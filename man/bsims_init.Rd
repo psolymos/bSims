@@ -1,81 +1,156 @@
 \name{bsims_init}
 \alias{bsims_init}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{bsims_populate}
+\alias{bsims_animate}
+\alias{bsims_detect}
+\alias{bsims_transcribe}
+\alias{print.bsims_landscape}
+\alias{print.bsims_population}
+\alias{print.bsims_events}
+\alias{print.bsims_detections}
+\alias{print.bsims_transcript}
 \title{
-%%  ~~function to do ... ~~
+bSims functions
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Functions to initialize, populate, animate, detect, and transcribe
+simulated birds in a point count.
 }
 \usage{
 bsims_init(extent = 10, road = 0, edge = 0, offset = 0)
+
+bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
+  margin = 0, maxit = 100, fail = FALSE, ...)
+
+bsims_animate(x, vocal_rate = 1, move_rate = 1, duration = 10,
+  movement = 0, mixture = 1, avoid = c("none", "R", "ER"), ...)
+
+bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL, repel = 0,
+  vocal_only = TRUE, ...)
+
+bsims_transcribe(x, tint = NULL, rint = Inf, first_only = TRUE, error = 0, ...)
+
+\method{print}{bsims_landscape}(x, ...)
+\method{print}{bsims_population}(x, ...)
+\method{print}{bsims_events}(x, ...)
+\method{print}{bsims_detections}(x, ...)
+\method{print}{bsims_transcript}(x, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{extent}{
-%%     ~~Describe \code{extent} here~~
+extent of simulation area, an extent x extent square with (0,0) at the center.
 }
   \item{road}{
-%%     ~~Describe \code{road} here~~
+half width of the road stratum (parallel to the y axis).
 }
   \item{edge}{
-%%     ~~Describe \code{edge} here~~
+width of edge, same width on both sides of the road stratum.
 }
   \item{offset}{
-%%     ~~Describe \code{offset} here~~
+offset to apply to road and edge strata relative to the center in the x direction.
+}
+  \item{x}{
+a simulation object.
+}
+  \item{density}{
+population density, D, recycled 3x for HER
+}
+  \item{abund_fun}{
+function to simulate abundance, N ~ Pois(lambda), lambda=DA by default.
+}
+  \item{xy_fun}{
+function to simulate nest locations, see \code{\link{acceptreject}}.
+\code{NULL} is complete spatial randomness
+}
+  \item{margin, maxit, fail}{
+arguments passed to \code{xy_fun}, see \code{\link{acceptreject}}.
+}
+  \item{vocal_rate, move_rate}{
+Vocal and movement rates (see \code{\link{events}}).
+Rate can be a single number, a vector matching length of mixture,
+vector of length 3 with mixture=1 (corresponding to HER strata),
+or a matrix of 3 x mixture (HER + groups).
+}
+  \item{movement, duration}{
+arguments passed to \code{xy_fun}, see \code{\link{events}}.
+}
+  \item{mixture}{
+finite mixture group proportions, can be a matrix referring
+population segments.
+}
+  \item{avoid}{
+strata to avoid by movement.
+}
+  \item{xy}{
+position of the observer.
+}
+  \item{tau}{
+parameter of the distance function.
+}
+  \item{dist_fun}{
+distance function (1st argument is distance, second is tau).
+}
+  \item{repel}{
+radius from observer within which events are invalidated.
+}
+  \item{vocal_only}{
+should we detect visuals or just vocals.
+}
+  \item{tint}{
+time interval break points.
+}
+  \item{rint}{
+distance interval break points.
+}
+  \item{first_only}{
+access 1st detctions only.
+}
+  \item{error}{
+log scale standard deviation for distance estimation error,
+see \code{\link{rlnorm2}}.
+}
+  \item{\dots}{
+other arguments passed to underlying functions.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The functions are supposed to be called in sequence,
+allowing to simulate multiple realities by keeping
+preceding layers intact. Construction allows easy piping.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+\code{bsims_init} returns a landscape object.
+
+\code{bsims_populate} returns a population object.
+
+\code{bsims_animate} returns an events object.
+
+\code{bsims_detect} returns a detections object.
+
+\code{bsims_transcribe} returns a transcript object.
 }
 \author{
-%%  ~~who you are~~
+Peter Solymos
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{acceptreject}}, \code{\link{events}},
+\code{\link{get_events}}, \code{\link{get_detections}},
+plotting functions \code{\link{plot.bsims_landscape}}.
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (extent = 10, road = 0, edge = 0, offset = 0) 
-{
-    if (extent <= 0) 
-        stop("extent must be positive")
-    road <- abs(road)
-    edge <- abs(edge)
-    a <- extent/2
-    box <- cbind(x = rep(a, 4) * c(-1, -1, 1, 1), y = rep(a, 
-        4) * c(-1, 1, 1, -1))
-    strata <- c(-a, offset - road - edge, offset - road, offset + 
-        road, offset + road + edge, a)
-    strata <- pmin(a, pmax(-a, strata))
-    names(strata) <- c("+h", "he", "er", "re", "eh", "h+")
-    x <- list(extent = extent, road = road, edge = edge, offset = offset, 
-        box = box, strata = strata)
-    class(x) <- c("bsim", "bsims_landscape")
-    x
-  }
+phi <- 0.5
+tau <- 1:3
+dur <- 10
+rbr <- c(0.5, 1, 1.5, Inf)
+tbr <- c(3, 5, 10)
+l <- bsims_init(10, 0.5, 1)
+p <- bsims_populate(l, 1)
+a <- bsims_animate(p, vocal_rate=phi, duration=dur)
+o <- bsims_detect(a, tau=tau)
+x <- bsims_transcribe(o, tint=tbr, rint=rbr)
+x
+plot(x)
+x$removal
+x$visits
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ datagen }

@@ -1,79 +1,41 @@
 \name{rmvn}
 \alias{rmvn}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Multivariate normal distribution
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+A shim of \code{\link[MASS]{mvrnorm}} to deal with n=1 case to return matrix.
 }
 \usage{
 rmvn(n = 1L, mu, Sigma, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{n}{
-%%     ~~Describe \code{n} here~~
+number of random vectors desired (nonnegative integer, can be 0).
 }
   \item{mu}{
-%%     ~~Describe \code{mu} here~~
+mean vector.
 }
   \item{Sigma}{
-%%     ~~Describe \code{Sigma} here~~
+variance-covariance matrix.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+other argumants passed to  \code{\link[MASS]{mvrnorm}}.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+A matrix with \code{n} rows and \code{length(mu)} columns.
 }
 \author{
-%%  ~~who you are~~
+Peter Solymos
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link[MASS]{mvrnorm}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (n = 1L, mu, Sigma, ...) 
-{
-    if (n < 2L) {
-        if (n == 0L) {
-            out <- matrix(numeric(0), nrow = 0L, ncol = length(mu))
-        }
-        else {
-            out <- matrix(MASS::mvrnorm(n, mu, Sigma, ...), nrow = 1L)
-        }
-        colnames(out) <- names(mu)
-    }
-    else {
-        out <- MASS::mvrnorm(n, mu, Sigma, ...)
-    }
-    out
-  }
+rmvn(0, c(a=0, b=0), diag(1, 2, 2))
+rmvn(1, c(a=0, b=0), diag(1, 2, 2))
+rmvn(2, c(a=0, b=0), diag(1, 2, 2))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ datagen }
+\keyword{ distribution }

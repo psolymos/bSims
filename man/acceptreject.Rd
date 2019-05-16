@@ -1,115 +1,58 @@
 \name{acceptreject}
 \alias{acceptreject}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Spatial point process simulator.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{acceptreject}
 }
 \usage{
-acceptreject(n, f = NULL, x0 = 0, x1 = 1, y0 = 0, y1 = 1, m = 0, maxit = 100, fail = FALSE)
+acceptreject(n, f = NULL, x0 = 0, x1 = 1, y0 = 0, y1 = 1,
+  m = 0, maxit = 100, fail = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{n}{
-%%     ~~Describe \code{n} here~~
+number of points to generate.
 }
   \item{f}{
-%%     ~~Describe \code{f} here~~
+a function returning probability (value between 0 and 1) given distance as
+the first and only argument, Poisson point process (complete spatial randomness)
+if \code{NULL}.
 }
-  \item{x0}{
-%%     ~~Describe \code{x0} here~~
-}
-  \item{x1}{
-%%     ~~Describe \code{x1} here~~
-}
-  \item{y0}{
-%%     ~~Describe \code{y0} here~~
-}
-  \item{y1}{
-%%     ~~Describe \code{y1} here~~
+  \item{x0, x1, y0, y1}{
+x and y ranges (bounding box).
 }
   \item{m}{
-%%     ~~Describe \code{m} here~~
+margin width for edge effect.
 }
   \item{maxit}{
-%%     ~~Describe \code{maxit} here~~
+maximum number of iterations.
 }
   \item{fail}{
-%%     ~~Describe \code{fail} here~~
+logical, what to do when there is a problem (error or warning).
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+A matrix with \code{n} rows and 2 columns for x and y coordinates.
 }
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Peter Solymos
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+## complete spatial randomness
+plot(acceptreject(100), asp=1)
 
-## The function is currently defined as
-function (n, f = NULL, x0 = 0, x1 = 1, y0 = 0, y1 = 1, m = 0, 
-    maxit = 100, fail = FALSE) 
-{
-    if (n <= 0) 
-        return(cbind(x = numeric(0), y = numeric(0)))
-    if (is.null(f)) 
-        return(cbind(x = runif(n, x0, x1), y = runif(n, y0, y1)))
-    g <- function(m) c(runif(1, x0 - m, x1 + m), runif(1, y0 - 
-        1, y1 + m))
-    xy <- rbind(g(m = 0))
-    colnames(xy) <- c("x", "y")
-    i <- 1L
-    j <- 1L
-    while (j < n) {
-        if (i > maxit * n) 
-            break
-        pr <- g(m = m)
-        d <- min(sqrt((xy[, 1] - pr[1])^2 + (xy[, 2] - pr[2])^2))
-        p <- f(d)
-        r <- runif(1)
-        if (r <= p) 
-            xy <- rbind(xy, unname(pr))
-        i <- i + 1L
-        j <- sum(xy[, 1] \%[]\% c(x0, x1) & xy[, 2] \%[]\% c(y0, 
-            y1))
-    }
-    xy <- xy[xy[, 1] \%[]\% c(x0, x1) & xy[, 2] \%[]\% c(y0, y1), 
-        , drop = FALSE]
-    if (nrow(xy) < n) {
-        msg <- sprintf("number of points generated: \%.0f", nrow(xy))
-        if (fail) 
-            stop(msg)
-        warning(msg)
-        xy <- rbind(xy, matrix(NA, n - nrow(xy), 2))
-    }
-    xy
-  }
+## close to systematic
+distance <- seq(0,1,0.01)
+f <- function(d) 1-exp(-d^2/0.1^2)
+plot(distance, f(distance), type="l")
+plot(acceptreject(100, f, m=1), asp=1)
+
+## bimodal/clustered
+f <- function(d) pmax(ifelse(d < 0.1, 1, 0), 0.5*(1-exp(-d^2/0.5^2)))
+plot(distance, f(distance), type="l")
+plot(acceptreject(100, f, m=1), asp=1)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ datagen }
+\keyword{ distribution }
+\keyword{ spatial }

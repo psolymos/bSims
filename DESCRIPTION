@@ -1,9 +1,13 @@
 Package: bSims
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Bird Point Count Simulator
+Version: 0.0-1
 Date: 2019-05-15
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Peter Solymos [aut, cre] (<https://orcid.org/0000-0001-7337-1740>)
+Maintainer: Peter Solymos <solymos@ualberta.ca>
+Description: Bird point count simulator to test statistical assumptions
+  and to aid survey design.
+License: MIT + file LICENSE
+LazyLoad: yes
+LazyData: true
+Depends: intrval, mefa4, MASS

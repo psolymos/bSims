@@ -1,1 +1,10 @@
 exportPattern("^[[:alpha:]]+")
+
+importFrom("graphics", "lines", "par", "plot", "points", "polygon",
+             "segments")
+importFrom("stats", "rbinom", "rexp", "rlnorm", "rpois", "runif")
+
+importFrom("intrval", "%)(%", "%[]%", "%][%")
+importFrom("mefa4", "Xtab")
+importFrom("MASS", "mvrnorm")
+

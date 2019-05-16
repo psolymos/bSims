@@ -1,81 +1,46 @@
 \name{dist_fun2}
 \alias{dist_fun2}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Half-Normal distance function with segmented attenuation
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Half-Normal distance function with segmented attenuation
+depending in 3 strata (habitat, edge, road)
 }
 \usage{
 dist_fun2(d, tau, dist_fun, b = numeric(0))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{d}{
-%%     ~~Describe \code{d} here~~
+distance from observer.
 }
   \item{tau}{
-%%     ~~Describe \code{tau} here~~
+a parameter passed to the the distance function, need to be in 1-3 in length
+referring to distance function parameters in the 3 strata.
 }
   \item{dist_fun}{
-%%     ~~Describe \code{dist_fun} here~~
+distance functon taking two arguments: for distance, and \code{tau}, see examples.
 }
   \item{b}{
-%%     ~~Describe \code{b} here~~
+distance breakpoints, must be \code{length(tau)-1} in length.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+Probability of detection given distance, strata specific parameters and breakpoints.
 }
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Peter Solymos
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (d, tau, dist_fun, b = numeric(0)) 
-{
-    if (any(is.infinite(b))) 
-        stop("b must be finite")
-    if (length(b) != length(tau) - 1L) 
-        stop("length(b) must equal length(tau)-1")
-    if (length(b) != length(unique(b))) 
-        stop("values in b must be unique")
-    b <- sort(b)
-    b[b == 0] <- .Machine$double.eps
-    h <- 1
-    for (i in seq_len(length(b))) {
-        h <- c(h, h[length(h)] * dist_fun(b[i], tau[i])/dist_fun(b[i], 
-            tau[i + 1L]))
-    }
-    j <- cut(d, c(0, b, Inf), labels = FALSE, include.lowest = TRUE)
-    dist_fun(d, tau[j]) * h[j]
-  }
+tau <- c(1,2,3,2,1)
+d <- 0:400/100
+dist_fun <- function(d, tau) exp(-d^2/tau^2) # half normal
+#dist_fun <- function(d, tau) exp(-d/tau^2) # exponential
+plot(d, dist_fun2(d, tau[1], dist_fun), type="l")
+lines(d, dist_fun2(d, tau[2], dist_fun))
+lines(d, dist_fun2(d, tau[3], dist_fun))
+b <- c(0.5, 1, 1.5, 2) # points at the HER boundaries
+abline(v=b)
+lines(d, dist_fun2(d, tau, dist_fun, b), col=2, lwd=3)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ math }
