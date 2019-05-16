@@ -1,0 +1,91 @@
+bsims_detect <-
+function(
+  x,
+  xy=c(0,0), # observer location
+  tau=1, # can vector when HER attenuation used, compatible w/ dist_fun
+  dist_fun=NULL, # takes args d and tau (single parameter)
+  repel=0, # radius within which vocalizations are invalidated
+  vocal_only=TRUE, # should we detect visuals or just vocals?
+  ...)
+{
+  if (!inherits(x, "bsims_events"))
+    stop("x must be a bsims_events object")
+  xy <- as.numeric(xy[1:2])
+  if (any(xy %)(% range(x$strata)))
+    stop("observer xy must be within extent")
+  if (is.null(dist_fun))
+    dist_fun <- function(d, tau) exp(-d^2/tau^2)
+  N <- sum(x$abundance)
+  A <- diff(x$strata) * diff(range(x$strata))
+  A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
+  names(A) <- c("H", "E", "R")
+  ## need for *att*enuation
+  att <- length(tau) > 1 && A["H"] < sum(A)
+  if (att && length(tau) != 3L)
+    stop("tau length must be 3 for HER attenuation")
+  if (att) {
+    st <- x$strata
+    st[1L] <- -Inf
+    st[6L] <- Inf
+    sobs <- cut(xy[1L], st, labels=FALSE)
+  }
+  for (i in seq_len(N)) {
+    z <- x$events[[i]]
+    ## bird position
+    xxb <- x$nests$x[i] + z$x
+    yyb <- x$nests$y[i] + z$y
+    ## distance from observer
+    xx <- xxb - xy[1L]
+    yy <- yyb - xy[2L]
+    z$d <- sqrt(xx^2 + yy^2)
+    ## repel inds within repel distance (0 just for temp object z)
+    z$v[z$d < repel] <- 0
+    ## NA is placeholder for these vocalizations in return object
+    x$events[[i]]$v[z$d < repel] <- NA
+    if (vocal_only) {
+      keep <- z$v > 0
+      z <- z[keep,,drop=FALSE]
+      xx <- xx[keep]
+      yy <- yy[keep]
+    }
+    ## this is where HER attenuation somes in
+    if (att) {
+      theta <- atan2(yy, xx) # angle in rad
+      sbrd <- cut(xxb, st, labels=FALSE)
+      for (j in seq_len(nrow(z))) {
+        ## order tau as HEREH
+        TAU <- tau[c(1,2,3,2,1)][sobs:sbrd[j]]
+        ## calculate distance breaks from x and theta
+        if (length(TAU) == 1) {
+          #b <- numeric(0)
+          q <- dist_fun(z$d[j], TAU)
+        } else {
+          ## this gives breaks along x axis
+          if (sobs < sbrd[j]) { # bird right of observer
+            stj <- st[(sobs+1):sbrd[j]]
+          } else { # bird left of observer
+            stj <- st[sobs:(sbrd[j]+1)]
+          }
+          ## breaks as radial distance: r=x/cos(theta)
+          b <- (stj - xy[1L]) / cos(theta[j])
+          ## calculate q
+          q <- dist_fun2(z$d[j], TAU, dist_fun, b)
+        }
+      }
+    } else {
+      q <- dist_fun(z$d, tau)
+    }
+    #u <- runif(length(z$d))
+    #z$det <- ifelse(u <= q, 1, 0) # detected
+    z$det <- rbinom(length(z$d), size=1, prob=q)
+    z <- z[z$det > 0,,drop=FALSE]
+    ## error is shown where detected, NA when not detected
+    x$events[[i]]$d <- z$d[match(rownames(x$events[[i]]), rownames(z))]
+  }
+  x$xy <- xy
+  x$tau <- tau
+  x$repel <- repel
+  x$vocal_only <- vocal_only
+  class(x) <- c("bsim", "bsims_detections")
+  x
+}
