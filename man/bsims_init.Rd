@@ -1,4 +1,6 @@
 \name{bsims_init}
+\alias{bSims-package}
+\alias{bSims}
 \alias{bsims_init}
 \alias{bsims_populate}
 \alias{bsims_animate}
