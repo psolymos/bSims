@@ -27,8 +27,8 @@ x
 ## bSims transcript
 ##   1 km x 1 km
 ##   stratification: HER
-##   total abunance: 90
-##   mixture with total duration: 10
+##   total abundance: 90
+##   total duration: 10
 ##   detected: 20 heard
 ##   1st inds. [0-3, 3-5, 5-10 min] [0-50, 50-100, 100-150, 150+ m]
 

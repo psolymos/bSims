@@ -10,8 +10,8 @@ function(x, ...) {
   cat("bSims events\n  ",
     round(x$extent/10, 1), " km x ", round(x$extent/10, 1),
     " km\n  stratification: ", her,
-    "\n  total abunance: ", sum(x$abundance),
-    "\n  ", ifelse(length(x$mixture) > 0, "mixture with ", ""),
+    "\n  total abundance: ", sum(x$abundance),
+    "\n  ", ifelse(length(x$mixture) > 1, "mixture with ", ""),
     "total duration: ", x$duration, "\n", sep="")
   invisible(x)
 }

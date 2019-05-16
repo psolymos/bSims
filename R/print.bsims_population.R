@@ -10,6 +10,6 @@ function(x, ...) {
   cat("bSims population\n  ",
     round(x$extent/10, 1), " km x ", round(x$extent/10, 1),
     " km\n  stratification: ", her,
-    "\n  total abunance: ", sum(x$abundance), "\n", sep="")
+    "\n  total abundance: ", sum(x$abundance), "\n", sep="")
   invisible(x)
 }
