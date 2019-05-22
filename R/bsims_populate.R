@@ -40,6 +40,7 @@ function(
   x$lambda <- lambda
   x$area <- A
   x$density <- D
+  x$call <- match.call()
   class(x) <- c("bsim", "bsims_population")
   x
 }

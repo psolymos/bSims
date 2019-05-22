@@ -86,6 +86,7 @@ function(
   x$tau <- tau
   x$repel <- repel
   x$vocal_only <- vocal_only
+  x$call <- match.call()
   class(x) <- c("bsim", "bsims_detections")
   x
 }

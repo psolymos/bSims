@@ -55,6 +55,7 @@ function(
   x$rint <- rint
   x$first_only <- first_only
   x$error <- error
+  x$call <- match.call()
   class(x) <- c("bsim", "bsims_transcript", "bsims_detections")
   x
 }

@@ -88,6 +88,7 @@ function(
   x$movement <- movement
   x$mixture <- P
   x$events <- Events
+  x$call <- match.call()
   class(x) <- c("bsim", "bsims_events")
   x
 }

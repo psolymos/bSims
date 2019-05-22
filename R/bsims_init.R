@@ -29,6 +29,7 @@ function(
     offset=offset,
     box=box,
     strata=strata)
+  x$call <- match.call()
   class(x) <- c("bsim", "bsims_landscape")
   x
 }
