@@ -386,3 +386,84 @@ for (i in 1:nstep) {
 im <- image_read(paste0("temp/", list.files("temp", pattern=".png")))
 an <- image_animate(im)
 image_write(an, "temp/bsims.gif")
+
+
+tau <- 0.8
+gfun <- function(d) exp(-d^2/tau^2)
+cfun <- function(d) pi*2*d
+integrate(cfun, 0, 1)$value # = pi
+f <- function(d) gfun(d) * cfun(d)
+Sum <- integrate(f, 0, Inf)$value
+qfun <- function(rmax) f(rmax) / Sum
+
+
+integrate(qfun, 0, Inf)$value
+
+## edr
+tau^2*pi
+
+tau^2*pi - integrate(f, 0, tau)$value
+Sum - integrate(f, 0, tau)$value
+## see what happens with neg exp: gfun <- function(d) exp(-d/tau^2)
+## hazard rate: gfun <- function(d) 1-exp(-(d/tau)^-2)
+
+
+## a,b major and minor axes, theta is angle
+ellipse_r <- function(theta, a, b)
+  a * b / sqrt(a^2 * sin(theta)^2 + b^2 * cos(theta)^2)
+
+
+deg2rad <- function(deg)
+  pi * deg / 180
+rad2deg <- function(rad)
+  180 * rad / pi
+deg <- seq(0, 360, by=1)
+plot(deg, ellipse_r(deg2rad(deg), 1, 2), type="l")
+
+
+## see of obs --> bird vs bird --> obs attenuation is same
+
+## in symmetric situation it is not exact but quite similar (b=c(1,2), max distance 4, half-normal)
+## but e.g. it is different for neg exponential
+## and also huge diffs when boundaries are not 'symmetrically' positioned
+## but if tau is the same: no problemo
+tau <- c(2,3,4)
+#tau <- c(3,3,3)
+b <- c(1, 2) # points at the HER boundaries
+dmax <- 4
+d <- seq(0, dmax, length.out = 101)
+dist_fun <- function(d, tau) exp(-d^2/tau^2) # half normal
+
+op <- par(mfrow=c(1,2))
+qq <- dist_fun2(d, tau[c(3,2,1)], dist_fun, b)
+plot(d, dist_fun2(d, tau[1], dist_fun), type="l", main=round(rev(qq)[1], 4), ylim=c(0,1))
+lines(d, dist_fun2(d, tau[2], dist_fun))
+lines(d, dist_fun2(d, tau[3], dist_fun))
+abline(v=b)
+#abline(h=rev(qq)[1], col=2, lty=2)
+lines(d, qq, col=2, lwd=3)
+arrows(0, rev(qq)[1], dmax, rev(qq)[1], col=4, lwd=2, angle=20)
+
+qq <- rev(dist_fun2(d, tau, dist_fun, 4-b))
+plot(d, rev(dist_fun2(d, tau[1], dist_fun)), type="l", main=round(qq[1], 4), ylim=c(0,1))
+lines(d, rev(dist_fun2(d, tau[2], dist_fun)))
+lines(d, rev(dist_fun2(d, tau[3], dist_fun)))
+abline(v=b)
+#abline(h=qq[1], col=2, lty=2)
+lines(d, qq, col=2, lwd=3)
+arrows(dmax, qq[1], 0, qq[1], col=4, lwd=2, angle=20)
+par(op)
+## add HER background colors, axis labels, colored lines, legends
+
+set.seed(12345)
+l <- bsims_init(20, 0.1, 0.5)
+p <- bsims_populate(l, 20)
+a <- bsims_animate(p)
+o <- bsims_detect(a, tau=c(1,3,3), vocal_only = FALSE) # detect all
+plot(o, pch_nest=NA, pch_vocal=NA, first_only=FALSE, tlim=c(0,60))
+# Eye of Sauron
+library(plotrix)
+draw.ellipse(0, 0, 1, 3, border="white")
+lines(c(0,0), c(-3,3), col="white")
+lines(c(-1,1), c(0,0), col="white")
+

@@ -24,10 +24,11 @@ function(
   if (att && length(tau) != 3L)
     stop("tau length must be 3 for HER attenuation")
   if (att) {
+    names(tau) <- c("H", "E", "R")
     st <- x$strata
     st[1L] <- -Inf
     st[6L] <- Inf
-    sobs <- cut(xy[1L], st, labels=FALSE)
+    sobs <- cut(xy[1L], st, labels=FALSE) # which stratum the observer is in
   }
   for (i in seq_len(N)) {
     z <- x$events[[i]]
@@ -37,7 +38,7 @@ function(
     ## distance from observer
     xx <- xxb - xy[1L]
     yy <- yyb - xy[2L]
-    z$d <- sqrt(xx^2 + yy^2)
+    z$d <- sqrt(xx^2 + yy^2) # distance from observer
     ## repel inds within repel distance (0 just for temp object z)
     z$v[z$d < repel] <- 0
     ## NA is placeholder for these vocalizations in return object
@@ -47,18 +48,22 @@ function(
       z <- z[keep,,drop=FALSE]
       xx <- xx[keep]
       yy <- yy[keep]
+      xxb <- xxb[keep]
+      yyb <- yyb[keep]
     }
-    ## this is where HER attenuation somes in
+    ## this is where HER attenuation comes in
     if (att) {
+      q <- numeric(nrow(z))
       theta <- atan2(yy, xx) # angle in rad
       sbrd <- cut(xxb, st, labels=FALSE)
       for (j in seq_len(nrow(z))) {
         ## order tau as HEREH
-        TAU <- tau[c(1,2,3,2,1)][sobs:sbrd[j]]
+        #TAU <- tau[c(1,2,3,2,1)][sobs:sbrd[j]] # obs-->brd ordering = wrong!
+        TAU <- tau[c(1,2,3,2,1)][sbrd[j]:sobs] # brd-->obs ordering = good!
         ## calculate distance breaks from x and theta
-        if (length(TAU) == 1) {
+        if (length(TAU) == 1L) {
           #b <- numeric(0)
-          q <- dist_fun(z$d[j], TAU)
+          q[j] <- dist_fun(z$d[j], TAU)
         } else {
           ## this gives breaks along x axis
           if (sobs < sbrd[j]) { # bird right of observer
@@ -66,10 +71,12 @@ function(
           } else { # bird left of observer
             stj <- st[sobs:(sbrd[j]+1)]
           }
-          ## breaks as radial distance: r=x/cos(theta)
+          ## breaks as radial distance from observer: r=x/cos(theta)
           b <- (stj - xy[1L]) / cos(theta[j])
+          ## turn that into distance from bird (stratified attenuation)
+          b <- z$d[j] - rev(b)
           ## calculate q
-          q <- dist_fun2(z$d[j], TAU, dist_fun, b)
+          q[j] <- dist_fun2(z$d[j], TAU, dist_fun, b)
         }
       }
     } else {
