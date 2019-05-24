@@ -460,10 +460,14 @@ l <- bsims_init(20, 0.1, 0.5)
 p <- bsims_populate(l, 20)
 a <- bsims_animate(p)
 o <- bsims_detect(a, tau=c(1,3,3), vocal_only = FALSE) # detect all
-plot(o, pch_nest=NA, pch_vocal=NA, first_only=FALSE, tlim=c(0,60))
+plot(o, pch_nest=NA, pch_vocal=NA, first_only=FALSE, tlim=c(0,60), col_det=NA)
+lines.bsims_detections(o, col="#00000044")
 # Eye of Sauron
 library(plotrix)
 draw.ellipse(0, 0, 1, 3, border="white")
 lines(c(0,0), c(-3,3), col="white")
 lines(c(-1,1), c(0,0), col="white")
+
+
+
 
