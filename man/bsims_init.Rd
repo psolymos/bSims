@@ -30,7 +30,8 @@ bsims_animate(x, vocal_rate = 1, move_rate = 1, duration = 10,
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL, repel = 0,
   vocal_only = TRUE, ...)
 
-bsims_transcribe(x, tint = NULL, rint = Inf, first_only = TRUE, error = 0, ...)
+bsims_transcribe(x, tint = NULL, rint = Inf,
+  first_only = TRUE, error = 0, ...)
 
 \method{print}{bsims_landscape}(x, ...)
 \method{print}{bsims_population}(x, ...)

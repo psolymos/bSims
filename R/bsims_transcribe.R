@@ -13,7 +13,7 @@ function(
   if (any(tint <= 0))
     stop("tint must be > 0")
   if (any(tint > x$duration))
-    stop("tint must <= duration")
+    stop("tint must be <= duration")
   rint <- sort(rint)
   if (any(rint <= 0))
     stop("rint must be > 0")
