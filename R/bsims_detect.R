@@ -94,6 +94,6 @@ function(
   x$repel <- repel
   x$vocal_only <- vocal_only
   x$call <- match.call()
-  class(x) <- c("bsim", "bsims_detections")
+  class(x) <- c("bsims", "bsims_detections")
   x
 }

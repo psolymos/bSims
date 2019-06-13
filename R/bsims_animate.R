@@ -89,6 +89,6 @@ function(
   x$mixture <- P
   x$events <- Events
   x$call <- match.call()
-  class(x) <- c("bsim", "bsims_events")
+  class(x) <- c("bsims", "bsims_events")
   x
 }
