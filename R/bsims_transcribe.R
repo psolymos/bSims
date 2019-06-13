@@ -6,8 +6,14 @@ function(
   first_only=TRUE,
   error=0,
   ...) {
-  if (!inherits(x, "bsims_detections"))
-    stop("x must be a bsims_detections object")
+  if (!inherits(x, "bsims_detections")) {
+    if (inherits(x, "bsims_events")) {
+      x <- bsims_detect(x, tau=Inf) # detect all
+    } else {
+      stop("x must be a bsims_events or a bsims_detections object")
+    }
+  }
+
   tint <- if (is.null(tint))
     x$duration else sort(tint)
   if (any(tint <= 0))
@@ -56,6 +62,6 @@ function(
   x$first_only <- first_only
   x$error <- error
   x$call <- match.call()
-  class(x) <- c("bsim", "bsims_transcript", "bsims_detections")
+  class(x) <- c("bsims", "bsims_transcript", "bsims_detections")
   x
 }
