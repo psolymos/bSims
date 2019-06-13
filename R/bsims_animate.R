@@ -21,7 +21,7 @@ function(
     stop("mixture must not be negative")
   if (move_rate < 0)
     stop("move_rate must not be negative")
-  if (vocal_rate < 0)
+  if (any(vocal_rate < 0))
     stop("vocal_rate must not be negative")
   K <- length(mixture)
   G <- paste0("G", 1:K)
