@@ -11,7 +11,7 @@ function(x, first_only=TRUE) {
     ))
   z <- lapply(1:length(x$events), function(i) {
     zz <- x$events[[i]]
-    zz$i <- i
+    zz$i <- rep(i, nrow(zz))
     zz <- zz[!is.na(zz$d),,drop=FALSE]
     zz
   })
