@@ -8,3 +8,21 @@ importFrom("intrval", "%)(%", "%[]%", "%][%")
 importFrom("mefa4", "Xtab")
 importFrom("MASS", "mvrnorm")
 
+S3method(plot, bsims_landscape)
+S3method(plot, bsims_population)
+S3method(plot, bsims_events)
+S3method(plot, bsims_detections)
+
+S3method(lines, bsims_events)
+S3method(lines, bsims_detections)
+
+S3method(points, bsims_events)
+S3method(points, bsims_population)
+S3method(points, bsims_detections)
+
+S3method(print, bsims_landscape)
+S3method(print, bsims_population)
+S3method(print, bsims_events)
+S3method(print, bsims_detections)
+S3method(print, bsims_transcript)
+

@@ -3,7 +3,6 @@
 \alias{plot.bsims_population}
 \alias{plot.bsims_events}
 \alias{plot.bsims_detections}
-\alias{plot.bsims_transcript}
 \alias{lines.bsims_detections}
 \alias{lines.bsims_events}
 \alias{points.bsims_population}
@@ -20,7 +19,8 @@ Plotting functionalities.
   col = c("darkolivegreen1", "burlywood1", "lightgrey"),
   xlim = NULL, ylim = NULL, ...)
 
-\method{points}{bsims_detections}(x, first_only = TRUE, ...)
+\method{plot}{bsims_population}(x, pch_nest=3,
+  col_nest="darkgreen", cex_nest=1, ...)
 
 \method{plot}{bsims_events}(x, tlim = NULL,
   pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
