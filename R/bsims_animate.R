@@ -7,6 +7,7 @@ function(
   movement=0, # SD for 2D kernel
   mixture=1, # finite mixture group proportions
   avoid=c("none", "R", "ER"),
+  initial_location=FALSE,
   ...) {
   if (!inherits(x, "bsims_population"))
     stop("x must be a bsims_population object")
@@ -77,10 +78,20 @@ function(
       "none" = c(0,0),
       "R" = x$strata[c("er", "re")]-x$nests$x[i],
       "ER" = x$strata[c("he", "eh")]-x$nests$x[i])
-    Events[[i]] <- events(
-      vocal_rate=vr[s[i], g[i]],
-      move_rate=mr[s[i], g[i]],
-      duration=duration, movement=movement, avoid=a)
+    if (initial_location) {
+      if (move_rate > 0)
+        warning("initial_location=TRUE: move_rate ignored")
+      if (vocal_rate > 0)
+        warning("initial_location=TRUE: vocal_rate ignored")
+      Events[[i]] <- data.frame(x=0, y=0, t=0, v=0)
+    } else {
+      Events[[i]] <- events(
+        vocal_rate=vr[s[i], g[i]],
+        move_rate=mr[s[i], g[i]],
+        duration=duration,
+        movement=movement,
+        avoid=a)
+    }
   }
   x$vocal_rate <- vr
   x$move_rate <- mr

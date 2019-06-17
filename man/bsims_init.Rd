@@ -25,7 +25,8 @@ bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
   margin = 0, maxit = 100, fail = FALSE, ...)
 
 bsims_animate(x, vocal_rate = 1, move_rate = 1, duration = 10,
-  movement = 0, mixture = 1, avoid = c("none", "R", "ER"), ...)
+  movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
+  initial_location=FALSE, ...)
 
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL, repel = 0,
   vocal_only = TRUE, ...)
@@ -83,6 +84,11 @@ population segments.
 }
   \item{avoid}{
 strata to avoid by movement.
+}
+  \item{initial_location}{
+logical, \code{move_rate} and \code{vocal_rate} ignored if \code{TRUE}
+and nest ocation is provided as part of the events table,
+this reders all individuals equally available for detection.
 }
   \item{xy}{
 position of the observer.
