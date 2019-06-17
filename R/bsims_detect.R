@@ -2,7 +2,7 @@ bsims_detect <-
 function(
   x,
   xy=c(0,0), # observer location
-  tau=1, # can vector when HER attenuation used, compatible w/ dist_fun
+  tau=1, # can be vector when HER attenuation used, compatible w/ dist_fun
   dist_fun=NULL, # takes args d and tau (single parameter)
   repel=0, # radius within which vocalizations are invalidated
   vocal_only=TRUE, # should we detect visuals or just vocals?
