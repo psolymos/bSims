@@ -13,7 +13,7 @@ function(x, vocal_only=TRUE, tlim=NULL) {
   tlim <- pmin(pmax(0, tlim), x$duration)
   z <- lapply(1:length(x$events), function(i) {
     zz <- x$events[[i]]
-    zz$i <- i
+    zz$i <- rep(i, nrow(zz))
     zz
   })
   z <- do.call(rbind, z)
