@@ -79,10 +79,10 @@ function(
       "R" = x$strata[c("er", "re")]-x$nests$x[i],
       "ER" = x$strata[c("he", "eh")]-x$nests$x[i])
     if (initial_location) {
-      if (move_rate > 0)
-        warning("initial_location=TRUE: move_rate ignored")
-      if (vocal_rate > 0)
-        warning("initial_location=TRUE: vocal_rate ignored")
+      #if (move_rate > 0)
+      #  warning("initial_location=TRUE: move_rate ignored")
+      #if (vocal_rate > 0)
+      #  warning("initial_location=TRUE: vocal_rate ignored")
       Events[[i]] <- data.frame(x=0, y=0, t=0, v=0)
     } else {
       Events[[i]] <- events(

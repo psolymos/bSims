@@ -86,7 +86,7 @@ population segments.
 strata to avoid by movement.
 }
   \item{initial_location}{
-logical, \code{move_rate} and \code{vocal_rate} ignored if \code{TRUE}
+logical, \code{move_rate} and \code{vocal_rate} silently ignored if \code{TRUE}
 and nest ocation is provided as part of the events table,
 this reders all individuals equally available for detection.
 }
