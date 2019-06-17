@@ -469,5 +469,91 @@ lines(c(0,0), c(-3,3), col="white")
 lines(c(-1,1), c(0,0), col="white")
 
 
+## distance sampling
+## https://cran.r-project.org/web/packages/DSsim/vignettes/Investigating_Covariates_and_Truncation.html
+
+tau <- 2
+rmax <- 5
+
+h <- function(r) 2*r/rmax^2
+g <- function(r) exp(-r^2/tau^2)
+
+n <- 10^4
+x <- runif(n, -10, 10)
+y <- runif(n, -10, 10)
+r <- sqrt(x^2 + y^2)
+p <- g(r)
+s <- rbinom(n, 1, p)
+
+plot(x, y, pch=c(21, 19)[s+1], asp=1)
+abline(h=0, v=0)
+
+hist(r[r < rmax], freq=FALSE)
+curve(2*x/rmax^2, add=TRUE, col=2)
+
+
+f <- function(x) g(x) * h(x)
+tot <- integrate(f, lower=0, upper=rmax)$value
+
+hist(r[r < rmax & s > 0], freq=FALSE)
+curve(g(x) * h(x) / tot, add=TRUE, col=2)
+
+
+# using bSims
+library(bSims)
+set.seed(1)
+l <- bsims_init()
+a <- bsims_populate(l, density=10)
+b <- bsims_animate(a, initial_location=TRUE)
+
+
+d <- bsims_detect(b, tau=2, vocal_only=FALSE)
+
+dt <- get_detections(d)
+
+ra <- sqrt(rowSums(a$nests[,c("x", "y")]^2))
+
+xy <- a$nests[,c("x", "y")]
+
+
+tau <- 2
+rmax <- 5
+
+h <- function(r) 2*r/rmax^2
+g <- function(r) exp(-r^2/tau^2)
+
+n <- 10^4
+x <- a$nests$x
+y <- a$nests$y
+r <- sqrt(x^2 + y^2)
+p <- g(r)
+s <- rbinom(length(p), 1, p)
+
+plot(x, y, pch=c(21, 19)[s+1], asp=1)
+abline(h=0, v=0)
+
+hist(r[r < rmax], freq=FALSE)
+curve(2*x/rmax^2, add=TRUE, col=2)
+
+
+f <- function(x) g(x) * h(x)
+tot <- integrate(f, lower=0, upper=rmax)$value
+
+hist(r[r < rmax & s > 0], freq=FALSE)
+curve(g(x) * h(x) / tot, add=TRUE, col=2)
+
+
+
+
+rmax <- 4
+
+## distances
+hist(ra[ra < rmax], freq=FALSE)
+curve(2*x/rmax^2, add=TRUE, col=2)
+
+hist(dt$d[dt$d < rmax], freq=FALSE)
+#hist(dt$d, freq=FALSE)
+curve(f(x)/tot, 0,10,add=TRUE)
+
 
 
