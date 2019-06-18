@@ -2,6 +2,7 @@
 > Bird Point Count Simulator
 
 [![Linux build status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
+[![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
 
 ![](bsims.gif)
 
