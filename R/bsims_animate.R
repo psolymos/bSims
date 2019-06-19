@@ -2,7 +2,7 @@ bsims_animate <-
 function(
   x, # population object
   vocal_rate=1, # phi /min
-  move_rate=1, #movement
+  move_rate=0, #movement
   duration=10,
   movement=0, # SD for 2D kernel
   mixture=1, # finite mixture group proportions
@@ -79,10 +79,12 @@ function(
       "R" = x$strata[c("er", "re")]-x$nests$x[i],
       "ER" = x$strata[c("he", "eh")]-x$nests$x[i])
     if (initial_location) {
-      #if (move_rate > 0)
-      #  warning("initial_location=TRUE: move_rate ignored")
-      #if (vocal_rate > 0)
-      #  warning("initial_location=TRUE: vocal_rate ignored")
+      ## resent all values to defaults
+      move_rate <- 0
+      vocal_rate <- 0
+      movement <- 0
+      mixture <- 1
+      avoid <- "none"
       Events[[i]] <- data.frame(x=0, y=0, t=0, v=0)
     } else {
       Events[[i]] <- events(
@@ -98,6 +100,8 @@ function(
   x$duration <- duration
   x$movement <- movement
   x$mixture <- P
+  x$avoid <- avoid
+  x$initial_location <- initial_location
   x$events <- Events
   x$call <- match.call()
   class(x) <- c("bsims", "bsims_events")

@@ -1,5 +1,6 @@
 get_events <-
-function(x, vocal_only=TRUE, tlim=NULL) {
+function(x, event_type=c("vocal", "move", "both"), tlim=NULL) {
+  event_type <- match.arg(event_type)
   if (sum(x$abundance) == 0)
     return(data.frame(
       x=numeric(0),
@@ -18,11 +19,14 @@ function(x, vocal_only=TRUE, tlim=NULL) {
   })
   z <- do.call(rbind, z)
   z <- z[order(z$t),]
-  if (vocal_only)
-    z <- z[z$v > 0,,drop=FALSE]
+  keep <- switch(event_type,
+    "vocal"=z$v > 0,
+    "move"=z$v == 0,
+    "both"=rep(TRUE, nrow(z)))
   rownames(z) <- NULL
   z$x <- x$nests$x[z$i] + z$x
   z$y <- x$nests$y[z$i] + z$y
   z <- z[z$t %[]% tlim,,drop=FALSE]
+  attr(z, "event_type") <- event_type
   z
 }

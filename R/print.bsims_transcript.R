@@ -15,9 +15,10 @@ function(x, ...) {
     "\n  total abundance: ", sum(x$abundance),
     "\n  ", ifelse(length(x$mixture) > 1, "mixture with ", ""),
     "total duration: ", x$duration, "\n  detected: ", ndet,
-    ifelse(x$vocal_only, " heard", " seen/heard"),
+    switch(x$event_type, "vocal"=" heard",
+      "move"=" seen", "both"=" seen/heard"),
     "\n  ", ifelse(x$first_only, "1st", "all"),
-    " inds. [", paste0(gsub("min", "", levels(x$det$tint)), collapse=", "),
-    " min] [", paste0(gsub("m", "", levels(x$det$rint)), collapse=", "), " m]\n", sep="")
+    " inds.\n    [", paste0(gsub("min", "", levels(x$det$tint)), collapse=", "),
+    " min]\n    [", paste0(gsub("m", "", levels(x$det$rint)), collapse=", "), " m]\n", sep="")
   invisible(x)
 }

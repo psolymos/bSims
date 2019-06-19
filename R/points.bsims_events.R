@@ -1,5 +1,5 @@
 points.bsims_events <-
-function(x, vocal_only=TRUE, tlim=NULL, ...) {
-  points(get_events(x, vocal_only, tlim), ...)
+function(x, event_type=c("vocal", "move", "both"), tlim=NULL, ...) {
+  points(get_events(x, event_type, tlim), ...)
   invisible(x)
 }

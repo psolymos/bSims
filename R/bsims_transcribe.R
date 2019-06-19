@@ -3,8 +3,8 @@ function(
   x,
   tint=NULL,
   rint=Inf,
-  first_only=TRUE,
   error=0,
+  first_only=TRUE,
   ...) {
   if (!inherits(x, "bsims_detections")) {
     if (inherits(x, "bsims_events")) {

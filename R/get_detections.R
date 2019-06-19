@@ -1,5 +1,5 @@
 get_detections <-
-function(x, first_only=TRUE, tlim=NULL) {
+function(x, first_only=TRUE, tlim=NULL, drop0=TRUE) {
   if (sum(x$abundance) == 0)
     return(data.frame(
       x=numeric(0),
@@ -16,7 +16,8 @@ function(x, first_only=TRUE, tlim=NULL) {
   z <- lapply(1:length(x$events), function(i) {
     zz <- x$events[[i]]
     zz$i <- rep(i, nrow(zz))
-    zz <- zz[!is.na(zz$d),,drop=FALSE] # keep detections
+    if (drop0)
+      zz <- zz[!is.na(zz$d),,drop=FALSE] # keep detections
     zz
   })
   z <- do.call(rbind, z)

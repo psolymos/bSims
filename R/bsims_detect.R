@@ -5,9 +5,10 @@ function(
   tau=1, # can be vector when HER attenuation used, compatible w/ dist_fun
   dist_fun=NULL, # takes args d and tau (single parameter)
   repel=0, # radius within which vocalizations are invalidated
-  vocal_only=TRUE, # should we detect visuals or just vocals?
+  event_type=c("vocal", "move", "both"),
   ...)
 {
+  event_type <- match.arg(event_type)
   if (!inherits(x, "bsims_events"))
     stop("x must be a bsims_events object")
   xy <- as.numeric(xy[1:2])
@@ -43,14 +44,16 @@ function(
     z$v[z$d < repel] <- 0
     ## NA is placeholder for these vocalizations in return object
     x$events[[i]]$v[z$d < repel] <- NA
-    if (vocal_only) {
-      keep <- z$v > 0
-      z <- z[keep,,drop=FALSE]
-      xx <- xx[keep]
-      yy <- yy[keep]
-      xxb <- xxb[keep]
-      yyb <- yyb[keep]
-    }
+    ## subset based on event type requested
+    keep <- switch(event_type,
+      "vocal"=z$v > 0,
+      "move"=z$v == 0,
+      "both"=rep(TRUE, nrow(z)))
+    z <- z[keep,,drop=FALSE]
+    xx <- xx[keep]
+    yy <- yy[keep]
+    xxb <- xxb[keep]
+    yyb <- yyb[keep]
     ## this is where HER attenuation comes in
     if (att) {
       q <- numeric(nrow(z))
@@ -82,8 +85,6 @@ function(
     } else {
       q <- dist_fun(z$d, tau)
     }
-    #u <- runif(length(z$d))
-    #z$det <- ifelse(u <= q, 1, 0) # detected
     z$det <- rbinom(length(z$d), size=1, prob=q)
     z <- z[z$det > 0,,drop=FALSE]
     ## error is shown where detected, NA when not detected
@@ -91,8 +92,9 @@ function(
   }
   x$xy <- xy
   x$tau <- tau
+  #x$dist_fun <- dist_fun
   x$repel <- repel
-  x$vocal_only <- vocal_only
+  x$event_type <- event_type
   x$call <- match.call()
   class(x) <- c("bsims", "bsims_detections")
   x

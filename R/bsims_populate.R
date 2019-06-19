@@ -36,6 +36,8 @@ function(
   d$s <- factor(c("H", "E", "R", "E", "H")[d$s], c("H", "E", "R"))
   d <- d[,c("i", "s", "x", "y")]
   x$nests <- d
+  #x$abund_fun <- abund_fun
+  #x$xy_fun <- xy_fun
   x$abundance <- N
   x$lambda <- lambda
   x$area <- A
