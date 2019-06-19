@@ -9,7 +9,7 @@
 ## Install
 
 ```R
-devtools::install_github("psolymos/bSims")
+remotes::install_github("psolymos/bSims")
 ```
 
 ## Example
