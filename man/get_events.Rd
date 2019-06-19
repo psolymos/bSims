@@ -9,7 +9,7 @@ Access events or detections from simulation object.
 }
 \usage{
 get_events(x, vocal_only = TRUE, tlim = NULL)
-get_detections(x, first_only = TRUE)
+get_detections(x, first_only = TRUE, tlim = NULL)
 }
 \arguments{
   \item{x}{

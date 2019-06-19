@@ -1,5 +1,5 @@
 get_detections <-
-function(x, first_only=TRUE) {
+function(x, first_only=TRUE, tlim=NULL) {
   if (sum(x$abundance) == 0)
     return(data.frame(
       x=numeric(0),
@@ -7,12 +7,16 @@ function(x, first_only=TRUE) {
       t=numeric(0),
       v=numeric(0),
       d=numeric(0),
-      i=numeric(0)
+      i=numeric(0),
+      a=numeric(0)
     ))
+  if (is.null(tlim))
+    tlim <- c(0, x$duration)
+  tlim <- pmin(pmax(0, tlim), x$duration)
   z <- lapply(1:length(x$events), function(i) {
     zz <- x$events[[i]]
     zz$i <- rep(i, nrow(zz))
-    zz <- zz[!is.na(zz$d),,drop=FALSE]
+    zz <- zz[!is.na(zz$d),,drop=FALSE] # keep detections
     zz
   })
   z <- do.call(rbind, z)
@@ -22,6 +26,7 @@ function(x, first_only=TRUE) {
   rownames(z) <- NULL
   z$x <- x$nests$x[z$i] + z$x
   z$y <- x$nests$y[z$i] + z$y
+  z <- z[z$t %[]% tlim,,drop=FALSE]
   ## angle in degrees counter clockwise from x axis right
   z$a <- 180 * atan2(z$x, z$y) / pi
   z$a[z$a < 0] <- 360+z$a[z$a < 0]
