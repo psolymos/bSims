@@ -605,9 +605,9 @@ curve(f(x)/tot, 0,10,add=TRUE)
 library(bSims)
 library(detect)
 
-phi <- 0.4
-tau <- 0.8
-Den <- 5
+phi <- 0.2
+tau <- 0.5
+Den <- 0.1
 
 tint <- c(1, 2, 3)
 rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
@@ -638,10 +638,12 @@ sim_fun <- function(type=c("pq", "p", "q")) {
   tr$rem
 }
 
-B <- 20
+B <- 200
 res <- pbapply::pbreplicate(B, sim_fun("p"), simplify=FALSE)
 res <- pbapply::pbreplicate(B, sim_fun("q"), simplify=FALSE)
 res <- pbapply::pbreplicate(B, sim_fun("pq"), simplify=FALSE)
+
+table(sapply(res, sum))
 
 ## need one excluding unlimited bin
 Ddur <- matrix(tint, B, length(tint), byrow=TRUE)
@@ -695,18 +697,27 @@ xx <- bsims_detect(b, tau=2)
 (vv <- colSums(bsims_transcribe(xx, tint=tint, rint=rint)$removal))
 exp(cmulti.fit(matrix(vv, 1), matrix(tint, 1), type="rem")$coef)
 
+aa <- get_detections(xx, first_only=FALSE, drop0=FALSE)
+aa <- aa[!duplicated(aa$i),]
+aa <- aa[!is.na(aa$d),]
+#summary(aa)
+i <- cut(aa$t, c(0, tint), include.lowest=TRUE, labels=FALSE)
+table(i)
+exp(cmulti.fit(matrix(table(i), 1), matrix(tint, 1), type="rem")$coef)
+
 str(get_detections(x))
 str(get_detections(xx))
 plot(ecdf(get_detections(x)$t))
 lines(ecdf(get_detections(xx)$t), col=2)
+lines(ecdf(aa$t), col=3)
 
 op <- par(mfrow=c(2,2))
-plot(get_detections(x)$d, get_detections(x)$t)
-plot(get_detections(xx)$d, get_detections(xx)$t)
 image(kde2d(get_detections(x)$d, get_detections(x)$t))
 contour(kde2d(get_detections(x)$d, get_detections(x)$t), add=TRUE)
 image(kde2d(get_detections(xx)$d, get_detections(xx)$t))
 contour(kde2d(get_detections(xx)$d, get_detections(xx)$t), add=TRUE)
+image(kde2d(aa$d, aa$t))
+contour(kde2d(aa$d, aa$t), add=TRUE)
 par(op)
 
 e <- get_events(b)
