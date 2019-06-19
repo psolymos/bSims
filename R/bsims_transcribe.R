@@ -23,8 +23,7 @@ function(
   rint <- sort(rint)
   if (any(rint <= 0))
     stop("rint must be > 0")
-  detall <- get_detections(x, first_only=FALSE)
-  detall <- detall[detall$d <= max(rint),,drop=FALSE]
+  detall <- get_detections(x, first_only=FALSE) # need all
   if (error < 0)
     stop("error must be >= 0")
   derr <- if (error > 0)
@@ -37,6 +36,12 @@ function(
     include.lowest=TRUE)], rLAB)
   detall$tint <- factor(tLAB[cut(detall$t, c(0, tint), labels=FALSE,
     include.lowest=TRUE)], tLAB)
+  ## truncate distances based on percieved distance:
+  ## it is when $rint is NA
+  ## (but detection probability still depends on actual distance)
+  detall <- detall[!is.na(detall$rint),,drop=FALSE]
+  ## exclude out of duration (NA) $tint values
+  detall <- detall[!is.na(detall$tint),,drop=FALSE]
 
   ## count 1st detections over whole duration
   det <- detall
