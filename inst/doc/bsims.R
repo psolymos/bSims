@@ -601,5 +601,125 @@ hist(dt$d[dt$d < rmax], freq=FALSE)
 #hist(dt$d, freq=FALSE)
 curve(f(x)/tot, 0,10,add=TRUE)
 
+## -------
+library(bSims)
+library(detect)
 
+phi <- 0.4
+tau <- 0.8
+Den <- 5
+
+tint <- c(1, 2, 3)
+rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
+
+tint <- c(3, 5, 10)
+rint <- c(0.5, 1, Inf) # unlimited
+
+sim_fun <- function(type=c("pq", "p", "q")) {
+  l <- bsims_init()
+  a <- bsims_populate(l, density=Den)
+  ## all
+  if (type == "pq") {
+    b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
+    d <- bsims_detect(b, tau=tau, vocal_only=TRUE)
+    tr <- bsims_transcribe(d, tint=tint, rint=rint)
+  }
+  ## skip detection
+  if (type == "p") {
+    b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
+    tr <- bsims_transcribe(b, tint=tint, rint=rint)
+  }
+  ## skip avail
+  if (type == "q") {
+    b <- bsims_animate(a, initial_location=TRUE)
+    d <- bsims_detect(b, tau=tau, vocal_only=FALSE)
+    tr <- bsims_transcribe(d, tint=tint, rint=rint)
+  }
+  tr$rem
+}
+
+B <- 20
+res <- pbapply::pbreplicate(B, sim_fun("p"), simplify=FALSE)
+res <- pbapply::pbreplicate(B, sim_fun("q"), simplify=FALSE)
+res <- pbapply::pbreplicate(B, sim_fun("pq"), simplify=FALSE)
+
+## need one excluding unlimited bin
+Ddur <- matrix(tint, B, length(tint), byrow=TRUE)
+Ydur <- t(sapply(res, function(z) colSums(z)))
+summary(Ddur)
+summary(Ydur)
+colSums(Ydur) / sum(Ydur)
+fitp <- cmulti(Ydur | Ddur ~ 1, type="rem")
+phihat <- unname(exp(coef(fitp)))
+c(true=phi, estimate=phihat)
+
+
+Ddis1 <- matrix(rint, B, length(rint), byrow=TRUE)
+Ydis1 <- t(sapply(res, function(z) rowSums(z)))
+colSums(Ydis1) / sum(Ydis1)
+fitq1 <- cmulti(Ydis1 | Ddis1 ~ 1, type="dis")
+tauhat1 <- unname(exp(fitq1$coef))
+
+Ddis2 <- matrix(rint[-length(rint)], B, length(rint)-1, byrow=TRUE)
+Ydis2 <- t(sapply(res, function(z) rowSums(z)[-length(rint)]))
+colSums(Ydis2) / sum(Ydis2)
+fitq2 <- cmulti(Ydis2 | Ddis2 ~ 1, type="dis")
+tauhat2 <- unname(exp(fitq2$coef))
+
+round(c(true=tau, unlimited=tauhat1, truncated=tauhat2), 4)
+
+
+
+(p <- 1-exp(-max(tint)*phihat))
+q1 <- 1
+(q2 <- (tauhat2^2/max(rint[-length(rint)])^2) * (1-exp(-(max(rint[-length(rint)])/tauhat2)^2)))
+(A1 <- pi * tauhat1^2)
+(A2 <- pi * max(rint[-length(rint)])^2)
+
+c(true=Den,
+  unlimited=mean(rowSums(Ydis1)) / (A1 * p * q1),
+  truncated=mean(rowSums(Ydis2)) / (A2 * p * q2))
+
+l <- bsims_init()
+a <- bsims_populate(l, density=Den)
+b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
+
+tr <- bsims_transcribe(b, tint=tint, rint=rint)
+colSums(tr$removal)
+exp(cmulti.fit(matrix(colSums(tr$removal), 1), matrix(tint, 1), type="rem")$coef)
+
+x <- bsims_detect(b, tau=Inf)
+(v <- colSums(bsims_transcribe(x, tint=tint, rint=rint)$removal))
+exp(cmulti.fit(matrix(v, 1), matrix(tint, 1), type="rem")$coef)
+xx <- bsims_detect(b, tau=2)
+(vv <- colSums(bsims_transcribe(xx, tint=tint, rint=rint)$removal))
+exp(cmulti.fit(matrix(vv, 1), matrix(tint, 1), type="rem")$coef)
+
+str(get_detections(x))
+str(get_detections(xx))
+plot(ecdf(get_detections(x)$t))
+lines(ecdf(get_detections(xx)$t), col=2)
+
+op <- par(mfrow=c(2,2))
+plot(get_detections(x)$d, get_detections(x)$t)
+plot(get_detections(xx)$d, get_detections(xx)$t)
+image(kde2d(get_detections(x)$d, get_detections(x)$t))
+contour(kde2d(get_detections(x)$d, get_detections(x)$t), add=TRUE)
+image(kde2d(get_detections(xx)$d, get_detections(xx)$t))
+contour(kde2d(get_detections(xx)$d, get_detections(xx)$t), add=TRUE)
+par(op)
+
+e <- get_events(b)
+e <- e[!duplicated(e$i),]
+table(cut(e$t, c(0, tint), include.lowest=TRUE, labels=FALSE))
+
+e$d <- sqrt(e$x^2 + e$y^2)
+e$g <- exp(-(e$r/tau)^2)
+e$d <- rbinom(nrow(e), 1, e$g)
+summary(e)
+e1 <- e[e$d > 0,]
+e1 <- e
+i <- cut(e1$t, c(0, tint), include.lowest=TRUE, labels=FALSE)
+table(i)
+exp(cmulti.fit(matrix(table(i), 1), matrix(tint, 1), type="rem")$coef)
 
