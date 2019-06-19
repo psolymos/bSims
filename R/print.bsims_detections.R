@@ -12,9 +12,14 @@ function(x, ...) {
   cat("bSims detections\n  ",
     round(x$extent/10, 1), " km x ", round(x$extent/10, 1),
     " km\n  stratification: ", her,
-    "\n  total abundance: ", sum(x$abundance),
-    "\n  ", ifelse(length(x$mixture) > 1, "mixture with ", ""),
-    "total duration: ", x$duration, "\n  detected: ", ndet,
+    "\n  total abundance: ", sum(x$abundance), "\n", sep="")
+  if (x$initial_location) {
+    cat("  no events, duration: ", x$duration, " min\n", sep="")
+  } else {
+    cat("  ", ifelse(length(x$mixture) > 1, "mixture, ", ""),
+      "duration: ", x$duration, " min\n", sep="")
+  }
+  cat("  detected: ", ndet,
     switch(x$event_type, "vocal"=" heard",
       "move"=" seen", "both"=" seen/heard"), "\n", sep="")
   invisible(x)
