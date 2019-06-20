@@ -9,6 +9,7 @@
 \alias{points.bsims_population}
 \alias{points.bsims_events}
 \alias{points.bsims_detections}
+\alias{col2hex}
 \title{
 Plot methods for populations
 }
@@ -41,7 +42,9 @@ Plotting functionalities.
   pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
   pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
   lty_move = 1, col_move = "orange", lwd_move = 1,
-  lty_det = 1, col_det = "black", lwd_det = 1, ...)
+  lty_det = 1, col_det = "black", lwd_det = 1,
+  show_tint=TRUE, show_rint=TRUE,
+  col_tint="red", col_rint="red", ...)
 
 \method{lines}{bsims_events}(x, tlim = NULL, ...)
 \method{lines}{bsims_detections}(x,
@@ -52,6 +55,8 @@ Plotting functionalities.
   event_type=c("vocal", "move", "both"), tlim = NULL, ...)
 \method{points}{bsims_detections}(x,
   event_type=c("vocal", "move", "both"), tlim=NULL, ...)
+
+col2hex(col, alpha = FALSE)
 }
 \arguments{
   \item{x}{
@@ -77,6 +82,15 @@ movement.
 }
   \item{lty_det, col_det, lwd_det}{
 detection.
+}
+  \item{alpha}{
+alpha channel for colors.
+}
+  \item{show_tint, show_rint}{
+time and distance intervals to be shown or not.
+}
+  \item{col_tint, col_rint}{
+color for time and distance intervals.
 }
   \item{\dots}{
 other graphical arguments.

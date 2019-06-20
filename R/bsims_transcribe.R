@@ -26,6 +26,9 @@ function(
   }
   condition <- match.arg(condition)
   event_type <- match.arg(event_type)
+  ## availability overridden
+  if (x$initial_location)
+    tint <- x$duration
   tint <- if (is.null(tint))
     x$duration else sort(tint)
   if (any(tint <= 0))

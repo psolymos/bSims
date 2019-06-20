@@ -49,6 +49,8 @@ function(
       "vocal"=z$v > 0,
       "move"=z$v == 0,
       "both"=rep(TRUE, nrow(z)))
+    if (x$initial_location)
+      keep <- rep(TRUE, nrow(z))
     z <- z[keep,,drop=FALSE]
     xx <- xx[keep]
     yy <- yy[keep]
