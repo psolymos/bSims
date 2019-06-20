@@ -757,3 +757,16 @@ b <- bsims_animate(a, initial_location=TRUE)
 head(dt <- get_detections(o))
 
 
+
+tau <- 2
+
+set.seed(123)
+l <- bsims_init()
+a <- bsims_populate(l, density=10)
+b <- bsims_animate(a, vocal_rate = 1, move_rate = 1, movement = 0.2)
+o <- bsims_detect(b, tau=tau, event_type = "both")
+
+nrow(get_detections(o, event_type="vocal"))
+nrow(get_detections(o, event_type="move"))
+nrow(get_detections(o, event_type="both"))
+

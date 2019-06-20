@@ -38,7 +38,6 @@ Plotting functionalities.
   lty_det = 1, col_det = "black", lwd_det = 1, ...)
 
 \method{plot}{bsims_transcript}(x,
-  event_type=c("vocal", "move", "both"), tlim = NULL,
   pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
   pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
   lty_move = 1, col_move = "orange", lwd_move = 1,
