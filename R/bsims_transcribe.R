@@ -69,6 +69,6 @@ function(
   x$condition <- condition
   x$event_type <- event_type
   x$call <- match.call()
-  class(x) <- c("bsims", "bsims_transcript", "bsims_detections")
+  class(x) <- c("bsims", "bsims_transcript")
   x
 }

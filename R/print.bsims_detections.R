@@ -8,7 +8,6 @@ function(x, ...) {
     ifelse(A[2] > 0, "E", ""),
     ifelse(A[3] > 0, "R", ""), collapse="")
 
-  # FIXME this needs to reflect probably det1 ???
   ndet <- if (sum(x$abundance) == 0)
     0 else sum(sapply(x$events, function(z) any(!is.na(z$d))))
 
