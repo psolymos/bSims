@@ -11,6 +11,7 @@
 \alias{print.bsims_events}
 \alias{print.bsims_detections}
 \alias{print.bsims_transcript}
+\alias{get_table}
 \title{
 bSims functions
 }
@@ -24,21 +25,24 @@ bsims_init(extent = 10, road = 0, edge = 0, offset = 0)
 bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
   margin = 0, maxit = 100, fail = FALSE, ...)
 
-bsims_animate(x, vocal_rate = 1, move_rate = 1, duration = 10,
+bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
   movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
   initial_location=FALSE, ...)
 
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL, repel = 0,
-  vocal_only = TRUE, ...)
+  event_type = c("vocal", "move", "both"), ...)
 
-bsims_transcribe(x, tint = NULL, rint = Inf,
-  first_only = TRUE, error = 0, ...)
+bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
+  condition=c("event1", "det1", "alldet"),
+  event_type=c("vocal", "move", "both"), ...)
 
 \method{print}{bsims_landscape}(x, ...)
 \method{print}{bsims_population}(x, ...)
 \method{print}{bsims_events}(x, ...)
 \method{print}{bsims_detections}(x, ...)
 \method{print}{bsims_transcript}(x, ...)
+
+get_table(x)
 }
 \arguments{
   \item{extent}{
@@ -102,8 +106,8 @@ distance function (1st argument is distance, second is tau).
   \item{repel}{
 radius from observer within which events are invalidated.
 }
-  \item{vocal_only}{
-should we detect visuals or just vocals.
+  \item{event_type}{
+type of events to access.
 }
   \item{tint}{
 time interval break points.
@@ -111,8 +115,11 @@ time interval break points.
   \item{rint}{
 distance interval break points.
 }
-  \item{first_only}{
-access 1st detctions only.
+  \item{condition}{
+conditioning type to define availability for each individual:
+\code{"event1"}: the 1st event;
+\code{"det1"}: the 1st detection;
+\code{"alldet"}: all detections (count same individual multiple timmes).
 }
   \item{error}{
 log scale standard deviation for distance estimation error,
@@ -137,6 +144,8 @@ preceding layers intact. Construction allows easy piping.
 \code{bsims_detect} returns a detections object.
 
 \code{bsims_transcribe} returns a transcript object.
+
+\code{get_table} returns the removal table.
 }
 \author{
 Peter Solymos
@@ -159,7 +168,6 @@ o <- bsims_detect(a, tau=tau)
 x <- bsims_transcribe(o, tint=tbr, rint=rbr)
 x
 plot(x)
-x$removal
-x$visits
+get_table(x)
 }
 \keyword{ datagen }

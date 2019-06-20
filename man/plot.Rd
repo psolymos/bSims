@@ -28,19 +28,22 @@ Plotting functionalities.
   pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
   lty_move = 1, col_move = "orange", lwd_move = 1, ...)
 
-\method{plot}{bsims_detections}(x, first_only = TRUE, tlim = NULL,
+\method{plot}{bsims_detections}(x,
+  event_type=c("vocal", "move", "both"), tlim = NULL,
   pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
   pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
   lty_move = 1, col_move = "orange", lwd_move = 1,
   lty_det = 1, col_det = "black", lwd_det = 1, ...)
 
 \method{lines}{bsims_events}(x, tlim = NULL, ...)
-\method{lines}{bsims_detections}(x, first_only = TRUE, tlim = NULL, ...)
+\method{lines}{bsims_detections}(x,
+  event_type=c("vocal", "move", "both"), tlim=NULL, ...)
 
 \method{points}{bsims_population}(x, ...)
 \method{points}{bsims_events}(x,
   event_type=c("vocal", "move", "both"), tlim = NULL, ...)
-\method{points}{bsims_detections}(x, first_only = TRUE, ...)
+\method{points}{bsims_detections}(x,
+  event_type=c("vocal", "move", "both"), tlim=NULL, ...)
 }
 \arguments{
   \item{x}{
@@ -51,9 +54,6 @@ stratum colors.
 }
   \item{event_type}{
 type of events to access.
-}
-  \item{first_only}{
-access 1st detctions only.
 }
   \item{xlim, ylim, tlim}{
 x, y, time intervals.
