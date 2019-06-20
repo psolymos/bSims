@@ -1,10 +1,8 @@
-# bSims
+# bSims <img src="bsims.gif" align="right" style="padding-left:10px;background-color:white;" />
 > Bird Point Count Simulator
 
 [![Linux build status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
 [![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
-
-![](bsims.gif)
 
 ## Install
 
