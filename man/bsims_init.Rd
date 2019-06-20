@@ -161,12 +161,12 @@ tau <- 1:3
 dur <- 10
 rbr <- c(0.5, 1, 1.5, Inf)
 tbr <- c(3, 5, 10)
-l <- bsims_init(10, 0.5, 1)
-p <- bsims_populate(l, 1)
-a <- bsims_animate(p, vocal_rate=phi, duration=dur)
-o <- bsims_detect(a, tau=tau)
-x <- bsims_transcribe(o, tint=tbr, rint=rbr)
-x
+(l <- bsims_init(10, 0.5, 1))
+(p <- bsims_populate(l, 1))
+(a <- bsims_animate(p, vocal_rate=phi, duration=dur))
+(o <- bsims_detect(a, tau=tau))
+(x <- bsims_transcribe(o, tint=tbr, rint=rbr))
+
 plot(x)
 get_table(x)
 
