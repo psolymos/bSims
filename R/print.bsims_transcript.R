@@ -22,8 +22,9 @@ function(x, ...) {
   cat("  detected: ", ndet,
     switch(x$event_type, "vocal"=" heard",
       "move"=" seen", "both"=" seen/heard"), "\n", sep="")
-  cat("  ", ifelse(x$first_only, "1st", "all"),
-    " inds.\n    [", paste0(gsub("min", "", levels(x$det$tint)), collapse=", "),
+  cat("  ", switch(x$condition, "event1"="1st event detected",
+    "det1"="1st detection", "alldet"="all detections"),
+    " by bins:\n    [", paste0(gsub("min", "", levels(x$det$tint)), collapse=", "),
     " min]\n    [", paste0(gsub("m", "", levels(x$det$rint)), collapse=", "), " m]\n", sep="")
   invisible(x)
 }
