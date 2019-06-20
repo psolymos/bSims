@@ -102,5 +102,9 @@ Peter Solymos
 \seealso{
 \code{\link{bsims_init}}
 }
+\examples{
+col2hex(c(blu = "royalblue", reddish = "tomato"), FALSE)
+col2hex(c(blu = "royalblue", reddish = "tomato"), TRUE)
+}
 \keyword{ hplot }
 \keyword{ aplot }

@@ -169,5 +169,8 @@ x <- bsims_transcribe(o, tint=tbr, rint=rbr)
 x
 plot(x)
 get_table(x)
+
+head(get_events(a))
+head(get_detections(o))
 }
 \keyword{ datagen }
