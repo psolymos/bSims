@@ -605,9 +605,9 @@ curve(f(x)/tot, 0,10,add=TRUE)
 library(bSims)
 library(detect)
 
-phi <- 0.2
-tau <- 0.5
-Den <- 0.1
+phi <- 0.5
+tau <- 1
+Den <- 10
 
 tint <- c(1, 2, 3)
 rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
@@ -620,25 +620,22 @@ sim_fun <- function(type=c("pq", "p", "q")) {
   a <- bsims_populate(l, density=Den)
   ## all
   if (type == "pq") {
-    b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
-    d <- bsims_detect(b, tau=tau, vocal_only=TRUE)
-    tr <- bsims_transcribe(d, tint=tint, rint=rint)
+    b <- bsims_animate(a, vocal_rate=phi)
+    x <- bsims_detect(b, tau=tau)
   }
   ## skip detection
   if (type == "p") {
-    b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
-    tr <- bsims_transcribe(b, tint=tint, rint=rint)
+    x <- bsims_animate(a, vocal_rate=phi)
   }
   ## skip avail
   if (type == "q") {
     b <- bsims_animate(a, initial_location=TRUE)
-    d <- bsims_detect(b, tau=tau, vocal_only=FALSE)
-    tr <- bsims_transcribe(d, tint=tint, rint=rint)
+    x <- bsims_detect(b, tau=tau)
   }
-  tr$rem
+  bsims_transcribe(x, tint=tint, rint=rint)$rem
 }
 
-B <- 200
+B <- 20
 res <- pbapply::pbreplicate(B, sim_fun("p"), simplify=FALSE)
 res <- pbapply::pbreplicate(B, sim_fun("q"), simplify=FALSE)
 res <- pbapply::pbreplicate(B, sim_fun("pq"), simplify=FALSE)
@@ -686,7 +683,17 @@ library(bSims)
 
 l <- bsims_init()
 a <- bsims_populate(l, density=Den)
-b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
+b <- bsims_animate(a, initial_location=TRUE)
+#d <- bsims_detect(b, tau=Inf)
+tr <- bsims_transcribe(b, tint=tint, rint=rint)
+tr$removal
+
+l <- bsims_init()
+a <- bsims_populate(l, density=Den)
+b <- bsims_animate(a, vocal_rate=phi)
+d <- bsims_detect(b, tau=tau)
+tr <- bsims_transcribe(d, tint=tint, rint=rint)
+tr$removal
 
 tr <- bsims_transcribe(b, tint=tint, rint=rint)
 colSums(tr$removal)
