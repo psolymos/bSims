@@ -9,6 +9,9 @@ function(
   ...)
 {
   event_type <- match.arg(event_type)
+  if (x$initial_location) {
+    event_type <- "both"
+  }
   if (!inherits(x, "bsims_events"))
     stop("x must be a bsims_events object")
   xy <- as.numeric(xy[1:2])

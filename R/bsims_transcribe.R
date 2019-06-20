@@ -27,8 +27,10 @@ function(
   condition <- match.arg(condition)
   event_type <- match.arg(event_type)
   ## availability overridden
-  if (x$initial_location)
+  if (x$initial_location) {
     tint <- x$duration
+    event_type <- "both"
+  }
   tint <- if (is.null(tint))
     x$duration else sort(tint)
   if (any(tint <= 0))

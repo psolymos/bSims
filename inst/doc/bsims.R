@@ -743,3 +743,17 @@ i <- cut(e1$t, c(0, tint), include.lowest=TRUE, labels=FALSE)
 table(i)
 exp(cmulti.fit(matrix(table(i), 1), matrix(tint, 1), type="rem")$coef)
 
+
+##--
+
+tau <- 2
+
+set.seed(123)
+l <- bsims_init()
+a <- bsims_populate(l, density=10)
+b <- bsims_animate(a, initial_location=TRUE)
+
+(o <- bsims_detect(b, tau=tau, vocal_only=FALSE))
+head(dt <- get_detections(o))
+
+

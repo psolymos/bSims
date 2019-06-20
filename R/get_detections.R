@@ -9,6 +9,14 @@ function(x,
 {
   condition <- match.arg(condition)
   event_type <- match.arg(event_type)
+
+  ## availability overridden
+  if (x$initial_location) {
+    tint <- x$duration
+    event_type <- "both"
+    tlim <- NULL
+  }
+
   ## get the events
   z <- get_events(x, event_type=event_type, tlim=tlim)
   if (nrow(z) == 0) {
