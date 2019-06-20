@@ -1,37 +1,37 @@
+## condition for being available:
+## "event1" 1st event (move or vocal)
+## "det1" 1st detection (inflates time-to-detection)
+## "alldet" count all detections (double counting)
 get_detections <-
-function(x, first_only=TRUE, tlim=NULL, drop0=TRUE) {
-  if (sum(x$abundance) == 0)
-    return(data.frame(
-      x=numeric(0),
-      y=numeric(0),
-      t=numeric(0),
-      v=numeric(0),
-      d=numeric(0),
-      i=numeric(0),
-      a=numeric(0)
-    ))
-  if (is.null(tlim))
-    tlim <- c(0, x$duration)
-  tlim <- pmin(pmax(0, tlim), x$duration)
-  z <- lapply(1:length(x$events), function(i) {
-    zz <- x$events[[i]]
-    zz$i <- rep(i, nrow(zz))
-    if (drop0)
-      zz <- zz[!is.na(zz$d),,drop=FALSE] # keep detections
-    zz
-  })
-  z <- do.call(rbind, z)
-  z <- z[order(z$t),]
-  if (first_only)
-    z <- z[!duplicated(z$i),,drop=FALSE]
-  rownames(z) <- NULL
-  z$x <- x$nests$x[z$i] + z$x
-  z$y <- x$nests$y[z$i] + z$y
-  z <- z[z$t %[]% tlim,,drop=FALSE]
+function(x,
+  condition=c("event1", "det1", "alldet"),
+  event_type=c("vocal", "move", "both"), tlim=NULL)
+{
+  condition <- match.arg(condition)
+  event_type <- match.arg(event_type)
+  ## get the events
+  z <- get_events(x, event_type=event_type, tlim=tlim)
+  if (nrow(z) == 0) {
+    z$d <- numeric(0)
+    return(z)
+  }
+  if (condition == "event1") {
+    z <- z[!duplicated(z$i) & !is.na(z$d),]
+  }
+  if (condition == "det1") {
+    z <- z[!is.na(z$d),]
+    z <- z[!duplicated(z$i),]
+  }
+  if (condition == "alldet") {
+    z <- z[!is.na(z$d),]
+  }
   ## angle in degrees counter clockwise from x axis right
-  z$a <- 180 * atan2(z$x, z$y) / pi
-  z$a[z$a < 0] <- 360+z$a[z$a < 0]
+  #z$a <- 180 * atan2(z$x, z$y) / pi
+  #z$a[z$a < 0] <- 360+z$a[z$a < 0]
   ## observer position
   attr(z, "observer") <- x$xy
+  attr(z, "condition") <- condition
+  attr(z, "event_type") <- event_type
+  attr(z, "tlim") <- tlim
   z
 }

@@ -14,7 +14,7 @@
     })
     z <- do.call(rbind, z)
     z <- z[order(z$t),]
+    rownames(z) <- NULL
   }
-  rownames(z) <- NULL
   z
 }
