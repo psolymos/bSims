@@ -13,6 +13,7 @@ function(x, event_type=c("vocal", "move", "both"), tlim=NULL) {
     "vocal"=z$v > 0,
     "move"=z$v == 0,
     "both"=rep(TRUE, nrow(z)))
+  z <- z[keep,,drop=FALSE]
   z$x <- x$nests$x[z$i] + z$x
   z$y <- x$nests$y[z$i] + z$y
   z <- z[z$t %[]% tlim,,drop=FALSE]
