@@ -87,7 +87,7 @@ function(
     }
     z$det <- rbinom(length(z$d), size=1, prob=q)
     z <- z[z$det > 0,,drop=FALSE]
-    ## error is shown where detected, NA when not detected
+    ## distance is shown where detected, NA when not detected
     x$events[[i]]$d <- z$d[match(rownames(x$events[[i]]), rownames(z))]
   }
   x$xy <- xy

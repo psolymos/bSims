@@ -682,6 +682,8 @@ c(true=Den,
   unlimited=mean(rowSums(Ydis1)) / (A1 * p * q1),
   truncated=mean(rowSums(Ydis2)) / (A2 * p * q2))
 
+library(bSims)
+
 l <- bsims_init()
 a <- bsims_populate(l, density=Den)
 b <- bsims_animate(a, vocal_rate=phi, move_rate=0)
