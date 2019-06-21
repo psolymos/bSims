@@ -4,11 +4,16 @@
 [![Linux build status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
 [![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
 
+Bird point count simulator to test statistical assumptions
+and to aid survey design.
+
 ## Install
 
 ```R
 remotes::install_github("psolymos/bSims")
 ```
+
+See what is new in the [NEWS](NEWS.md) file.
 
 ## Example
 
