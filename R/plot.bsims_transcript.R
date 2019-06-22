@@ -10,30 +10,28 @@ col_tint="red", col_rint="red",
   op <- par(xpd = TRUE)
   on.exit(par(op))
   xx <- x
-  class(xx) <- c("bsim", "bsims_detections")
+  class(xx) <- c("bsim", "bsims_events")
   plot(xx,
     tlim=c(0, max(x$tint)),
     event_type=x$event_type,
     pch_nest=pch_nest, col_nest=col_nest, cex_nest=cex_nest,
     pch_vocal=pch_vocal, col_vocal=col_vocal, cex_vocal=cex_vocal,
     lty_move=lty_move, col_move=col_move, lwd_move=lwd_move, ...)
+  lines(x, event_type=x$event_type, col=col_det, lwd=lwd_det)
   if (show_rint) {
     col_rint <- col2hex(col_rint)
     rr <- x$rint
     rr <- rr[is.finite(rr)]
-    if (length(rr) > 0) {
-      if (any(is.infinite(x$rint))) {
-        polygon(0.5*x$extent*c(-1,-1,1,1), 0.5*x$extent*c(-1,1,1,-1),
-          border=NA, col=paste0(col_rint, "33"))
-      } else {
-        .draw_ellipse(0, 0, max(rr), max(rr),
-          border=NA, col=paste0(col_rint, "33"))
-      }
-      .draw_ellipse(rep(0, length(rr)), rep(0, length(rr)), rr, rr,
-        border=col_rint)
-    } else {
+    if (any(is.infinite(x$rint))) {
       polygon(0.5*x$extent*c(-1,-1,1,1), 0.5*x$extent*c(-1,1,1,-1),
         border=NA, col=paste0(col_rint, "33"))
+    } else {
+      .draw_ellipse(0, 0, max(rr), max(rr),
+        border=NA, col=paste0(col_rint, "33"))
+    }
+    if (length(rr) > 0) {
+      .draw_ellipse(rep(0, length(rr)), rep(0, length(rr)), rr, rr,
+        border=col_rint)
     }
   }
   if (show_tint) {
