@@ -17,6 +17,7 @@ S3method(plot, bsims_transcript)
 
 S3method(lines, bsims_events)
 S3method(lines, bsims_detections)
+S3method(lines, bsims_transcript)
 
 S3method(points, bsims_events)
 S3method(points, bsims_population)

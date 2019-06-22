@@ -6,6 +6,7 @@
 \alias{plot.bsims_transcript}
 \alias{lines.bsims_detections}
 \alias{lines.bsims_events}
+\alias{lines.bsims_transcript}
 \alias{points.bsims_population}
 \alias{points.bsims_events}
 \alias{points.bsims_detections}
@@ -47,6 +48,8 @@ Plotting functionalities.
 
 \method{lines}{bsims_events}(x, tlim = NULL, ...)
 \method{lines}{bsims_detections}(x,
+  event_type=c("vocal", "move", "both"), tlim=NULL, ...)
+\method{lines}{bsims_transcript}(x,
   event_type=c("vocal", "move", "both"), tlim=NULL, ...)
 
 \method{points}{bsims_population}(x, ...)
