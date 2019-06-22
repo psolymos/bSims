@@ -1,4 +1,4 @@
-lines.bsims_detections <-
+lines.bsims_transcript <-
 function(x, event_type=c("vocal", "move", "both"), tlim=NULL, ...) {
   z <- get_detections(x,
     condition=x$conditio, event_type=event_type, tlim=tlim)
