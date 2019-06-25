@@ -30,6 +30,10 @@ function(
   if (att) {
     names(tau) <- c("H", "E", "R")
     st <- x$strata
+    if (x$edge == 0) {
+      st[2L] <- st[2L] - 10*.Machine$double.eps
+      st[5L] <- st[5L] + 10*.Machine$double.eps
+    }
     st[1L] <- -Inf
     st[6L] <- Inf
     sobs <- cut(xy[1L], st, labels=FALSE) # which stratum the observer is in
