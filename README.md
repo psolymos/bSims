@@ -15,7 +15,15 @@ remotes::install_github("psolymos/bSims")
 
 See what is new in the [NEWS](NEWS.md) file.
 
-## Example
+## Shiny apps
+
+```R
+shiny::runApp(system.file("shiny/distancefun.R", package="bSims"))
+shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
+shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
+```
+
+## Examples
 
 ```R
 library(bSims)
