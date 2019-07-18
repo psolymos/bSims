@@ -770,3 +770,24 @@ nrow(get_detections(o, event_type="vocal"))
 nrow(get_detections(o, event_type="move"))
 nrow(get_detections(o, event_type="both"))
 
+
+## roadside EDR
+l <- bsims_init(10, 0.5, 0.5)
+p <- bsims_populate(l, 3)
+a <- bsims_animate(p, movement=0)
+o <- bsims_detect(a, c(0,0), tau=1:3)
+plot(o, pch_vocal=NA)
+
+
+library(bSims)
+library(magrittr)
+
+p <- bsims_init(5) %>%
+  bsims_populate(5) %>%
+  bsims_animate(
+    move_rate=0.5,
+    movement=0.1) %>%
+  bsims_detect()
+plot(p)
+
+
