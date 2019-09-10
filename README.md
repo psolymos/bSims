@@ -4,8 +4,11 @@
 [![Linux build status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
 [![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
 
-Bird point count simulator to test statistical assumptions
-and to aid survey design.
+The goal of the package is to:
+
+- test statistical assumptions,
+- aid survey design,
+- and have fun while doing it!
 
 See the package in action in the [QPAD Book](https://peter.solymos.org/qpad-book/).
 
@@ -16,6 +19,15 @@ remotes::install_github("psolymos/bSims")
 ```
 
 See what is new in the [NEWS](NEWS.md) file.
+
+## Feedback
+
+Submit issues and feature requests through [GitHub issues](https://github.com/psolymos/bSims/issues).
+
+## License
+
+[GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
 
 ## Shiny apps
 
