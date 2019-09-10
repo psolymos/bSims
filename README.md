@@ -1,11 +1,13 @@
-# bSims <img src="bsims.gif" align="right" style="padding-left:10px;background-color:white;" />
-> Bird Point Count Simulator
+# bSims: Bird Point Count Simulator <img src="bsims.gif" align="right" style="padding-left:10px;background-color:white;" />
+> A highly scientific and utterly addictive bird point count simulator to test statistical assumptions and to aid survey design.
 
 [![Linux build status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
 [![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
 
 Bird point count simulator to test statistical assumptions
 and to aid survey design.
+
+See the package in action in the [QPAD Book](https://peter.solymos.org/qpad-book/).
 
 ## Install
 
