@@ -1,0 +1,238 @@
+---
+title: 'bSims: Bird Point Count Simulator'
+author: "Peter Solymos"
+output: pdf_document
+---
+
+## Goals of the package
+
+The `{bSims}` R package is a _highly scientific_ and _utterly addictive_ bird point count simulator.
+
+The goal of the package is to:
+
+- test statistical assumptions,
+- aid survey design,
+- and have fun while doing it!
+
+## Install
+
+```{r install,eval=FALSE}
+if (!require(remotes)) install.packages("remotes")
+if (!require(bSims)) remotes::install_github("psolymos/bSims")
+if (!require(detect)) install.packages("detect")
+```
+
+## Examples
+
+### The general idea
+
+Set up a bSims world:
+
+1. initiating the landscape,
+2. populating the landscape by individuals,
+3. breath life into the virtual birds and let them sing,
+4. put in an observer and let the observation process begin.
+
+```{r gen,fig.height=6,fig.width=6}
+library(bSims)
+
+phi <- 0.5                 # singing rate
+tau <- 1:3                 # EDR by strata
+dur <- 10                  # simulation duration
+tbr <- c(3, 5, 10)         # time intervals
+rbr <- c(0.5, 1, 1.5, Inf) # counting radii
+
+l <- bsims_init(10, 0.5, 1)# landscape
+p <- bsims_populate(l, 1)  # population
+a <- bsims_animate(p,      # events
+  vocal_rate=phi, duration=dur)
+o <- bsims_detect(a,       # detections
+  tau=tau)
+x <- bsims_transcribe(o,   # transcription
+  tint=tbr, rint=rbr)
+
+plot(x)
+get_table(x)
+head(get_events(a))
+head(get_detections(o))
+```
+
+Use functional programming constructs if you do not want to experiment with individual layers
+(i.e. do not want state changes and mutations and only care about the outcome):
+
+```{r mag,eval=FALSE}
+library(magrittr)
+
+x <- bsims_init(10, 0.5, 1) %>%
+  bsims_populate(1) %>%
+  bsims_animate(vocal_rate=phi, duration=dur) %>%
+  bsims_detect(tau=tau) %>%
+  bsims_transcribe(tint=tbr, rint=rbr)
+```
+
+### Single habitat case
+
+```{r H,fig.height=10,fig.width=10}
+phi <- 0.5
+tau <- 2
+Den <- 10
+
+set.seed(1)
+l <- bsims_init()
+a <- bsims_populate(l, density=Den)
+b <- bsims_animate(a, vocal_rate=phi)
+o <- bsims_detect(b, tau=tau)
+
+tint <- c(1, 2, 3, 4, 5)
+rint <- c(0.5, 1, 1.5, 2) # truncated at 200 m
+(tr <- bsims_transcribe(o, tint=tint, rint=rint))
+(rem <- tr$removal) # binned new individuals
+colSums(rem)
+rowSums(rem)
+plot(tr)
+```
+
+### Estimating density
+
+Estimating density with truncation
+
+```{r Dtr}
+library(detect)
+
+## singing rate
+fitp <- cmulti.fit(matrix(colSums(rem), 1), matrix(tint, 1), type="rem")
+phihat <- exp(fitp$coef)
+c(true=phi, estimate=exp(fitp$coef))
+(p <- 1-exp(-max(tint)*phihat))
+
+## EDR
+fitq <- cmulti.fit(matrix(rowSums(rem), 1), matrix(rint, 1), type="dis")
+tauhat <- exp(fitq$coef)
+c(true=tau, estimate=tauhat)
+rmax <- max(rint)
+(q <- (tauhat^2/rmax^2) * (1-exp(-(rmax/tauhat)^2)))
+
+## density
+(A <- pi * rmax^2)
+Dhat <- sum(rem) / (A * p * q)
+c(true=Den, estimate=Dhat)
+```
+
+Estimating density with unlimited distance
+
+```{r Dinf}
+rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
+
+(tr <- bsims_transcribe(o, tint=tint, rint=rint))
+(rem <- tr$removal) # binned new individuals
+colSums(rem)
+rowSums(rem)
+
+fitp <- cmulti.fit(matrix(colSums(rem), 1), matrix(tint, 1), type="rem")
+phihat <- exp(fitp$coef)
+c(true=phi, estimate=phihat)
+(p <- 1-exp(-max(tint)*phihat))
+
+fitq <- cmulti.fit(matrix(rowSums(rem), 1), matrix(rint, 1), type="dis")
+tauhat <- exp(fitq$coef)
+c(true=tau, estimate=tauhat)
+
+(Ahat <- pi * tauhat^2)
+q <- 1
+
+Dhat <- sum(rem) / (Ahat * p * q)
+c(true=Den, estimate=Dhat)
+```
+
+### Replicating landscapes
+
+We have used so far a single location.
+We also set the density unreasonably high to have enough counts for a reasonable estimate.
+We can independently replicate the simulation for multiple
+landscapes and analyze the results to give justice to bSims
+under ideal conditions:
+
+```{r Dx}
+phi <- 0.5
+tau <- 1
+Den <- 1
+
+tint <- c(3, 5, 10)
+rint <- c(0.5, 1, 1.5, Inf)
+
+sim_fun <- function() {
+  l <- bsims_init()
+  a <- bsims_populate(l, density=Den)
+  b <- bsims_animate(a, vocal_rate=phi)
+  o <- bsims_detect(b, tau=tau)
+  bsims_transcribe(o, tint=tint, rint=rint)$rem
+}
+
+B <- 200
+set.seed(123)
+res <- pbapply::pbreplicate(B, sim_fun(), simplify=FALSE)
+
+Ddur <- matrix(tint, B, length(tint), byrow=TRUE)
+Ydur1 <- t(sapply(res, function(z) colSums(z)))
+Ydur2 <- t(sapply(res, function(z) colSums(z[-nrow(z),])))
+colSums(Ydur1) / sum(Ydur1)
+colSums(Ydur2) / sum(Ydur2)
+fitp1 <- cmulti(Ydur1 | Ddur ~ 1, type="rem")
+fitp2 <- cmulti(Ydur2 | Ddur ~ 1, type="rem")
+phihat1 <- unname(exp(coef(fitp1)))
+phihat2 <- unname(exp(coef(fitp2)))
+
+Ddis1 <- matrix(rint, B, length(rint), byrow=TRUE)
+Ddis2 <- matrix(rint[-length(rint)], B, length(rint)-1, byrow=TRUE)
+Ydis1 <- t(sapply(res, function(z) rowSums(z)))
+Ydis2 <- t(sapply(res, function(z) rowSums(z)[-length(rint)]))
+colSums(Ydis1) / sum(Ydis1)
+colSums(Ydis2) / sum(Ydis2)
+fitq1 <- cmulti(Ydis1 | Ddis1 ~ 1, type="dis")
+fitq2 <- cmulti(Ydis2 | Ddis2 ~ 1, type="dis")
+tauhat1 <- unname(exp(fitq1$coef))
+tauhat2 <- unname(exp(fitq2$coef))
+
+## unlimited correction
+Apq1 <- pi * tauhat1^2 * (1-exp(-max(tint)*phihat1)) * 1
+rmax <- max(rint[is.finite(rint)])
+## truncated correction
+Apq2 <- pi * rmax^2 * 
+  (1-exp(-max(tint)*phihat2)) * 
+  (tauhat2^2/rmax^2) * (1-exp(-(rmax/tauhat2)^2))
+
+round(rbind(
+  phi=c(true=phi, unlimited=phihat1, truncated=phihat2),
+  tau=c(true=tau, unlimited=tauhat1, truncated=tauhat2),
+  D=c(Den, unlimited=mean(rowSums(Ydis1))/Apq1,
+      truncated=mean(rowSums(Ydis2))/Apq2)), 4)
+```
+
+## Shiny apps
+
+Play with detection functions:
+
+```{r shiny1,eval=FALSE}
+shiny::runApp(system.file("shiny/distancefun.R", package="bSims"))
+```
+
+Play with simulations and explore biases in a single-habitat setting (see also https://psolymos.shinyapps.io/bSimsH/):
+
+```{r shiny2,eval=FALSE}
+shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
+```
+
+Play with simulations and explore biases in a stratified habitat setting with road and edge (see also https://psolymos.shinyapps.io/bSimsHER/):
+
+```{r shiny3,eval=FALSE}
+shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
+```
+
+## Feedback
+
+Submit issues and feature requests through [GitHub issues](https://github.com/psolymos/bSims/issues).
+
+## License
+
+[GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
