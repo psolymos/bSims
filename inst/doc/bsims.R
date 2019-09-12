@@ -274,11 +274,11 @@ plot(o, tlim=c(5,10))
 plot(o, xlim=c(-3,3), ylim=c(-3,3))
 
 ## repel birds
-l <- bsims_init(4, 0.5, 0.5)
-p <- bsims_populate(l, 1)
-a <- bsims_animate(p, movement=0)
-o <- bsims_detect(a, c(0,0), repel=1)
-plot(o)
+#l <- bsims_init(4, 0.5, 0.5)
+#p <- bsims_populate(l, 1)
+#a <- bsims_animate(p, movement=0)
+#o <- bsims_detect(a, c(0,0), repel=1)
+#plot(o)
 
 ## roadside EDR
 l <- bsims_init(10, 0.5, 0.5)
@@ -533,7 +533,7 @@ x=b
 xy=c(0,0)
 tau=1
 dist_fun=NULL
-repel=0
+#repel=0
 vocal_only=FALSE
 
 

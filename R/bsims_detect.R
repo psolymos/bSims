@@ -4,7 +4,7 @@ function(
   xy=c(0,0), # observer location
   tau=1, # can be vector when HER attenuation used, compatible w/ dist_fun
   dist_fun=NULL, # takes args d and tau (single parameter)
-  repel=0, # radius within which vocalizations are invalidated
+#  repel=0, # radius within which vocalizations are invalidated
   event_type=c("vocal", "move", "both"),
   ...)
 {
@@ -47,9 +47,9 @@ function(
     yy <- yyb - xy[2L]
     z$d <- sqrt(xx^2 + yy^2) # distance from observer
     ## repel inds within repel distance (0 just for temp object z)
-    z$v[z$d < repel] <- 0
+#    z$v[z$d < repel] <- 0
     ## NA is placeholder for these vocalizations in return object
-    x$events[[i]]$v[z$d < repel] <- NA
+#    x$events[[i]]$v[z$d < repel] <- NA
     ## subset based on event type requested
     keep <- switch(event_type,
       "vocal"=z$v > 0,
@@ -101,7 +101,7 @@ function(
   x$xy <- xy
   x$tau <- tau
   #x$dist_fun <- dist_fun
-  x$repel <- repel
+#  x$repel <- repel
   x$event_type <- event_type
   x$call <- match.call()
   class(x) <- c("bsims", "bsims_detections")

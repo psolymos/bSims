@@ -119,7 +119,7 @@ ui <- navbarPage("bSims (HER)",
       sliderInput("tauH", "EDR in habitat stratum", 0, 5, 1, 0.25),
       sliderInput("tauE", "EDR in edge stratum", 0, 5, 1, 0.25),
       sliderInput("tauR", "EDR in road stratum", 0, 5, 1, 0.25),
-      sliderInput("repel", "Repel distance", 0, 2, 0, 0.1),
+#      sliderInput("repel", "Repel distance", 0, 2, 0, 0.1),
       radioButtons("event", "Event type",
         c("Vocalization"="vocal",
           "Movement"="move",
@@ -205,7 +205,7 @@ server <- function(input, output) {
       xy = c(0, 0),
       tau = c(input$tauH, input$tauE, input$tauR),
       dist_fun = NULL,
-      repel = input$repel,
+#      repel = input$repel,
       event_type = input$event)
   })
   m <- reactive({

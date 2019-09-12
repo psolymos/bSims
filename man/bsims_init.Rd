@@ -29,7 +29,7 @@ bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
   movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
   initial_location=FALSE, ...)
 
-bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL, repel = 0,
+bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
   event_type = c("vocal", "move", "both"), ...)
 
 bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
@@ -102,9 +102,6 @@ parameter of the distance function.
 }
   \item{dist_fun}{
 distance function (1st argument is distance, second is tau).
-}
-  \item{repel}{
-radius from observer within which events are invalidated.
 }
   \item{event_type}{
 type of events to access.

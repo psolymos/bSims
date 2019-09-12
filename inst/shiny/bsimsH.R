@@ -113,7 +113,7 @@ ui <- navbarPage("bSims (H)",
         c("Half Normal"="halfnormal",
           "Negative Exponential"="negexp",
           "Hazard rate"="hazrate")),
-      sliderInput("repel", "Repel distance", 0, 2, 0, 0.1),
+#      sliderInput("repel", "Repel distance", 0, 2, 0, 0.1),
       radioButtons("event", "Event type",
         c("Vocalization"="vocal",
           "Movement"="move",
@@ -194,7 +194,7 @@ server <- function(input, output) {
       xy = c(0, 0),
       tau = input$tau,
       dist_fun = dfun(),
-      repel = input$repel,
+#      repel = input$repel,
       event_type = input$event)
   })
   m <- reactive({
