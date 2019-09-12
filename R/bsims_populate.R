@@ -21,6 +21,10 @@ function(
     stop("abund_fun must return integers")
   if (any(N < 0))
     stop("abund_fun must return positive integers")
+  if (any(is.na(N)))
+    stop("abund_fun must not return NA values")
+  if (any(is.infinite(N)))
+    stop("abund_fun must not return infinite values")
   names(A) <- names(D) <- names(N) <- names(lambda) <-
     c("+H", "+E", "R", "E+", "H+")
   d <- NULL
