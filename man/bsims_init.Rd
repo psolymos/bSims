@@ -80,7 +80,7 @@ vector of length 3 with mixture=1 (corresponding to HER strata),
 or a matrix of 3 x mixture (HER + groups).
 }
   \item{movement, duration}{
-arguments passed to \code{xy_fun}, see \code{\link{events}}.
+arguments passed to \code{\link{events}}.
 }
   \item{mixture}{
 finite mixture group proportions, can be a matrix referring
