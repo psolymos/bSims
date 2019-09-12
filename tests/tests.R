@@ -19,10 +19,8 @@ for (i in help_pages) {
         "', package = 'bSims', run.dontrun = TRUE)")))
 }
 
-cat("Parsing Shiny apps:", app, "\n")
-files <- list.files(
-    system.file("shiny", package="bSims"),
-    pattern="\\.R$")
+cat("\n\n---------- Parsing Shiny apps:", "----------\n\n")
+files <- list.files(system.file("shiny", package="bSims"), pattern="\\.R$")
 for (file in files) {
     cat(" * file:", file)
     tmp <- parse(file.path(
