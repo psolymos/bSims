@@ -143,6 +143,11 @@ ui <- navbarPage("bSims (H)",
         plotOutput(outputId = "plot_est")
       )
     )
+  ),
+  tabPanel("Settings",
+    column(6,
+      verbatimTextOutput("settings")
+    )
   )
 )
 
@@ -246,6 +251,9 @@ server <- function(input, output) {
       A=A, p=p, q=q,
       D=D)
   })
+  getset <- reactive({
+    return(c("#placeholder", "\n#text"))
+  })
 
 
   output$plot_ini <- renderPlot({
@@ -298,6 +306,9 @@ server <- function(input, output) {
     barplot(c(True=input$D, Estimate=v$D),
       col=col, main=expression(D))
     par(op)
+  })
+  output$settings <- renderText({
+    getset()
   })
 }
 
