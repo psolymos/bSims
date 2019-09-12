@@ -1,5 +1,10 @@
 # bSims package version history
 
+## Version 0.1-3, 2019-09-12
+
+* Incorporated feedback.
+* Started bSims article.
+
 ## Version 0.1-2, 2019-07-02
 
 * Shiny apps added to `/inst/shiny` folder.
