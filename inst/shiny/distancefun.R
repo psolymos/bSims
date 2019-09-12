@@ -6,7 +6,8 @@ ui <- navbarPage("bSims",
     checkboxInput("hazard", "Hazard rate formulation (1-exp(...))"),
     sliderInput("tau", "tau", 0, 5, 1, 0.1),
     sliderInput("b", "b", 0, 10, 2, 0.25),
-    sliderInput("rmax", "r max", 0, 10, 2, 0.25)
+    sliderInput("rmax", "r max", 0, 10, 2, 0.25),
+    verbatimTextOutput("settings")
   )
 )
 
@@ -20,6 +21,17 @@ server <- function(input, output) {
     }
     plot(d, g(d), type="l", col=4, ylim=c(0,1),
       xlab="Distance (100 m)", ylab="P(detection)")
+  })
+  output$settings <- renderText({
+    c(
+      "dist_fun <- function(d, tau) {",
+      {if (input$hazard) {
+        paste0("\n  1-exp(-(d/tau)^-", input$b, ")", collapse="")
+      } else {
+        paste0("\n  exp(-(d/tau)^", input$b, ")", collapse="")
+      }},
+      "\n}"
+    )
   })
 }
 
