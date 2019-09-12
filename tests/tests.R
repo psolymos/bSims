@@ -18,3 +18,14 @@ for (i in help_pages) {
     eval(parse(text=paste0("example('", i,
         "', package = 'bSims', run.dontrun = TRUE)")))
 }
+
+cat("Parsing Shiny apps:", app, "\n")
+files <- list.files(
+    system.file("shiny", package="bSims"),
+    pattern="\\.R$")
+for (file in files) {
+    cat(" * file:", file)
+    tmp <- parse(file.path(
+        system.file("shiny", package="bSims"), file))
+    cat(" -- OK\n")
+}
