@@ -17,6 +17,10 @@ function(
   if (is.null(abund_fun))
     abund_fun <- function(lambda, ...) rpois(1, lambda)
   N <- sapply(lambda, abund_fun, ...)
+  if (!all(round(N) == N))
+    stop("abund_fun must return integers")
+  if (any(N < 0))
+    stop("abund_fun must return positive integers")
   names(A) <- names(D) <- names(N) <- names(lambda) <-
     c("+H", "+E", "R", "E+", "H+")
   d <- NULL
