@@ -32,7 +32,9 @@ Submit issues and feature requests through [GitHub issues](https://github.com/ps
 ## Shiny apps
 
 ```R
-shiny::runApp(system.file("shiny/distancefun.R", package="bSims"))
+shiny::runApp(system.file("shiny/distfunH.R", package="bSims"))
+shiny::runApp(system.file("shiny/distfunHER.R", package="bSims"))
+
 shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
 shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
 ```
