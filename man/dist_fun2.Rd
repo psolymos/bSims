@@ -4,7 +4,7 @@
 Half-Normal distance function with segmented attenuation
 }
 \description{
-Half-Normal distance function with segmented attenuation
+Distance function with segmented attenuation
 depending in 3 strata (habitat, edge, road)
 }
 \usage{
@@ -36,12 +36,13 @@ tau <- c(1,2,3,2,1)
 d <- seq(0, 4, 0.01)
 dist_fun <- function(d, tau) exp(-(d/tau)^2) # half normal
 #dist_fun <- function(d, tau) exp(-d/tau) # exponential
+#dist_fun <- function(d, tau) 1-exp(-(d/tau)^-2) # hazard rate
 
 b <- c(0.5, 1, 1.5, 2) # points at the HER boundaries
 
 op <- par(mfrow=c(2,1))
 plot(d, dist_fun2(d, tau[1], dist_fun), type="n",
-  ylab="P(detection", xlab="Distance", axes=FALSE)
+  ylab="P(detection)", xlab="Distance", axes=FALSE)
 axis(1)
 axis(2)
 for (i in seq_len(length(b)+1)) {
@@ -58,7 +59,7 @@ lines(d, dist_fun2(d, tau[3], dist_fun))
 lines(d, dist_fun2(d, tau, dist_fun, b), col=2, lwd=3)
 
 plot(rev(d), dist_fun2(d, tau[1], dist_fun), type="n",
-  ylab="P(detection", xlab="Distance", axes=FALSE)
+  ylab="P(detection)", xlab="Distance", axes=FALSE)
 axis(1)
 axis(2)
 for (i in seq_len(length(b)+1)) {
