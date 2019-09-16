@@ -277,7 +277,9 @@ server <- function(input, output) {
   })
   output$plot_det <- renderPlot({
     op <- par(mar=c(0,0,0,0))
-    plot(o())
+    plot(o(),
+      event_type=input$event,
+      condition=input$condition)
     par(op)
   })
   output$plot_dfun <- renderPlot({

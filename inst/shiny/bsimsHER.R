@@ -210,6 +210,7 @@ server <- function(input, output) {
       xy = c(0, 0),
       tau = c(input$tauH, input$tauE, input$tauR),
       dist_fun = NULL,
+      #dist_fun = function(d, tau) { print(c(length(d), length(tau)));exp(-d^2/tau^2)},
 #      repel = input$repel,
       event_type = input$event)
   })
