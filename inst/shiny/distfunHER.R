@@ -46,7 +46,7 @@ server <- function(input, output) {
       xlab="Distance (100 m)", ylab="P(detection)")
     axis(1)
     axis(2)
-    for (i in seq_len(length(b)+1)) {
+    for (i in seq_len(length(br)+1)) {
       x1 <- c(0, br, input$rmax)[i]
       x2 <- c(0, br, input$rmax)[i+1]
       polygon(c(0, br, input$rmax)[c(i, i, i+1, i+1)], c(0, 1, 1, 0),
