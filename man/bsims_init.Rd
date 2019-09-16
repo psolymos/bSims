@@ -34,7 +34,7 @@ bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
 
 bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
   condition=c("event1", "det1", "alldet"),
-  event_type=c("vocal", "move", "both"), ...)
+  event_type=NULL, ...)
 
 \method{print}{bsims_landscape}(x, ...)
 \method{print}{bsims_population}(x, ...)
@@ -104,7 +104,7 @@ parameter of the distance function.
 distance function (1st argument is distance, second is tau).
 }
   \item{event_type}{
-type of events to access.
+type of events to access. Infered from input object when \code{NULL}.
 }
   \item{tint}{
 time interval break points.

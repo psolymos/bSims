@@ -10,7 +10,7 @@ function(
   rint=Inf,
   error=0,
   condition=c("event1", "det1", "alldet"),
-  event_type=c("vocal", "move", "both"),
+  event_type=NULL,
   ...) {
   if (!inherits(x, "bsims_detections")) {
     if (inherits(x, "bsims_events")) {
@@ -25,6 +25,8 @@ function(
     }
   }
   condition <- match.arg(condition)
+  if (is.null(event_type))
+    event_type <- x$event_type
   event_type <- match.arg(event_type)
   ## availability overridden
   if (x$initial_location) {
