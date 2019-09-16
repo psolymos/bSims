@@ -822,3 +822,39 @@ lines(t(t(e[,c("x", "y")])+as.numeric(x$nests[i,c("x", "y")])))
 e$ti
 e
 
+
+bsims_all <- function(...) {
+  Settings <- list(...)
+  Functions <- list(
+    ini=bsims_init,
+    pop=bsims_populate,
+    ani=bsims_animate,
+    det=bsims_detect,
+    tra=bsims_transcribe)
+  Formals <- lapply(Functions, formals)
+  Formals <- lapply(Formals, function(z) z[names(z) != "..."])
+  Formals <- lapply(Formals, function(z) z[names(z) != "x"])
+
+  x <- bsims_init()
+  Call <- x$call
+  for (i in seq_len(length(Formals))) {
+    if (i == 2)
+      x <- bsims_init()
+    if (i > 1)
+      Call[["x"]] <- as.name(x)
+    for (j in names(Settings)) {
+      if (j %in% names(Formals[[i]])) {
+        Formals[[i]][[j]] <- Settings[[j]]
+        Call[[j]] <- Settings[[j]]
+      }
+    }
+    x <- eval(Call)
+    # evaluate the call
+    # update conditionally by mutating c0 here
+  }
+  Formals
+}
+
+## start from this call and update conditionally by mutating c0
+
+

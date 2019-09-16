@@ -151,7 +151,7 @@ ui <- navbarPage("bSims (HER)",
     )
   ),
   tabPanel("Settings",
-    column(6,
+    column(12,
       verbatimTextOutput("settings")
     )
   )
@@ -265,9 +265,8 @@ server <- function(input, output) {
       D=D)
   })
   getset <- reactive({
-    return(c("#placeholder", "\n#text"))
+    return(print(unique(sapply(strsplit(names(input), "-"), "[", 1))))
   })
-
 
   output$plot_ini <- renderPlot({
     op <- par(mar=c(0,0,0,0))
