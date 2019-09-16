@@ -23,8 +23,11 @@ function(
   A <- diff(x$strata) * diff(range(x$strata))
   A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
   names(A) <- c("H", "E", "R")
-  ## need for *att*enuation
-  att <- length(tau) > 1 && A["H"] < sum(A)
+  ## this is silent, but makes sense
+  if (length(tau) > 1L && A["H"] == sum(A))
+    tau <- tau[1L]
+  ## needed for *att*enuation
+  att <- length(tau) > 1L && A["H"] < sum(A)
   if (att && length(tau) != 3L)
     stop("tau length must be 3 for HER attenuation")
   if (att) {
