@@ -79,7 +79,7 @@ ui <- navbarPage("bSims (HER)",
       sliderInput("road", "Road half width", 0, EXTENT/2, 0, EXTENT/40),
       sliderInput("edge", "Edge width", 0, EXTENT/2, 0, EXTENT/40),
       sliderInput("offset",
-        "Offset for road position", 0, EXTENT, 0, EXTENT/20)
+        "Offset for road position", -EXTENT/2, EXTENT/2, 0, EXTENT/20)
     )
   ),
   tabPanel("Populate",
@@ -287,7 +287,9 @@ server <- function(input, output) {
   output$plot_det <- renderPlot({
     req(o())
     op <- par(mar=c(0,0,0,0))
-    plot(o())
+    plot(o(),
+      event_type=input$event,
+      condition=input$condition)
     par(op)
   })
   output$plot_tra <- renderPlot({
