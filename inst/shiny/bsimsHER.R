@@ -107,8 +107,8 @@ ui <- navbarPage("bSims (HER)",
       radioButtons("avoid", "Avoid",
         c("None"="none",
           "Road"="R",
-          "Edge and road"="ER"))
-
+          "Edge and road"="ER")),
+      checkboxInput("overlap", "Territory overlap allowed", TRUE)
     )
   ),
   tabPanel("Detect",
@@ -203,7 +203,8 @@ server <- function(input, output) {
       move_rate = input$phim,
       movement = input$SDm,
       mixture = 1,
-      avoid = input$avoid)
+      avoid = input$avoid,
+      allow_overlap=input$overlap)
   })
   o <- reactive({
     bsims_detect(b(),
@@ -283,6 +284,7 @@ server <- function(input, output) {
     req(b())
     op <- par(mar=c(0,0,0,0))
     plot(b())
+    plot(b()$tess, TRUE, "tess", "none")
     par(op)
   })
   output$plot_det <- renderPlot({

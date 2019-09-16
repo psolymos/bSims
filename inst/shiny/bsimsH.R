@@ -98,7 +98,8 @@ ui <- navbarPage("bSims (H)",
       sliderInput("phi2", "Vocal rate (group 2)", 0, 10, 0, 0.1),
       sliderInput("mix", "Mixture (group 1)", 0, 1, 1, 0.05),
       sliderInput("phim", "Movement rate", 0, 10, 1, 0.1),
-      sliderInput("SDm", "Movement SD", 0, 1, 0, 0.05)
+      sliderInput("SDm", "Movement SD", 0, 1, 0, 0.05),
+      checkboxInput("overlap", "Territory overlap allowed", TRUE)
     )
   ),
   tabPanel("Detect",
@@ -185,7 +186,8 @@ server <- function(input, output) {
       vocal_rate = c(input$phi1, input$phi2),
       move_rate = input$phim,
       movement = input$SDm,
-      mixture = c(input$mix, 1-input$mix))
+      mixture = c(input$mix, 1-input$mix),
+      allow_overlap=input$overlap)
   })
   dfun <- reactive({
     switch(input$dfun,
@@ -273,6 +275,7 @@ server <- function(input, output) {
   output$plot_ani <- renderPlot({
     op <- par(mar=c(0,0,0,0))
     plot(b())
+    #plot(b()$tess, TRUE, "tess", "none")
     par(op)
   })
   output$plot_det <- renderPlot({
