@@ -32,11 +32,12 @@ Plotting functionalities.
   lty_move = 1, col_move = "orange", lwd_move = 1, ...)
 
 \method{plot}{bsims_detections}(x,
-  event_type=c("vocal", "move", "both"), tlim = NULL,
+  event_type=NULL, tlim = NULL,
   pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
   pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
   lty_move = 1, col_move = "orange", lwd_move = 1,
-  lty_det = 1, col_det = "black", lwd_det = 1, ...)
+  lty_det = 1, col_det = "black", lwd_det = 1,
+  condition = "event1", ...)
 
 \method{plot}{bsims_transcript}(x,
   pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
@@ -48,7 +49,7 @@ Plotting functionalities.
 
 \method{lines}{bsims_events}(x, tlim = NULL, ...)
 \method{lines}{bsims_detections}(x,
-  event_type=c("vocal", "move", "both"), tlim=NULL, ...)
+  event_type=NULL, tlim=NULL, condition="event1", ...)
 \method{lines}{bsims_transcript}(x,
   event_type=c("vocal", "move", "both"), tlim=NULL, ...)
 
@@ -68,7 +69,7 @@ simulation object.
 stratum colors.
 }
   \item{event_type}{
-type of events to access.
+type of events to access. Value is inferred from the input object when \code{NULL}.
 }
   \item{xlim, ylim, tlim}{
 x, y, time intervals.
@@ -93,6 +94,10 @@ time and distance intervals to be shown or not.
 }
   \item{col_tint, col_rint}{
 color for time and distance intervals.
+}
+  \item{condition}{
+conditioning type to define availability for each individual,
+see \code{\link{bsims_detect}}.
 }
   \item{\dots}{
 other graphical arguments.
