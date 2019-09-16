@@ -4,6 +4,7 @@ importFrom("graphics", "lines", "par", "plot", "points", "polygon",
              "segments")
 importFrom("stats", "rbinom", "rexp", "rlnorm", "rpois", "runif")
 
+importFrom("deldir", "deldir")
 importFrom("intrval", "%)(%", "%[]%", "%][%")
 importFrom("mefa4", "Xtab")
 importFrom("MASS", "mvrnorm")

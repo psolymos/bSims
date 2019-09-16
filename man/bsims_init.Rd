@@ -27,7 +27,7 @@ bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
 
 bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
   movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
-  initial_location=FALSE, ...)
+  initial_location=FALSE, allow_overlap=TRUE, ...)
 
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
   event_type = c("vocal", "move", "both"), ...)
@@ -93,6 +93,10 @@ strata to avoid by movement.
 logical, \code{move_rate} and \code{vocal_rate} silently ignored if \code{TRUE}
 and nest ocation is provided as part of the events table,
 this reders all individuals equally available for detection.
+}
+  \item{allow_overlap}{
+logical, allows overlap between neighbor nests when movement is involved.
+If \code{FALSE}, Voronoi tessellation is used to prevent overlap.
 }
   \item{xy}{
 position of the observer.

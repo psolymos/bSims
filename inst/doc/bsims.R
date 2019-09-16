@@ -791,3 +791,34 @@ p <- bsims_init(5) %>%
 plot(p)
 
 
+## tessellation
+
+#remotes::install_github("psolymos/bSims")
+library(bSims)
+library(deldir)
+
+l <- bsims_init(2)
+set.seed(1)
+p <- bsims_populate(l, 5)
+x <- bsims_animate(p, vocal_rate=0, duration=5, move_rate=1, movement=0.1, allow_overlap=FALSE)
+
+#d <- bsims_detect(x, event_type = "move")
+#plot(d)
+
+dd <- x$tess
+u1 <- dd$dirsgs[, 1]
+v1 <- dd$dirsgs[, 2]
+u2 <- dd$dirsgs[, 3]
+v2 <- dd$dirsgs[, 4]
+
+
+plot(x)
+segments(u1, v1, u2, v2, lty=2, col="grey")
+#lines(xy)
+
+i <- 1
+e <- x$events[[i]]
+lines(t(t(e[,c("x", "y")])+as.numeric(x$nests[i,c("x", "y")])))
+e$ti
+e
+

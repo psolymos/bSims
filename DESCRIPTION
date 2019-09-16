@@ -10,6 +10,6 @@ Description: A highly scientific and utterly addictive bird point count simulato
 License: GPL-2
 LazyLoad: yes
 LazyData: true
-Depends: intrval, mefa4, MASS
+Depends: intrval, mefa4, MASS, deldir
 URL: https://github.com/psolymos/bSims
 BugReports: https://github.com/psolymos/bSims/issues

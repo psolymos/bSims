@@ -8,6 +8,7 @@ function(
   mixture=1, # finite mixture group proportions
   avoid=c("none", "R", "ER"),
   initial_location=FALSE,
+  allow_overlap=TRUE,
   ...) {
   if (!inherits(x, "bsims_population"))
     stop("x must be a bsims_population object")
@@ -87,12 +88,29 @@ function(
       avoid <- "none"
       Events[[i]] <- data.frame(x=0, y=0, t=0, v=0)
     } else {
-      Events[[i]] <- events(
+      e <- events(
         vocal_rate=vr[s[i], g[i]],
         move_rate=mr[s[i], g[i]],
         duration=duration,
         movement=movement,
         avoid=a)
+      ## add here tessellation based rules
+      if (!allow_overlap) {
+        ## identify tile id for locations
+        ti <- sapply(seq_len(nrow(e)), function(j)
+          which.tile(e$x[j]+x$nest$x[i], e$y[j]+x$nest$y[i], x$tess$tile_list))
+        ## outside locations are reevaluated
+        for (ii in which(ti != i)) {
+          tmp <- ti[ii]
+          while (tmp != i) {
+            dm <- rmvn(1, c(0, 0), diag(movement^2, 2, 2))
+            tmp <- which.tile(dm[1L]+x$nest$x[i], dm[2L]+x$nest$y[i], x$tess$tile_list)
+          }
+          e$x[ii] <- dm[1L]
+          e$y[ii] <- dm[2L]
+        }
+      }
+      Events[[i]] <- e
     }
   }
   x$vocal_rate <- vr
@@ -102,6 +120,7 @@ function(
   x$mixture <- P
   x$avoid <- avoid
   x$initial_location <- initial_location
+  x$allow_overlap <- allow_overlap
   x$events <- Events
   x$call <- match.call()
   class(x) <- c("bsims", "bsims_events")
