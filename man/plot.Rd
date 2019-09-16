@@ -51,13 +51,13 @@ Plotting functionalities.
 \method{lines}{bsims_detections}(x,
   event_type=NULL, tlim=NULL, condition="event1", ...)
 \method{lines}{bsims_transcript}(x,
-  event_type=c("vocal", "move", "both"), tlim=NULL, ...)
+  event_type=NULL, tlim=NULL, condition="event1", ...)
 
 \method{points}{bsims_population}(x, ...)
 \method{points}{bsims_events}(x,
   event_type=c("vocal", "move", "both"), tlim = NULL, ...)
 \method{points}{bsims_detections}(x,
-  event_type=c("vocal", "move", "both"), tlim=NULL, ...)
+  event_type=NULL, tlim=NULL, condition="event1", ...)
 
 col2hex(col, alpha = FALSE)
 }
