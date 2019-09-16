@@ -51,7 +51,7 @@ Plotting functionalities.
 \method{lines}{bsims_detections}(x,
   event_type=NULL, tlim=NULL, condition="event1", ...)
 \method{lines}{bsims_transcript}(x,
-  event_type=NULL, tlim=NULL, condition="event1", ...)
+  event_type=NULL, tlim=NULL, ...)
 
 \method{points}{bsims_population}(x, ...)
 \method{points}{bsims_events}(x,

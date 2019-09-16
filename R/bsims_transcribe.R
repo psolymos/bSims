@@ -27,7 +27,7 @@ function(
   condition <- match.arg(condition)
   if (is.null(event_type))
     event_type <- x$event_type
-  event_type <- match.arg(event_type)
+  event_type <- match.arg(event_type,  c("vocal", "move", "both"))
   ## availability overridden
   if (x$initial_location) {
     tint <- x$duration
