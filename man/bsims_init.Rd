@@ -12,6 +12,7 @@
 \alias{print.bsims_detections}
 \alias{print.bsims_transcript}
 \alias{get_table}
+\alias{bsims_all}
 \title{
 bSims functions
 }
@@ -35,6 +36,8 @@ bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
 bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
   condition=c("event1", "det1", "alldet"),
   event_type=NULL, ...)
+
+bsims_all(...)
 
 \method{print}{bsims_landscape}(x, ...)
 \method{print}{bsims_population}(x, ...)
@@ -127,7 +130,8 @@ log scale standard deviation for distance estimation error,
 see \code{\link{rlnorm2}}.
 }
   \item{\dots}{
-other arguments passed to underlying functions.
+other arguments passed to underlying functions. For \code{bsims_all} wrapper, it is all
+the arguments (except for \code{x}) that the underlying \code{bsims_*} functions have.
 }
 }
 \details{
@@ -144,7 +148,7 @@ preceding layers intact. Construction allows easy piping.
 
 \code{bsims_detect} returns a detections object.
 
-\code{bsims_transcribe} returns a transcript object.
+\code{bsims_transcribe} and \code{bsims_all} returns a transcript object.
 
 \code{get_table} returns the removal table.
 }
@@ -173,5 +177,8 @@ get_table(x)
 
 head(get_events(a))
 head(get_detections(o))
+
+## wrapper function for all the bsims_* layers
+bsims_all(road=1, density=0.5, tint=tbr, rint=rbr)
 }
 \keyword{ datagen }
