@@ -254,7 +254,33 @@ server <- function(input, output) {
       D=D)
   })
   getset <- reactive({
-    return(print(unique(sapply(strsplit(names(input), "-"), "[", 1))))
+    #return(print(unique(sapply(strsplit(names(input), "-"), "[", 1))))
+    #bpar condition D derr dfun event mix overlap phi1 phi2 phim rint SDm seed spfun tau tint
+    margin <- switch(input$spfun,
+      "random"=0,
+      "regular"=2,
+      "clustered"=5)
+    "tmp <- bsims_all(extent = EXTENT,
+      density = input$D,
+      xy_fun = xy_fun(),
+      margin = margin,
+      duration = DURATION,
+      vocal_rate = c(input$phi1, input$phi2),
+      move_rate = input$phim,
+      movement = input$SDm,
+      mixture = c(input$mix, 1-input$mix),
+      allow_overlap=input$overlap,
+      xy = c(0, 0),
+      tau = input$tau,
+      dist_fun = dfun(), # this needs attention
+      event_type = input$event,
+      tint = TINT[[input$tint]],
+      rint = RINT[[input$rint]],
+      error = input$derr,
+      condition = input$condition,
+      event_type = input$event
+    )
+    print(tmp)"
   })
 
   output$plot_ini <- renderPlot({

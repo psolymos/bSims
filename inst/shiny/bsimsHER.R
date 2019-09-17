@@ -266,6 +266,8 @@ server <- function(input, output) {
   })
   getset <- reactive({
     return(print(unique(sapply(strsplit(names(input), "-"), "[", 1))))
+    # avoid condition DE derr DH DR edge event offset overlap phiE phiH phim phiR rint road SDm seed spfun tauE tauH tauR tint
+
   })
 
   output$plot_ini <- renderPlot({
