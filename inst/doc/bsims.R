@@ -823,37 +823,38 @@ e$ti
 e
 
 
+library(bSims)
+Settings <- list(extent=2, road=2)
+
 bsims_all <- function(...) {
   Settings <- list(...)
   Functions <- list(
-    ini=bsims_init,
-    pop=bsims_populate,
-    ani=bsims_animate,
-    det=bsims_detect,
-    tra=bsims_transcribe)
+    bsims_init=bsims_init,
+    bsims_populate=bsims_populate,
+    bsims_animate=bsims_animate,
+    bsims_detect=bsims_detect,
+    bsims_transcribe=bsims_transcribe)
   Formals <- lapply(Functions, formals)
   Formals <- lapply(Formals, function(z) z[names(z) != "..."])
   Formals <- lapply(Formals, function(z) z[names(z) != "x"])
-
-  x <- bsims_init()
-  Call <- x$call
-  for (i in seq_len(length(Formals))) {
-    if (i == 2)
-      x <- bsims_init()
-    if (i > 1)
-      Call[["x"]] <- as.name(x)
+  for (i in seq_len(length(Functions))) {
+    Call <- if (i == 1L)
+      Functions[[i]]()$call else Functions[[i]](Last)$call
+    Call[[1L]] <- as.name(names(Functions)[i])
+    if (i > 1L)
+      Call[["x"]] <- as.name("Last")
     for (j in names(Settings)) {
       if (j %in% names(Formals[[i]])) {
         Formals[[i]][[j]] <- Settings[[j]]
         Call[[j]] <- Settings[[j]]
       }
     }
-    x <- eval(Call)
-    # evaluate the call
-    # update conditionally by mutating c0 here
+    Last <- eval(Call)
   }
-  Formals
+  Last
 }
+
+bsims_all(road=1, edge=2, density=0.5)
 
 ## start from this call and update conditionally by mutating c0
 
