@@ -10,6 +10,14 @@ The goal of the package is to:
 - aid survey design,
 - and have fun while doing it!
 
+Design objectives:
+
+- small (point count) scale implementation,
+- habitat is considered homogeneous except for edge effects,
+- realistic but efficient implementation of biological mechanisms and observation process,
+- defaults chosen to reflect common practice and assumptions,
+- extensible (PRs are welcome).
+
 See the package in action in the [QPAD Book](https://peter.solymos.org/qpad-book/).
 
 ## Install
@@ -20,14 +28,16 @@ remotes::install_github("psolymos/bSims")
 
 See what is new in the [NEWS](NEWS.md) file.
 
-## Feedback
-
-Submit issues and feature requests through [GitHub issues](https://github.com/psolymos/bSims/issues).
-
 ## License
 
 [GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
+## Contributing
+
+Feedback and contributions are welcome:
+
+- submit feature request or report issues [here](https://github.com/psolymos/bSims/issues),
+- fork the project and submit pull request, see [CoC](CODE_OF_CONDUCT.md).
 
 ## Shiny apps
 
