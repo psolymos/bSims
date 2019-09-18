@@ -39,23 +39,9 @@ Feedback and contributions are welcome:
 - submit feature request or report issues [here](https://github.com/psolymos/bSims/issues),
 - fork the project and submit pull request, see [CoC](CODE_OF_CONDUCT.md).
 
-## Shiny apps
-
-A few [Shiny](https://shiny.rstudio.com/) apps come with the package.
-These can be used to interactively explore the effects of different settings.
-
-```R
-shiny::runApp(system.file("shiny/distfunH.R", package="bSims"))
-shiny::runApp(system.file("shiny/distfunHER.R", package="bSims"))
-
-shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
-shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
-```
-
-Settings can be copied from the app to be replicated as `replicate(10, bsims_all(...), simplify=FALSE)`, 
-where `...` are the settings ejected by the shiny apps.
-
 ## Examples
+
+### Command line
 
 ```R
 library(bSims)
@@ -108,3 +94,36 @@ head(get_detections(o))
 ## 52  0.2042901 -0.2897062 1.6134511 1 0.3544914 39
 ## 57 -1.8040735  0.1768196 1.7666779 1 1.8127180 18
 ```
+
+### Shiny apps
+
+A few [Shiny](https://shiny.rstudio.com/) apps come with the package.
+These can be used to interactively explore the effects of different settings.
+
+Compare distance functions:
+
+```R
+shiny::runApp(system.file("shiny/distfunH.R", package="bSims"))
+shiny::runApp(system.file("shiny/distfunHER.R", package="bSims"))
+```
+
+Compare simulation settings for single landscape:
+
+```R
+shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
+shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
+```
+
+### Replicating simulations
+
+Interactive sessions can be used to explore different settings.
+Settings can be copied from the Shiny apps and replicated using the
+`bsims_all` function: 
+
+```R
+b <- bsims_all(extent=5, road=1, density=c(1,1,0))
+b$settings()      # retrieve settings
+b$new()           # replicate once
+b$replicate(10)   # replicate 10x
+```
+

@@ -131,7 +131,7 @@ see \code{\link{rlnorm2}}.
 }
   \item{\dots}{
 other arguments passed to underlying functions. For \code{bsims_all} wrapper, it is all
-the arguments (except for \code{x}) that the underlying \code{bsims_*} functions have.
+the arguments (except for \code{x}) that the underlying \code{bsims_*} functions have. \code{bsims_all} can also take a single list as argument.
 }
 }
 \details{
@@ -148,9 +148,16 @@ preceding layers intact. Construction allows easy piping.
 
 \code{bsims_detect} returns a detections object.
 
-\code{bsims_transcribe} and \code{bsims_all} returns a transcript object.
+\code{bsims_transcribe} returns a transcript object.
 
 \code{get_table} returns the removal table.
+
+\code{bsims_all} returns a closure with
+\code{$settings()}, \code{$new()}, and \code{$replicate(B)}
+functions. The settings function returns the input arguments as a list,
+the new function returns a single transcript object,
+the replicate function takes an argument for the
+number of replicates and returns a list of transcript objects.
 }
 \author{
 Peter Solymos
@@ -179,6 +186,13 @@ head(get_events(a))
 head(get_detections(o))
 
 ## wrapper function for all the bsims_* layers
-bsims_all(road=1, density=0.5, tint=tbr, rint=rbr)
+b <- bsims_all(road=1, density=0.5, tint=tbr, rint=rbr)
+## alternatively: supply a list
+#settings <- list(road=1, density=0.5, tint=tbr, rint=rbr)
+#b <- bsims_all(settings)
+b$settings()
+b$new()
+bb <- b$replicate(3)
+lapply(bb, get_table)
 }
 \keyword{ datagen }
