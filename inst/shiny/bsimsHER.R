@@ -165,9 +165,9 @@ server <- function(input, output) {
   l <- reactive({
     set.seed(rv$seed)
     bsims_init(extent = EXTENT,
-      road=input$road,
-      edge=input$edge,
-      offset=input$offset)
+      road = input$road,
+      edge = input$edge,
+      offset = input$offset)
   })
   xy_fun <- reactive({
     switch(input$spfun,
@@ -204,7 +204,7 @@ server <- function(input, output) {
       movement = input$SDm,
       mixture = 1,
       avoid = input$avoid,
-      allow_overlap=input$overlap)
+      allow_overlap = input$overlap)
   })
   o <- reactive({
     bsims_detect(b(),
@@ -265,9 +265,36 @@ server <- function(input, output) {
       D=D)
   })
   getset <- reactive({
-    return(print(unique(sapply(strsplit(names(input), "-"), "[", 1))))
-    # avoid condition DE derr DH DR edge event offset overlap phiE phiH phim phiR rint road SDm seed spfun tauE tauH tauR tint
-
+    xc <- function(x) paste0("c(", paste0(x, collapse=", "), ")")
+    xq <- function(x) paste0("'", x, "'", collapse="")
+    margin <- switch(input$spfun,
+      "random"=0,
+      "regular"=2,
+      "clustered"=5)
+    paste0("bsims_all(",
+    "\n  extent = ", EXTENT,
+    ",\n  road = ", input$road,
+    ",\n  edge = ", input$edge,
+    ",\n  offset = ", input$offset,
+    ",\n  density = ", xc(c(input$DH, input$DE, input$DR)),
+    ",\n  xy_fun = ", paste0(deparse(xy_fun()), collapse=''),
+    ",\n  margin = ", margin,
+    ",\n  duration = ", DURATION,
+    ",\n  vocal_rate = ", xc(c(input$phiH, input$phiE, input$phiR)),
+    ",\n  move_rate = ", input$phim,
+    ",\n  movement = ", input$SDm,
+    ",\n  mixture = 1",
+    ",\n  allow_overlap = ", input$overlap,
+    ",\n  tau = ", xc(c(input$tauH, input$tauE, input$tauR)),
+#    ",\n  dist_fun = NULL",
+    ",\n  xy = c(0, 0)",
+    ",\n  event_type = ", xq(input$event),
+    ",\n  tint = ", xc(TINT[[input$tint]]),
+    ",\n  rint = ", xc(RINT[[input$rint]]),
+    ",\n  error = ", input$derr,
+    ",\n  condition = ", xq(input$condition),
+    ",\n  event_type = ", xq(input$event),
+    ")", collapse="")
   })
 
   output$plot_ini <- renderPlot({

@@ -187,7 +187,7 @@ server <- function(input, output) {
       move_rate = input$phim,
       movement = input$SDm,
       mixture = c(input$mix, 1-input$mix),
-      allow_overlap=input$overlap)
+      allow_overlap = input$overlap)
   })
   dfun <- reactive({
     switch(input$dfun,
@@ -254,33 +254,33 @@ server <- function(input, output) {
       D=D)
   })
   getset <- reactive({
-    #return(print(unique(sapply(strsplit(names(input), "-"), "[", 1))))
-    #bpar condition D derr dfun event mix overlap phi1 phi2 phim rint SDm seed spfun tau tint
+    xc <- function(x) paste0("c(", paste0(x, collapse=", "), ")")
+    xq <- function(x) paste0("'", x, "'", collapse="")
     margin <- switch(input$spfun,
       "random"=0,
       "regular"=2,
       "clustered"=5)
-    "tmp <- bsims_all(extent = EXTENT,
-      density = input$D,
-      xy_fun = xy_fun(),
-      margin = margin,
-      duration = DURATION,
-      vocal_rate = c(input$phi1, input$phi2),
-      move_rate = input$phim,
-      movement = input$SDm,
-      mixture = c(input$mix, 1-input$mix),
-      allow_overlap=input$overlap,
-      xy = c(0, 0),
-      tau = input$tau,
-      dist_fun = dfun(), # this needs attention
-      event_type = input$event,
-      tint = TINT[[input$tint]],
-      rint = RINT[[input$rint]],
-      error = input$derr,
-      condition = input$condition,
-      event_type = input$event
-    )
-    print(tmp)"
+    paste0("bsims_all(",
+    "\n  extent = ", EXTENT,
+    ",\n  density = ", input$D,
+    ",\n  xy_fun = ", paste0(deparse(xy_fun()), collapse=''),
+    ",\n  margin = ", margin,
+    ",\n  duration = ", DURATION,
+    ",\n  vocal_rate = ", xc(c(input$phi1, input$phi2)),
+    ",\n  move_rate = ", input$phim,
+    ",\n  movement = ", input$SDm,
+    ",\n  mixture = ", xc(c(input$mix, 1-input$mix)),
+    ",\n  allow_overlap = ", input$overlap,
+    ",\n  tau = ", input$tau,
+    ",\n  dist_fun = ", paste0(deparse(dfun()), collapse=''),
+    ",\n  xy = c(0, 0)",
+    ",\n  event_type = ", xq(input$event),
+    ",\n  tint = ", xc(TINT[[input$tint]]),
+    ",\n  rint = ", xc(RINT[[input$rint]]),
+    ",\n  error = ", input$derr,
+    ",\n  condition = ", xq(input$condition),
+    ",\n  event_type = ", xq(input$event),
+    ")", collapse="")
   })
 
   output$plot_ini <- renderPlot({
