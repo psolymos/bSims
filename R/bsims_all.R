@@ -1,4 +1,4 @@
-## wrapper
+## wrapper (currently: NULL argument cannot be passed)
 bsims_all <- function(...) {
   Settings <- list(...)
   Functions <- list(
@@ -19,6 +19,8 @@ bsims_all <- function(...) {
     for (j in names(Settings)) {
       if (j %in% names(Formals[[i]])) {
         Formals[[i]][[j]] <- Settings[[j]]
+        if (is.null(Settings[[j]]))
+          stop(sprintf("argument '%s' was found to be NULL", j))
         Call[[j]] <- Settings[[j]]
       }
     }
