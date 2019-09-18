@@ -183,7 +183,11 @@ plot(x)
 get_table(x)
 
 head(get_events(a))
+plot(get_events(a))
+
 head(get_detections(o))
+plot(get_detections(o), "time")
+plot(get_detections(o), "distance")
 
 ## wrapper function for all the bsims_* layers
 b <- bsims_all(road=1, density=0.5, tint=tbr, rint=rbr)

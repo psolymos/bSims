@@ -19,6 +19,7 @@ function(x, event_type=c("vocal", "move", "both"), tlim=NULL) {
   z <- z[z$t %[)% tlim,,drop=FALSE]
   attr(z, "event_type") <- event_type
   attr(z, "tlim") <- tlim
+  attr(z, "n") <- length(x$events)
   class(z) <- c("bsims_events_table", "data.frame")
   z
 }

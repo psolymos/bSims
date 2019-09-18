@@ -41,7 +41,7 @@ function(x,
   attr(z, "condition") <- condition
   attr(z, "event_type") <- event_type
   attr(z, "tlim") <- tlim
-  class(z) <- c("bsims_detections_table",
-    "bsims_events_table", "data.frame")
+  attr(z, "n") <- length(x$events)
+  class(z) <- c("bsims_detections_table", "data.frame")
   z
 }

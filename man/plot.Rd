@@ -11,6 +11,8 @@
 \alias{points.bsims_events}
 \alias{points.bsims_detections}
 \alias{col2hex}
+\alias{plot.bsims_events_table}
+\alias{plot.bsims_detections_table}
 \title{
 Plot methods for populations
 }
@@ -61,7 +63,10 @@ Plotting functionalities.
 
 col2hex(col, alpha = FALSE)
 
-\method{plot}{bsims_events_table}(x, ...)
+\method{plot}{bsims_events_table}(x,
+  xlab, ylab, xlim, ylim, ...)
+\method{plot}{bsims_detections_table}(x,
+  type=c("time", "distance"), xlab, ylab, xlim, ylim, ...)
 }
 \arguments{
   \item{x}{
@@ -75,6 +80,9 @@ type of events to access. Value is inferred from the input object when \code{NUL
 }
   \item{xlim, ylim, tlim}{
 x, y, time intervals.
+}
+  \item{xlab, ylab}{
+x and y labels.
 }
   \item{pch_nest, col_nest, cex_nest}{
 nest.
@@ -100,6 +108,9 @@ color for time and distance intervals.
   \item{condition}{
 conditioning type to define availability for each individual,
 see \code{\link{bsims_detect}}.
+}
+  \item{type}{
+what to put on the x axis: time or distance.
 }
   \item{\dots}{
 other graphical arguments.
