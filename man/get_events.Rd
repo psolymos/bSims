@@ -27,7 +27,7 @@ conditioning type to define availability for each individual:
 \code{"alldet"}: all detections (count same individual multiple timmes).
 }
   \item{tlim}{
-time intervals.
+time intervals treated as [\code{min(tlim)}, \code{max(tlim)}).
 }
 }
 \value{
