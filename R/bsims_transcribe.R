@@ -11,6 +11,7 @@ function(
   error=0,
   condition=c("event1", "det1", "alldet"),
   event_type=NULL,
+  perception=NULL,
   ...) {
   if (!inherits(x, "bsims_detections")) {
     if (inherits(x, "bsims_events")) {
@@ -27,7 +28,7 @@ function(
   condition <- match.arg(condition)
   if (is.null(event_type))
     event_type <- x$event_type
-  event_type <- match.arg(event_type,  c("vocal", "move", "both"))
+  event_type <- match.arg(event_type, c("vocal", "move", "both"))
   ## availability overridden
   if (x$initial_location) {
     tint <- x$duration
@@ -44,7 +45,9 @@ function(
     stop("rint must be > 0")
   ## let get_detections take care of subsetting
   detall <- get_detections(x,
-    condition=condition, event_type=event_type)
+    condition=condition,
+    event_type=event_type,
+    perception=perception)
   ## add distance estimation error
   if (error < 0)
     stop("error must be >= 0")
@@ -75,6 +78,7 @@ function(
   x$error <- error
   x$condition <- condition
   x$event_type <- event_type
+  x$perception <- perception
   x$call <- match.call()
   class(x) <- c("bsims", "bsims_transcript")
   x

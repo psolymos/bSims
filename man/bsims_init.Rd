@@ -35,7 +35,7 @@ bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
 
 bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
   condition=c("event1", "det1", "alldet"),
-  event_type=NULL, ...)
+  event_type=NULL, perception=NULL, ...)
 
 bsims_all(...)
 
@@ -128,6 +128,11 @@ conditioning type to define availability for each individual:
   \item{error}{
 log scale standard deviation for distance estimation error,
 see \code{\link{rlnorm2}}.
+}
+  \item{perception}{
+perceived number of individuals relative to the actual number of individuals
+(a non-negative number, <1 values lead to under counting, >1 values lead to over counting),
+or \code{NULL} (observer correctly identifies all individuals).
 }
   \item{\dots}{
 other arguments passed to underlying functions. For \code{bsims_all} wrapper, it is all

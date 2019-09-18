@@ -5,7 +5,9 @@
 get_detections <-
 function(x,
   condition=c("event1", "det1", "alldet"),
-  event_type=c("vocal", "move", "both"), tlim=NULL)
+  event_type=c("vocal", "move", "both"),
+  tlim=NULL,
+  perception=NULL)
 {
   condition <- match.arg(condition)
   event_type <- match.arg(event_type)
@@ -21,14 +23,29 @@ function(x,
   z <- get_events(x, event_type=event_type, tlim=tlim)
   if (nrow(z) == 0) {
     z$d <- numeric(0)
+    z$j <- z$i # percieved individual id
     return(z)
   }
+  ## deal with under/over counting using hclust
+  if (!is.null(perception)) {
+    if (!is.numeric(perception))
+      stop("perception must be numeric")
+    if (perception < 0)
+      stop("perception must be >= 0")
+    detall <- get_detections(x, condition="alldet")
+    hc <- hclust(dist(cbind(detall$x, detall$y)))
+    h <- length(unique(detall$i)) * perception
+    detall$j <- ct <- cutree(hc, k=min(nrow(detall), max(1, round(h))))
+  } else {
+    detall$j <- detall$i
+  }
+
   if (condition == "event1") {
-    z <- z[!duplicated(z$i) & !is.na(z$d),]
+    z <- z[!duplicated(z$j) & !is.na(z$d),]
   }
   if (condition == "det1") {
     z <- z[!is.na(z$d),]
-    z <- z[!duplicated(z$i),]
+    z <- z[!duplicated(z$j),]
   }
   if (condition == "alldet") {
     z <- z[!is.na(z$d),]

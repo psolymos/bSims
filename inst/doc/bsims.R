@@ -859,3 +859,28 @@ bsims_all(road=1, edge=2, density=0.5)
 ## start from this call and update conditionally by mutating c0
 
 
+## use hclust
+
+library(bSims)
+
+set.seed(1)
+s <- list(
+  movement=0.1,
+  move_rate=2,
+  tau=2
+)
+x <- bsims_all(s)$new()
+
+d <- get_detections(x, condition="alldet")
+
+(N <- length(unique(d$i)))
+hc <- hclust(dist(cbind(d$x, d$y)))
+
+h <- 2
+ct <- cutree(hc, k=min(nrow(d), max(1, round(N*h))))
+
+plot(y ~ x, e, pch=3, cex=0.6, col="grey")
+points(0,0,pch=3, cex=2, col=2)
+plot(x$tess, add=TRUE, "tess", "none", col="grey")
+points(y ~ x, d, pch=19, col=ct)
+

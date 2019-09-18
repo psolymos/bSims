@@ -11,7 +11,8 @@ Access events or detections from simulation object.
 get_events(x, event_type=c("vocal", "move", "both"), tlim = NULL)
 
 get_detections(x, condition = c("event1", "det1", "alldet"),
-  event_type = c("vocal", "move", "both"), tlim = NULL)
+  event_type = c("vocal", "move", "both"), tlim = NULL,
+  perception = NULL)
 }
 \arguments{
   \item{x}{
@@ -28,6 +29,11 @@ conditioning type to define availability for each individual:
 }
   \item{tlim}{
 time intervals treated as [\code{min(tlim)}, \code{max(tlim)}).
+}
+  \item{perception}{
+perceived number of individuals relative to the actual number of individuals
+(a non-negative number, <1 values lead to under counting, >1 values lead to over counting),
+or \code{NULL} (observer correctly identifies all individuals).
 }
 }
 \value{
