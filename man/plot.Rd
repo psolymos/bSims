@@ -60,6 +60,8 @@ Plotting functionalities.
   event_type=NULL, tlim=NULL, condition="event1", ...)
 
 col2hex(col, alpha = FALSE)
+
+\method{plot}{bsims_events_table}(x, ...)
 }
 \arguments{
   \item{x}{
