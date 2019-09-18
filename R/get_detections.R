@@ -32,12 +32,12 @@ function(x,
       stop("perception must be numeric")
     if (perception < 0)
       stop("perception must be >= 0")
-    detall <- get_detections(x, condition="alldet")
-    hc <- hclust(dist(cbind(detall$x, detall$y)))
-    h <- length(unique(detall$i)) * perception
-    detall$j <- ct <- cutree(hc, k=min(nrow(detall), max(1, round(h))))
+    z <- get_detections(x, condition="alldet")
+    hc <- hclust(dist(cbind(z$x, z$y)))
+    h <- length(unique(z$i)) * perception
+    z$j <- ct <- cutree(hc, k=min(nrow(z), max(1, round(h))))
   } else {
-    detall$j <- detall$i
+    z$j <- z$i
   }
 
   if (condition == "event1") {
@@ -58,6 +58,7 @@ function(x,
   attr(z, "condition") <- condition
   attr(z, "event_type") <- event_type
   attr(z, "tlim") <- tlim
+  attr(z, "perception") <- perception
   attr(z, "n") <- length(x$events)
   class(z) <- c("bsims_detections_table", "data.frame")
   z

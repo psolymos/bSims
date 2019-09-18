@@ -2,7 +2,8 @@ exportPattern("^[[:alpha:]]+")
 
 importFrom("graphics", "lines", "par", "plot", "points", "polygon",
              "segments")
-importFrom("stats", "rbinom", "rexp", "rlnorm", "rpois", "runif")
+importFrom("stats", "rbinom", "rexp", "rlnorm", "rpois", "runif",
+  "cutree", "dist", "hclust")
 
 importFrom("deldir", "deldir", "which.tile", "tile.list")
 importFrom("intrval", "%)(%", "%[]%", "%[)%", "%][%")
