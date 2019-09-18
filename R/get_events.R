@@ -16,7 +16,7 @@ function(x, event_type=c("vocal", "move", "both"), tlim=NULL) {
   z <- z[keep,,drop=FALSE]
   z$x <- x$nests$x[z$i] + z$x
   z$y <- x$nests$y[z$i] + z$y
-  z <- z[z$t %[]% tlim,,drop=FALSE]
+  z <- z[z$t %[)% tlim,,drop=FALSE]
   attr(z, "event_type") <- event_type
   attr(z, "tlim") <- tlim
   z

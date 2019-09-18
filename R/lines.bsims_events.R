@@ -8,7 +8,7 @@ function(x, tlim=NULL, ...) {
     xy <- cbind(
       x=x$nests$x[i] + x$events[[i]]$x,
       y=x$nests$y[i] + x$events[[i]]$y)
-    xy <- xy[x$events[[i]]$t %[]% tlim,,drop=FALSE]
+    xy <- xy[x$events[[i]]$t %[)% tlim,,drop=FALSE]
     lines(xy, ...)
   }
   invisible(x)
