@@ -8,7 +8,7 @@ plot.bsims_events_table <- function(x, ...) {
     "Time" else list(...)$xlab
   xlim <- if (is.null(list(...)$xlim))
     attr(x, "tmil") else list(...)$xlim
-  plot(o ~ t, tmp, type="n", ylab=ylab, xlim=xlim, ...)
+  plot(o ~ t, tmp, type="n", ylab=ylab, xlab=xlab, xlim=xlim, ...)
   for (i in tmp$o) {
     tmp2 <- x[x$i == x1$i[i],]
     lines(c(tmp2$t[1], 10), c(i,i), col="grey")
