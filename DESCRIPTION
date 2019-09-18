@@ -11,6 +11,6 @@ License: GPL-2
 LazyLoad: yes
 LazyData: true
 Depends: intrval, mefa4, MASS, deldir
-Suggests: pbapply
+Imports: pbapply
 URL: https://github.com/psolymos/bSims
 BugReports: https://github.com/psolymos/bSims/issues
