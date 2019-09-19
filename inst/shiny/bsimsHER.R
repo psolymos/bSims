@@ -138,7 +138,9 @@ ui <- navbarPage("bSims (HER)",
         radioButtons("condition", "Condition",
           c("1st event"="event1",
             "1st detection"="det1",
-            "All detections"="alldet"))
+            "All detections"="alldet")),
+        sliderInput("percept", "Percepted ratio", 0, 2, 1, 0.05),
+        checkboxInput("oucount", "Over/under count", FALSE)
       )
     ),
     fluidRow(
@@ -216,12 +218,15 @@ server <- function(input, output) {
       event_type = input$event)
   })
   m <- reactive({
+    pr <- if (!input$oucount)
+      NULL else input$percept
     bsims_transcribe(o(),
       tint = TINT[[input$tint]],
       rint = RINT[[input$rint]],
       error = input$derr,
       condition = input$condition,
-      event_type = input$event
+      event_type = input$event,
+      perception = pr
     )
   })
   e <- reactive({
@@ -271,6 +276,8 @@ server <- function(input, output) {
       "random"=0,
       "regular"=2,
       "clustered"=5)
+    pr <- if (!input$oucount)
+      "NULL" else input$percept
     paste0("bsims_all(",
     "\n  extent = ", EXTENT,
     ",\n  road = ", input$road,
@@ -294,6 +301,7 @@ server <- function(input, output) {
     ",\n  error = ", input$derr,
     ",\n  condition = ", xq(input$condition),
     ",\n  event_type = ", xq(input$event),
+    ",\n  perception = ", pr,
     ")", collapse="")
   })
 
