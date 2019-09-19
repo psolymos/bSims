@@ -904,21 +904,7 @@ get_table(x1)
 get_table(x2)
 
 ## looking at multiple visits
-phi <- 0.5
-tau <- 1:3
-dur <- 10
-rbr <- c(0.5, 1, 1.5)
-tbr <- c(3, 5, 10)
-l <- bsims_init()
-p <- bsims_populate(l, 2)
-a <- bsims_animate(p, vocal_rate=phi, duration=dur)
-o <- bsims_detect(a, tau=tau)
-
-x <- bsims_transcribe(o, c(2,4,6,8, 10), 1.5)
-x$removal
-x$visits
-
-
+library(bSims)
 library(dclone)
 library(rjags)
 model <- custommodel("model {
@@ -931,14 +917,92 @@ model <- custommodel("model {
     p ~ dunif(0.001, 0.999)
     D ~ dlnorm(0, 0.001)
 }")
-Y <- x$visits
-dat <- list(Y = Y, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
-ini <- list(N = apply(Y, 1, max) + 1)
-fit <- jags.fit(data = dat, params = c("p", "D"),
+phi <- 0.5
+tau <- 1
+dur <- 10
+l <- bsims_init()
+D <- 1
+p <- 1-exp(-2*phi)
+q <- (tau^2/1.5^2) * (1-exp(-(1.5/tau)^2))
+P <- p * q
+
+## availability only
+Y <- NULL
+for (i in 1:100) {
+  n <- bsims_populate(l, D)
+  a <- bsims_animate(n, vocal_rate=phi, duration=dur)
+  x <- bsims_transcribe(a, c(2,4,6,8,10), c(0.5, 1, 1.5))
+  Y <- rbind(Y, colSums(x$visits))
+}
+mean(Y)
+D*1.5^2*pi*p
+Y1 <- Y
+
+## distance only
+Y <- NULL
+for (i in 1:100) {
+  n <- bsims_populate(l, D)
+  a <- bsims_animate(n, initial_location=TRUE)
+  o <- bsims_detect(a, tau=tau)
+  x <- bsims_transcribe(o, c(2,4,6,8,10), c(0.5, 1, 1.5))
+  Y <- rbind(Y, colSums(x$visits))
+}
+mean(Y)
+D*1.5^2*pi*q
+Y2 <- Y
+
+## both
+Y <- NULL
+for (i in 1:100) {
+  n <- bsims_populate(l, D)
+  a <- bsims_animate(n, vocal_rate=phi, duration=dur)
+  o <- bsims_detect(a, tau=tau)
+  x <- bsims_transcribe(o, c(2,4,6,8,10), c(0.5, 1, 1.5))
+  Y <- rbind(Y, colSums(x$visits))
+}
+mean(Y)
+D*1.5^2*pi*p*q
+Y3 <- Y
+
+dat <- list(Y = Y1, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
+ini <- list(N = apply(Y1, 1, max) + 1)
+fit1 <- jags.fit(data = dat, params = c("p", "D"),
+    n.update = 1000,
+    model = model, inits = ini)
+coef(fit1) # good
+D
+mean(Y1)/(1.5^2*pi*p)
+
+dat <- list(Y = Y3, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
+ini <- list(N = apply(Y3, 1, max) + 1)
+fit3 <- jags.fit(data = dat, params = c("p", "D"),
     n.update = 10000,
     model = model, inits = ini)
-summary(fit)
-x$density
+coef(fit3) # not so good
+D
+mean(Y3)/(1.5^2*pi*p*q)
 
-## need to replicate
+## 1st det
+## both
+Y <- NULL
+for (i in 1:100) {
+  n <- bsims_populate(l, D)
+  a <- bsims_animate(n, vocal_rate=phi, duration=dur)
+  o <- bsims_detect(a, tau=tau)
+  x <- bsims_transcribe(o, c(2,4,6,8,10), c(0.5, 1, 1.5),
+        condition = "det1")
+  Y <- rbind(Y, colSums(x$visits))
+}
+mean(Y)
+D*1.5^2*pi*p*q
+Y4 <- Y
+
+dat <- list(Y = Y4, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
+ini <- list(N = apply(Y4, 1, max) + 1)
+fit4 <- jags.fit(data = dat, params = c("p", "D"),
+    n.update = 10000,
+    model = model, inits = ini)
+coef(fit4) # not so good
+D
+mean(Y4)/(1.5^2*pi*p*q)
 
