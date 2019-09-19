@@ -230,7 +230,7 @@ server <- function(input, output) {
     )
   })
   e <- reactive({
-    REM <- m()$removal
+    REM <- get_table(m())
     MaxDur <- max(TINT[[input$tint]])
     MaxDis <- max(RINT[[input$rint]])
     Ydur <- matrix(colSums(REM), 1)
@@ -339,7 +339,7 @@ server <- function(input, output) {
   })
   output$table_rem <- renderTable({
     req(m())
-    tab <- m()$removal
+    tab <- get_table(m())
     tab <- cbind(tab, Total=rowSums(tab))
     tab <- rbind(tab, Total=colSums(tab))
     tab
