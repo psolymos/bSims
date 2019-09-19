@@ -1,4 +1,13 @@
-exportPattern("^[[:alpha:]]+")
+export("bsims_all",
+  "bsims_init", "bsims_populate", "bsims_animate",
+  "bsims_detect", "bsims_transcribe",
+  "acceptreject", "col2hex", "dist_fun2",
+  "events",
+  "get_detections", "get_events", "get_table",
+  "rlnorm2", "rmvn", "timetoevent")
+
+export(".bsims_all")
+#export(".draw_ellipse", ".get_raw_events")
 
 importFrom("graphics", "lines", "par", "plot", "points", "polygon",
              "segments")
@@ -11,6 +20,7 @@ importFrom("mefa4", "Xtab")
 importFrom("MASS", "mvrnorm")
 importFrom("grDevices", "col2rgb")
 importFrom("pbapply", "pbreplicate")
+importFrom("parallel", "clusterEvalQ", "clusterExport")
 
 S3method(plot, bsims_landscape)
 S3method(plot, bsims_population)
