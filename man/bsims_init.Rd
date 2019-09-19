@@ -45,7 +45,7 @@ bsims_all(...)
 \method{print}{bsims_detections}(x, ...)
 \method{print}{bsims_transcript}(x, ...)
 
-get_table(x)
+get_table(x, type = c("removal", "visits"))
 }
 \arguments{
   \item{extent}{
@@ -134,6 +134,9 @@ perceived number of individuals relative to the actual number of individuals
 (a non-negative number, <1 values lead to under counting, >1 values lead to over counting),
 or \code{NULL} (observer correctly identifies all individuals).
 }
+  \item{type}{
+character, the type of table to return: removal or visits.
+}
   \item{\dots}{
 other arguments passed to underlying functions. For \code{bsims_all} wrapper, it is all
 the arguments (except for \code{x}) that the underlying \code{bsims_*} functions have. \code{bsims_all} can also take a single list as argument.
@@ -185,7 +188,8 @@ tbr <- c(3, 5, 10)
 (x <- bsims_transcribe(o, tint=tbr, rint=rbr))
 
 plot(x)
-get_table(x)
+get_table(x, "removal")
+get_table(x, "visits")
 
 head(get_events(a))
 plot(get_events(a))

@@ -43,8 +43,13 @@ function(
   rint <- sort(rint)
   if (any(rint <= 0))
     stop("rint must be > 0")
+  rLAB <- paste0(c(0, round(100*rint[-length(rint)])),
+    ifelse(is.finite(rint), paste0("-", round(100*rint)), "+"), "m")
+  tLAB <- paste0(c(0, round(tint[-length(tint)], 2)), "-", tint, "min")
+
+  ## --- REMOVAL ---
   ## let get_detections take care of subsetting
-  detall <- get_detections(x,
+  detrem <- get_detections(x,
     condition=condition,
     event_type=event_type,
     perception=perception)
@@ -52,27 +57,55 @@ function(
   if (error < 0)
     stop("error must be >= 0")
   derr <- if (error > 0)
-    rlnorm2(nrow(detall), detall$d, error) else detall$d
-  detall$error <- derr - detall$d
+    rlnorm2(nrow(detrem), detrem$d, error) else detrem$d
+  detrem$error <- derr - detrem$d
   ## assign labels
-  rLAB <- paste0(c(0, round(100*rint[-length(rint)])),
-    ifelse(is.finite(rint), paste0("-", round(100*rint)), "+"), "m")
-  tLAB <- paste0(c(0, round(tint[-length(tint)], 2)), "-", tint, "min")
-  detall$rint <- factor(rLAB[cut(derr, c(0, rint), labels=FALSE,
+  detrem$rint <- factor(rLAB[cut(derr, c(0, rint), labels=FALSE,
     include.lowest=TRUE)], rLAB)
-  detall$tint <- factor(tLAB[cut(detall$t, c(0, tint), labels=FALSE,
+  detrem$tint <- factor(tLAB[cut(detrem$t, c(0, tint), labels=FALSE,
     include.lowest=TRUE)], tLAB)
   ## truncate distances based on percieved distance:
   ## it is when $rint is NA
   ## (but detection probability still depends on actual distance)
-  detall <- detall[!is.na(detall$rint),,drop=FALSE]
+  detrem <- detrem[!is.na(detrem$rint),,drop=FALSE]
   ## exclude out of duration (NA) $tint values
-  detall <- detall[!is.na(detall$tint),,drop=FALSE]
+  detrem <- detrem[!is.na(detrem$tint),,drop=FALSE]
   ## crosstab
-  xt <- as.matrix(Xtab(~ rint + tint, detall))
+  xtrem <- as.matrix(Xtab(~ rint + tint, detrem))
 
-  x$detections <- detall
-  x$removal <- xt
+  ## --- MULTIPLE VISIT ---
+  ## let get_detections take care of subsetting
+  detvis <- NULL
+  for (i in seq_along(tint)) {
+    detvis <- rbind(detvis, get_detections(x,
+      condition=condition,
+      event_type=event_type,
+      perception=perception,
+      tlim=c(0, tint)[c(i, i+1L)]))
+  }
+  ## add distance estimation error
+  if (error < 0)
+    stop("error must be >= 0")
+  derr2 <- if (error > 0)
+    rlnorm2(nrow(detvis), detvis$d, error) else detvis$d
+  detvis$error <- derr2 - detvis$d
+  ## assign labels
+  detvis$rint <- factor(rLAB[cut(derr2, c(0, rint), labels=FALSE,
+    include.lowest=TRUE)], rLAB)
+  detvis$tint <- factor(tLAB[cut(detvis$t, c(0, tint), labels=FALSE,
+    include.lowest=TRUE)], tLAB)
+  ## truncate distances based on percieved distance:
+  ## it is when $rint is NA
+  ## (but detection probability still depends on actual distance)
+  detvis <- detvis[!is.na(detvis$rint),,drop=FALSE]
+  ## exclude out of duration (NA) $tint values
+  detvis <- detvis[!is.na(detvis$tint),,drop=FALSE]
+  ## crosstab
+  xtvis <- as.matrix(Xtab(~ rint + tint, detvis))
+
+  x$detections <- list(removal=detrem, visits=detvis)
+  x$removal <- xtrem
+  x$visits <- xtvis
   x$tint <- tint
   x$rint <- rint
   x$error <- error
