@@ -127,3 +127,27 @@ b$new()           # replicate once
 b$replicate(10)   # replicate 10x
 ```
 
+The `$replicate()` function also runs on multiple cores:
+
+```R
+library(parallel)
+b <- bsims_all(density=0.5)
+B <- 4  # number of runs
+nc <- 2 # number of cores
+
+## sequential
+system.time(bb <- b$replicate(B, cl=NULL))
+
+## parallel clusters
+cl <- makeCluster(nc)
+## note: loading the package is optional
+system.time(clusterEvalQ(cl, library(bSims)))
+system.time(bb <- b$replicate(B, cl=cl))
+stopCluster(cl)
+
+## parallel forking
+if (.Platform$OS.type != "windows") {
+  system.time(bb <- b$replicate(B, cl=nc))
+}
+```
+

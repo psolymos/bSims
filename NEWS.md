@@ -1,9 +1,8 @@
 # bSims package version history
 
-## Version 0.1-3, 2019-09-12
+## Version 0.1-3, 2019-09-18
 
-* Incorporated feedback.
-* Started bSims article.
+* Incorporated feedback (GitHub issues #1-8).
 
 ## Version 0.1-2, 2019-07-02
 
