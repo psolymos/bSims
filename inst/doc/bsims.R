@@ -902,3 +902,43 @@ dim(x1$detections)
 dim(x2$detections)
 get_table(x1)
 get_table(x2)
+
+## looking at multiple visits
+phi <- 0.5
+tau <- 1:3
+dur <- 10
+rbr <- c(0.5, 1, 1.5)
+tbr <- c(3, 5, 10)
+l <- bsims_init()
+p <- bsims_populate(l, 2)
+a <- bsims_animate(p, vocal_rate=phi, duration=dur)
+o <- bsims_detect(a, tau=tau)
+
+x <- bsims_transcribe(o, c(2,4,6,8, 10), 1.5)
+x$removal
+x$visits
+
+
+library(dclone)
+library(rjags)
+model <- custommodel("model {
+    for (i in 1:n) {
+        N[i] ~ dpois(D*A)
+        for (t in 1:T) {
+            Y[i,t] ~ dbin(p, N[i])
+        }
+    }
+    p ~ dunif(0.001, 0.999)
+    D ~ dlnorm(0, 0.001)
+}")
+Y <- x$visits
+dat <- list(Y = Y, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
+ini <- list(N = apply(Y, 1, max) + 1)
+fit <- jags.fit(data = dat, params = c("p", "D"),
+    n.update = 10000,
+    model = model, inits = ini)
+summary(fit)
+x$density
+
+## need to replicate
+
