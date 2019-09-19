@@ -27,6 +27,9 @@ function(x,
     return(z)
   }
   ## deal with under/over counting using hclust
+  ## note: this is not necessarily meaningful
+  ## when condition="alldet" (it is already double counting
+  ## to the max degree possible)
   if (!is.null(perception)) {
     if (!is.numeric(perception))
       stop("perception must be numeric")
@@ -34,7 +37,7 @@ function(x,
       stop("perception must be >= 0")
     hc <- hclust(dist(cbind(z$x, z$y)))
     h <- length(unique(z$i)) * perception
-    z$j <- ct <- cutree(hc, k=min(nrow(z), max(1, round(h))))
+    z$j <- cutree(hc, k=min(nrow(z), max(1, round(h))))
   } else {
     z$j <- z$i
   }
@@ -48,6 +51,7 @@ function(x,
   }
   if (condition == "alldet") {
     z <- z[!is.na(z$d),]
+    ## no filtering duplicated $j
   }
   ## angle in degrees counter clockwise from x axis right
   #z$a <- 180 * atan2(z$x, z$y) / pi
