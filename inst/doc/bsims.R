@@ -884,3 +884,21 @@ points(0,0,pch=3, cex=2, col=2)
 plot(x$tess, add=TRUE, "tess", "none", col="grey")
 points(y ~ x, d, pch=19, col=ct)
 
+## NULL vs 1
+phi <- 0.5
+tau <- 1:3
+dur <- 10
+rbr <- c(0.5, 1, 1.5, Inf)
+tbr <- c(3, 5, 10)
+l <- bsims_init(10, 0.5, 1)
+p <- bsims_populate(l, 1)
+a <- bsims_animate(p, vocal_rate=phi, duration=dur)
+o <- bsims_detect(a, tau=tau)
+
+cond <- "alldet"
+x1 <- bsims_transcribe(o, condition=cond, perception=NULL)
+x2 <- bsims_transcribe(o, condition=cond, perception=.2)
+dim(x1$detections)
+dim(x2$detections)
+get_table(x1)
+get_table(x2)
