@@ -161,11 +161,14 @@ preceding layers intact. Construction allows easy piping.
 \code{get_table} returns the removal table.
 
 \code{bsims_all} returns a closure with
-\code{$settings()}, \code{$new()}, and \code{$replicate(B)}
+\code{$settings()}, \code{$new()}, and \code{$replicate(B, cl=NULL)}
 functions. The settings function returns the input arguments as a list,
-the new function returns a single transcript object,
-the replicate function takes an argument for the
-number of replicates and returns a list of transcript objects.
+the new function returns a single transcript object.
+The replicate function takes an argument for the
+number of replicates (\code{B}) and returns a list of transcript objects.
+The \code{cl} argument is used to parallelize the work,
+can be a numeroc value on Unix/Linux/OSX, or a cluster object on any OS,
+see examples.
 }
 \author{
 Peter Solymos
@@ -207,5 +210,24 @@ b$settings()
 b$new()
 bb <- b$replicate(3)
 lapply(bb, get_table)
+
+## parallel simulations
+library(parallel)
+b <- bsims_all(density=0.5)
+B <- 4  # number of runs
+nc <- 2 # number of cores
+## sequential
+system.time(bb <- b$replicate(B, cl=NULL))
+## parallel clusters
+cl <- makeCluster(nc)
+## note: loading the package is optional
+system.time(clusterEvalQ(cl, library(bSims)))
+system.time(bb <- b$replicate(B, cl=cl))
+stopCluster(cl)
+## parallel forking
+if (.Platform$OS.type != "windows") {
+  system.time(bb <- b$replicate(B, cl=nc))
+}
+
 }
 \keyword{ datagen }

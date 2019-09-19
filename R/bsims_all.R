@@ -1,7 +1,7 @@
 ## wrapper
 ## NULL arguments are dropped
 
-## this returns the call
+## internal function
 .bsims_all <- function(Settings) {
   Functions <- list(
     bsims_init=bsims_init,
@@ -37,12 +37,31 @@ bsims_all <- function(...) {
   out <- list()
   out$settings <- function() Settings
   out$new <- function() .bsims_all(Settings)
-  out$replicate <- function(B=1)  {
-    if (requireNamespace("pbapply", quietly = TRUE)) {
-      pbreplicate(B, .bsims_all(Settings), simplify=FALSE)
-    } else {
-      replicate(B, .bsims_all(Settings), simplify=FALSE)
+  out$replicate <- function(B=1, cl=NULL)  {
+    if (!is.null(cl) && inherits(cl, "cluster")) {
+      isLoaded <- all(unlist(clusterEvalQ(cl, "bSims" %in% .packages())))
+      if (!isLoaded)
+        clusterEvalQ(cl, library(bSims))
+      clusterExport(cl, ".bsims_all")
     }
+    z <- pbreplicate(B, .bsims_all(Settings), simplify=FALSE, cl=cl)
+    if (!is.null(cl) && inherits(cl, "cluster")) {
+      clusterEvalQ(cl, rm(.bsims_all))
+      if (!isLoaded)
+        clusterEvalQ(cl, detach("package:bSims", unload=TRUE))
+    }
+    z
   }
   out
+}
+
+if (FALSE) {
+library(parallel)
+b <- bsims_all(density=0.5)
+## sequential
+system.time(bb <- b$replicate(10, cl=NULL))
+## parallel
+cl <- makeCluster(5)
+system.time(bb <- b$replicate(10, cl=cl))
+stopCluster(cl)
 }
