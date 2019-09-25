@@ -1,4 +1,4 @@
-# bSims: Bird Point Count Simulator <img src="bsims.gif" align="right" style="padding-left:10px;background-color:white;" />
+# bSims: Bird Point Count Simulator <img src="https://raw.githubusercontent.com/psolymos/bSims/master/bsims.gif" align="right" style="padding-left:10px;background-color:white;" />
 
 A highly scientific and utterly addictive bird point count simulator to test statistical assumptions and to aid survey design.
 
