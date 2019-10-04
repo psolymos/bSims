@@ -108,7 +108,8 @@ ui <- navbarPage("bSims (HER)",
         c("None"="none",
           "Road"="R",
           "Edge and road"="ER")),
-      checkboxInput("overlap", "Territory overlap allowed", TRUE)
+      checkboxInput("overlap", "Territory overlap allowed", TRUE),
+      checkboxInput("show_tess", "Show tessellation", FALSE)
     )
   ),
   tabPanel("Detect",
@@ -320,7 +321,8 @@ server <- function(input, output) {
     req(b())
     op <- par(mar=c(0,0,0,0))
     plot(b())
-    plot(b()$tess, TRUE, "tess", "none")
+    if (input$show_tess)
+      plot(b()$tess, TRUE, "tess", "none", col="grey", lty=1)
     par(op)
   })
   output$plot_det <- renderPlot({
