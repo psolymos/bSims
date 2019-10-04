@@ -8,12 +8,12 @@ function(
   event_type=c("vocal", "move", "both"),
   ...)
 {
+  if (!inherits(x, "bsims_events"))
+    stop("x must be a bsims_events object")
   event_type <- match.arg(event_type)
   if (x$initial_location) {
     event_type <- "both"
   }
-  if (!inherits(x, "bsims_events"))
-    stop("x must be a bsims_events object")
   xy <- as.numeric(xy[1:2])
   if (any(xy %)(% range(x$strata)))
     stop("observer xy must be within extent")
