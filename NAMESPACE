@@ -38,6 +38,7 @@ S3method(points, bsims_events)
 S3method(points, bsims_population)
 S3method(points, bsims_detections)
 
+S3method(print, bsims_all)
 S3method(print, bsims_landscape)
 S3method(print, bsims_population)
 S3method(print, bsims_events)
