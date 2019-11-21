@@ -55,25 +55,3 @@ bsims_all <- function(...) {
   class(out) <- c("bsims", "bsims_all")
   out
 }
-
-if (FALSE) {
-library(bSims)
-library(parallel)
-b <- bsims_all(density=0.5)
-## sequential
-system.time(bb <- b$replicate(10, cl=NULL))
-## parallel
-cl <- makeCluster(5)
-system.time(bb <- b$replicate(10, cl=cl))
-stopCluster(cl)
-
-print.bsims_all <-
-function(x, ...) {
-  cat("bSims wrapper object\n  ",
-    round(x$extent/10, 1), " km x ", round(x$extent/10, 1),
-    " km\n  stratification: ", her, "\n", sep="")
-  invisible(x)
-}
-
-
-}

@@ -94,8 +94,6 @@ function(
     include.lowest=TRUE)], rLAB)
   detvis$tint <- factor(tLAB[cut(detvis$t, c(0, tint), labels=FALSE,
     include.lowest=TRUE)], tLAB)
-#  attr(detvis, "tlab") <- tLAB
-#  attr(detvis, "rlab") <- rLAB
   ## truncate distances based on percieved distance:
   ## it is when $rint is NA
   ## (but detection probability still depends on actual distance)
