@@ -57,6 +57,7 @@ bsims_all <- function(...) {
 }
 
 if (FALSE) {
+library(bSims)
 library(parallel)
 b <- bsims_all(density=0.5)
 ## sequential

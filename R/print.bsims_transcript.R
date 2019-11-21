@@ -24,7 +24,8 @@ function(x, ...) {
       "move"=" seen", "both"=" seen/heard"), "\n", sep="")
   cat("  ", switch(x$condition, "event1"="1st event detected",
     "det1"="1st detection", "alldet"="all detections"),
-    " by bins:\n    [", paste0(gsub("min", "", levels(x$det$tint)), collapse=", "),
-    " min]\n    [", paste0(gsub("m", "", levels(x$det$rint)), collapse=", "), " m]\n", sep="")
+    " by breaks:\n    [",
+    paste0(round(c(0, x$tint), 2), collapse=", "), " min]\n    [",
+    paste0(round(100 * c(0, x$rint)), collapse=", "), " m]\n", sep="")
   invisible(x)
 }
