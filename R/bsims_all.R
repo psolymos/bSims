@@ -52,6 +52,7 @@ bsims_all <- function(...) {
     }
     z
   }
+  class(out) <- c("bsims", "bsims_all")
   out
 }
 
@@ -64,4 +65,14 @@ system.time(bb <- b$replicate(10, cl=NULL))
 cl <- makeCluster(5)
 system.time(bb <- b$replicate(10, cl=cl))
 stopCluster(cl)
+
+print.bsims_all <-
+function(x, ...) {
+  cat("bSims wrapper object\n  ",
+    round(x$extent/10, 1), " km x ", round(x$extent/10, 1),
+    " km\n  stratification: ", her, "\n", sep="")
+  invisible(x)
+}
+
+
 }
