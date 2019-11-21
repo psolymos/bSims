@@ -13,6 +13,7 @@
 \alias{print.bsims_transcript}
 \alias{get_table}
 \alias{bsims_all}
+\alias{print.bsims_all}
 \title{
 bSims functions
 }
@@ -44,6 +45,7 @@ bsims_all(...)
 \method{print}{bsims_events}(x, ...)
 \method{print}{bsims_detections}(x, ...)
 \method{print}{bsims_transcript}(x, ...)
+\method{print}{bsims_all}(x, ...)
 
 get_table(x, type = c("removal", "visits"))
 }

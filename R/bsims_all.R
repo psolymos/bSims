@@ -52,16 +52,6 @@ bsims_all <- function(...) {
     }
     z
   }
+  class(out) <- c("bsims", "bsims_all")
   out
-}
-
-if (FALSE) {
-library(parallel)
-b <- bsims_all(density=0.5)
-## sequential
-system.time(bb <- b$replicate(10, cl=NULL))
-## parallel
-cl <- makeCluster(5)
-system.time(bb <- b$replicate(10, cl=cl))
-stopCluster(cl)
 }
