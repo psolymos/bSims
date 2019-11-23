@@ -21,7 +21,14 @@ s <- expand_list(
   )
 )
 
-
+# animate
+s <- expand_list(
+  density = 1,
+  tau = 2,
+  move_rate = 2,
+  movement = c(0, 0.1, 0.2),
+  rint = list(c(1, 2, 3, Inf))
+)
 
 b <- lapply(s, bsims_all)
 B <- 25
@@ -40,7 +47,7 @@ f <- function(x) {
 
 yy <- lapply(bb, function(z) t(sapply(z, f)))
 
-plot(colMeans(yy[[1]]), type="l", ylim=c(0, 0.5),
+plot(colMeans(yy[[1]]), type="l",
   xlab="Distance band", ylab=expression(pi))
 lines(colMeans(yy[[2]]), col=2)
 lines(colMeans(yy[[3]]), col=4)
