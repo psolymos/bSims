@@ -1,6 +1,57 @@
 library(bSims)
 library(parallel)
 
+# landscape init
+s <- expand_list(
+  density = list(c(1, 1, 0)),
+  tau = list(c(2, 2, 4)),
+  road = c(0, 0.25, 0.5),
+  rint = list(c(1, 2, 3, Inf))
+)
+
+# populate
+s <- expand_list(
+  density = 1,
+  tau = 2,
+  rint = list(c(0.5, 1, 1.5, 2, 2.5, 3, Inf)), # needed as a list to keep vector together
+  xy_fun = list(
+    NULL,
+    function(d) { (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(2,2)) / 2 },
+    function(d) { exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2)) }
+  )
+)
+
+
+
+b <- lapply(s, bsims_all)
+B <- 25
+bb <- lapply(b, function(z) z$replicate(B))
+
+op <- par(mfrow=c(1,3))
+plot(bb[[1]][[1]])
+plot(bb[[2]][[1]])
+plot(bb[[3]][[1]])
+par(op)
+
+f <- function(x) {
+  y <- drop(get_table(x, "removal"))
+  y / ifelse(sum(y)==0, 1, sum(y))
+}
+
+yy <- lapply(bb, function(z) t(sapply(z, f)))
+
+plot(colMeans(yy[[1]]), type="l", ylim=c(0, 0.5),
+  xlab="Distance band", ylab=expression(pi))
+lines(colMeans(yy[[2]]), col=2)
+lines(colMeans(yy[[3]]), col=4)
+
+D <- matrix(s[[1]]$rint, nrow=B, ncol=length(s[[1]]$rint), byrow=TRUE)
+exp(detect::cmulti.fit(yy[[1]], D, type="dis")$coef)
+exp(detect::cmulti.fit(yy[[2]], D, type="dis")$coef)
+exp(detect::cmulti.fit(yy[[3]], D, type="dis")$coef)
+
+
+
 ## common settings
 s1 <- list(
   density = 2,
