@@ -28,7 +28,8 @@ Peter Solymos
 \examples{
 b <- expand_list(
   movement = c(0, 1, 2),
-  xy_fun = list(function(z) z, function(z) z * 2))
+  rint = list(c(0.5, 1, 1.5, Inf)), # in a list to keep as one
+  xy_fun = list(NULL, function(z) z))
 b[[1]]
 str(b)
 }
