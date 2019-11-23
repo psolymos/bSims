@@ -4,7 +4,8 @@ export("bsims_all",
   "acceptreject", "col2hex", "dist_fun2",
   "events",
   "get_detections", "get_events", "get_table",
-  "rlnorm2", "rmvn", "timetoevent")
+  "rlnorm2", "rmvn", "timetoevent",
+  "expand_list")
 
 export(".bsims_all")
 #export(".draw_ellipse", ".get_raw_events")
