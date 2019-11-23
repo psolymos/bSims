@@ -147,6 +147,8 @@ simulated birds in a point count.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 <span class='co'># S3 method for bsims_transcript</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for bsims_all</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"removal"</span>, <span class='st'>"visits"</span>))</pre>
     
@@ -297,6 +299,10 @@ number of replicates (<code>B</code>) and returns a list of transcript objects.
 The <code>cl</code> argument is used to parallelize the work,
 can be a numeroc value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.</p>
+<p>Note that simulated objects returned by <code>bsims_all</code>
+will contain different realizations and all the conditionally
+independent layers. Use a layered approach if former layers are meant
+to be kept identical across runs.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -331,9 +337,9 @@ plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p
 #&gt;   total abundance: 92
 #&gt;   duration: 10 min
 #&gt;   detected: 31 heard
-#&gt;   1st event detected by bins:
-#&gt;     [ min]
-#&gt;     [ m]</div><div class='input'>
+#&gt;   1st event detected by breaks:
+#&gt;     [0, 3, 5, 10 min]
+#&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         1      1       0
 #&gt; 50-100m       3      1       0
@@ -379,9 +385,9 @@ plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p
 #&gt;   total abundance: 47
 #&gt;   duration: 10 min
 #&gt;   detected: 8 heard
-#&gt;   1st event detected by bins:
-#&gt;     [ min]
-#&gt;     [ m]</div><div class='input'><span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>3</span>)
+#&gt;   1st event detected by breaks:
+#&gt;     [0, 3, 5, 10 min]
+#&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'><span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>3</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>bb</span>, <span class='no'>get_table</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
@@ -410,16 +416,18 @@ plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p
 <span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
 <span class='co'>## sequential</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;    0.41    0.00    0.40 </div><div class='input'><span class='co'>## parallel clusters</span>
+#&gt;   0.612   0.004   0.620 </div><div class='input'><span class='co'>## parallel clusters</span>
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span>(<span class='no'>nc</span>)
 <span class='co'>## note: loading the package is optional</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;    0.00    0.00    0.84 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;    0.02    0.00    0.31 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
+#&gt;   0.001   0.000   1.259 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.006   0.001   0.497 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
 <span class='co'>## parallel forking</span>
 <span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
   <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>nc</span>))
-}</div></pre>
+}</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.005   0.007   0.754 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
