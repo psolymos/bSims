@@ -15,7 +15,12 @@ function(...) {
     l <- list()
     for (k in seq_len(ncol(d))) {
       h <- colnames(d)[k]
-      l[[h]] <- a[[h]][[d[j,h]]]
+      if (is.null(a[[h]][[d[j,h]]])) {
+        l[[h]] <- "NULL"
+        l[h] <- list(NULL)
+      } else {
+        l[[h]] <- a[[h]][[d[j,h]]]
+      }
     }
     out[[j]] <- l
   }
