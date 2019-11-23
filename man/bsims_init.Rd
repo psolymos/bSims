@@ -171,6 +171,11 @@ number of replicates (\code{B}) and returns a list of transcript objects.
 The \code{cl} argument is used to parallelize the work,
 can be a numeroc value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.
+
+Note that simulated objects returned by \code{bsims_all}
+will contain different realizations and all the conditionally
+independent layers. Use a layered approach if former layers are meant
+to be kept identical across runs.
 }
 \author{
 Peter Solymos
