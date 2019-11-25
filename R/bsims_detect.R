@@ -35,8 +35,9 @@ function(
     st <- x$strata
     st[1L] <- -Inf
     st[6L] <- Inf
+    eps <- 0.00001 # this is 1 mm
     for (i in which(duplicated(st))) {
-      st[i] <- st[i-1] + sign(st[i]) * 0.0001 # this is 1 cm
+      st[i] <- st[i-1] + ifelse(st[i] < 0, -eps, eps)
     }
     sobs <- cut(xy[1L], st, labels=FALSE) # which stratum the observer is in
   }
