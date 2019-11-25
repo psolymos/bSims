@@ -12,46 +12,48 @@ rint <- c(0.5, 1, Inf)
 tint <- c(3, 5, 10)
 s <- expand_list(
   road = c(0, 0.1, 0.2),
-  edge = 0.1,
+  edge = 0.5,
   density = list(c(1, 1, 0)),
-  vocal_rate = list(c(0.8, 0.4, 0), c(0.8, 0.8, 0), c(0.8, 1.6, 0)),
-  tau = list(c(2, 2, 4)),
+  vocal_rate = list(c(0.5, 0.25, 0), c(0.5, 0.5, 0), c(0.5, 1, 0)),
+  tau = list(c(1, 1, 2)),
   rint = list(rint),
   tint = list(tint)
 )
+## no edge without road
 for (i in seq_along(s))
   if (s[[i]]$road == 0)
     s[[i]]$edge <- 0
 b <- lapply(s, bsims_all)
-B <- 100
+B <- 500
 nc <- 4
 cl <- makeCluster(nc)
 tmp <- clusterEvalQ(cl, library(bSims))
 bb <- lapply(b, function(z) z$replicate(B, cl=cl))
 stopCluster(cl)
 
-f <- function(x) {
-  rowSums(get_table(x, "removal"))
-}
-yy <- lapply(bb, function(z) t(sapply(z, f)))
-D <- matrix(rint, nrow=B, ncol=length(rint), byrow=TRUE)
-tau <- sapply(yy, function(z) exp(detect::cmulti.fit(z, D, type="dis")$coef))
+yy <- lapply(bb, function(z) lapply(z, get_table))
 
-f <- function(x) {
-  colSums(get_table(x, "removal"))
-}
-yy <- lapply(bb, function(z) t(sapply(z, f)))
-D <- matrix(tint, nrow=B, ncol=length(tint), byrow=TRUE)
-phi <- sapply(yy, function(z) exp(detect::cmulti.fit(z, D, type="rem")$coef))
+Mr <- matrix(rint, nrow=B, ncol=length(rint), byrow=TRUE)
+tau <- sapply(yy, function(z) {
+  Y <- t(sapply(z, rowSums))
+  exp(detect::cmulti.fit(Y, Mr, type="dis")$coef)
+})
 
-tot <- sapply(bb, function(z)
-  mean(sapply(z, function(zz) sum(get_table(zz, "removal")))))
+Mt <- matrix(tint, nrow=B, ncol=length(tint), byrow=TRUE)
+phi <- sapply(yy, function(z) {
+  Y <- t(sapply(z, colSums))
+  exp(detect::cmulti.fit(Y, Mt, type="rem")$coef)
+})
+
+
+Ybar <- sapply(yy, function(z) mean(sapply(z, sum)))
 p <- 1-exp(-phi*max(tint))
-Nest <- tot / (p * tau^2*pi)
+Dhat <- Ybar / (p * tau^2*pi)
 
 op <- par(mfrow=c(3,3), mar=c(1,1,1,1))
 for (i in seq_along(s))
-plot(bb[[i]][[1]], main=round(Nest[i], 2))
+plot(bb[[i]][[1]],
+  main=paste(round(c(Ybar[i], phi[i], tau[i], Dhat[i]), 2), collapse=" "))
 par(op)
 
 
