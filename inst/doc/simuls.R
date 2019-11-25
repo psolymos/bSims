@@ -1,22 +1,80 @@
+#remotes::install_github("psolymos/bSims")
 library(bSims)
 library(parallel)
+
+# roadside bias stuff
+# - road width -- vary
+# - density: 1,1,0
+# - behav: 0.8, lower/higher/same, 0 -- vary
+# - EDR: 1,1,2 (same)
+
+rint <- c(0.5, 1, Inf)
+tint <- c(3, 5, 10)
+s <- expand_list(
+  road = c(0, 0.1, 0.2),
+  edge = 0.1,
+  density = list(c(1, 1, 0)),
+  vocal_rate = list(c(0.8, 0.4, 0), c(0.8, 0.8, 0), c(0.8, 1.6, 0)),
+  tau = list(c(2, 2, 4)),
+  rint = list(rint),
+  tint = list(tint)
+)
+for (i in seq_along(s))
+  if (s[[i]]$road == 0)
+    s[[i]]$edge <- 0
+b <- lapply(s, bsims_all)
+B <- 100
+nc <- 4
+cl <- makeCluster(nc)
+tmp <- clusterEvalQ(cl, library(bSims))
+bb <- lapply(b, function(z) z$replicate(B, cl=cl))
+stopCluster(cl)
+
+f <- function(x) {
+  rowSums(get_table(x, "removal"))
+}
+yy <- lapply(bb, function(z) t(sapply(z, f)))
+D <- matrix(rint, nrow=B, ncol=length(rint), byrow=TRUE)
+tau <- sapply(yy, function(z) exp(detect::cmulti.fit(z, D, type="dis")$coef))
+
+f <- function(x) {
+  colSums(get_table(x, "removal"))
+}
+yy <- lapply(bb, function(z) t(sapply(z, f)))
+D <- matrix(tint, nrow=B, ncol=length(tint), byrow=TRUE)
+phi <- sapply(yy, function(z) exp(detect::cmulti.fit(z, D, type="rem")$coef))
+
+tot <- sapply(bb, function(z)
+  mean(sapply(z, function(zz) sum(get_table(zz, "removal")))))
+p <- 1-exp(-phi*max(tint))
+Nest <- tot / (p * tau^2*pi)
+
+op <- par(mfrow=c(3,3), mar=c(1,1,1,1))
+for (i in seq_along(s))
+plot(bb[[i]][[1]], main=round(Nest[i], 2))
+par(op)
+
+
+## layers
+
+rint <- c(seq(1, 5, 1), Inf)
 
 # landscape init
 s <- expand_list(
   density = list(c(1, 1, 0)),
   tau = list(c(2, 2, 4)),
   road = c(0, 0.25, 0.5),
-  rint = list(c(1, 2, 3, Inf))
+  rint = list(rint)
 )
 
 # populate
 s <- expand_list(
   density = 1,
   tau = 2,
-  rint = list(c(0.5, 1, 1.5, 2, 2.5, 3, Inf)), # needed as a list to keep vector together
+  rint = list(rint), # needed as a list to keep vector together
   xy_fun = list(
     NULL,
-    function(d) { (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(2,2)) / 2 },
+    function(d) { (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(exp(2-1),2)) / 2 },
     function(d) { exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2)) }
   )
 )
@@ -27,12 +85,17 @@ s <- expand_list(
   tau = 2,
   move_rate = 2,
   movement = c(0, 0.1, 0.2),
-  rint = list(c(1, 2, 3, Inf))
+  rint = list(rint)
 )
 
+
 b <- lapply(s, bsims_all)
-B <- 25
-bb <- lapply(b, function(z) z$replicate(B))
+B <- 100
+nc <- 4
+cl <- makeCluster(nc)
+tmp <- clusterEvalQ(cl, library(bSims))
+bb <- lapply(b, function(z) z$replicate(B, cl=cl))
+stopCluster(cl)
 
 op <- par(mfrow=c(1,3))
 plot(bb[[1]][[1]])
@@ -47,16 +110,41 @@ f <- function(x) {
 
 yy <- lapply(bb, function(z) t(sapply(z, f)))
 
-plot(colMeans(yy[[1]]), type="l",
+yhat <- sapply(yy, colMeans)
+
+plot(spline(c(0, rint[-length(rint)]), yhat[,1]), type="l", ylim=c(0, max(yhat)),
   xlab="Distance band", ylab=expression(pi))
-lines(colMeans(yy[[2]]), col=2)
-lines(colMeans(yy[[3]]), col=4)
+lines(spline(c(0, rint[-length(rint)]), yhat[,2]), col=2)
+lines(spline(c(0, rint[-length(rint)]), yhat[,3]), col=4)
+
+plot(c(0, rint[-length(rint)]), yhat[,1], type="l", ylim=c(0, max(yhat)),
+  xlab="Distance band", ylab=expression(pi))
+lines(c(0, rint[-length(rint)]), yhat[,2], col=2)
+lines(c(0, rint[-length(rint)]), yhat[,3], col=4)
 
 D <- matrix(s[[1]]$rint, nrow=B, ncol=length(s[[1]]$rint), byrow=TRUE)
 exp(detect::cmulti.fit(yy[[1]], D, type="dis")$coef)
 exp(detect::cmulti.fit(yy[[2]], D, type="dis")$coef)
 exp(detect::cmulti.fit(yy[[3]], D, type="dis")$coef)
 
+h <- function(x, a=2, b=0.5) {
+  b * (1-exp(-x^2/a^2)) + (1-b) * dlnorm(x, a)/dlnorm(exp(a-1),a)
+}
+bv <- 0.8
+curve(h(x, a=2, b=bv), 0, 5, 1001, ylim=c(0,1))
+curve(h(x,a=1, b=bv), 0, 5, 1001, add=TRUE, col=2)
+curve(h(x,a=0.5, b=bv), 0, 5, 1001, add=TRUE, col=4)
+
+hfun <- function(d, a=2, b=0.5) {
+  function(d) {
+    b * (1-exp(-d^2/a^2)) + (1-b) * dlnorm(d, a)/dlnorm(exp(a-1),a)
+  }
+}
+l <- bsims_init()
+p1 <- bsims_populate(l, density=2, xy_fun=NULL)
+p2 <- bsims_populate(l, density=2, xy_fun=hfun(x,a=0.5, b=bv))
+p3 <- bsims_populate(l, density=2, xy_fun=hfun(x,a=1, b=bv))
+p4 <- bsims_populate(l, density=2, xy_fun=hfun(x,a=2, b=bv))
 
 
 ## common settings
