@@ -36,7 +36,7 @@ function(
     st[1L] <- -Inf
     st[6L] <- Inf
     for (i in which(duplicated(st))) {
-      st[i] <- st[i-1] + sign(st[i])*10*.Machine$double.eps
+      st[i] <- st[i-1] + sign(st[i]) * 0.0001 # this is 1 cm
     }
     sobs <- cut(xy[1L], st, labels=FALSE) # which stratum the observer is in
   }
