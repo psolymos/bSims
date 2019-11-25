@@ -168,7 +168,7 @@ server <- function(input, output) {
     switch(input$spfun,
       "random"=function(d) rep(1, length(d)),
       "regular"=function(d)
-        (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(2,2)) / 2,
+        (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(exp(2-1),2)) / 2,
       "clustered"=function(d)
         exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2))
       )
