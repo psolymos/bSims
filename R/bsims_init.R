@@ -9,8 +9,8 @@ function(
     stop("extent must be positive")
   road <- abs(road)
   edge <- abs(edge)
-  if (road == 0 && edge > 0)
-    stop("edge cannot be > 0 when road = 0")
+  #if (road == 0 && edge > 0)
+  #  stop("edge cannot be > 0 when road = 0")
   a <- extent / 2
   box <- cbind(
     x=rep(a, 4) * c(-1, -1, 1, 1),
