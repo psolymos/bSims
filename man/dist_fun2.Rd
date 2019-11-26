@@ -19,7 +19,7 @@ a parameter passed to the the distance function, need to be in 1-3 in length
 referring to distance function parameters in the 3 strata.
 }
   \item{dist_fun}{
-distance functon taking two arguments: for distance, and \code{tau}, see examples.
+distance funciton taking two arguments: for distance, and \code{tau}, see examples.
 }
   \item{b}{
 distance breakpoints, must be \code{length(tau)-1} in length.

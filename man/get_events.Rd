@@ -25,7 +25,7 @@ type of events to access.
 conditioning type to define availability for each individual:
 \code{"event1"}: the 1st event;
 \code{"det1"}: the 1st detection;
-\code{"alldet"}: all detections (count same individual multiple timmes).
+\code{"alldet"}: all detections (count same individual multiple times).
 }
   \item{tlim}{
 time intervals treated as [\code{min(tlim)}, \code{max(tlim)}).

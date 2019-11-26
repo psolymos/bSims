@@ -17,7 +17,7 @@ vectors or lists. All arguments must be named.
 \value{
 A list containing one element for each combination of the supplied vectors
 and lists. The first factors vary fastest.
-The nested elements are labelled by the factors.
+The nested elements are labeled by the factors.
 }
 \author{
 Peter Solymos

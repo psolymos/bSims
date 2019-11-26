@@ -4,14 +4,14 @@
 Internal functions
 }
 \description{
-Not intended to be used bycopy user.
+Not intended to be used by the user.
 }
 \usage{
 .bsims_all(Settings)
 }
 \arguments{
   \item{Settings}{
-a list off_t arguments.
+a list of arguments.
 }
 }
 \keyword{ internal }

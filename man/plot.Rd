@@ -123,8 +123,8 @@ Peter Solymos
 \code{\link{bsims_init}}
 }
 \examples{
-col2hex(c(blu = "royalblue", reddish = "tomato"), FALSE)
-col2hex(c(blu = "royalblue", reddish = "tomato"), TRUE)
+col2hex(c(blu = "royalblue", reddish = "tomato"), alpha = FALSE)
+col2hex(c(blu = "royalblue", reddish = "tomato"), alpha = TRUE)
 }
 \keyword{ hplot }
 \keyword{ aplot }

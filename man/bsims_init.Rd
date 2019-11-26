@@ -69,7 +69,7 @@ a simulation object.
 population density, D, recycled 3x for HER
 }
   \item{abund_fun}{
-function to simulate abundance, N ~ Pois(lambda), lambda=DA by default.
+function to simulate abundance, N ~ Poisson(lambda), lambda=DA by default.
 }
   \item{xy_fun}{
 function to simulate nest locations, see \code{\link{acceptreject}}.
@@ -96,8 +96,8 @@ strata to avoid by movement.
 }
   \item{initial_location}{
 logical, \code{move_rate} and \code{vocal_rate} silently ignored if \code{TRUE}
-and nest ocation is provided as part of the events table,
-this reders all individuals equally available for detection.
+and nest location is provided as part of the events table,
+this renders all individuals equally available for detection.
 }
   \item{allow_overlap}{
 logical, allows overlap between neighbor nests when movement is involved.
@@ -113,7 +113,7 @@ parameter of the distance function.
 distance function (1st argument is distance, second is tau).
 }
   \item{event_type}{
-type of events to access. Infered from input object when \code{NULL}.
+type of events to access. Inferred from input object when \code{NULL}.
 }
   \item{tint}{
 time interval break points.
@@ -125,7 +125,7 @@ distance interval break points.
 conditioning type to define availability for each individual:
 \code{"event1"}: the 1st event;
 \code{"det1"}: the 1st detection;
-\code{"alldet"}: all detections (count same individual multiple timmes).
+\code{"alldet"}: all detections (count same individual multiple times).
 }
   \item{error}{
 log scale standard deviation for distance estimation error,
@@ -169,7 +169,7 @@ the new function returns a single transcript object.
 The replicate function takes an argument for the
 number of replicates (\code{B}) and returns a list of transcript objects.
 The \code{cl} argument is used to parallelize the work,
-can be a numeroc value on Unix/Linux/OSX, or a cluster object on any OS,
+can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.
 
 Note that simulated objects returned by \code{bsims_all}
