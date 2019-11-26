@@ -5,7 +5,8 @@ export("bsims_all",
   "events",
   "get_detections", "get_events", "get_table",
   "rlnorm2", "rmvn", "timetoevent",
-  "expand_list")
+  "expand_list",
+  "run_app")
 
 export(".bsims_all")
 #export(".draw_ellipse", ".get_raw_events")
