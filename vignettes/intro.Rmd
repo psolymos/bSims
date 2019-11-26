@@ -68,19 +68,6 @@ head(get_events(a))
 head(get_detections(o))
 ```
 
-Use functional programming constructs if you do not want to experiment with individual layers
-(i.e. do not want state changes and mutations and only care about the outcome):
-
-```{r mag,eval=FALSE}
-library(magrittr)
-
-x <- bsims_init(10, 0.5, 1) %>%
-  bsims_populate(1) %>%
-  bsims_animate(vocal_rate=phi, duration=dur) %>%
-  bsims_detect(tau=tau) %>%
-  bsims_transcribe(tint=tbr, rint=rbr)
-```
-
 ### Single habitat case
 
 ```{r H,fig.height=10,fig.width=10}
@@ -224,26 +211,19 @@ round(rbind(
 Play with detection functions:
 
 ```{r shiny1,eval=FALSE}
-shiny::runApp(system.file("shiny/distancefun.R", package="bSims"))
+run_app("distfunH")
+run_app("distfunHER")
 ```
 
 Play with simulations and explore biases in a single-habitat setting (see also https://psolymos.shinyapps.io/bSimsH/):
 
 ```{r shiny2,eval=FALSE}
-shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
+run_app("bsimsH")
 ```
 
 Play with simulations and explore biases in a stratified habitat setting with road and edge (see also https://psolymos.shinyapps.io/bSimsHER/):
 
 ```{r shiny3,eval=FALSE}
-shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
+run_app("bsimsHER")
 ```
-
-## Feedback
-
-Submit issues and feature requests through [GitHub issues](https://github.com/psolymos/bSims/issues).
-
-## License
-
-[GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 

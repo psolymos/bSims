@@ -94,15 +94,15 @@ These can be used to interactively explore the effects of different settings.
 Compare distance functions:
 
 ```{r eval=FALSE}
-shiny::runApp(system.file("shiny/distfunH.R", package="bSims"))
-shiny::runApp(system.file("shiny/distfunHER.R", package="bSims"))
+run_app("distfunH")
+run_app("distfunHER")
 ```
 
 Compare simulation settings for single landscape:
 
 ```{r eval=FALSE}
-shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
-shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
+run_app("bsimsH")
+run_app("bsimsHER")
 ```
 
 ### Replicating simulations
