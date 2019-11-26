@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Access events or detections from simulation object — get_events • bSims</title>
+<title>Run Shiny apps — run_app • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Access events or detections from simulation object — get_events" />
+<meta property="og:title" content="Run Shiny apps — run_app" />
 
-<meta property="og:description" content="Access events or detections from simulation object." />
+<meta property="og:description" content="Run Shiny apps included in the bSims package." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,60 +121,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Access events or detections from simulation object</h1>
+    <h1>Run Shiny apps</h1>
     
-    <div class="hidden name"><code>get_events.Rd</code></div>
+    <div class="hidden name"><code>run_app.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Access events or detections from simulation object.</p>
+    <p>Run Shiny apps included in the bSims package.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_events</span>(<span class='no'>x</span>, <span class='kw'>event_type</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span>), <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>get_detections</span>(<span class='no'>x</span>, <span class='kw'>condition</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"event1"</span>, <span class='st'>"det1"</span>, <span class='st'>"alldet"</span>),
-  <span class='kw'>event_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span>), <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>perception</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>run_app</span>(<span class='kw'>app</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bsimsH"</span>, <span class='st'>"bsimsHER"</span>, <span class='st'>"distfunH"</span>, <span class='st'>"distfunHER"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>simulation object.</p></td>
-    </tr>
-    <tr>
-      <th>event_type</th>
-      <td><p>type of events to access.</p></td>
-    </tr>
-    <tr>
-      <th>condition</th>
-      <td><p>conditioning type to define availability for each individual:
-<code>"event1"</code>: the 1st event;
-<code>"det1"</code>: the 1st detection;
-<code>"alldet"</code>: all detections (count same individual multiple times).</p></td>
-    </tr>
-    <tr>
-      <th>tlim</th>
-      <td><p>time intervals treated as [<code><a href='https://rdrr.io/r/base/Extremes.html'>min(tlim)</a></code>, <code><a href='https://rdrr.io/r/base/Extremes.html'>max(tlim)</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>perception</th>
-      <td><p>perceived number of individuals relative to the actual number of individuals
-(a non-negative number, &lt;1 values lead to under counting, &gt;1 values lead to over counting),
-or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
+      <th>app</th>
+      <td><p>character, which app to run.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Events or detections.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='bsims_init.html'>bsims_animate</a></code>, <code><a href='bsims_init.html'>bsims_detect</a></code></p></div>
     
 
   </div>
@@ -182,14 +149,8 @@ or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
+                </ul>
 
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    <p>Peter Solymos</p>
   </div>
 </div>
 
