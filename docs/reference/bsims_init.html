@@ -181,7 +181,7 @@ simulated birds in a point count.</p>
     </tr>
     <tr>
       <th>abund_fun</th>
-      <td><p>function to simulate abundance, N ~ Pois(lambda), lambda=DA by default.</p></td>
+      <td><p>function to simulate abundance, N ~ Poisson(lambda), lambda=DA by default.</p></td>
     </tr>
     <tr>
       <th>xy_fun</th>
@@ -215,8 +215,8 @@ population segments.</p></td>
     <tr>
       <th>initial_location</th>
       <td><p>logical, <code>move_rate</code> and <code>vocal_rate</code> silently ignored if <code>TRUE</code>
-and nest ocation is provided as part of the events table,
-this reders all individuals equally available for detection.</p></td>
+and nest location is provided as part of the events table,
+this renders all individuals equally available for detection.</p></td>
     </tr>
     <tr>
       <th>allow_overlap</th>
@@ -237,7 +237,7 @@ If <code>FALSE</code>, Voronoi tessellation is used to prevent overlap.</p></td>
     </tr>
     <tr>
       <th>event_type</th>
-      <td><p>type of events to access. Infered from input object when <code>NULL</code>.</p></td>
+      <td><p>type of events to access. Inferred from input object when <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>tint</th>
@@ -252,7 +252,7 @@ If <code>FALSE</code>, Voronoi tessellation is used to prevent overlap.</p></td>
       <td><p>conditioning type to define availability for each individual:
 <code>"event1"</code>: the 1st event;
 <code>"det1"</code>: the 1st detection;
-<code>"alldet"</code>: all detections (count same individual multiple timmes).</p></td>
+<code>"alldet"</code>: all detections (count same individual multiple times).</p></td>
     </tr>
     <tr>
       <th>error</th>
@@ -297,7 +297,7 @@ the new function returns a single transcript object.
 The replicate function takes an argument for the
 number of replicates (<code>B</code>) and returns a list of transcript objects.
 The <code>cl</code> argument is used to parallelize the work,
-can be a numeroc value on Unix/Linux/OSX, or a cluster object on any OS,
+can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.</p>
 <p>Note that simulated objects returned by <code>bsims_all</code>
 will contain different realizations and all the conditionally
@@ -416,17 +416,17 @@ plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p
 <span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
 <span class='co'>## sequential</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.726   0.009   0.757 </div><div class='input'><span class='co'>## parallel clusters</span>
+#&gt;   0.589   0.004   0.595 </div><div class='input'><span class='co'>## parallel clusters</span>
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span>(<span class='no'>nc</span>)
 <span class='co'>## note: loading the package is optional</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.001   0.000   1.575 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.005   0.001   0.458 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
+#&gt;   0.001   0.000   1.332 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.006   0.001   0.506 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
 <span class='co'>## parallel forking</span>
 <span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
   <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>nc</span>))
 }</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.004   0.006   0.825 </div><div class='input'>
+#&gt;   0.005   0.006   0.582 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
