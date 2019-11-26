@@ -111,15 +111,15 @@ settings.
 Compare distance functions:
 
 ``` r
-shiny::runApp(system.file("shiny/distfunH.R", package="bSims"))
-shiny::runApp(system.file("shiny/distfunHER.R", package="bSims"))
+run_app("distfunH")
+run_app("distfunHER")
 ```
 
 Compare simulation settings for single landscape:
 
 ``` r
-shiny::runApp(system.file("shiny/bsimsH.R", package="bSims"))
-shiny::runApp(system.file("shiny/bsimsHER.R", package="bSims"))
+run_app("bsimsH")
+run_app("bsimsHER")
 ```
 
 ### Replicating simulations
@@ -156,17 +156,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   1.041   0.021   1.167
+#>   0.916   0.017   0.999
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.001   0.000   1.559
+#>   0.002   0.000   1.396
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.005   0.000   0.694
+#>   0.006   0.001   0.539
 stopCluster(cl)
 
 ## parallel forking
@@ -174,5 +174,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.533   0.161   0.751
+#>   0.005   0.006   0.610
 ```
