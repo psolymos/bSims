@@ -95,7 +95,7 @@ function(
         movement=movement,
         avoid=a)
       ## add here tessellation based rules
-      if (!allow_overlap) {
+      if (!allow_overlap && !is.null(x$tess)) {
         ## identify tile id for locations
         ti <- sapply(seq_len(nrow(e)), function(j)
           which.tile(e$x[j]+x$nest$x[i], e$y[j]+x$nest$y[i], x$tess$tile_list))

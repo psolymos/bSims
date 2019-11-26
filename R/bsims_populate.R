@@ -20,7 +20,7 @@ function(
   if (!all(round(N) == N))
     stop("abund_fun must return integers")
   if (any(N < 0))
-    stop("abund_fun must return positive integers")
+    stop("abund_fun must return non-negative integers")
   if (any(is.na(N)))
     stop("abund_fun must not return NA values")
   if (any(is.infinite(N)))
@@ -45,8 +45,12 @@ function(
   d <- d[,c("i", "s", "x", "y")]
   x$nests <- d
   ## tessellation
-  x$tess <- deldir(x$nests$x, x$nests$y, suppressMsge=TRUE)
-  x$tess$tile_list <- tile.list(x$tess)
+  if (sum(N) > 0) {
+    x$tess <- deldir(x$nests$x, x$nests$y, suppressMsge=TRUE)
+    x$tess$tile_list <- tile.list(x$tess)
+  } else {
+    x$tess <- NULL
+  }
   #x$abund_fun <- abund_fun
   #x$xy_fun <- xy_fun
   x$abundance <- N

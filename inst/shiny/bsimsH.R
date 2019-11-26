@@ -309,7 +309,7 @@ server <- function(input, output) {
   output$plot_ani <- renderPlot({
     op <- par(mar=c(0,0,0,0))
     plot(b())
-    if (input$show_tess)
+    if (input$show_tess && !is.null(b()$tess))
       plot(b()$tess, TRUE, "tess", "none", col="grey", lty=1)
     par(op)
   })
