@@ -36,15 +36,22 @@ bsims_all <- function(...) {
     Settings <- Settings[[1L]]
   out <- list()
   out$settings <- function() Settings
-  out$new <- function() .bsims_all(Settings)
-  out$replicate <- function(B=1, cl=NULL)  {
+  out$new <- function(recover=FALSE) {
+    if (recover)
+      try(.bsims_all(Settings)) else .bsims_all(Settings)
+  }
+  out$replicate <- function(B=1, recover=FALSE, cl=NULL)  {
     if (!is.null(cl) && inherits(cl, "cluster")) {
       isLoaded <- all(unlist(clusterEvalQ(cl, "bSims" %in% .packages())))
       if (!isLoaded)
         clusterEvalQ(cl, library(bSims))
-      clusterExport(cl, ".bsims_all")
+      clusterExport(cl, c(".bsims_all"))
     }
-    z <- pbreplicate(B, .bsims_all(Settings), simplify=FALSE, cl=cl)
+    z <- if (recover) {
+      pbreplicate(B, try(.bsims_all(Settings)), simplify=FALSE, cl=cl)
+    } else {
+      pbreplicate(B, .bsims_all(Settings), simplify=FALSE, cl=cl)
+    }
     if (!is.null(cl) && inherits(cl, "cluster")) {
       clusterEvalQ(cl, rm(.bsims_all))
       if (!isLoaded)

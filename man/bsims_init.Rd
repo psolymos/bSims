@@ -163,7 +163,8 @@ preceding layers intact. Construction allows easy piping.
 \code{get_table} returns the removal table.
 
 \code{bsims_all} returns a closure with
-\code{$settings()}, \code{$new()}, and \code{$replicate(B, cl=NULL)}
+\code{$settings()}, \code{$new(recover = FALSE)},
+and \code{$replicate(B, recover = FALSE, cl = NULL)}
 functions. The settings function returns the input arguments as a list,
 the new function returns a single transcript object.
 The replicate function takes an argument for the
@@ -171,6 +172,8 @@ number of replicates (\code{B}) and returns a list of transcript objects.
 The \code{cl} argument is used to parallelize the work,
 can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.
+`recover = TRUE` argument allows to run extensive simulations with error
+catching based on \code{link{try}}.
 
 Note that simulated objects returned by \code{bsims_all}
 will contain different realizations and all the conditionally
