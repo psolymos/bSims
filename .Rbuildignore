@@ -13,3 +13,4 @@ appveyor.yml
 ^CODE_OF_CONDUCT\.md$
 .png
 .gif
+^inst/tmp$
