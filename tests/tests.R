@@ -8,8 +8,7 @@ help_pages <- c(
     "bsims_init",
     "dist_fun2",
     "events",
-    #"get_events",
-    #"plot.bsims_landscape",
+    "expand_list",
     "rlnorm2",
     "rmvn")
 
