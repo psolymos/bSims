@@ -1,11 +1,12 @@
 \name{dist_fun2}
 \alias{dist_fun2}
 \title{
-Half-Normal distance function with segmented attenuation
+Distance function with segmented attenuation
 }
 \description{
 Distance function with segmented attenuation
-depending in 3 strata (habitat, edge, road)
+crossing a number of boundaries of strata
+with different attenuation charactersitics.
 }
 \usage{
 dist_fun2(d, tau, dist_fun, b = numeric(0))
@@ -15,34 +16,40 @@ dist_fun2(d, tau, dist_fun, b = numeric(0))
 distance from observer.
 }
   \item{tau}{
-a parameter passed to the the distance function, need to be in 1-3 in length
-referring to distance function parameters in the 3 strata.
+a parameter passed to the the distance function.
+Length of \code{tau} must equal \code{length(b) + 1}
+referring to distance function parameters in the different strata
+(a stratum is defined by an interval surrounded by 1 or 2 boundaries).
 }
   \item{dist_fun}{
-distance funciton taking two arguments: for distance, and \code{tau}, see examples.
+distance funciton taking two arguments: distance, and \code{tau}, see examples.
 }
   \item{b}{
-distance breakpoints, must be \code{length(tau)-1} in length.
+distance breakpoints, must be \code{length(tau) - 1} in length.
+These breakpoints represent the boundaries between the intervals
+characterized by homogeneous attenuation characteristics.
 }
 }
 \value{
-Probability of detection given distance, strata specific parameters and breakpoints.
+Probability of detection given the distance, stratum specific parameters
+and the arrangement of breakpoints.
 }
 \author{
 Peter Solymos
 }
 \examples{
-tau <- c(1,2,3,2,1)
+tau <- c(1, 2, 3, 2, 1)
 d <- seq(0, 4, 0.01)
 dist_fun <- function(d, tau) exp(-(d/tau)^2) # half normal
 #dist_fun <- function(d, tau) exp(-d/tau) # exponential
 #dist_fun <- function(d, tau) 1-exp(-(d/tau)^-2) # hazard rate
 
-b <- c(0.5, 1, 1.5, 2) # points at the HER boundaries
+b <- c(0.5, 1, 1.5, 2) #  boundaries
 
-op <- par(mfrow=c(2,1))
+op <- par(mfrow=c(2, 1))
 plot(d, dist_fun2(d, tau[1], dist_fun), type="n",
-  ylab="P(detection)", xlab="Distance", axes=FALSE)
+  ylab="P(detection)", xlab="Distance", axes=FALSE,
+  main="Sound travels from left to right")
 axis(1)
 axis(2)
 for (i in seq_len(length(b)+1)) {
@@ -59,7 +66,8 @@ lines(d, dist_fun2(d, tau[3], dist_fun))
 lines(d, dist_fun2(d, tau, dist_fun, b), col=2, lwd=3)
 
 plot(rev(d), dist_fun2(d, tau[1], dist_fun), type="n",
-  ylab="P(detection)", xlab="Distance", axes=FALSE)
+  ylab="P(detection)", xlab="Distance", axes=FALSE,
+  main="Sound travels from right to left")
 axis(1)
 axis(2)
 for (i in seq_len(length(b)+1)) {

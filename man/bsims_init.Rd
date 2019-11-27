@@ -221,6 +221,7 @@ b$new()
 bb <- b$replicate(3)
 lapply(bb, get_table)
 
+\dontrun{
 ## parallel simulations
 library(parallel)
 b <- bsims_all(density=0.5)
@@ -238,6 +239,6 @@ stopCluster(cl)
 if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
-
+}
 }
 \keyword{ datagen }
