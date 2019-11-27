@@ -1,7 +1,15 @@
 library(shiny)
 
+
 ui <- navbarPage("bSims",
   tabPanel("Detection function (H)",
+    tagList(
+      singleton(
+        tags$head(
+          tags$script(src = 'clipboard.min.js')
+        )
+      )
+    ),
     plotOutput(outputId = "plot_dfun"),
     hr(),
     column(6,
@@ -11,7 +19,8 @@ ui <- navbarPage("bSims",
       sliderInput("rmax", "r max", 0, 10, 2, 0.25)
     ),
     column(6,
-      verbatimTextOutput("settings")
+      verbatimTextOutput("settings"),
+      uiOutput("clip")
     )
   )
 )
@@ -32,7 +41,7 @@ server <- function(input, output) {
       border=NA, col="darkolivegreen1")
     lines(d, g(d), col=2, lwd=3)
   })
-  output$settings <- renderText({
+  getset <- reactive({
     c(
       "dist_fun <- function(d, tau) {",
       {if (input$hazard) {
@@ -41,6 +50,22 @@ server <- function(input, output) {
         paste0("\n  exp(-(d/tau)^", input$b, ")", collapse="")
       }},
       "\n}"
+    )
+  })
+  output$settings <- renderText({
+    getset()
+  })
+  output$clip <- renderUI({
+    tagList(
+      actionButton("clipbtn",
+        label = "Copy settings to clipboard",
+        icon = icon("clipboard"),
+        `data-clipboard-text` = paste(
+          getset(),
+          collapse="")
+      ),
+      tags$script(
+        'new ClipboardJS(".btn", document.getElementById("clipbtn") );')
     )
   })
 }

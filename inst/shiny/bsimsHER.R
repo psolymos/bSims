@@ -120,7 +120,6 @@ ui <- navbarPage("bSims (HER)",
       sliderInput("tauH", "EDR in habitat stratum", 0, 5, 1, 0.25),
       sliderInput("tauE", "EDR in edge stratum", 0, 5, 1, 0.25),
       sliderInput("tauR", "EDR in road stratum", 0, 5, 1, 0.25),
-#      sliderInput("repel", "Repel distance", 0, 2, 0, 0.1),
       radioButtons("event", "Event type",
         c("Vocalization"="vocal",
           "Movement"="move",
@@ -154,8 +153,16 @@ ui <- navbarPage("bSims (HER)",
     )
   ),
   tabPanel("Settings",
+    tagList(
+      singleton(
+        tags$head(
+          tags$script(src = 'clipboard.min.js')
+        )
+      )
+    ),
     column(12,
-      verbatimTextOutput("settings")
+      verbatimTextOutput("settings"),
+      uiOutput("clip")
     )
   )
 )
@@ -361,6 +368,19 @@ server <- function(input, output) {
   })
   output$settings <- renderText({
     getset()
+  })
+  output$clip <- renderUI({
+    tagList(
+      actionButton("clipbtn",
+        label = "Copy settings to clipboard",
+        icon = icon("clipboard"),
+        `data-clipboard-text` = paste(
+          getset(),
+          collapse="")
+      ),
+      tags$script(
+        'new ClipboardJS(".btn", document.getElementById("clipbtn") );')
+    )
   })
 }
 

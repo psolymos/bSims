@@ -115,7 +115,6 @@ ui <- navbarPage("bSims (H)",
         c("Half Normal"="halfnormal",
           "Negative Exponential"="negexp",
           "Hazard rate"="hazrate")),
-#      sliderInput("repel", "Repel distance", 0, 2, 0, 0.1),
       radioButtons("event", "Event type",
         c("Vocalization"="vocal",
           "Movement"="move",
@@ -149,8 +148,16 @@ ui <- navbarPage("bSims (H)",
     )
   ),
   tabPanel("Settings",
+    tagList(
+      singleton(
+        tags$head(
+          tags$script(src = 'clipboard.min.js')
+        )
+      )
+    ),
     column(12,
-      verbatimTextOutput("settings")
+      verbatimTextOutput("settings"),
+      uiOutput("clip")
     )
   )
 )
@@ -349,6 +356,19 @@ server <- function(input, output) {
   })
   output$settings <- renderText({
     getset()
+  })
+  output$clip <- renderUI({
+    tagList(
+      actionButton("clipbtn",
+        label = "Copy settings to clipboard",
+        icon = icon("clipboard"),
+        `data-clipboard-text` = paste(
+          getset(),
+          collapse="")
+      ),
+      tags$script(
+        'new ClipboardJS(".btn", document.getElementById("clipbtn") );')
+    )
   })
 }
 

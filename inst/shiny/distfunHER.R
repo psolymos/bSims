@@ -3,6 +3,13 @@ library(bSims)
 
 ui <- navbarPage("bSims",
   tabPanel("Detection function (HER)",
+    tagList(
+      singleton(
+        tags$head(
+          tags$script(src = 'clipboard.min.js')
+        )
+      )
+    ),
     plotOutput(outputId = "plot_dfun"),
     hr(),
     column(6,
@@ -17,7 +24,8 @@ ui <- navbarPage("bSims",
       uiOutput("breaks")
     ),
     column(12,
-      verbatimTextOutput("settings")
+      verbatimTextOutput("settings"),
+      uiOutput("clip")
     )
   )
 )
@@ -60,7 +68,7 @@ server <- function(input, output) {
     req(d, tau, g, br)
     lines(d, dist_fun2(d, tau, g, br), col=2, lwd=3)
   })
-  output$settings <- renderText({
+  getset <- reactive({
     c(
       "dist_fun <- function(d, tau) {",
       {if (input$hazard) {
@@ -71,7 +79,22 @@ server <- function(input, output) {
       "\n}"
     )
   })
-  output$z <- renderText({"z"})
+  output$settings <- renderText({
+    getset()
+  })
+  output$clip <- renderUI({
+    tagList(
+      actionButton("clipbtn",
+        label = "Copy settings to clipboard",
+        icon = icon("clipboard"),
+        `data-clipboard-text` = paste(
+          getset(),
+          collapse="")
+      ),
+      tags$script(
+        'new ClipboardJS(".btn", document.getElementById("clipbtn") );')
+    )
+  })
 }
 
 shinyApp(ui = ui, server = server)
