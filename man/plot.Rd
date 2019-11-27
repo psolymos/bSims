@@ -21,7 +21,8 @@ Plot methods for different bSims objects.
 }
 \usage{
 \method{plot}{bsims_landscape}(x,
-  col, xlim = NULL, ylim = NULL, ...)
+  col_H, col_E, col_R,
+  xlim = NULL, ylim = NULL, ...)
 
 \method{plot}{bsims_population}(x,
   pch_nest, col_nest, cex_nest, ...)
@@ -72,7 +73,10 @@ col2hex(col, alpha = FALSE)
 simulation object.
 }
   \item{col}{
-stratum colors.
+color values.
+}
+  \item{col_H, col_E, col_R}{
+color values for the Habitat, Edge, and Road strata.
 }
   \item{event_type}{
 type of events to access.
