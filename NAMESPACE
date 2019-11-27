@@ -8,7 +8,7 @@ export("bsims_all",
   "expand_list",
   "run_app")
 
-export(".bsims_all")
+export(".bsims_all", ".bsims_theme")
 #export(".draw_ellipse", ".get_raw_events")
 
 importFrom("graphics", "lines", "par", "plot", "points", "polygon",

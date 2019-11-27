@@ -14,40 +14,39 @@
 \alias{plot.bsims_events_table}
 \alias{plot.bsims_detections_table}
 \title{
-Plot methods for populations
+Plot methods
 }
 \description{
-Plotting functionalities.
+Plot methods for different bSims objects.
 }
 \usage{
 \method{plot}{bsims_landscape}(x,
-  col = c("darkolivegreen1", "burlywood1", "lightgrey"),
-  xlim = NULL, ylim = NULL, ...)
+  col, xlim = NULL, ylim = NULL, ...)
 
-\method{plot}{bsims_population}(x, pch_nest=3,
-  col_nest="darkgreen", cex_nest=1, ...)
+\method{plot}{bsims_population}(x,
+  pch_nest, col_nest, cex_nest, ...)
 
 \method{plot}{bsims_events}(x,
   event_type=c("vocal", "move", "both"), tlim = NULL,
-  pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
-  pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
-  lty_move = 1, col_move = "orange", lwd_move = 1, ...)
+  pch_nest, col_nest, cex_nest,
+  pch_vocal, col_vocal, cex_vocal,
+  lty_move, col_move, lwd_move, ...)
 
 \method{plot}{bsims_detections}(x,
   event_type=NULL, tlim = NULL,
-  pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
-  pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
-  lty_move = 1, col_move = "orange", lwd_move = 1,
-  lty_det = 1, col_det = "black", lwd_det = 1,
+  pch_nest, col_nest, cex_nest,
+  pch_vocal, col_vocal, cex_vocal,
+  lty_move, col_move, lwd_move,
+  lty_det, col_det, lwd_det,
   condition = "event1", ...)
 
 \method{plot}{bsims_transcript}(x,
-  pch_nest = 3, col_nest = "darkgreen", cex_nest = 1,
-  pch_vocal = 21, col_vocal = "blue", cex_vocal = 0.5,
-  lty_move = 1, col_move = "orange", lwd_move = 1,
-  lty_det = 1, col_det = "black", lwd_det = 1,
+  pch_nest, col_nest, cex_nest,
+  pch_vocal, col_vocal, cex_vocal,
+  lty_move, col_move, lwd_move,
+  lty_det, col_det, lwd_det,
   show_tint=TRUE, show_rint=TRUE,
-  col_tint="red", col_rint="red", ...)
+  col_tint, col_rint, ...)
 
 \method{lines}{bsims_events}(x, tlim = NULL, ...)
 \method{lines}{bsims_detections}(x,
@@ -76,51 +75,64 @@ simulation object.
 stratum colors.
 }
   \item{event_type}{
-type of events to access. Value is inferred from the input object when \code{NULL}.
+type of events to access.
+The value is inferred from the input object when \code{NULL}.
 }
   \item{xlim, ylim, tlim}{
 x, y, time intervals.
 }
   \item{xlab, ylab}{
-x and y labels.
+x and y axis labels.
 }
   \item{pch_nest, col_nest, cex_nest}{
-nest.
+visual characteristics of nest locations.
 }
   \item{pch_vocal, col_vocal, cex_vocal}{
-vocal.
+characteristics of vocalization events.
 }
   \item{lty_move, col_move, lwd_move}{
-movement.
+characteristics of movement events.
 }
   \item{lty_det, col_det, lwd_det}{
-detection.
+characteristics of detection events.
 }
   \item{alpha}{
 alpha channel for colors.
 }
   \item{show_tint, show_rint}{
-time and distance intervals to be shown or not.
+whether time and distance intervals should be displayed.
 }
   \item{col_tint, col_rint}{
-color for time and distance intervals.
+colors for time and distance intervals.
 }
   \item{condition}{
 conditioning type to define availability for each individual,
 see \code{\link{bsims_detect}}.
 }
   \item{type}{
-what to put on the x axis: time or distance.
+what the x axis should be: time or distance.
 }
   \item{\dots}{
 other graphical arguments.
 }
 }
+\details{
+The main plotting functions use a theme defined in \code{.bsims_theme}.
+Overriding these defaults allows customization.
+}
+\value{
+These plotting functions are called for their side effects
+and silently return the input object.
+
+\code{col2hex} is modelled after \code{\link{col2rgb}}
+and returns a character vector giving hexadecimal color codes with
+or without alpha channel values.
+}
 \author{
 Peter Solymos
 }
 \seealso{
-\code{\link{bsims_init}}
+\code{\link{bsims_init}}, \code{\link{col2rgb}}
 }
 \examples{
 col2hex(c(blu = "royalblue", reddish = "tomato"), alpha = FALSE)

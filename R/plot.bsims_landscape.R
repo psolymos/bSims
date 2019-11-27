@@ -1,7 +1,9 @@
 plot.bsims_landscape <-
-function(x,
-  col=c("darkolivegreen1", "burlywood1", "lightgrey"),
-  xlim=NULL, ylim=NULL, ...) {
+function(x, col, xlim=NULL, ylim=NULL, ...) {
+
+  if (missing(col))
+    col <- .bsims_theme$col
+
   A <- diff(x$strata) * diff(range(x$strata))
   A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
   names(A) <- c("H", "E", "R")

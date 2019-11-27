@@ -141,6 +141,14 @@
   "ka-ka-ka-kowp-kowp-kowp",
   "tsyoo-tsyoo-tsyoo-tsyoo")
 
+.bsims_theme <- list(
+  col=c(H="darkolivegreen1", E="burlywood1", R="lightgrey"),
+  pch_nest = 3,   col_nest = "darkgreen", cex_nest = 1,
+  pch_vocal = 21, col_vocal = "blue",     cex_vocal = 0.5,
+  lty_move = 1,   col_move = "orange",    lwd_move = 1,
+  lty_det = 1,    col_det = "black",      lwd_det = 1,
+  col_tint="red", col_rint="red")
+
 .onAttach <- function(libname, pkgname){
   ver <- read.dcf(file=system.file("DESCRIPTION", package=pkgname),
     fields=c("Version", "Date"))
