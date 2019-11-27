@@ -7,6 +7,7 @@ lty_move, col_move, lwd_move,
 lty_det, col_det, lwd_det,
 condition="event1", ...) {
 
+  .bsims_theme <- getOption("bsims_theme")
   if (missing(pch_nest))
     pch_nest <- .bsims_theme$pch_nest
   if (missing(col_nest))

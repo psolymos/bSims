@@ -5,6 +5,7 @@ pch_vocal, col_vocal, cex_vocal,
 lty_move, col_move, lwd_move,
 ...) {
 
+  .bsims_theme <- getOption("bsims_theme")
   if (missing(pch_nest))
     pch_nest <- .bsims_theme$pch_nest
   if (missing(col_nest))

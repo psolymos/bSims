@@ -1,6 +1,7 @@
 plot.bsims_population <-
 function(x, pch_nest, col_nest, cex_nest, ...) {
 
+  .bsims_theme <- getOption("bsims_theme")
   if (missing(pch_nest))
     pch_nest <- .bsims_theme$pch_nest
   if (missing(col_nest))

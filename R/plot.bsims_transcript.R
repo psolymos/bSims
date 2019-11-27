@@ -8,6 +8,7 @@ show_tint=TRUE, show_rint=TRUE,
 col_tint, col_rint,
 ...) {
 
+  .bsims_theme <- getOption("bsims_theme")
   if (missing(pch_nest))
     pch_nest <- .bsims_theme$pch_nest
   if (missing(col_nest))

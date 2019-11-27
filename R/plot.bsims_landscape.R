@@ -1,6 +1,7 @@
 plot.bsims_landscape <-
 function(x, col, xlim=NULL, ylim=NULL, ...) {
 
+  .bsims_theme <- getOption("bsims_theme")
   if (missing(col))
     col <- .bsims_theme$col
 
