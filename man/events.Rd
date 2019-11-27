@@ -16,13 +16,13 @@ timetoevent(rate, duration)
 events(vocal_rate = 1, move_rate = 1, duration = 10,
   movement = 0, avoid = c(0, 0))
 }
+\arguments{
   \item{rate}{
 rate for the exponential distribution (\code{\link{rexp}}).
 }
   \item{duration}{
 total time duration to consider (in minutes).
 }
-\arguments{
   \item{vocal_rate}{
 vocal rate for exponential distribution (\code{\link{rexp}}),
 how often a vocal event happens per minute.
