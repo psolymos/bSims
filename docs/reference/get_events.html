@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Access events or detections from simulation object — get_events • bSims</title>
+<title>Access events or detections — get_events • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
 
 
-<meta property="og:title" content="Access events or detections from simulation object — get_events" />
+<meta property="og:title" content="Access events or detections — get_events" />
 
 <meta property="og:description" content="Access events or detections from simulation object." />
 <meta name="twitter:card" content="summary" />
@@ -91,9 +91,6 @@
     <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -121,7 +118,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Access events or detections from simulation object</h1>
+    <h1>Access events or detections</h1>
     
     <div class="hidden name"><code>get_events.Rd</code></div>
     </div>
@@ -152,9 +149,9 @@
     <tr>
       <th>condition</th>
       <td><p>conditioning type to define availability for each individual:
-<code>"event1"</code>: the 1st event;
+<code>"event1"</code>: the 1st event (detected or not);
 <code>"det1"</code>: the 1st detection;
-<code>"alldet"</code>: all detections (count same individual multiple times).</p></td>
+<code>"alldet"</code>: all detections (counting the same individual multiple times).</p></td>
     </tr>
     <tr>
       <th>tlim</th>
@@ -162,8 +159,9 @@
     </tr>
     <tr>
       <th>perception</th>
-      <td><p>perceived number of individuals relative to the actual number of individuals
-(a non-negative number, &lt;1 values lead to under counting, &gt;1 values lead to over counting),
+      <td><p>perceived number of individuals relative to the actual number of individuals.
+A non-negative number (&lt;1 values lead to under counting,
+&gt;1 values lead to over counting),
 or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
     </tr>
     </table>

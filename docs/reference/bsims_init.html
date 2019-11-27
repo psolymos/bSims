@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bSims functions — bsims_init • bSims</title>
+<title>bSims simulation functions — bsims_init • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
 
 
-<meta property="og:title" content="bSims functions — bsims_init" />
+<meta property="og:title" content="bSims simulation functions — bsims_init" />
 
 <meta property="og:description" content="Functions to initialize, populate, animate, detect, and transcribe
 simulated birds in a point count." />
@@ -92,9 +92,6 @@ simulated birds in a point count." />
     <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -122,7 +119,7 @@ simulated birds in a point count." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bSims functions</h1>
+    <h1>bSims simulation functions</h1>
     
     <div class="hidden name"><code>bsims_init.Rd</code></div>
     </div>
@@ -176,7 +173,7 @@ simulated birds in a point count.</p>
     </tr>
     <tr>
       <th>road</th>
-      <td><p>half width of the road stratum (parallel to the y axis).</p></td>
+      <td><p>half width of the road stratum (perpendicular to the y axis).</p></td>
     </tr>
     <tr>
       <th>edge</th>
@@ -192,7 +189,8 @@ simulated birds in a point count.</p>
     </tr>
     <tr>
       <th>density</th>
-      <td><p>population density, D, recycled 3x for HER</p></td>
+      <td><p>population density, D, recycled 3x for the 3 strata
+(H: habitat, E: edge, R: road).</p></td>
     </tr>
     <tr>
       <th>abund_fun</th>
@@ -200,74 +198,89 @@ simulated birds in a point count.</p>
     </tr>
     <tr>
       <th>xy_fun</th>
-      <td><p>function to simulate nest locations, see <code><a href='acceptreject.html'>acceptreject</a></code>.
-<code>NULL</code> is complete spatial randomness</p></td>
+      <td><p>function used to simulate nest locations, see <code><a href='acceptreject.html'>acceptreject</a></code>.
+The function should return probability (value between 0 and 1),
+<code>NULL</code> means complete spatial randomness.</p></td>
     </tr>
     <tr>
       <th>margin, maxit, fail</th>
-      <td><p>arguments passed to <code>xy_fun</code>, see <code><a href='acceptreject.html'>acceptreject</a></code>.</p></td>
+      <td><p>arguments passed to <code><a href='acceptreject.html'>acceptreject</a></code> when using <code>xy_fun</code>
+to simulate nest locations.</p></td>
     </tr>
     <tr>
       <th>vocal_rate, move_rate</th>
       <td><p>Vocal and movement rates (see <code><a href='events.html'>events</a></code>).
-Rate can be a single number, a vector matching length of mixture,
-vector of length 3 with mixture=1 (corresponding to HER strata),
-or a matrix of 3 x mixture (HER + groups).</p></td>
+Both of these rates can be: a single number;
+a vector of length <code><a href='https://rdrr.io/r/base/length.html'>length(mixture)</a></code> (behaviour based finite mixture groups);
+a vector of length 3 with <code>mixture=1</code> (corresponding to HER strata);
+or a matrix of dimension 3 x <code><a href='https://rdrr.io/r/base/length.html'>length(mixture)</a></code>
+(HER strata x number of behaviour based groups).</p></td>
     </tr>
     <tr>
-      <th>movement, duration</th>
-      <td><p>arguments passed to <code><a href='events.html'>events</a></code>.</p></td>
+      <th>duration</th>
+      <td><p>total time duration to consider (in minutes), passed to <code><a href='events.html'>events</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>movement</th>
+      <td><p>standard deviation for a bivariate Normal kernel to simulate
+locations centered at the nest location, passed to <code><a href='events.html'>events</a></code>.</p></td>
     </tr>
     <tr>
       <th>mixture</th>
-      <td><p>finite mixture group proportions, can be a matrix referring
-population segments.</p></td>
+      <td><p>behaviour based finite mixture group proportions.</p></td>
     </tr>
     <tr>
       <th>avoid</th>
-      <td><p>strata to avoid by movement.</p></td>
+      <td><p>range along the x axis to avoid with respect to movement locations,
+passed to <code><a href='events.html'>events</a></code>.</p></td>
     </tr>
     <tr>
       <th>initial_location</th>
-      <td><p>logical, <code>move_rate</code> and <code>vocal_rate</code> silently ignored if <code>TRUE</code>
-and nest location is provided as part of the events table,
-this renders all individuals equally available for detection.</p></td>
+      <td><p>logical, <code>move_rate</code> and <code>vocal_rate</code> are
+silently ignored if <code>TRUE</code>
+and nest locations are provided as part of the events table.
+This renders all individuals equally available for detection.</p></td>
     </tr>
     <tr>
       <th>allow_overlap</th>
-      <td><p>logical, allows overlap between neighbor nests when movement is involved.
-If <code>FALSE</code>, Voronoi tessellation is used to prevent overlap.</p></td>
+      <td><p>logical, allowing overlap between neighboring nests when movement is involved.
+If <code>FALSE</code>, Voronoi tessellation is used to prevent overlap.
+If <code>TRUE</code>, the unconstrained bivariate Normal kernel is used.</p></td>
     </tr>
     <tr>
       <th>xy</th>
-      <td><p>position of the observer.</p></td>
+      <td><p>a vector of x and y coordinates describing the position of the observer.</p></td>
     </tr>
     <tr>
       <th>tau</th>
-      <td><p>parameter of the distance function.</p></td>
+      <td><p>parameter of the distance function.
+Can be a single numeric value or a vector of length 3
+to provide parameter in the 3 strata (H: habitat, E: edge, R: road).
+Segmented sound attenuation is used when the values are different
+in the 3 strata (see <code><a href='dist_fun2.html'>dist_fun2</a></code>).</p></td>
     </tr>
     <tr>
       <th>dist_fun</th>
-      <td><p>distance function (1st argument is distance, second is tau).</p></td>
+      <td><p>distance function (1st argument is distance, second is <code>tau</code>).</p></td>
     </tr>
     <tr>
       <th>event_type</th>
-      <td><p>type of events to access. Inferred from input object when <code>NULL</code>.</p></td>
+      <td><p>type of events to access (vocal, movement, or both).</p></td>
     </tr>
     <tr>
       <th>tint</th>
-      <td><p>time interval break points.</p></td>
+      <td><p>time interval break points in minutes.</p></td>
     </tr>
     <tr>
       <th>rint</th>
-      <td><p>distance interval break points.</p></td>
+      <td><p>distance interval break points in units of 100 meter.</p></td>
     </tr>
     <tr>
       <th>condition</th>
       <td><p>conditioning type to define availability for each individual:
-<code>"event1"</code>: the 1st event;
+<code>"event1"</code>: the 1st event (detected or not);
 <code>"det1"</code>: the 1st detection;
-<code>"alldet"</code>: all detections (count same individual multiple times).</p></td>
+<code>"alldet"</code>: all detections (counting the same individual multiple times).</p></td>
     </tr>
     <tr>
       <th>error</th>
@@ -276,26 +289,36 @@ see <code><a href='rlnorm2.html'>rlnorm2</a></code>.</p></td>
     </tr>
     <tr>
       <th>perception</th>
-      <td><p>perceived number of individuals relative to the actual number of individuals
-(a non-negative number, &lt;1 values lead to under counting, &gt;1 values lead to over counting),
+      <td><p>perceived number of individuals relative to the actual number of individuals.
+A non-negative number (&lt;1 values lead to under counting,
+&gt;1 values lead to over counting),
 or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>character, the type of table to return: removal or visits.</p></td>
+      <td><p>character, the type of table to return:
+<code>"removal"</code> includes only new individuals as time progresses,
+<code>"visits"</code> counts individuals in each time interval independent
+of each other.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments passed to underlying functions. For <code>bsims_all</code> wrapper, it is all
-the arguments (except for <code>x</code>) that the underlying <code>bsims_*</code> functions have. <code>bsims_all</code> can also take a single list as argument.</p></td>
+      <td><p>other arguments passed to underlying functions.
+For the <code>bsims_all</code> wrapper, it means all
+the arguments (except for <code>x</code>) that the underlying
+<code>bsims_*</code> functions have. <code>bsims_all</code> can also take a single
+list as its argument.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The functions are supposed to be called in sequence,
+    <p>The functions capturing the simulation layers
+are supposed to be called in sequence,
 allowing to simulate multiple realities by keeping
-preceding layers intact. Construction allows easy piping.</p>
+preceding layers intact. Construction allows easy piping.
+The <code>bsims_all</code> function is a wrapper for the <code>bsims_*</code>
+layer functions.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -306,14 +329,18 @@ preceding layers intact. Construction allows easy piping.</p>
 <p><code>bsims_transcribe</code> returns a transcript object.</p>
 <p><code>get_table</code> returns the removal table.</p>
 <p><code>bsims_all</code> returns a closure with
-<code>$settings()</code>, <code>$new()</code>, and <code>$replicate(B, cl=NULL)</code>
-functions. The settings function returns the input arguments as a list,
-the new function returns a single transcript object.
-The replicate function takes an argument for the
-number of replicates (<code>B</code>) and returns a list of transcript objects.
+<code>$settings()</code>, <code>$new(recover = FALSE)</code>,
+and <code>$replicate(B, recover = FALSE, cl = NULL)</code>
+functions. The settings function returns the input arguments as a list;
+the new function returns a single transcript object;
+the replicate function takes an argument for the
+number of replicates (<code>B</code>) and returns a list of transcript objects
+with B elements.
 The <code>cl</code> argument is used to parallelize the work,
 can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
-see examples.</p>
+see examples.
+The `recover = TRUE` argument allows to run simulations with error
+catching based on <code>link{try}</code>.</p>
 <p>Note that simulated objects returned by <code>bsims_all</code>
 will contain different realizations and all the conditionally
 independent layers. Use a layered approach if former layers are meant
@@ -322,8 +349,9 @@ to be kept identical across runs.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='acceptreject.html'>acceptreject</a></code>, <code><a href='events.html'>events</a></code>,
-<code><a href='get_events.html'>get_events</a></code>, <code><a href='get_events.html'>get_detections</a></code>,
-plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p></div>
+<code><a href='get_events.html'>get_events</a></code>, <code><a href='get_events.html'>get_detections</a></code></p>
+<p>Plotting functions: <code><a href='plot.html'>plot.bsims_landscape</a></code></p>
+<p>Shiny apps: <code><a href='run_app.html'>run_app</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -337,47 +365,47 @@ plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p
 #&gt;   stratification: HER</div><div class='input'>(<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_populate</span>(<span class='no'>l</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; bSims population
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
-#&gt;   total abundance: 92</div><div class='input'>(<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_animate</span>(<span class='no'>p</span>, <span class='kw'>vocal_rate</span><span class='kw'>=</span><span class='no'>phi</span>, <span class='kw'>duration</span><span class='kw'>=</span><span class='no'>dur</span>))</div><div class='output co'>#&gt; bSims events
+#&gt;   total abundance: 89</div><div class='input'>(<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_animate</span>(<span class='no'>p</span>, <span class='kw'>vocal_rate</span><span class='kw'>=</span><span class='no'>phi</span>, <span class='kw'>duration</span><span class='kw'>=</span><span class='no'>dur</span>))</div><div class='output co'>#&gt; bSims events
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
-#&gt;   total abundance: 92
+#&gt;   total abundance: 89
 #&gt;   duration: 10 min</div><div class='input'>(<span class='no'>o</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_detect</span>(<span class='no'>a</span>, <span class='kw'>tau</span><span class='kw'>=</span><span class='no'>tau</span>))</div><div class='output co'>#&gt; bSims detections
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
-#&gt;   total abundance: 92
+#&gt;   total abundance: 89
 #&gt;   duration: 10 min
-#&gt;   detected: 31 heard</div><div class='input'>(<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_transcribe</span>(<span class='no'>o</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>))</div><div class='output co'>#&gt; bSims transcript
+#&gt;   detected: 32 heard</div><div class='input'>(<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_transcribe</span>(<span class='no'>o</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>))</div><div class='output co'>#&gt; bSims transcript
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
-#&gt;   total abundance: 92
+#&gt;   total abundance: 89
 #&gt;   duration: 10 min
-#&gt;   detected: 31 heard
+#&gt;   detected: 32 heard
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
-#&gt; 0-50m         1      1       0
-#&gt; 50-100m       3      1       0
-#&gt; 100-150m      2      0       0
-#&gt; 150+m         5      0       0</div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"visits"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
-#&gt; 0-50m         1      2       1
-#&gt; 50-100m       3      3       4
-#&gt; 100-150m      2      0       1
-#&gt; 150+m         5      5       9</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='get_events.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='output co'>#&gt;           x          y           t v  i
-#&gt; 1  4.009796  1.7976807 0.003453022 1 70
-#&gt; 2  1.410808 -0.3245988 0.004115677 1 62
-#&gt; 3 -3.473786 -0.9058883 0.028479105 1  1
-#&gt; 4 -1.040369 -1.2016781 0.055751432 1 40
-#&gt; 5 -4.400550 -4.4406871 0.115042071 1 11
-#&gt; 6 -1.692110 -2.8050580 0.149915833 1  7</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>))</div><div class='output co'>#&gt;             x          y           t v         d  i  j
-#&gt; 2   1.4108078 -0.3245988 0.004115677 1 1.4476681 62 62
-#&gt; 4  -1.0403689 -1.2016781 0.055751432 1 1.5894647 40 40
-#&gt; 18  1.0733794 -2.2953770 0.341309576 1 2.5339493 58 58
-#&gt; 23  0.1282475 -0.2522818 0.449940288 1 0.2830080 48 48
-#&gt; 33  0.4799047  0.2999041 0.656589126 1 0.5659072 52 52
-#&gt; 52  0.9032164 -0.1727605 1.073981445 1 0.9195902 61 61</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 0-50m         0      0       0
+#&gt; 50-100m       2      0       0
+#&gt; 100-150m      2      1       0
+#&gt; 150+m         7      0       2</div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"visits"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
+#&gt; 0-50m         0      0       0
+#&gt; 50-100m       2      1       1
+#&gt; 100-150m      2      3       5
+#&gt; 150+m         7      6       6</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='get_events.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='output co'>#&gt;            x          y          t v  i
+#&gt; 1 -2.3401644 -2.8527517 0.03530175 1  9
+#&gt; 2 -2.2627545  0.5759206 0.03671147 1 10
+#&gt; 3 -0.0575831  2.5478251 0.05696669 1 52
+#&gt; 4 -2.6777408  4.0848588 0.08751628 1  4
+#&gt; 5  1.2101658  1.8188797 0.10244937 1 53
+#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>))</div><div class='output co'>#&gt;             x          y          t v         d  i  j
+#&gt; 3  -0.0575831  2.5478251 0.05696669 1 2.5484757 52 52
+#&gt; 6  -0.6398754  0.7921080 0.13954534 1 1.0182709 36 36
+#&gt; 8  -1.8415121 -0.1032800 0.17209894 1 1.8444060 21 21
+#&gt; 30 -0.2132248  0.4793912 0.63565147 1 0.5246720 42 42
+#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44
+#&gt; 62 -2.0270036 -1.3496067 1.35772910 1 2.4351965 28 28</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## wrapper function for all the bsims_* layers</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>road</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>)
 <span class='co'>## alternatively: supply a list</span>
@@ -397,52 +425,52 @@ plotting functions <code><a href='plot.html'>plot.bsims_landscape</a></code>.</p
 #&gt; </div><div class='input'><span class='no'>b</span>$<span class='fu'>new</span>()</div><div class='output co'>#&gt; bSims transcript
 #&gt;   1 km x 1 km
 #&gt;   stratification: HR
-#&gt;   total abundance: 47
+#&gt;   total abundance: 61
 #&gt;   duration: 10 min
-#&gt;   detected: 8 heard
+#&gt;   detected: 7 heard
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'><span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>3</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>bb</span>, <span class='no'>get_table</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
-#&gt; 50-100m       1      0       0
+#&gt; 50-100m       0      0       0
 #&gt; 100-150m      1      0       0
 #&gt; 150+m         0      0       0
 #&gt; 
 #&gt; [[2]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
-#&gt; 50-100m       2      0       0
+#&gt; 50-100m       1      0       0
 #&gt; 100-150m      0      0       0
 #&gt; 150+m         0      0       0
 #&gt; 
 #&gt; [[3]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
-#&gt; 50-100m       1      0       0
+#&gt; 50-100m       3      0       0
 #&gt; 100-150m      0      0       0
 #&gt; 150+m         0      0       0
 #&gt; </div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>## parallel simulations</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parallel</span>)
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>)
 <span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fl'>4</span>  <span class='co'># number of runs</span>
 <span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
 <span class='co'>## sequential</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.602   0.003   0.610 </div><div class='input'><span class='co'>## parallel clusters</span>
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))
+<span class='co'>## parallel clusters</span>
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span>(<span class='no'>nc</span>)
 <span class='co'>## note: loading the package is optional</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.001   0.000   1.366 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.006   0.000   0.464 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))
+<span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
 <span class='co'>## parallel forking</span>
 <span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
   <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>nc</span>))
-}</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.005   0.007   0.711 </div><div class='input'>
-</div></pre>
+}
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

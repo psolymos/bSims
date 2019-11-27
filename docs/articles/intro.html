@@ -56,9 +56,6 @@
 <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -135,7 +132,7 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; Loading required package: MASS</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; Loading required package: deldir</span></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; deldir 0.1-23</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; bSims 0.1-4   2019-11-22      peet-seeeeep</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; bSims 0.1-4   2019-11-22      veer-veer-veer-veer</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">phi &lt;-<span class="st"> </span><span class="fl">0.5</span>                 <span class="co"># singing rate</span></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">tau &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>                 <span class="co"># EDR by strata</span></a>
@@ -156,26 +153,26 @@
 <p><img src="intro_files/figure-html/gen-1.png" width="576"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/bsims_init.html">get_table</a></span>(x)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;          0-3min 3-5min 5-10min</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 0-50m         1      0       0</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; 50-100m       2      0       0</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 100-150m      1      0       1</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 150+m         5      2       0</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 0-50m         0      0       0</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; 50-100m       1      0       0</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 100-150m      1      1       0</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 150+m         9      3       0</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../reference/get_events.html">get_events</a></span>(a))</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;            x          y          t v  i</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 1  1.2858877  4.1163019 0.01671414 1 54</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 2  4.0694122  1.1655596 0.07250391 1 87</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 3  3.2209493  1.8648520 0.12206197 1 79</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 4 -0.7213338  0.3278765 0.13202802 1 36</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 5  1.9062295 -2.1817138 0.14871710 1 64</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 6 -1.5272440  0.7007578 0.23268680 1 32</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;            x          y           t v  i</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 1  3.8642367 -2.9472684 0.006027938 1 80</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 2 -3.1330255  0.3144894 0.038060688 1 42</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 3 -2.9695474  4.8548563 0.097478780 1 26</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 4  3.8642367 -2.9472684 0.160987542 1 80</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 5  0.9073181 -1.9795893 0.166915348 1 66</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 6  3.8926923 -4.4227712 0.169582218 1 85</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../reference/get_events.html">get_detections</a></span>(o))</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;              x           y         t v         d  i  j</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; 4  -0.72133380  0.32787649 0.1320280 1 0.7923544 36 36</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; 7  -0.62942960  1.94816492 0.2606090 1 2.0473222 40 40</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; 14  0.63723917 -1.14976789 0.3598231 1 1.3145493 49 49</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; 53 -0.02289133  0.26038767 1.3021201 1 0.2613920 41 41</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; 58 -0.56461472  3.10517534 1.3679124 1 3.1560899 39 39</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 69 -1.81733289  0.07086729 1.5056050 1 1.8187141 22 22</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;             x           y         t v        d  i  j</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; 8   1.2361159 -1.40286764 0.2269619 1 1.869765 69 69</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; 11 -0.4569557  2.36132795 0.2434847 1 2.405136 56 56</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; 23  0.4401659 -3.67573400 0.4541851 1 3.701995 60 60</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; 29 -1.5334777  0.02120768 0.6457541 1 1.533624 39 39</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; 34 -1.2221533  3.92748510 0.7688783 1 4.113247 50 50</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 35 -1.5205827  0.16110829 0.7814649 1 1.529094 43 43</span></a></code></pre></div>
 </div>
 <div id="single-habitat-case" class="section level3">
 <h3 class="hasAnchor">

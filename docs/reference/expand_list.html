@@ -91,9 +91,6 @@
     <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -148,6 +145,8 @@
     <p>A list containing one element for each combination of the supplied vectors
 and lists. The first factors vary fastest.
 The nested elements are labeled by the factors.</p>
+<p>The function allows list elements to be vectors, functions, or <code>NULL</code>.
+If a vector element is supposed to be kept as a vector, use <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -185,19 +184,19 @@ The nested elements are labeled by the factors.</p>
 #&gt;   ..$ rint    : num [1:4] 0.5 1 1.5 Inf
 #&gt;   ..$ xy_fun  :function (z)  
 #&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 4 23 4 35 23 35 4 4
-#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fbf005e54f0&gt; 
+#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fae38db6210&gt; 
 #&gt;  $ :List of 3
 #&gt;   ..$ movement: num 1
 #&gt;   ..$ rint    : num [1:4] 0.5 1 1.5 Inf
 #&gt;   ..$ xy_fun  :function (z)  
 #&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 4 23 4 35 23 35 4 4
-#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fbf005e54f0&gt; 
+#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fae38db6210&gt; 
 #&gt;  $ :List of 3
 #&gt;   ..$ movement: num 2
 #&gt;   ..$ rint    : num [1:4] 0.5 1 1.5 Inf
 #&gt;   ..$ xy_fun  :function (z)  
 #&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 4 23 4 35 23 35 4 4
-#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fbf005e54f0&gt; </div></pre>
+#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fae38db6210&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

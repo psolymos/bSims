@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Event time generator — events • bSims</title>
+<title>Event time simulator — events • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,11 +32,11 @@
 
 
 
-<meta property="og:title" content="Event time generator — events" />
+<meta property="og:title" content="Event time simulator — events" />
 
 <meta property="og:description" content="timetoevent turns exponential wait times to time-to-event data
-within a desired duration handling ~0 and infinite rates in a robust manner,
-events generates event times based on exponential time-to-event
+within a desired duration, it handles 0 and infinite rates in a robust manner.
+events simulates event times based on an exponential time-to-event
 distribution." />
 <meta name="twitter:card" content="summary" />
 
@@ -94,9 +94,6 @@ distribution." />
     <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -124,7 +121,7 @@ distribution." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Event time generator</h1>
+    <h1>Event time simulator</h1>
     
     <div class="hidden name"><code>events.Rd</code></div>
     </div>
@@ -132,13 +129,14 @@ distribution." />
     <div class="ref-description">
     
     <p><code>timetoevent</code> turns exponential wait times to time-to-event data
-within a desired duration handling ~0 and infinite rates in a robust manner,
-<code>events</code> generates event times based on exponential time-to-event
+within a desired duration, it handles 0 and infinite rates in a robust manner.
+<code>events</code> simulates event times based on an exponential time-to-event
 distribution.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>timetoevent</span>(<span class='no'>rate</span>, <span class='no'>duration</span>)
+
 <span class='fu'>events</span>(<span class='kw'>vocal_rate</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>move_rate</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>movement</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>avoid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>))</pre>
     
@@ -146,28 +144,33 @@ distribution.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>vocal_rate</th>
-      <td><p>vocal rate for exponential distribution.</p></td>
-    </tr>
-    <tr>
-      <th>move_rate</th>
-      <td><p>movement rate for exponential distribution.</p></td>
+      <th>rate</th>
+      <td><p>rate for the exponential distribution (<code><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></code>).</p></td>
     </tr>
     <tr>
       <th>duration</th>
-      <td><p>total duration to consider.</p></td>
+      <td><p>total time duration to consider (in minutes).</p></td>
+    </tr>
+    <tr>
+      <th>vocal_rate</th>
+      <td><p>vocal rate for exponential distribution (<code><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></code>),
+how often a vocal event happens per minute.</p></td>
+    </tr>
+    <tr>
+      <th>move_rate</th>
+      <td><p>movement rate for exponential distribution (<code><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></code>),
+how often a movement event happens per minute.</p></td>
     </tr>
     <tr>
       <th>movement</th>
-      <td><p>standard deviation for a bivariate Normal kernel to simulate movement from.</p></td>
+      <td><p>standard deviation for a bivariate Normal kernel to simulate
+locations centered at the nest location.</p></td>
     </tr>
     <tr>
       <th>avoid</th>
-      <td><p>range along the x axis to avoid with respect to locations.</p></td>
-    </tr>
-    <tr>
-      <th>rate</th>
-      <td><p>rate for exponential distribution.</p></td>
+      <td><p>range along the x axis to avoid with respect to movement locations,
+i.e. location for a movement event within this interval will be rejected
+and a new location drawn.</p></td>
     </tr>
     </table>
     
@@ -176,6 +179,10 @@ distribution.</p>
     <p>An events object data frame with coordinates (x, y; centered at 0 that is nest
 location), event times (t) and indicator for vocal events (v).</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>timetoevent</span>(<span class='fl'>0</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; numeric(0)</div><div class='input'><span class='fu'>timetoevent</span>(<span class='fl'>Inf</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
@@ -183,12 +190,15 @@ location), event times (t) and indicator for vocal events (v).</p>
 <span class='no'>tt</span> <span class='kw'>&lt;-</span> <span class='fu'>timetoevent</span>(<span class='no'>rr</span>, <span class='fl'>10</span>)
 <span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>))
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ecdf.html'>ecdf</a></span>(<span class='no'>tt</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span>(<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>rr</span>*<span class='no'>x</span>), <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span>(<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>rr</span>*<span class='no'>x</span>), <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>) <span class='co'># cdf</span>
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/stepfun.html'>stepfun</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='no'>tt</span>), <span class='fl'>0</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tt</span>)/<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tt</span>)), <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"F(x)"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span>(<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>rr</span>*<span class='no'>x</span>), <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='events-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/stepfun.html'>stepfun</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='no'>tt</span>), <span class='fl'>0</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tt</span>)/<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tt</span>)), <span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"F(x)"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/curve.html'>curve</a></span>(<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>rr</span>*<span class='no'>x</span>), <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>) <span class='co'># cdf</span></div><div class='img'><img src='events-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)
 
 <span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>events</span>(<span class='kw'>movement</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>duration</span><span class='kw'>=</span><span class='fl'>60</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>e</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='no'>e</span>$<span class='no'>v</span>+<span class='fl'>1</span>, <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>v</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='events-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>mx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>e</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>]))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>e</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='no'>e</span>$<span class='no'>v</span>+<span class='fl'>1</span>, <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>,
+  <span class='kw'>xlim</span><span class='kw'>=</span><span class='fl'>2</span>*<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='no'>mx</span>, <span class='no'>mx</span>), <span class='kw'>ylim</span><span class='kw'>=</span><span class='fl'>2</span>*<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='no'>mx</span>, <span class='no'>mx</span>))</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>v</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>"topright"</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>21</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>2</span>, <span class='kw'>horiz</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
+  <span class='kw'>legend</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"movement"</span>, <span class='st'>"vocalization"</span>))</div><div class='img'><img src='events-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,6 +206,8 @@ location), event times (t) and indicator for vocal events (v).</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

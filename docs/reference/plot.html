@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot methods for populations — plot.bsims_landscape • bSims</title>
+<title>Plot methods — plot.bsims_landscape • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Plot methods for populations — plot.bsims_landscape" />
+<meta property="og:title" content="Plot methods — plot.bsims_landscape" />
 
-<meta property="og:description" content="Plotting functionalities." />
+<meta property="og:description" content="Plot methods for different bSims objects." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,9 +91,6 @@
     <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -121,50 +118,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot methods for populations</h1>
+    <h1>Plot methods</h1>
     
     <div class="hidden name"><code>plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plotting functionalities.</p>
+    <p>Plot methods for different bSims objects.</p>
     
     </div>
 
     <pre class="usage"><span class='co'># S3 method for bsims_landscape</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"darkolivegreen1"</span>, <span class='st'>"burlywood1"</span>, <span class='st'>"lightgrey"</span>),
+  <span class='no'>col_H</span>, <span class='no'>col_E</span>, <span class='no'>col_R</span>,
   <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bsims_population</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>pch_nest</span><span class='kw'>=</span><span class='fl'>3</span>,
-  <span class='kw'>col_nest</span><span class='kw'>=</span><span class='st'>"darkgreen"</span>, <span class='kw'>cex_nest</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
+  <span class='no'>pch_nest</span>, <span class='no'>col_nest</span>, <span class='no'>cex_nest</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bsims_events</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
   <span class='kw'>event_type</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span>), <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pch_nest</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col_nest</span> <span class='kw'>=</span> <span class='st'>"darkgreen"</span>, <span class='kw'>cex_nest</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>pch_vocal</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='kw'>col_vocal</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>cex_vocal</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>lty_move</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col_move</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>lwd_move</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
+  <span class='no'>pch_nest</span>, <span class='no'>col_nest</span>, <span class='no'>cex_nest</span>,
+  <span class='no'>pch_vocal</span>, <span class='no'>col_vocal</span>, <span class='no'>cex_vocal</span>,
+  <span class='no'>lty_move</span>, <span class='no'>col_move</span>, <span class='no'>lwd_move</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bsims_detections</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
   <span class='kw'>event_type</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>pch_nest</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col_nest</span> <span class='kw'>=</span> <span class='st'>"darkgreen"</span>, <span class='kw'>cex_nest</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>pch_vocal</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='kw'>col_vocal</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>cex_vocal</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>lty_move</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col_move</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>lwd_move</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>lty_det</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col_det</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd_det</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='no'>pch_nest</span>, <span class='no'>col_nest</span>, <span class='no'>cex_nest</span>,
+  <span class='no'>pch_vocal</span>, <span class='no'>col_vocal</span>, <span class='no'>cex_vocal</span>,
+  <span class='no'>lty_move</span>, <span class='no'>col_move</span>, <span class='no'>lwd_move</span>,
+  <span class='no'>lty_det</span>, <span class='no'>col_det</span>, <span class='no'>lwd_det</span>,
   <span class='kw'>condition</span> <span class='kw'>=</span> <span class='st'>"event1"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bsims_transcript</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>,
-  <span class='kw'>pch_nest</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>col_nest</span> <span class='kw'>=</span> <span class='st'>"darkgreen"</span>, <span class='kw'>cex_nest</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>pch_vocal</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='kw'>col_vocal</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>cex_vocal</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>lty_move</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col_move</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>lwd_move</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>lty_det</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col_det</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd_det</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='no'>pch_nest</span>, <span class='no'>col_nest</span>, <span class='no'>cex_nest</span>,
+  <span class='no'>pch_vocal</span>, <span class='no'>col_vocal</span>, <span class='no'>cex_vocal</span>,
+  <span class='no'>lty_move</span>, <span class='no'>col_move</span>, <span class='no'>lwd_move</span>,
+  <span class='no'>lty_det</span>, <span class='no'>col_det</span>, <span class='no'>lwd_det</span>,
   <span class='kw'>show_tint</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>show_rint</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-  <span class='kw'>col_tint</span><span class='kw'>=</span><span class='st'>"red"</span>, <span class='kw'>col_rint</span><span class='kw'>=</span><span class='st'>"red"</span>, <span class='no'>...</span>)
+  <span class='no'>col_tint</span>, <span class='no'>col_rint</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bsims_events</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>x</span>, <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
@@ -202,11 +199,16 @@
     </tr>
     <tr>
       <th>col</th>
-      <td><p>stratum colors.</p></td>
+      <td><p>color values.</p></td>
+    </tr>
+    <tr>
+      <th>col_H, col_E, col_R</th>
+      <td><p>color values for the Habitat, Edge, and Road strata.</p></td>
     </tr>
     <tr>
       <th>event_type</th>
-      <td><p>type of events to access. Value is inferred from the input object when <code>NULL</code>.</p></td>
+      <td><p>type of events to access.
+The value is inferred from the input object when <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>xlim, ylim, tlim</th>
@@ -214,23 +216,23 @@
     </tr>
     <tr>
       <th>xlab, ylab</th>
-      <td><p>x and y labels.</p></td>
+      <td><p>x and y axis labels.</p></td>
     </tr>
     <tr>
       <th>pch_nest, col_nest, cex_nest</th>
-      <td><p>nest.</p></td>
+      <td><p>visual characteristics of nest locations.</p></td>
     </tr>
     <tr>
       <th>pch_vocal, col_vocal, cex_vocal</th>
-      <td><p>vocal.</p></td>
+      <td><p>visual characteristics of vocalization events.</p></td>
     </tr>
     <tr>
       <th>lty_move, col_move, lwd_move</th>
-      <td><p>movement.</p></td>
+      <td><p>visual characteristics of movement events.</p></td>
     </tr>
     <tr>
       <th>lty_det, col_det, lwd_det</th>
-      <td><p>detection.</p></td>
+      <td><p>visual characteristics of detection events.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -238,11 +240,11 @@
     </tr>
     <tr>
       <th>show_tint, show_rint</th>
-      <td><p>time and distance intervals to be shown or not.</p></td>
+      <td><p>whether time and distance intervals should be displayed.</p></td>
     </tr>
     <tr>
       <th>col_tint, col_rint</th>
-      <td><p>color for time and distance intervals.</p></td>
+      <td><p>colors for time and distance intervals.</p></td>
     </tr>
     <tr>
       <th>condition</th>
@@ -251,7 +253,7 @@ see <code><a href='bsims_init.html'>bsims_detect</a></code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>what to put on the x axis: time or distance.</p></td>
+      <td><p>what the x axis should be: time or distance.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -259,13 +261,56 @@ see <code><a href='bsims_init.html'>bsims_detect</a></code>.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The main plotting functions use a theme defined in
+the option <code><a href='https://rdrr.io/r/base/options.html'>getOption("bsims_theme")</a></code>.
+Overriding these default settings allows customization.</p>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>These plotting functions are called for their side effects
+and silently return the input object.</p>
+<p><code>col2hex</code> is modelled after <code><a href='https://rdrr.io/r/grDevices/col2rgb.html'>col2rgb</a></code>
+and returns a character vector giving hexadecimal color codes with
+or without alpha channel values.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bsims_init.html'>bsims_init</a></code></p></div>
+    <div class='dont-index'><p><code><a href='bsims_init.html'>bsims_init</a></code>, <code><a href='https://rdrr.io/r/grDevices/col2rgb.html'>col2rgb</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>col2hex</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>blu</span> <span class='kw'>=</span> <span class='st'>"royalblue"</span>, <span class='kw'>reddish</span> <span class='kw'>=</span> <span class='st'>"tomato"</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       blu   reddish 
+    <pre class="examples"><div class='input'><span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_all</a></span>(<span class='kw'>road</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>edge</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>move_rate</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>movement</span><span class='kw'>=</span><span class='fl'>0.2</span>)$<span class='fu'>new</span>()
+<span class='no'>o</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"bsims_theme"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>o</span>)</div><div class='output co'>#&gt; List of 17
+#&gt;  $ col_H    : chr "darkolivegreen1"
+#&gt;  $ col_E    : chr "burlywood1"
+#&gt;  $ col_R    : chr "lightgrey"
+#&gt;  $ col_nest : chr "darkgreen"
+#&gt;  $ pch_nest : num 3
+#&gt;  $ cex_nest : num 1
+#&gt;  $ col_vocal: chr "blue"
+#&gt;  $ pch_vocal: num 21
+#&gt;  $ cex_vocal: num 0.5
+#&gt;  $ col_move : chr "orange"
+#&gt;  $ lty_move : num 1
+#&gt;  $ lwd_move : num 1
+#&gt;  $ col_det  : chr "black"
+#&gt;  $ lty_det  : num 1
+#&gt;  $ lwd_det  : num 1
+#&gt;  $ col_tint : chr "red"
+#&gt;  $ col_rint : chr "red"</div><div class='input'><span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='no'>o</span>
+<span class='no'>n</span>$<span class='no'>col_H</span> <span class='kw'>&lt;-</span> <span class='st'>"gold"</span>
+<span class='no'>n</span>$<span class='no'>col_E</span> <span class='kw'>&lt;-</span> <span class='st'>"magenta"</span>
+<span class='no'>n</span>$<span class='no'>col_R</span> <span class='kw'>&lt;-</span> <span class='st'>"black"</span>
+<span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>b</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"bsims_theme"</span> <span class='kw'>=</span> <span class='no'>n</span>) <span class='co'># apply new theme</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>b</span>)</div><div class='img'><img src='plot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"bsims_theme"</span> <span class='kw'>=</span> <span class='no'>o</span>) <span class='co'># reset old theme</span>
+
+<span class='fu'>col2hex</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>blu</span> <span class='kw'>=</span> <span class='st'>"royalblue"</span>, <span class='kw'>reddish</span> <span class='kw'>=</span> <span class='st'>"tomato"</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;       blu   reddish 
 #&gt; "#4169E1" "#FF6347" </div><div class='input'><span class='fu'>col2hex</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>blu</span> <span class='kw'>=</span> <span class='st'>"royalblue"</span>, <span class='kw'>reddish</span> <span class='kw'>=</span> <span class='st'>"tomato"</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         blu     reddish 
 #&gt; "#4169E1FF" "#FF6347FF" </div></pre>
   </div>
@@ -274,6 +319,10 @@ see <code><a href='bsims_init.html'>bsims_detect</a></code>.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

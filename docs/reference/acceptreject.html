@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Spatial point process simulator. — acceptreject • bSims</title>
+<title>Spatial point process simulator — acceptreject • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,10 @@
 
 
 
-<meta property="og:title" content="Spatial point process simulator. — acceptreject" />
+<meta property="og:title" content="Spatial point process simulator — acceptreject" />
 
-<meta property="og:description" content="acceptreject" />
+<meta property="og:description" content="Spatial point process simulator based on
+accept/reject algorithm." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,9 +92,6 @@
     <li>
       <a href="../articles/intro.html">Introduction</a>
     </li>
-    <li>
-      <a href="../articles/simuls.html">Simulations</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -121,14 +119,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Spatial point process simulator.</h1>
+    <h1>Spatial point process simulator</h1>
     
     <div class="hidden name"><code>acceptreject.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>acceptreject</code></p>
+    <p>Spatial point process simulator based on
+accept/reject algorithm.</p>
     
     </div>
 
@@ -145,8 +144,9 @@
     <tr>
       <th>f</th>
       <td><p>a function returning probability (value between 0 and 1) given distance as
-the first and only argument, Poisson point process (complete spatial randomness)
-if <code>NULL</code>.</p></td>
+the first and only argument. The function generates
+spatially uniform Poisson point process (complete spatial randomness)
+when <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>x0, x1, y0, y1</th>
@@ -154,15 +154,16 @@ if <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>margin width for edge effect.</p></td>
+      <td><p>margin width for avoidong edge effects.</p></td>
     </tr>
     <tr>
       <th>maxit</th>
-      <td><p>maximum number of iterations.</p></td>
+      <td><p>maximum number of iterations per point to try if no acceptance happens.</p></td>
     </tr>
     <tr>
       <th>fail</th>
-      <td><p>logical, what to do when there is a problem (error or warning).</p></td>
+      <td><p>logical, what to do when there is a problem.
+<code>TRUE</code> gives error, the default <code>FALSE</code> gives only a warning.</p></td>
     </tr>
     </table>
     
@@ -174,13 +175,20 @@ if <code>NULL</code>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## complete spatial randomness</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>acceptreject</span>(<span class='fl'>100</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='acceptreject-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## close to systematic</span>
+<span class='co'>## more systematic</span>
 <span class='no'>distance</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0.01</span>)
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>d</span>) <span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>d</span>^<span class='fl'>2</span>/<span class='fl'>0.1</span>^<span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>distance</span>, <span class='fu'>f</span>(<span class='no'>distance</span>), <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"l"</span>)</div><div class='img'><img src='acceptreject-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>acceptreject</span>(<span class='fl'>100</span>, <span class='no'>f</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>1</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='acceptreject-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>## bimodal/clustered</span>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>d</span>) <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmax</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>d</span> <span class='kw'>&lt;</span> <span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='fl'>0.5</span>*(<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>d</span>^<span class='fl'>2</span>/<span class='fl'>0.5</span>^<span class='fl'>2</span>)))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>distance</span>, <span class='fu'>f</span>(<span class='no'>distance</span>), <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"l"</span>)</div><div class='img'><img src='acceptreject-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>acceptreject</span>(<span class='fl'>100</span>, <span class='no'>f</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>1</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='acceptreject-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>d</span>)
+  (<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>d</span>^<span class='fl'>2</span>/<span class='fl'>0.1</span>^<span class='fl'>2</span>) + <span class='fu'><a href='https://rdrr.io/r/stats/Lognormal.html'>dlnorm</a></span>(<span class='no'>d</span>, <span class='fl'>0.2</span>)/<span class='fu'><a href='https://rdrr.io/r/stats/Lognormal.html'>dlnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fl'>0.2</span>-<span class='fl'>1</span>),<span class='fl'>0.2</span>)) / <span class='fl'>2</span>
+<span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>distance</span>, <span class='fu'>f</span>(<span class='no'>distance</span>), <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"l"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>acceptreject</span>(<span class='fl'>100</span>, <span class='no'>f</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>1</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='acceptreject-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)
+
+<span class='co'>## more clustered</span>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>d</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>d</span>^<span class='fl'>2</span>/<span class='fl'>0.1</span>^<span class='fl'>2</span>) + <span class='fl'>0.5</span>*(<span class='fl'>1</span>-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(-<span class='no'>d</span>^<span class='fl'>2</span>/<span class='fl'>0.4</span>^<span class='fl'>2</span>))
+<span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>distance</span>, <span class='fu'>f</span>(<span class='no'>distance</span>), <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"l"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>acceptreject</span>(<span class='fl'>100</span>, <span class='no'>f</span>, <span class='kw'>m</span><span class='kw'>=</span><span class='fl'>1</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='acceptreject-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
