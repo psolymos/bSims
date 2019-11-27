@@ -2,7 +2,7 @@
 \alias{get_events}
 \alias{get_detections}
 \title{
-Access events or detections from simulation object
+Access events or detections
 }
 \description{
 Access events or detections from simulation object.
@@ -23,16 +23,17 @@ type of events to access.
 }
   \item{condition}{
 conditioning type to define availability for each individual:
-\code{"event1"}: the 1st event;
+\code{"event1"}: the 1st event (detected or not);
 \code{"det1"}: the 1st detection;
-\code{"alldet"}: all detections (count same individual multiple times).
+\code{"alldet"}: all detections (counting the same individual multiple times).
 }
   \item{tlim}{
 time intervals treated as [\code{min(tlim)}, \code{max(tlim)}).
 }
   \item{perception}{
-perceived number of individuals relative to the actual number of individuals
-(a non-negative number, <1 values lead to under counting, >1 values lead to over counting),
+perceived number of individuals relative to the actual number of individuals.
+A non-negative number (<1 values lead to under counting,
+>1 values lead to over counting),
 or \code{NULL} (observer correctly identifies all individuals).
 }
 }

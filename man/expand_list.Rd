@@ -18,6 +18,9 @@ vectors or lists. All arguments must be named.
 A list containing one element for each combination of the supplied vectors
 and lists. The first factors vary fastest.
 The nested elements are labeled by the factors.
+
+The function allows list elements to be vectors, functions, or \code{NULL}.
+If a vector element is supposed to be kept as a vector, use \code{list()}.
 }
 \author{
 Peter Solymos

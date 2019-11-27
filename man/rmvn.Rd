@@ -4,7 +4,7 @@
 Multivariate normal distribution
 }
 \description{
-A shim of \code{\link[MASS]{mvrnorm}} to deal with n=1 case to return matrix.
+A shim of \code{\link[MASS]{mvrnorm}} to return matrix when n < 2.
 }
 \usage{
 rmvn(n = 1L, mu, Sigma, ...)
@@ -36,6 +36,8 @@ Peter Solymos
 rmvn(0, c(a=0, b=0), diag(1, 2, 2))
 rmvn(1, c(a=0, b=0), diag(1, 2, 2))
 rmvn(2, c(a=0, b=0), diag(1, 2, 2))
+
+sapply(0:10, function(n) dim(rmvn(n, c(a=0, b=0), diag(1, 2, 2))))
 }
 \keyword{ datagen }
 \keyword{ distribution }

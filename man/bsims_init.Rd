@@ -15,7 +15,7 @@
 \alias{bsims_all}
 \alias{print.bsims_all}
 \title{
-bSims functions
+bSims simulation functions
 }
 \description{
 Functions to initialize, populate, animate, detect, and transcribe
@@ -54,7 +54,7 @@ get_table(x, type = c("removal", "visits"))
 extent of simulation area, an extent x extent square with (0,0) at the center.
 }
   \item{road}{
-half width of the road stratum (parallel to the y axis).
+half width of the road stratum (perpendicular to the y axis).
 }
   \item{edge}{
 width of edge, same width on both sides of the road stratum.
@@ -66,88 +66,113 @@ offset to apply to road and edge strata relative to the center in the x directio
 a simulation object.
 }
   \item{density}{
-population density, D, recycled 3x for HER
+population density, D, recycled 3x for the 3 strata
+(H: habitat, E: edge, R: road).
 }
   \item{abund_fun}{
 function to simulate abundance, N ~ Poisson(lambda), lambda=DA by default.
 }
   \item{xy_fun}{
-function to simulate nest locations, see \code{\link{acceptreject}}.
-\code{NULL} is complete spatial randomness
+function used to simulate nest locations, see \code{\link{acceptreject}}.
+The function should return probability (value between 0 and 1),
+\code{NULL} means complete spatial randomness.
 }
   \item{margin, maxit, fail}{
-arguments passed to \code{xy_fun}, see \code{\link{acceptreject}}.
+arguments passed to \code{\link{acceptreject}} when using \code{xy_fun}
+to simulate nest locations.
 }
   \item{vocal_rate, move_rate}{
 Vocal and movement rates (see \code{\link{events}}).
-Rate can be a single number, a vector matching length of mixture,
-vector of length 3 with mixture=1 (corresponding to HER strata),
-or a matrix of 3 x mixture (HER + groups).
+Both of these rates can be: a single number;
+a vector of length \code{length(mixture)} (behaviour based finite mixture groups);
+a vector of length 3 with \code{mixture=1} (corresponding to HER strata);
+or a matrix of dimension 3 x \code{length(mixture)}
+(HER strata x number of behaviour based groups).
 }
-  \item{movement, duration}{
-arguments passed to \code{\link{events}}.
+  \item{duration}{
+total time duration to consider (in minutes), passed to \code{\link{events}}.
+}
+  \item{movement}{
+standard deviation for a bivariate Normal kernel to simulate
+locations centered at the nest location, passed to \code{\link{events}}.
 }
   \item{mixture}{
-finite mixture group proportions, can be a matrix referring
-population segments.
+behaviour based finite mixture group proportions.
 }
   \item{avoid}{
-strata to avoid by movement.
+range along the x axis to avoid with respect to movement locations,
+passed to \code{\link{events}}.
 }
   \item{initial_location}{
-logical, \code{move_rate} and \code{vocal_rate} silently ignored if \code{TRUE}
-and nest location is provided as part of the events table,
-this renders all individuals equally available for detection.
+logical, \code{move_rate} and \code{vocal_rate} are
+silently ignored if \code{TRUE}
+and nest locations are provided as part of the events table.
+This renders all individuals equally available for detection.
 }
   \item{allow_overlap}{
-logical, allows overlap between neighbor nests when movement is involved.
+logical, allowing overlap between neighboring nests when movement is involved.
 If \code{FALSE}, Voronoi tessellation is used to prevent overlap.
+If \code{TRUE}, the unconstrained bivariate Normal kernel is used.
 }
   \item{xy}{
-position of the observer.
+a vector of x and y coordinates describing the position of the observer.
 }
   \item{tau}{
 parameter of the distance function.
+Can be a single numeric value or a vector of length 3
+to provide parameter in the 3 strata (H: habitat, E: edge, R: road).
+Segmented sound attenuation is used when the values are different
+in the 3 strata (see \code{\link{dist_fun2}}).
 }
   \item{dist_fun}{
-distance function (1st argument is distance, second is tau).
+distance function (1st argument is distance, second is \code{tau}).
 }
   \item{event_type}{
-type of events to access. Inferred from input object when \code{NULL}.
+type of events to access (vocal, movement, or both).
 }
   \item{tint}{
-time interval break points.
+time interval break points in minutes.
 }
   \item{rint}{
-distance interval break points.
+distance interval break points in units of 100 meter.
 }
   \item{condition}{
 conditioning type to define availability for each individual:
-\code{"event1"}: the 1st event;
+\code{"event1"}: the 1st event (detected or not);
 \code{"det1"}: the 1st detection;
-\code{"alldet"}: all detections (count same individual multiple times).
+\code{"alldet"}: all detections (counting the same individual multiple times).
 }
   \item{error}{
 log scale standard deviation for distance estimation error,
 see \code{\link{rlnorm2}}.
 }
   \item{perception}{
-perceived number of individuals relative to the actual number of individuals
-(a non-negative number, <1 values lead to under counting, >1 values lead to over counting),
+perceived number of individuals relative to the actual number of individuals.
+A non-negative number (<1 values lead to under counting,
+>1 values lead to over counting),
 or \code{NULL} (observer correctly identifies all individuals).
 }
   \item{type}{
-character, the type of table to return: removal or visits.
+character, the type of table to return:
+\code{"removal"} includes only new individuals as time progresses,
+\code{"visits"} counts individuals in each time interval independent
+of each other.
 }
   \item{\dots}{
-other arguments passed to underlying functions. For \code{bsims_all} wrapper, it is all
-the arguments (except for \code{x}) that the underlying \code{bsims_*} functions have. \code{bsims_all} can also take a single list as argument.
+other arguments passed to underlying functions.
+For the \code{bsims_all} wrapper, it means all
+the arguments (except for \code{x}) that the underlying
+\code{bsims_*} functions have. \code{bsims_all} can also take a single
+list as its argument.
 }
 }
 \details{
-The functions are supposed to be called in sequence,
+The functions capturing the simulation layers
+are supposed to be called in sequence,
 allowing to simulate multiple realities by keeping
 preceding layers intact. Construction allows easy piping.
+The \code{bsims_all} function is a wrapper for the \code{bsims_*}
+layer functions.
 }
 \value{
 \code{bsims_init} returns a landscape object.
@@ -165,14 +190,15 @@ preceding layers intact. Construction allows easy piping.
 \code{bsims_all} returns a closure with
 \code{$settings()}, \code{$new(recover = FALSE)},
 and \code{$replicate(B, recover = FALSE, cl = NULL)}
-functions. The settings function returns the input arguments as a list,
-the new function returns a single transcript object.
-The replicate function takes an argument for the
-number of replicates (\code{B}) and returns a list of transcript objects.
+functions. The settings function returns the input arguments as a list;
+the new function returns a single transcript object;
+the replicate function takes an argument for the
+number of replicates (\code{B}) and returns a list of transcript objects
+with B elements.
 The \code{cl} argument is used to parallelize the work,
 can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.
-`recover = TRUE` argument allows to run extensive simulations with error
+The `recover = TRUE` argument allows to run simulations with error
 catching based on \code{link{try}}.
 
 Note that simulated objects returned by \code{bsims_all}
@@ -185,8 +211,11 @@ Peter Solymos
 }
 \seealso{
 \code{\link{acceptreject}}, \code{\link{events}},
-\code{\link{get_events}}, \code{\link{get_detections}},
-plotting functions \code{\link{plot.bsims_landscape}}.
+\code{\link{get_events}}, \code{\link{get_detections}}
+
+Plotting functions: \code{\link{plot.bsims_landscape}}
+
+Shiny apps: \code{\link{run_app}}
 }
 \examples{
 phi <- 0.5

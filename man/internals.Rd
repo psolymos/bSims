@@ -4,7 +4,7 @@
 Internal functions
 }
 \description{
-Not intended to be used by the user.
+Internal functions are not intended to be used by the user.
 }
 \usage{
 .bsims_all(Settings)

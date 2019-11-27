@@ -92,13 +92,13 @@ x and y axis labels.
 visual characteristics of nest locations.
 }
   \item{pch_vocal, col_vocal, cex_vocal}{
-characteristics of vocalization events.
+visual characteristics of vocalization events.
 }
   \item{lty_move, col_move, lwd_move}{
-characteristics of movement events.
+visual characteristics of movement events.
 }
   \item{lty_det, col_det, lwd_det}{
-characteristics of detection events.
+visual characteristics of detection events.
 }
   \item{alpha}{
 alpha channel for colors.
@@ -121,8 +121,9 @@ other graphical arguments.
 }
 }
 \details{
-The main plotting functions use a theme defined in \code{.bsims_theme}.
-Overriding these defaults allows customization.
+The main plotting functions use a theme defined in
+the option \code{getOption("bsims_theme")}.
+Overriding these default settings allows customization.
 }
 \value{
 These plotting functions are called for their side effects
@@ -139,6 +140,20 @@ Peter Solymos
 \code{\link{bsims_init}}, \code{\link{col2rgb}}
 }
 \examples{
+b <- bsims_all(road=1, edge=2, move_rate=1, movement=0.2)$new()
+o <- getOption("bsims_theme")
+str(o)
+n <- o
+n$col_H <- "gold"
+n$col_E <- "magenta"
+n$col_R <- "black"
+op <- par(mfrow=c(1, 2))
+plot(b)
+options("bsims_theme" = n) # apply new theme
+plot(b)
+par(op)
+options("bsims_theme" = o) # reset old theme
+
 col2hex(c(blu = "royalblue", reddish = "tomato"), alpha = FALSE)
 col2hex(c(blu = "royalblue", reddish = "tomato"), alpha = TRUE)
 }

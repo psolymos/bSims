@@ -4,7 +4,7 @@
 Reparametrized lognormal distribution
 }
 \description{
-lognormal parametrized as mean (ybar) and SDlog.
+A lognormal distribution parametrized as mean (ybar) and SDlog.
 }
 \usage{
 rlnorm2(n, mean = exp(0.5), sdlog = 1)
