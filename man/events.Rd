@@ -67,8 +67,9 @@ par(op)
 
 e <- events(movement=1, duration=60)
 mx <- max(abs(e[,1:2]))
-plot(e[,1:2], col=e$v+1, asp=1,
+plot(e[,1:2], col="grey", type="l", asp=1,
   xlim=2*c(-mx, mx), ylim=2*c(-mx, mx))
+points(e[,1:2], col=e$v+1)
 abline(h=0, v=0, lty=2)
 legend("topright", pch=21, col=1:2, horiz=TRUE,
   legend=c("movement", "vocalization"))
