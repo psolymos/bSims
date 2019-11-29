@@ -25,19 +25,9 @@ The goal of the package is to:
 - aid survey design,
 - and have fun while doing it!
 
-## Install
+## Simulation layers
 
-```{r install,eval=FALSE}
-if (!require(remotes)) install.packages("remotes")
-if (!require(bSims)) remotes::install_github("psolymos/bSims")
-if (!require(detect)) install.packages("detect")
-```
-
-## Examples
-
-### The general idea
-
-Set up a bSims world:
+Here are the steps for setting up a bSims world:
 
 1. initiating the landscape,
 2. populating the landscape by individuals,
@@ -90,9 +80,7 @@ rowSums(rem)
 plot(tr)
 ```
 
-### Estimating density
-
-Estimating density with truncation
+Estimating density with truncation in the single habitat case:
 
 ```{r Dtr}
 library(detect)
@@ -116,7 +104,7 @@ Dhat <- sum(rem) / (A * p * q)
 c(true=Den, estimate=Dhat)
 ```
 
-Estimating density with unlimited distance
+Estimating density with unlimited distance in the single habitat case:
 
 ```{r Dinf}
 rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
@@ -142,13 +130,11 @@ Dhat <- sum(rem) / (Ahat * p * q)
 c(true=Den, estimate=Dhat)
 ```
 
-### Replicating landscapes
-
 We have used so far a single location.
-We also set the density unreasonably high to have enough counts for a reasonable estimate.
+We also set the density unreasonably high to have enough 
+counts for a reasonable estimate.
 We can independently replicate the simulation for multiple
-landscapes and analyze the results to give justice to bSims
-under ideal conditions:
+landscapes and analyze the results:
 
 ```{r Dx, eval=FALSE}
 phi <- 0.5
@@ -226,4 +212,7 @@ Play with simulations and explore biases in a stratified habitat setting with ro
 ```{r shiny3,eval=FALSE}
 run_app("bsimsHER")
 ```
+
+Shiny apps can be used to play with the settings, then
+settings copied to the clipboard and eventually into R.
 
