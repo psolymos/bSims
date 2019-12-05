@@ -39,6 +39,7 @@ $Y \sim Binomial(1, p)$ doing something like this:
 
 ```{r Bin,eval=FALSE}
 p <- 0.5
+
 Y <- rbinom(1, size = 1, prob = p)
 ```
 
@@ -55,6 +56,7 @@ D <- 2 # individuals / unit area
 A <- 1 # area
 p <- 0.8 # probability of availability given presence
 q <- 0.5 # probability of detection given availability
+
 N <- rpois(1, lambda = A * D)
 Y <- rbinom(1, size = N, prob = p * q)
 ```
@@ -92,7 +94,7 @@ The conditionally independent _layers_ of a
 4. the phisical side of the observation process (`bsims_detect`), and
 5. the human aspect of the observation process (`bsims_transcribe`).
 
-Here is basic example:
+See ths example as a sneak peek that we'll explain in the following sections:
 
 ```{r gen,fig.height=6,fig.width=6}
 library(bSims)
@@ -105,11 +107,11 @@ rbr <- c(0.5, 1, 1.5, Inf) # counting radii
 
 l <- bsims_init(10, 0.5, 1)# landscape
 p <- bsims_populate(l, 1)  # population
-a <- bsims_animate(p,      # events
+e <- bsims_animate(p,      # events
   vocal_rate=phi, duration=dur)
-o <- bsims_detect(a,       # detections
+d <- bsims_detect(e,       # detections
   tau=tau)
-x <- bsims_transcribe(o,   # transcription
+x <- bsims_transcribe(d,   # transcription
   tint=tbr, rint=rbr)
 
 plot(x)
@@ -118,14 +120,22 @@ head(get_events(a))
 head(get_detections(o))
 ```
 
-Let us dive into the details of each layer!
-
 ### Landscape
 
 Args and what they do, cover support functions, use examples from Rd, cover theory briefly
 
 ```{r eval=FALSE}
-bsims_init(extent = 10, road = 0, edge = 0, offset = 0)
+l1 <- bsims_init(extent = 10, road = 0, edge = 0, offset = 0)
+l2 <- bsims_init(extent = 10, road = 1, edge = 1, offset = 0)
+l3 <- bsims_init(extent = 10, road = 1, edge = 1, offset = 2)
+l4 <- bsims_init(extent = 10, road = 0, edge = 5, offset = 5)
+
+op <- par(mfrow = c(2, 2), mar = c(1, 1, 1, 1))
+plot(l1, main = "Habitat (H)")
+plot(l2, main = "Habitat/edge/road (HER)")
+plot(l3, main = "HER with offset")
+plot(l4, main = "2 habitats")
+par(op)
 ```
 
 ### Population
@@ -135,6 +145,28 @@ Args and what they do, cover support functions, use examples from Rd, cover theo
 ```{r eval=FALSE}
 bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
   margin = 0, maxit = 100, fail = FALSE, ...)
+
+## complete spatial randomness
+plot(acceptreject(100), asp=1)
+
+## more systematic
+distance <- seq(0,1,0.01)
+f <- function(d)
+  (1-exp(-d^2/0.1^2) + dlnorm(d, 0.2)/dlnorm(exp(0.2-1),0.2)) / 2
+op <- par(mfrow = c(1, 2))
+plot(distance, f(distance), type="l")
+plot(acceptreject(100, f, m=1), asp=1)
+par(op)
+
+## more clustered
+f <- function(d)
+  exp(-d^2/0.1^2) + 0.5*(1-exp(-d^2/0.4^2))
+op <- par(mfrow = c(1, 2))
+plot(distance, f(distance), type="l")
+plot(acceptreject(100, f, m=1), asp=1)
+par(op)
+
+# explain density=c(1,2,3)
 ```
 
 
@@ -146,6 +178,30 @@ Args and what they do, cover support functions, use examples from Rd, cover theo
 bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
   movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
   initial_location=FALSE, allow_overlap=TRUE, ...)
+
+timetoevent(0, 10)
+timetoevent(Inf, 10)
+
+rr <- 1
+tt <- timetoevent(rr, 10)
+op <- par(mfrow=c(1,2))
+plot(ecdf(tt))
+curve(1-exp(-rr*x), add=TRUE, col=2) # cdf
+
+plot(stepfun(sort(tt), 0:length(tt)/length(tt)), ylab="F(x)")
+curve(1-exp(-rr*x), add=TRUE, col=2) # cdf
+par(op)
+
+e <- events(movement=1, duration=60)
+mx <- max(abs(e[,1:2]))
+plot(e[,1:2], col="grey", type="l", asp=1,
+  xlim=2*c(-mx, mx), ylim=2*c(-mx, mx))
+points(e[,1:2], col=e$v+1)
+abline(h=0, v=0, lty=2)
+legend("topright", pch=21, col=1:2, horiz=TRUE,
+  legend=c("movement", "vocalization"))
+
+
 ```
 
 ### Detection
@@ -155,6 +211,8 @@ Args and what they do, cover support functions, use examples from Rd, cover theo
 ```{r eval=FALSE}
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
   event_type = c("vocal", "move", "both"), ...)
+
+# distance function exploration
 ```
 
 ### Transcription
