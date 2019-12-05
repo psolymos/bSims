@@ -116,25 +116,47 @@ x <- bsims_transcribe(d,   # transcription
 
 plot(x)
 get_table(x)
-head(get_events(a))
-head(get_detections(o))
 ```
 
 ### Landscape
 
-Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+The `bsims_ini` function sets up the geometry of a local landscape.
+The `extent` of the landscape determines the edge lengths of a quare shaped area.
+With no argument values passed, the function assumes a homogeneous _habitat_ (H)
+in a 10 units x 10 units landscape, 1 unit is 100 meters. Having units this way allows
+easier conversion to ha as area unit that is often used in the North American bird literature.
+As a result, our landscape has an area of 1 km$^2$.
 
-```{r eval=FALSE}
-l1 <- bsims_init(extent = 10, road = 0, edge = 0, offset = 0)
-l2 <- bsims_init(extent = 10, road = 1, edge = 1, offset = 0)
-l3 <- bsims_init(extent = 10, road = 1, edge = 1, offset = 2)
-l4 <- bsims_init(extent = 10, road = 0, edge = 5, offset = 5)
+The `road` argument defines the half-width of the road that is placed in a vertical position.
+The `edge` argument defines the width of the edge stratum on boths sides of the road.
+Habitat (H), edge (E), and road (R) defines the 3 strata that we refer to by their initials (H for no stratification, HER for all 3 strata present).
+
+The origin of the cartesian coordinate system inside the landscape is dentered at the middle of the square.
+The `offset` argument allows the road and edge strata to be shifted to the left (negative values)
+or to the right (positive values) of the horizontal axis. This makes it possible to create landscapes with only
+two strata.
+The `bsims_init` function returns an object of class 'bsims_landscape' that has a `plot` and a `print` method.
+
+
+```{r landscape-plot}
+(l1 <- bsims_init(extent = 10, road = 0, edge = 0, offset = 0))
+(l2 <- bsims_init(extent = 10, road = 1, edge = 0, offset = 0))
+(l3 <- bsims_init(extent = 10, road = 0.5, edge = 1, offset = 2))
+(l4 <- bsims_init(extent = 10, road = 0, edge = 5, offset = 5))
 
 op <- par(mfrow = c(2, 2), mar = c(1, 1, 1, 1))
-plot(l1, main = "Habitat (H)")
-plot(l2, main = "Habitat/edge/road (HER)")
-plot(l3, main = "HER with offset")
+plot(l1, main = "Habitat")
+points(0, 0, pch=3)
+plot(l2, main = "Habitat & road")
+lines(c(0, 0), c(-5, 5), lty=2)
+plot(l3, main = "Habitat, edge, road + offset")
+arrows(0, 0, 2, 0, 0.1, 20)
+lines(c(2, 2), c(-5, 5), lty=2)
+points(0, 0, pch=3)
 plot(l4, main = "2 habitats")
+arrows(0, 0, 5, 0, 0.1, 20)
+lines(c(5, 5), c(-5, 5), lty=2)
+points(0, 0, pch=3)
 par(op)
 ```
 
