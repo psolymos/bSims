@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+par(mar = c(1, 1, 1, 1))
 ```
 
 ## Introduction
@@ -135,16 +136,16 @@ The origin of the cartesian coordinate system inside the landscape is dentered a
 The `offset` argument allows the road and edge strata to be shifted to the left (negative values)
 or to the right (positive values) of the horizontal axis. This makes it possible to create landscapes with only
 two strata.
-The `bsims_init` function returns an object of class 'bsims_landscape' that has a `plot` and a `print` method.
+The `bsims_init` function returns a landscape object (with class 'bsims_landscape').
 
 
-```{r landscape-plot}
+```{r landscape-plot,fig.width=6, fig.height=7}
 (l1 <- bsims_init(extent = 10, road = 0, edge = 0, offset = 0))
 (l2 <- bsims_init(extent = 10, road = 1, edge = 0, offset = 0))
 (l3 <- bsims_init(extent = 10, road = 0.5, edge = 1, offset = 2))
 (l4 <- bsims_init(extent = 10, road = 0, edge = 5, offset = 5))
 
-op <- par(mfrow = c(2, 2), mar = c(1, 1, 1, 1))
+op <- par(mfrow = c(2, 2))
 plot(l1, main = "Habitat")
 points(0, 0, pch=3)
 plot(l2, main = "Habitat & road")
@@ -162,33 +163,90 @@ par(op)
 
 ### Population
 
-Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+The `bsims_populate` function _populates_ the landscape we created by the `bsims_init` function,
+which is the first argument we have to pass to `bsims_populate`. The function returns a population
+object (with class 'bsims_population').
+The most important argument that controls how many individuals will inhabit our landscape is
+`density` that defines the expected value of individuals per unit area (1 ha). By default,
+`density = 1` ($D=1$) and we have 100 ha in the landscape ($A=100$) which 
+translates into 100 individuals on average ($E[N]=\lambda=AD$).
+The actual number of individuals in the landscape might deviate from this expectation,
+because $N$ is a random variable ($N \sim f(\lambda)$). The `abund_fun` argument controls this relationship
+between the expected ($\lambda$) and realized abundance ($N$). The default is a Poisson distribution:
 
-```{r eval=FALSE}
-bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
-  margin = 0, maxit = 100, fail = FALSE, ...)
+```{r pop-pois}
+bsims_populate(l1)
+```
 
-## complete spatial randomness
-plot(acceptreject(100), asp=1)
 
-## more systematic
-distance <- seq(0,1,0.01)
-f <- function(d)
-  (1-exp(-d^2/0.1^2) + dlnorm(d, 0.2)/dlnorm(exp(0.2-1),0.2)) / 2
-op <- par(mfrow = c(1, 2))
-plot(distance, f(distance), type="l")
-plot(acceptreject(100, f, m=1), asp=1)
+Changing `abund_fun` can be useful to allow under or overdispersion, e.g.:
+
+```{r pop-nb}
+summary(rpois(100, 100)) # Poisson variation
+summary(MASS::rnegbin(100, 100, 0.8)) # NegBin variation
+negbin <- function(lambda, ...) MASS::rnegbin(1, lambda, ...)
+bsims_populate(l1, abund_fun = negbin, theta = 0.8)
+```
+
+Once we determine how many individuals will populate the landscape, we have control over the
+spatial arrangement of the nest location for each individual. The default is a homogeneous Poisson 
+point process (complete spatial randomness). 
+Deviations from this can be controlled by the `xy_fun`. This function takes
+distance as its only argument and returns a numeric value between 0 and 1. A function
+`function(d) reurn(1)` would be equivalent with the Poisson process, meaning that every new
+random location is accepted with probability 1 irrespective of the distance between the new location and the 
+previously generated point locations in the landscape.
+When this function varies with distance, it leads to a non-homogeneous point process via this
+accept-reject algorithm. The other arguments (`margin`, `maxit`, `fail`) are passed to the underlying
+`accepreject` function to remove edge effects and handle high rejection rates.
+
+In the next example, we fix the abundance to be constant (i.e. not a random variable, $N=\lambda$) 
+and different spatial point processes:
+
+```{r pop-xy,fig.height=9,fig.width=6}
+D <- 0.5
+f_abund <- function(lambda, ...) lambda
+
+## systematic
+f_syst <- function(d)
+  (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(exp(2-1),2)) / 2
+## clustered
+f_clust <- function(d)
+  exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2))
+
+l0 <- bsims_init(1)
+p1 <- bsims_populate(l1, density = D, abund_fun = f_abund)
+p2 <- bsims_populate(l1, density = D, abund_fun = f_abund, xy_fun = f_syst)
+p3 <- bsims_populate(l1, density = D, abund_fun = f_abund, xy_fun = f_clust)
+
+distance <- seq(0,10,0.01)
+op <- par(mfrow = c(3, 2))
+plot(distance, rep(1, length(distance)), type="l", ylim = c(0, 1), 
+  main = "random", ylab=expression(f(d)), col=2)
+plot(p1)
+
+plot(distance, f_syst(distance), type="l", ylim = c(0, 1), 
+  main = "systematic", ylab=expression(f(d)), col=2)
+plot(p2)
+
+plot(distance, f_clust(distance), type="l", ylim = c(0, 1), 
+  main = "clustered", ylab=expression(f(d)), col=2)
+plot(p3)
 par(op)
+```
 
-## more clustered
-f <- function(d)
-  exp(-d^2/0.1^2) + 0.5*(1-exp(-d^2/0.4^2))
-op <- par(mfrow = c(1, 2))
-plot(distance, f(distance), type="l")
-plot(acceptreject(100, f, m=1), asp=1)
+If the landscape is stratified, that has no affect on density unless we specify different values
+through the `density` argument as a vector of length 3 referring to the HER strata:
+
+```{r pop-3,fig.width=6, fig.height=7}
+D <- c(H = 2, E = 0.5, R = 0)
+
+op <- par(mfrow = c(2, 2))
+plot(bsims_populate(l1, density = D), main = "Habitat")
+plot(bsims_populate(l2, density = D), main = "Habitat & road")
+plot(bsims_populate(l3, density = D), main = "Habitat, edge, road + offset")
+plot(bsims_populate(l4, density = D), main = "2 habitats")
 par(op)
-
-# explain density=c(1,2,3)
 ```
 
 
