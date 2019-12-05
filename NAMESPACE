@@ -25,24 +25,28 @@ importFrom("pbapply", "pbreplicate")
 importFrom("parallel", "clusterEvalQ", "clusterExport")
 
 S3method(plot, bsims_landscape)
+S3method(print, bsims_landscape)
+
 S3method(plot, bsims_population)
+S3method(points, bsims_population)
+S3method(print, bsims_population)
+
 S3method(plot, bsims_events)
+S3method(lines, bsims_events)
+S3method(points, bsims_events)
+S3method(print, bsims_events)
+
 S3method(plot, bsims_detections)
+S3method(lines, bsims_detections)
+S3method(points, bsims_detections)
+S3method(print, bsims_detections)
+
 S3method(plot, bsims_transcript)
+S3method(lines, bsims_transcript)
+S3method(print, bsims_transcript)
+
 S3method(plot, bsims_events_table)
+
 S3method(plot, bsims_detections_table)
 
-S3method(lines, bsims_events)
-S3method(lines, bsims_detections)
-S3method(lines, bsims_transcript)
-
-S3method(points, bsims_events)
-S3method(points, bsims_population)
-S3method(points, bsims_detections)
-
 S3method(print, bsims_all)
-S3method(print, bsims_landscape)
-S3method(print, bsims_population)
-S3method(print, bsims_events)
-S3method(print, bsims_detections)
-S3method(print, bsims_transcript)
