@@ -15,24 +15,84 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Goals of the package
+## Introduction
 
-The `{bSims}` R package is a _highly scientific_ and _utterly addictive_ bird point count simulator.
+The **bSims** R package is a _highly scientific_ and _utterly addictive_ bird point count simulator. Highly scientific, because it implements a spatially
+explicit mechanistic simulation that is based on statistical models
+widely used in bird point count analysis (i.e. removal models, distance 
+sampling), and utterly addictive because the implementation
+is designed to allow rapid exploration (via Shiny apps)
+and efficient simulation (supporting various parallel backends),
+thus elevating the user experiance.
 
-The goal of the package is to:
-
-- test statistical assumptions,
-- aid survey design,
-- and have fun while doing it!
+The goals of the package are to (1) allow easy testing of
+statistical assumptions and explore effects of violating these assumptions,
+to (2) aid survey design by comparing different options, and most
+importantly, to (3) have fun while doing it.
 
 ## Simulation layers
 
-Here are the steps for setting up a bSims world:
+Introductory stats books begin with the coin flip to introduce
+the binomial distribution. In R we can easily simulate
+an outcome from such a random variable
+$Y \sim Binomial(1, p)$ doing something like this:
 
-1. initiating the landscape,
-2. populating the landscape by individuals,
-3. breath life into the virtual birds and let them sing,
-4. put in an observer and let the observation process begin.
+```{r Bin,eval=FALSE}
+p <- 0.5
+Y <- rbinom(1, size = 1, prob = p)
+```
+
+But a coin flip in reality is a lot more complicated: we might consider 
+the initial forece, the height of the toss, the spin, 
+and the weight of the coin.
+
+Bird behaviour combined with the observation process presents
+a more complicated system, that is often treated as a mixture of
+a count distribution and a detection/nondetection process, e.g.:
+
+```{r Pois,eval=FALSE}
+D <- 2 # individuals / unit area
+A <- 1 # area
+p <- 0.8 # probability of availability given presence
+q <- 0.5 # probability of detection given availability
+N <- rpois(1, lambda = A * D)
+Y <- rbinom(1, size = N, prob = p * q)
+```
+
+This looks not too complicated, corresponding to the true abundance
+being a random variables $N \sim Poisson(DA)$, while the observed count
+being $Y \sim Binomial(N, pq)$.
+This is the exact simulation
+that we need when we want to make sure that an _estimator_
+is capable of estimating the _model_ parameters (`lambda` and `prob` here).
+But such probabilistic simulations are not wery useful when we are
+interested how well the _model_ captures important aspects of _reality_.
+
+Going back to the Poisson--Binomial example, `N` would be a result
+of all the factors influencing burd abundance, such as
+geographical location, season, habitat suitability, number of
+conspecifics, competitors, or predators. `Y` however would
+largely depend on how the birds behave depending on timing,
+or how an observer might detect or miss the different individuals,
+or count the same indivual twice, etc.
+
+Therefore the package has layers, that by default are 
+_conditionally independent_ of each other. This design decision
+is meant to facilitate the comparison of certaing settings
+while keeping all the underlying realizations identical, thus
+helping to pinpoint effects without the extra variability introduced
+by all the other effects.
+
+The conditionally independent _layers_ of a 
+**bSims** realization are the following, with the corresponding function:
+
+1. landscape (`bsims_init`),
+2. population (`bsims_populate`),
+3. behaviour with movement and vocalization events (`bsims_animate`),
+4. the phisical side of the observation process (`bsims_detect`), and
+5. the human aspect of the observation process (`bsims_transcribe`).
+
+Here is basic example:
 
 ```{r gen,fig.height=6,fig.width=6}
 library(bSims)
@@ -58,7 +118,63 @@ head(get_events(a))
 head(get_detections(o))
 ```
 
-### Single habitat case
+Let us dive into the details of each layer!
+
+### Landscape
+
+Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+
+```{r eval=FALSE}
+bsims_init(extent = 10, road = 0, edge = 0, offset = 0)
+```
+
+### Population
+
+Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+
+```{r eval=FALSE}
+bsims_populate(x, density = 1, abund_fun = NULL, xy_fun = NULL,
+  margin = 0, maxit = 100, fail = FALSE, ...)
+```
+
+
+### Behaviour
+
+Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+
+```{r eval=FALSE}
+bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
+  movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
+  initial_location=FALSE, allow_overlap=TRUE, ...)
+```
+
+### Detection
+
+Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+
+```{r eval=FALSE}
+bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
+  event_type = c("vocal", "move", "both"), ...)
+```
+
+### Transcription
+
+Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+
+
+```{r eval=FALSE}
+bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
+  condition=c("event1", "det1", "alldet"),
+  event_type=NULL, perception=NULL, ...)
+```
+
+## Simulation workflows
+
+- Shiny apps: interactive exploration, copy/paste
+- define corner cases
+- use `expand_list` and `bsims_all`
+
+## Single habitat case
 
 ```{r H,fig.height=10,fig.width=10}
 phi <- 0.5
