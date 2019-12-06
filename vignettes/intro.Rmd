@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup,include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -24,7 +24,7 @@ widely used in bird point count analysis (i.e. removal models, distance
 sampling), and utterly addictive because the implementation
 is designed to allow rapid exploration (via Shiny apps)
 and efficient simulation (supporting various parallel backends),
-thus elevating the user experiance.
+thus elevating the user experience.
 
 The goals of the package are to (1) allow easy testing of
 statistical assumptions and explore effects of violating these assumptions,
@@ -38,21 +38,21 @@ the binomial distribution. In R we can easily simulate
 an outcome from such a random variable
 $Y \sim Binomial(1, p)$ doing something like this:
 
-```{r Bin,eval=FALSE}
+```{r sim-bin,eval=FALSE}
 p <- 0.5
 
 Y <- rbinom(1, size = 1, prob = p)
 ```
 
 But a coin flip in reality is a lot more complicated: we might consider 
-the initial forece, the height of the toss, the spin, 
+the initial force, the height of the toss, the spin, 
 and the weight of the coin.
 
-Bird behaviour combined with the observation process presents
+Bird behavior combined with the observation process presents
 a more complicated system, that is often treated as a mixture of
 a count distribution and a detection/nondetection process, e.g.:
 
-```{r Pois,eval=FALSE}
+```{r sim-pois,eval=FALSE}
 D <- 2 # individuals / unit area
 A <- 1 # area
 p <- 0.8 # probability of availability given presence
@@ -68,20 +68,20 @@ being $Y \sim Binomial(N, pq)$.
 This is the exact simulation
 that we need when we want to make sure that an _estimator_
 is capable of estimating the _model_ parameters (`lambda` and `prob` here).
-But such probabilistic simulations are not wery useful when we are
+But such probabilistic simulations are not very useful when we are
 interested how well the _model_ captures important aspects of _reality_.
 
 Going back to the Poisson--Binomial example, `N` would be a result
-of all the factors influencing burd abundance, such as
+of all the factors influencing bird abundance, such as
 geographical location, season, habitat suitability, number of
 conspecifics, competitors, or predators. `Y` however would
 largely depend on how the birds behave depending on timing,
 or how an observer might detect or miss the different individuals,
-or count the same indivual twice, etc.
+or count the same individual twice, etc.
 
 Therefore the package has layers, that by default are 
 _conditionally independent_ of each other. This design decision
-is meant to facilitate the comparison of certaing settings
+is meant to facilitate the comparison of certain settings
 while keeping all the underlying realizations identical, thus
 helping to pinpoint effects without the extra variability introduced
 by all the other effects.
@@ -91,13 +91,13 @@ The conditionally independent _layers_ of a
 
 1. landscape (`bsims_init`),
 2. population (`bsims_populate`),
-3. behaviour with movement and vocalization events (`bsims_animate`),
-4. the phisical side of the observation process (`bsims_detect`), and
+3. behavior with movement and vocalization events (`bsims_animate`),
+4. the physical side of the observation process (`bsims_detect`), and
 5. the human aspect of the observation process (`bsims_transcribe`).
 
-See ths example as a sneak peek that we'll explain in the following sections:
+See this example as a sneak peek that we'll explain in the following sections:
 
-```{r gen,fig.height=6,fig.width=6}
+```{r intro,fig.height=6,fig.width=6}
 library(bSims)
 
 phi <- 0.5                 # singing rate
@@ -122,24 +122,24 @@ get_table(x)
 ### Landscape
 
 The `bsims_ini` function sets up the geometry of a local landscape.
-The `extent` of the landscape determines the edge lengths of a quare shaped area.
+The `extent` of the landscape determines the edge lengths of a square shaped area.
 With no argument values passed, the function assumes a homogeneous _habitat_ (H)
 in a 10 units x 10 units landscape, 1 unit is 100 meters. Having units this way allows
 easier conversion to ha as area unit that is often used in the North American bird literature.
 As a result, our landscape has an area of 1 km$^2$.
 
 The `road` argument defines the half-width of the road that is placed in a vertical position.
-The `edge` argument defines the width of the edge stratum on boths sides of the road.
+The `edge` argument defines the width of the edge stratum on both sides of the road.
 Habitat (H), edge (E), and road (R) defines the 3 strata that we refer to by their initials (H for no stratification, HER for all 3 strata present).
 
-The origin of the cartesian coordinate system inside the landscape is dentered at the middle of the square.
+The origin of the Cartesian coordinate system inside the landscape is centered at the middle of the square.
 The `offset` argument allows the road and edge strata to be shifted to the left (negative values)
 or to the right (positive values) of the horizontal axis. This makes it possible to create landscapes with only
 two strata.
 The `bsims_init` function returns a landscape object (with class 'bsims_landscape').
 
 
-```{r landscape-plot,fig.width=6, fig.height=7}
+```{r landscape,fig.width=6, fig.height=7}
 (l1 <- bsims_init(extent = 10, road = 0, edge = 0, offset = 0))
 (l2 <- bsims_init(extent = 10, road = 1, edge = 0, offset = 0))
 (l3 <- bsims_init(extent = 10, road = 0.5, edge = 1, offset = 2))
@@ -177,7 +177,6 @@ between the expected ($\lambda$) and realized abundance ($N$). The default is a 
 ```{r pop-pois}
 bsims_populate(l1)
 ```
-
 
 Changing `abund_fun` can be useful to allow under or overdispersion, e.g.:
 
@@ -235,10 +234,10 @@ plot(p3)
 par(op)
 ```
 
-If the landscape is stratified, that has no affect on density unless we specify different values
+If the landscape is stratified, that has no effect on density unless we specify different values
 through the `density` argument as a vector of length 3 referring to the HER strata:
 
-```{r pop-3,fig.width=6, fig.height=7}
+```{r pop-dens,fig.width=6, fig.height=7}
 D <- c(H = 2, E = 0.5, R = 0)
 
 op <- par(mfrow = c(2, 2))
@@ -249,18 +248,24 @@ plot(bsims_populate(l4, density = D), main = "2 habitats")
 par(op)
 ```
 
-
-### Behaviour
+### Behavior
 
 Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+
+vocal rate, link to survival analysis (no mixture)
+
+duration is trivial
+
+movement: rate and SD
+
+finite mixtures (prop and stratum based)
+
+movement restrictions: no overlap, avoidance
 
 ```{r eval=FALSE}
 bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
   movement = 0, mixture = 1, avoid = c("none", "R", "ER"),
   initial_location=FALSE, allow_overlap=TRUE, ...)
-
-timetoevent(0, 10)
-timetoevent(Inf, 10)
 
 rr <- 1
 tt <- timetoevent(rr, 10)
@@ -469,4 +474,1451 @@ run_app("bsimsHER")
 
 Shiny apps can be used to play with the settings, then
 settings copied to the clipboard and eventually into R.
+
+
+
+# Behavioral Complexities -----------------------------
+
+## Introduction
+
+We have reviewed so far how to fit _naive_ models to estimate
+the expected value of the observed counts, $\lambda$.
+So what is this $\lambda$?
+Here are some deifinitions for further discussion:
+
+- **relative abundance**: $\lambda$ without any reference to nuisance variables, but possibly standardized by design, or nuisance variables used as fixed effects,
+- **abundance**: $N=\lambda/C$, $C$ is a correction factor and $N$ refers to the number of individuals within the area surveyed -- the problem is that we cannot measure this directly (this is a latent variable), moreover the survey area is also often unknown (i.e. for unlimited distance counts),
+- **occupancy**: the probability that the survey area is occupied, this is really equivalent to the indicator function $N>0$,
+- **density** $D = N/A = \lambda/AC$, abundance per unit area -- same problems as above: both $N$ and $A$ are unknowns.
+
+Our objective in the following chapters is to work out the details of 
+estimating abundance and density in some clever ways through
+learning about the nature of the mechanisms contributing to $C$.
+
+## Prerequisites
+
+```{r beh-libs,message=TRUE,warning=FALSE}
+library(bSims)                # simulations
+library(detect)               # multinomial models
+load("_data/josm/josm.rda")   # JOSM data
+```
+
+## Birds in the forest
+
+Build a landscape: extent is given in 100 m units
+
+```{r}
+(l <- bsims_init(extent=10))
+```
+
+```{r fig.width=8,fig.height=8}
+plot(l)
+```
+
+We have a 100 ha landscape that we populate with birds,
+1 bird / ha using a Poisson spatial point process.
+As a result, we have $N$ birds in the landscape,
+$N \sim Poisson(\lambda)$, $\lambda = DA$:
+
+```{r}
+set.seed(1)
+(a <- bsims_populate(l, density=0.5))
+```
+
+```{r fig.width=8,fig.height=8}
+plot(a)
+```
+
+The locations can be seen as nest locations (`a$nests` stores the locations). 
+But birds don't just stay put in one place. They move and vocalize:
+
+```{r}
+(b <- bsims_animate(a, 
+  vocal_rate=0.5, duration=10,
+  move_rate=1, movement=0.25))
+```
+
+```{r fig.width=8,fig.height=8}
+plot(b)
+```
+
+The `get_events` function, as the name implies, extracts the events: 
+movements (`$v` is 0) and vocalizations (`$v` is 1) alike, 
+unless filtered for vocalization events only.
+Besides the coordinates, we also have the time of event (`$t`) and
+the individual identifier (`$i` linking to the rows of the `b$nests` table):
+
+```{r}
+e <- get_events(b, event_type="both")
+head(e)
+v <- get_events(b, event_type="vocal")
+head(v)
+```
+
+
+## Survival model
+
+Survival models assess time-to-event data which is often censored
+(some event has not occurred at the time the data collection ended).
+
+Event time ($T$) is a continuous random variable.
+In the simplest case, its probability density function is the Exponential
+distribution: $f(t)=\phi e^{-t\phi}$.
+The corresponding cumulative distribution function is:
+$F(t)=\int_{0}^{t} f(t)dt=1-e^{-t\phi}$,
+giving the probability that the event has occurred by duration $t$ and we will refer to
+this probability as $p_t$. The parameter $\phi$ is the rate of the Exponential distribution
+with mean $1/\phi$ and variance $1/\phi^2$.
+
+In survival model, the complement of $F(t)$ is called the 
+_survival function_ ($S(t)=1-F(t)$, $S(0)=1$),
+which gives the probability that the event has not occurred by duration $t$.
+The the _hazard function_ ($\lambda(t)=f(t)/S(t)$) 
+which defines the instantaneous rate of occurrence of the event
+(the density of events at $t$ divided by the probability of surviving).
+The cumulative hazard (cumulative risk) the sum of the risks between doration 0 and $t$
+($\Lambda(t)=\int_{0}^{t} \lambda(t)dt$).
+
+The simplest survival distribution assumes constant risk over time ($\lambda(t)=\phi$),
+which corresponds to the Exponential distribution.
+The Exponential distribution also happens to describe the lengths of the 
+inter-event times in a homogeneous Poisson process (events are independent, 'memory-less' process).
+
+## Vocalization events
+
+Event times in our bSims example follow a Poisson process with rate $\phi$ (`vocal_rate`)
+within `duration` $t=10$ minutes.
+
+Let's subset the vocalization events to include the time of first detections
+for each individual (`v1`). The estimated rate should match our setting,
+the plot shows the Exponential probability density function on top of
+the event times:
+
+```{r}
+v1 <- v[!duplicated(v$i),]
+
+tmp <- v1
+tmp$o <- seq_len(nrow(v1))
+plot(o ~ t, tmp, type="n", ylab="Individuals",
+  main="Vocalization events", 
+  ylim=c(1, nrow(b$nests)), xlim=c(0,10))
+for (i in tmp$o) {
+  tmp2 <- v[v$i == v1$i[i],]
+  lines(c(tmp2$t[1], 10), c(i,i), col="grey")
+  points(tmp2$t, rep(i, nrow(tmp2)), cex=0.5)
+  points(tmp2$t[1], i, pch=19, cex=0.5)
+}
+```
+
+```{r}
+(phi <- b$vocal_rate[1])
+(phi_hat <- fitdistr(v1$t, "exponential")$estimate)
+
+hist(v1$t, xlab="Time of first detection (min)", freq=FALSE, main="", 
+  col="lightgrey", ylab="f(t)")
+curve(dexp(x, phi), add=TRUE, col=2)
+curve(dexp(x, phi_hat), add=TRUE, col=4)
+legend("topright", bty="n", lty=1, col=c(2,4), 
+  legend=c("Expected", "Estimated"))
+```
+
+Now let's visualize the corresponding cumulative distribution function.
+We also bin the events into time intervals defined by interval end times
+in the vector `br` (breaks to be used with `cut`):
+
+```{r}
+br <- c(3, 5, 10)
+i <- cut(v1$t, c(0, br), include.lowest = TRUE)
+table(i)
+
+plot(stepfun(v1$t, (0:nrow(v1))/nrow(v1)), do.points=FALSE, xlim=c(0,10),
+  xlab="Time of first detection (min)", ylab="F(t)", main="")
+curve(1-exp(-phi*x), add=TRUE, col=2)
+curve(1-exp(-phi_hat*x), add=TRUE, col=4)
+legend("bottomright", bty="n", lty=c(1,1,1,NA), 
+  col=c(1,2,4,3), pch=c(NA,NA,NA,21),
+  legend=c("Empirical", "Expected", "Estimated", "Binned"))
+points(br, cumsum(table(i))/sum(table(i)), cex=2, col=3, pch=21)
+```
+
+## Removal model
+
+The time-removal model, originally developed for estimating wildlife and fish abundances from mark-recapture studies, was later reformulated for avian surveys with the goal of improving estimates of bird abundance by accounting for the availability bias inherent in point-count data. The removal model applied to point-count surveys estimates the probability that a bird is available for detection as a function of the average number of detectable cues that an individual bird gives per minute (singing rate, $\phi$), and the known count duration ($t$).
+
+Time-removal models are based on a removal experiment whereby animals are trapped and thereby removed from the closed population of animals being sampled. When applying a removal model to avian point-count surveys, the counts of singing birds ($Y_{ij}, \ldots, Y_{iJ}$) within a given point-count survey $i$ ($i  = 1,\ldots, n$) are tallied relative to when each bird is first detected in multiple and consecutive time intervals, with the survey start time $t_{i0} = 0$, the end times of the time intervals $t_{ij}$ ($j = 1, 2,\ldots, J$), and the total count duration of the survey $$t_{iJ}$$. We count each individual bird once, so individuals are 'mentally removed' from a closed population of undetected birds by the surveyor.
+
+The continuous-time formulation of the removal model is identical to the Exponential survival model
+formulation with respect to the cumulative density function, which defines probability of 
+availability for sampling given the occurrence of the species.
+The response variable in the removal model follows multinomial distribution
+with cell probabilities derived from the cumulative probability function.
+
+We will use the `detect::cmulti` function to fit multinomial models using
+conditional maximum likelihood procedure (the conditioning means that we only use
+observations where the total count is not 0, i.e. the species was present).
+The `Y` matrix lists the number of new individuals counted in each time interval,
+the `D` matrix gives the interval end times.
+(We use the `detect::cmulti.fit` function to be able to fit the model to a single survey.)
+
+```{r}
+(y <- matrix(as.numeric(table(i)), nrow=1))
+(d <- matrix(br, nrow=1))
+(phi_hat1 <- exp(cmulti.fit(y, d, type="rem")$coef))
+phi # setting
+phi_hat # from time-to-event data
+```
+
+### Real data
+
+Let's pick a species from the JOSM data set.
+For predictors, we will use a variable capturing date (`DAY`; standardized ordinal day of the year) 
+and an other one capturing time of day (`TSSR`; time since local sunrise).
+The data frame `X` contains the predictors. 
+The matrix `Y` contains the counts of newly counted individuals binned into consecutive time intervals: 
+cell values are the $Y_{ij}$'s. The `D` object is another matrix mirroring the structure of `Y`
+but instead of counts, it contains the interval end times: cell values are
+the $t_{ij}$'s.
+
+```{r}
+yall <- Xtab(~ SiteID + Dur + SpeciesID, 
+  josm$counts[josm$counts$DetectType1 != "V",])
+yall <- yall[sapply(yall, function(z) sum(rowSums(z) > 0)) > 100]
+
+spp <- "TEWA"
+
+Y <- as.matrix(yall[[spp]])
+D <- matrix(c(3, 5, 10), nrow(Y), 3, byrow=TRUE,
+  dimnames=dimnames(Y))
+X <- josm$surveys[rownames(Y), c("DAY", "TSSR")]
+head(Y[rowSums(Y) > 0,])
+head(D)
+summary(X)
+```
+
+
+The `D` matrix can take different methodologies for each row.
+The leftover values in each row must be filled with `NA`s
+and the pattern of `NA`s must match between the `Y` and `D` matrices
+(i.e. you should't have observation in a non-existing time interval).
+Integrating data becomes really easy this way, for example:
+
+```{r}
+matrix(c(3, 5, 10, NA, NA, 1:5, 4, 8, NA, NA, NA), 3, byrow=TRUE)
+```
+
+### Time-invariant conventional model
+
+Time-invariant means that the rate is constant over time
+(i.e. no difference between morning and midnight),
+while conventional refers to the assumption
+that all individuals share the same rate
+(their behaviour is identical in this regard).
+
+In the time-invariant conventional removal model (`Me0`), 
+the individuals of a species at a given location and time are assumed to be homogeneous 
+in their singing rates. 
+The time to first detection follows the Exponential distribution, 
+and the cumulative density function of times to first detection in time interval 
+(0, $t_{iJ}$) gives us the probability that a bird sings at least once during the point count as 
+$p(t_{iJ}) = 1 - exp(-t_{iJ} \phi)$.
+
+We fit this model by specifying intercep-only in the
+right hand side of the formula, and `type="rem"`
+as part of the `cmulti` call:
+
+```{r}
+Me0 <- cmulti(Y | D ~ 1, type="rem")
+summary(Me0)
+(phi_Me0 <- exp(coef(Me0)))
+
+curve(1-exp(-x*phi_Me0), xlim=c(0, 10), ylim=c(0, 1), col=4,
+  xlab="Duration (min)", ylab=expression(p(t[J])), 
+  main=paste(spp, "Me0"))
+points(D[1,], cumsum(colSums(Y))/sum(Y), cex=2, col=3, pch=21)
+```
+
+### Time-varying conventional removal model
+
+Singing rates of birds vary with time of day, time of year, breeding status, and stage of the nesting cycle. 
+Thus, removal model estimates of availability may be improved by accounting for variation in singing rates
+using covariates for day of year and time of day. 
+In this case $p(t_{iJ}) = 1 - e^{-t_{iJ} \phi_{i}}$ and $log(\phi_{i}) = \beta_{0} + \sum^{K}_{k=1} \beta_{k} x_{ik}$ is the linear predictor with $K$ covariates and the corresponding unknown coefficients ($\beta_{k}$, $k = 0,\ldots, K$).
+
+Let's fit a couple of time-varying models using `DAY` and `TSSR` as covariates:
+```{r beh-Me,cache=TRUE}
+Me1 <- cmulti(Y | D ~ DAY, X, type="rem")
+Me2 <- cmulti(Y | D ~ TSSR, X, type="rem")
+```
+
+Now compare the three conventional models based on AIC and inspect the summary for the best supported model with the `JDAY` effect.
+
+```{r}
+Me_AIC <- AIC(Me0, Me1, Me2)
+Me_AIC$delta_AIC <- Me_AIC$AIC - min(Me_AIC$AIC)
+Me_AIC[order(Me_AIC$AIC),]
+
+Me_Best <- get(rownames(Me_AIC)[Me_AIC$delta_AIC == 0])
+summary(Me_Best)
+```
+
+To visually capture the time-varying effects, we make some plots using base graphics, 
+colors matching the time-varying predictor. This way we can not only assess how availability 
+probability (given a fixed time interval) is changing with the values of the predictor, 
+but also how the cumulative distribution changes with time.
+
+```{r}
+b <- coef(Me_Best)
+
+n <- 100
+DAY <- seq(min(X$DAY), max(X$DAY), length.out=n+1)
+TSSR <- seq(min(X$TSSR), max(X$TSSR), length.out=n+1)
+Duration <- seq(0, 10, length.out=n)
+col <- colorRampPalette(c("red", "yellow", "blue"))(n)
+
+op <- par(mfrow=c(1,2))
+p1 <- 1-exp(-3*exp(b[1]+b[2]*DAY))
+plot(DAY, p1, ylim=c(0,1), type="n",
+    main=paste(spp, rownames(Me_AIC)[Me_AIC$delta_AIC == 0]),
+    ylab="P(availability)")
+for (i in seq_len(n)) {
+    lines(DAY[c(i,i+1)], p1[c(i,i+1)], col=col[i], lwd=2)
+}
+abline(h=range(p1), col="grey")
+
+plot(Duration, Duration, type="n", ylim=c(0,1),
+    ylab="P(availability)")
+for (i in seq_len(n)) {
+    p2 <- 1-exp(-Duration*exp(b[1]+b[2]*DAY[i]))
+    lines(Duration, p2, col=col[i])
+}
+abline(v=3, h=range(p1), col="grey")
+par(op)
+```
+
+## Finite mixtures
+
+Let's relax the assumption that all individuals vocalize at the same rate.
+We can think about this as different groups in the population.
+The individuals within the groups have homogenerous rates,
+but the group level rates are different.
+We can introduce such heterogeneity into our bSims world by
+specifying the group level rates (`phi` vector) and the
+proportion of individuals belonging to the groups (`mix`).
+
+
+```{r}
+phi <- c(10, 0.5)
+mix <- c(0.25, 0.75)
+
+set.seed(1)
+(a2 <- bsims_populate(l, density=1)) # increase density
+(b2 <- bsims_animate(a2, vocal_rate=phi, mixture=mix))
+b2$vocal_rate
+```
+
+If we plot the time to first detection data, we can see how
+expected distribution (red) is different from the fitted
+Exponential distribution assuming homogeneity:
+
+```{r}
+v <- get_events(b2, event_type="vocal")
+v1 <- v[!duplicated(v$i),]
+(phi_hat <- fitdistr(v1$t, "exponential")$estimate)
+
+hist(v1$t, xlab="Time of first detection (min)", freq=FALSE, main="", 
+  col="lightgrey", ylab="f(t)")
+curve(mix[1]*dexp(x, phi[1])+mix[2]*dexp(x, phi[2]), add=TRUE, col=2)
+curve(dexp(x, phi_hat), add=TRUE, col=4)
+legend("topright", bty="n", lty=1, col=c(2,4), 
+  legend=c("Expected (mixture)", "Estimated (exponential)"))
+```
+
+Now let's visualize the corresponding cumulative distribution function:
+
+```{r}
+br <- 1:10
+i <- cut(v1$t, c(0, br), include.lowest = TRUE)
+table(i)
+
+plot(stepfun(v1$t, (0:nrow(v1))/nrow(v1)), do.points=FALSE, xlim=c(0,10),
+  xlab="Time of first detection (min)", ylab="F(t)", main="")
+curve(1-mix[2]*exp(-phi[2]*x), add=TRUE, col=2)
+curve(1-exp(-phi_hat*x), add=TRUE, col=4)
+legend("bottomright", bty="n", lty=c(1,1,1,NA), 
+  col=c(1,2,4,3), pch=c(NA,NA,NA,21),
+  legend=c("Empirical", "Expected (mixture)", "Estimated (exponential)", "Binned"))
+points(br, cumsum(table(i))/sum(table(i)), cex=2, col=3, pch=21)
+```
+
+We use the `detect::cmulti` function to fit the finite mixture model:
+
+```{r}
+(y <- matrix(as.numeric(table(i)), nrow=1))
+(d <- matrix(br, nrow=1))
+cf <- cmulti.fit(y, d, type="fmix")$coef # log.phi, logit.c
+
+c(phi=phi[2], c=mix[2]) # setting
+c(phi_hat=exp(cf[1]), c_hat=plogis(cf[2])) # estimate
+```
+
+### Time-invariant finite mixture removal model
+
+The removal model can accommodate behavioral heterogeneity in singing by subdividing the 
+sampled population for a species at a given point into a finite mixture of birds with low and 
+high singing rates, which requires the additional estimation of the proportion of birds in the 
+sampled population with low singing rates.
+
+In the continuous-time formulation of the finite mixture (or two-point mixture) removal model, 
+the cumulative density function during a point count is given by 
+$p(t_{iJ}) = (1 - c) 1 + c (1 - e^{-t_{iJ} \phi}) = 1 - c e^{-t_{iJ} \phi}$, where 
+$\phi$ is the singing rate for the group of infrequently singing birds, and $c$ is the 
+proportion of birds during the point count that are infrequent singers. The remaining 
+proportions ($1 - c$; the intercept of the cumulative density function) of the frequent 
+singers are assumed to be detected instantaneously at the start of the first time interval. 
+In the simplest form of the finite mixture model, the proportion and singing rate of birds 
+that sing infrequently is homogeneous across all times and locations (model `Mf0`). 
+We are using the `type = "fmix"` for finite mixture removal models.
+
+Here, for the read bird data set:
+
+```{r}
+Mf0 <- cmulti(Y | D ~ 1, type="fmix")
+summary(Mf0)
+cf_Mf0 <- coef(Mf0)
+
+curve(1-plogis(cf_Mf0[2]) * exp(-x*exp(cf_Mf0[1])), 
+  xlim=c(0, 10), ylim=c(0, 1), col=4, main=paste(spp, "Mf0"),
+  xlab="Duration (min)", ylab=expression(p(t[J])))
+points(D[1,], cumsum(colSums(Y))/sum(Y), cex=2, col=3, pch=21)
+```
+
+### Time-varying finite mixture removal models
+
+Previously, researchers have applied covariate effects on the parameter 
+$\phi_{i}$ of the finite mixture model, similarly to how we modeled these effects in conventional models.
+This model assumes that the parameter $c$ is constant irrespective of time and location 
+(i.e. only the infrequent singer group changes its singing behavior).
+
+We can fit finite mixture models with `DAY` and `TSSR` as covariates on $\phi$. 
+In this case $p(t_{iJ}) = 1 - c e^{-t_{iJ} \phi_{i}}$ and 
+$log(\phi_{i}) = \beta_{0} + \sum^{K}_{k=1} \beta_{k} x_{ik}$ 
+is the linear predictor with $K$ covariates and the corresponding unknown coefficients 
+($\beta_{k}$, $k = 0,\ldots, K$).
+
+```{r}
+Mf1 <- cmulti(Y | D ~ DAY, X, type="fmix")
+Mf2 <- cmulti(Y | D ~ TSSR, X, type="fmix")
+```
+
+Compare the three finite mixture models based on AIC and inspect the summary for the best supported 
+model:
+
+```{r}
+Mf_AIC <- AIC(Mf0, Mf1, Mf2)
+Mf_AIC$delta_AIC <- Mf_AIC$AIC - min(Mf_AIC$AIC)
+
+Mf_Best <- get(rownames(Mf_AIC)[Mf_AIC$delta_AIC == 0])
+Mf_AIC[order(Mf_AIC$AIC),]
+
+summary(Mf_Best)
+```
+
+We produce a similar plot as before.
+
+```{r}
+b <- coef(Mf_Best)
+
+op <- par(mfrow=c(1,2))
+p1 <- 1-plogis(b[3])*exp(-3*exp(b[1]+b[2]*DAY))
+plot(DAY, p1, ylim=c(0,1), type="n",
+    main=paste(spp, rownames(Mf_AIC)[Mf_AIC$delta_AIC == 0]),
+    ylab="P(availability)")
+for (i in seq_len(n)) {
+    lines(DAY[c(i,i+1)], p1[c(i,i+1)], col=col[i], lwd=2)
+}
+abline(h=range(p1), col="grey")
+
+plot(Duration, Duration, type="n", ylim=c(0,1),
+    ylab="P(availability)")
+for (i in seq_len(n)) {
+    p2 <- 1-plogis(b[3])*exp(-Duration*exp(b[1]+b[2]*DAY[i]))
+    lines(Duration, p2, col=col[i])
+}
+abline(v=3, h=range(p1), col="grey")
+par(op)
+```
+
+
+An alternative parametrization is that $c_{i}$ rather than $\phi$ be the time-varying parameter, 
+allowing the individuals to switch between the frequent and infrequent group depending on covariates. 
+We can fit this class of finite mixture model with `DAY` and `TSSR` as covariates on $c$ 
+using `type = "mix"` (instead of `"fmix"`). 
+In this case $p(t_{iJ}) = 1 - c_{i} e^{-t_{iJ} \phi}$ and 
+$logit(c_{i}) = \beta_{0} + \sum^{K}_{k=1} \beta_{k} x_{ik}$ is the linear predictor with $K$ 
+covariates and the corresponding unknown coefficients ($\beta_{k}$, $k = 0,\ldots, K$). 
+Because $c_{i}$ is a proportion, we model it on the logit scale.
+
+```{r}
+Mm1 <- cmulti(Y | D ~ DAY, X, type="mix")
+Mm2 <- cmulti(Y | D ~ TSSR, X, type="mix")
+```
+
+We did not fit a null model for this parametrization, because it is identical to the `Mf0` model, 
+so that model `Mf0` is what we use to compare AIC values and inspect the summary for the best 
+supported model:
+
+```{r}
+Mm_AIC <- AIC(Mf0, Mm1, Mm2)
+Mm_AIC$delta_AIC <- Mm_AIC$AIC - min(Mm_AIC$AIC)
+
+Mm_Best <- get(rownames(Mm_AIC)[Mm_AIC$delta_AIC == 0])
+Mm_AIC[order(Mm_AIC$AIC),]
+
+summary(Mm_Best)
+```
+
+We produce a similar plot as before:
+
+```{r}
+b <- coef(Mm_Best)
+
+op <- par(mfrow=c(1,2))
+p1 <- 1-plogis(b[2]+b[3]*DAY)*exp(-3*exp(b[1]))
+plot(DAY, p1, ylim=c(0,1), type="n",
+    main=paste(spp, rownames(Mm_AIC)[Mm_AIC$delta_AIC == 0]),
+    ylab="P(availability)")
+for (i in seq_len(n)) {
+    lines(DAY[c(i,i+1)], p1[c(i,i+1)], col=col[i], lwd=2)
+}
+abline(h=range(p1), col="grey")
+
+plot(Duration, Duration, type="n", ylim=c(0,1),
+    ylab="P(availability)")
+for (i in seq_len(n)) {
+    p2 <- 1-plogis(b[2]+b[3]*DAY[i])*exp(-Duration*exp(b[1]))
+    lines(Duration, p2, col=col[i])
+}
+abline(v=3, h=range(p1), col="grey")
+par(op)
+```
+
+
+## Let the best model win
+
+So which of the 3 parametrizations proved to be best for our data? 
+It was the finite mixture with time-varying proportion of infrequent singers.
+Second was the other finite mixture model, while the conventional model 
+was lagging behind.
+
+```{r}
+M_AIC <- AIC(Me_Best, Mf_Best, Mm_Best)
+M_AIC$delta_AIC <- M_AIC$AIC - min(M_AIC$AIC)
+M_AIC[order(M_AIC$AIC),]
+```
+
+
+Finite mixture models provide some really nice insight into how singing behavior changes over time and, due to more parameters, they provide a better fit and thus minimize bias in population size estimates. But all this improvement comes with a price: sample size requirements (or more precisely, the number of detections required) are really high. To have all the benefits with reduced variance, one needs about 1000 non-zero observations to fit finite mixture models, 20 times more than needed to reliably fit conventional removal models. This is much higher than previously suggested minimum sample sizes.
+
+Our findings also indicate that lengthening the count duration from 3 minutes to 5--10 minutes is an important consideration when designing field surveys to increase the accuracy and precision of population estimates. Well-informed survey design combined with various forms of removal sampling are useful in accounting for availability bias in point counts, thereby improving population estimates, and allowing for better integration of disparate studies at larger spatial scales.
+
+
+```{block2, type='rmdexercise'}
+**Exercise**
+
+Compare different durations, numbers and lengths of time intervals when estimating vocalization rates.
+
+Estimate vocalization rates for other species (e.g. rare species, specias with less frequent vocalizations). 
+
+Compare linear and polynomial `DAY` effects for migratory and resident species (e.g. BCCH, BOCH, BRCR, CORA, GRAJ, RBNU).
+```
+
+## Estimating abundance
+
+Let us use the bSims approach to see how well we can estimate abundance
+after accounting for availability. We set `Den` as density ($D$), and because
+area is $A$ = 100 ha by default, the expected value of the abundance ($\lambda$)
+bacomes $AD$, while the actual abundance ($N$) is a realization of that
+based on Poisson distribution ($N \sim Poisson(\lambda)$):
+
+```{r}
+phi <- 0.5
+Den <- 1
+
+set.seed(1)
+l <- bsims_init()
+a <- bsims_populate(l, density=Den)
+(b <- bsims_animate(a, vocal_rate=phi, move_rate=0))
+```
+
+The next function we use is `bsims_transcribe` which takes the events data
+and bins it according to time intervals, `tint` defines the end times of
+each interval:
+
+```{r}
+tint <- c(1, 2, 3, 4, 5)
+(tr <- bsims_transcribe(b, tint=tint))
+tr$removal # binned new individuals
+(Y <- sum(tr$removal)) # detected in 0-3 min
+```
+
+After `max(tint)` duration, we detected $Y$ individuals.
+Because $E[Y] = NC$, we only have to estimate the correction factor $C$,
+that happens to be $C=p$ in this case because our bSims world
+ignored the observation process so far. $p$ is estimated based on $\phi$:
+
+```{r}
+fit <- cmulti.fit(tr$removal, matrix(tint, nrow=1), type="rem")
+c(true=phi, estimate=exp(fit$coef))
+(p <- 1-exp(-max(tint)*exp(fit$coef)))
+
+tt <- seq(0, 10, 0.01)
+plot(tt, 1-exp(-tt*phi), type="l", ylim=c(0, 1),
+  ylab="P(availability)", xlab="Duration", lty=2)
+lines(tt, 1-exp(-tt*exp(fit$coef)))
+for (i in seq_len(length(tint))) {
+  ii <- c(0, tint)[c(i, i+1)]
+  ss <- tt >= ii[1] & tt <= ii[2]
+  xi <- tt[ss]
+  yi <- 1-exp(-xi*exp(fit$coef))
+  polygon(c(xi, xi[length(xi)]), c(yi, yi[1]),
+    border=NA, col="#0000ff33")
+}
+legend("bottomright", bty="n", lty=c(2, 1, NA), 
+  fill=c(NA, NA, "#0000ff33"), border=NA, 
+  legend=c("True", "Estimated", "'New individuals'"))
+```
+
+Our estimate of $N$ becomes $Y/C=Y/p$:
+
+```{r}
+N <- sum(a$abundance)
+Nhat <- Y/p
+c(true=N, estimate=Nhat)
+```
+
+In this case, area is known, so density becomes:
+
+```{r}
+A <- sum(a$area)
+c(true=N / A, estimate=Nhat / A)
+```
+
+Next we use the `Best` model from our real JOSM bird data analysis:
+
+```{r}
+spp <- "TEWA"
+
+Y <- as.matrix(yall[[spp]])
+D <- matrix(c(3, 5, 10), nrow(Y), 3, byrow=TRUE,
+  dimnames=dimnames(Y))
+X <- josm$surveys[rownames(Y), c("DAY", "TSSR")]
+
+Best <- get(rownames(M_AIC)[M_AIC$delta_AIC == 0])
+summary(Best)
+```
+
+In this case, availability varies due to `DAY`.
+Our estimate of $N_i$ becomes $Y_i/C_i=Y_i/p_i$:
+
+```{r}
+p <- 1 - plogis(model.matrix(Best) %*% coef(Best)[-1]) *
+  exp(-10 * exp(coef(Best)[1]))
+summary(p)
+```
+
+We can now calculate mean abundance, where `ytot` tallies up the counts
+across the 3 time intervals:
+
+```{r}
+ytot <- rowSums(Y)
+table(ytot)
+mean(ytot / p)
+```
+
+Alternatively, we can fit a GLM and use `log(p)` as an offset:
+
+```{r}
+mod <- glm(ytot ~ 1, family=poisson, offset=log(p))
+summary(mod)
+```
+
+The GLM based estimate comes from the intercept, because
+$E[Y_i]=N_i C_i$ is equivalent to $\lambda_i=e^{\beta_0} e^{o_i}$,
+this $\hat{N_i}=e^{\hat{\beta_0}}$:
+
+```{r}
+exp(coef(mod))
+```
+
+This result tells us mean abundance after correcting for availability
+bias, but we don't know what area was effectively sampled,
+and detection of individuals given availability is probably less than 1
+because this happens to be a real data set and it is guaranteed that
+humans in the forest cannot detect birds that are very far (say > 500 m away).
+We shall address these problem in the next chapter.
+
+
+# The Detection Process -------------------------------------
+
+## Introduction
+
+As part of the detection process, a skilled observer
+counts individual birds at a count station.
+New individuals are assigned to time and distance categories,
+the type of behavior also registered.
+During this process, auditory cues travel through
+the distance between the bird and the observer.
+As the pover of the sound fades away, the
+chanches of being detected also decreases.
+If the detection process is based on visual detections,
+vegetation can block line of sight, etc.
+In this chapter, we scrutinize how this detection process
+contributes to the factor $C$.
+
+## Prerequisites
+
+```{r det-libs,message=TRUE,warning=FALSE}
+library(bSims)                # simulations
+library(detect)               # multinomial models
+library(Distance)             # distance sampling
+load("_data/josm/josm.rda")   # JOSM data
+source("functions.R")         # some useful stuff
+```
+
+
+## Distance functions
+
+The distance function ($g(d)$ describes the probability of detecting an individual
+given the distance between the observer and the individual ($d$).
+The detection itself is often triggered by visual or auditory cues,
+and thus depend on the individuals being available for detection 
+(and of course being present in the survey area).
+
+Distance functions have some characteristics:
+
+- It is a monotonic decreasing function of distance,
+- $g(0)=1$: detection at 0 distance is perfect.
+
+Here are some common distance function and rationale for their use
+(i.e. mechanisms leading to such distance shapes):
+
+1. Negative Exponential: a one-parameter function ($g(d) = e^{-d/\tau}$), probability quickly decreases with distance, this mirrors sound attenuation under spherical spreading, so might be a suitable form for acoustic recoding devices (we will revisit this later), but not a very useful form for human based counts, as explained below;
+2. Half-Normal: this is also a one-parameter function ($g(d) = e^{-(d/\tau)^2}$) where probability initially remain high (the _shoulder_), reflecting an increased chance of detecting individuals closer to the observer, this form has also sone practical advantages that we will discuss shortly ($\tau^2$ is variance of the unfolded Normal distribution, $\tau^2/2$ is the variance of the Half-Normal distribution -- both the Negative Exponential and the Half-Normal being special cases of $g(d) = e^{-(d/\tau)^b}$ that have the parameter $b$ [$b > 0$] affecting the shoulder);
+3. Hazard rate: this is a two-parameter model ($g(d) = 1-e^{-(d/\tau)^-b}$) that have the parameter $b$ ($b > 0$) affecting the more pronounced and sharp shoulder.
+
+
+```{r fig.show='hold',out.width='33%'}
+d <- seq(0, 2, 0.01)
+plot(d, exp(-d/0.8), type="l", col=4, ylim=c(0,1),
+  xlab="Distance (100 m)", ylab="P(detection)", main="Negative Exponential")
+plot(d, exp(-(d/0.8)^2), type="l", col=4, ylim=c(0,1),
+  xlab="Distance (100 m)", ylab="P(detection)", main="Half-Normal")
+plot(d, 1-exp(-(d/0.8)^-4), type="l", col=4, ylim=c(0,1),
+  xlab="Distance (100 m)", ylab="P(detection)", main="Hazard rate")
+```
+
+
+```{block2, type='rmdexercise'}
+**Exercise**
+
+Try different values of $b$ to explore the different shapes of the Hazard rate function.
+
+Write your own code (`plot(d, exp(-(d/<tau>)^<b>), type="l", ylim=c(0,1))`), or run `shiny::runApp("_shiny/distancefun.R")`.
+```
+
+We will apply this new found knowledge to our bSims world:
+the observer is in the middle of the landscape, and each vocalization
+event is aither detected or not, depending on the distance.
+Units of `tau` are given on 100 m units, so that corresponding 
+density estimates will refer to ha as the unit area.
+
+In this example, we want all individuals to be equally available,
+so we are going to override all behavioral aspects of the simulations
+by the `initial_location` argument when calling `bsims_animate`.
+We set `density` and `tau` high enough to detections in this example.
+
+```{r}
+tau <- 2
+
+set.seed(123)
+l <- bsims_init()
+a <- bsims_populate(l, density=10)
+b <- bsims_animate(a, initial_location=TRUE)
+
+(o <- bsims_detect(b, tau=tau))
+```
+
+```{r fig.width=8,fig.height=8}
+plot(o)
+```
+
+## Distance sampling
+
+The distribution of the _observed distances_ is a product of detectability
+and the distribution of the individuals with respect to the point where
+the observer is located.
+For point counts, area increases linearly with radial distance, 
+implying a triangular distribution with respect to the point
+($h(d)=\pi 2 d /A=\pi 2 d / \pi r_{max}^2=2 d / r_{max}^2$, where 
+$A$ is a circular survey area with truncation distance $r_{max}$).
+The product $g(d) h(d)$ gives the density function of the observed distances.
+
+```{r}
+g <- function(d, tau, b=2, hazard=FALSE)
+  if (hazard)
+    1-exp(-(d/tau)^-b) else exp(-(d/tau)^b)
+h <- function(d, rmax)
+  2*d/rmax^2
+```
+
+```{r fig.show='hold',out.width='33%'}
+rmax <- 4
+
+d <- seq(0, rmax, 0.01)
+plot(d, g(d, tau), type="l", col=4, ylim=c(0,1),
+  xlab="d", ylab="g(d)", main="Prob. of detection")
+plot(d, h(d, rmax), type="l", col=4,
+  xlab="d", ylab="h(d)", main="PDF of distances")
+plot(d, g(d, tau) * h(d, rmax), type="l", col=4,
+  xlab="d", ylab="g(d) h(d)", main="Density of observed distances")
+```
+
+The object `da` contains the distances to all the nests
+based on our bSims object,
+we use this to display the distribution of available distances:
+
+```{r}
+da <- sqrt(rowSums(a$nests[,c("x", "y")]^2))
+
+hist(da[da <= rmax], freq=FALSE, xlim=c(0, rmax),
+  xlab="Available distances (d <= r_max)", main="")
+curve(2*x/rmax^2, add=TRUE, col=2)
+```
+
+The `get_detections` function returns a data frame with the
+detected events (in our case just the nest locations): 
+`$d` is the distance, `$a` is the angle
+(in degrees, counter clock-wise from positive x axis).
+
+```{r}
+head(dt <- get_detections(o))
+```
+
+The following code plots the probability density of the
+observed distances within the truncation distance $r_{max}$,
+thus we need to standardize the $g(r) h(r)$ function
+by the integral sum:
+
+```{r}
+f <- function(d, tau, b=2, hazard=FALSE, rmax=1) 
+  g(d, tau, b, hazard) * h(d, rmax)
+tot <- integrate(f, lower=0, upper=rmax, tau=tau, rmax=rmax)$value
+
+hist(dt$d[dt$d <= rmax], freq=FALSE, xlim=c(0, rmax),
+  xlab="Observed distances (r <= rmax)", main="")
+curve(f(x, tau=tau, rmax=rmax) / tot, add=TRUE, col=2)
+```
+
+In case of the Half-Normal, we can linearize the relationship
+by taking the log of the distance function: 
+$log(g(d)) =log(e^{-(d/\tau)^2})= -(d / \tau)^2 = x \frac{1}{\tau^2} = 0 + x \beta$.
+Consequently, we can use GLM to fit a model with $x = -d^2$ as 
+predictor and no intercept, and estimate $\hat{\beta}$ and
+$\hat{\tau}=\sqrt{1/\hat{\beta}}$.
+
+For this method to work, we need to know the observed and 
+unobserved distances as well,
+which makes this approach of low utility in practice when
+location of unobserved individuals is unknown.
+But we can at least check our bSims data:
+
+```{r}
+dat <- data.frame(
+  distance=da, 
+  x=-da^2, 
+  detected=ifelse(rownames(o$nests) %in% dt$i, 1, 0))
+summary(dat)
+mod <- glm(detected ~ x - 1, data=dat, family=binomial(link="log"))
+c(true=tau, estimate=sqrt(1/coef(mod)))
+```
+
+```{r}
+curve(exp(-(x/sqrt(1/coef(mod)))^2), 
+  xlim=c(0,max(dat$distance)), ylim=c(0,1),
+  xlab="Distance (100 m)", ylab="P(detection)")
+curve(exp(-(x/tau)^2), lty=2, add=TRUE)
+rug(dat$distance[dat$detected == 0], side=1, col=4)
+rug(dat$distance[dat$detected == 1], side=3, col=2)
+legend("topright", bty="n", lty=c(2,1), 
+  legend=c("True", "Estimated"))
+```
+
+The Distance package offers various tools to fit
+models to observed distance data. 
+See [here](https://workshops.distancesampling.org/duke-spatial-2015/practicals/1-detection-functions-solutions.html) for a tutorial.
+The following script fits the Half-Normal (`key = "hn"`)
+without ajustments (`adjustment=NULL`) to  
+observed distance data from truncated point transect.
+It estimates $\sigma = \sqrt{\tau}$:
+
+```{r}
+dd <- ds(dt$d, truncation = rmax, transect="point", 
+  key = "hn", adjustment=NULL)
+c(true=tau, estimate=exp(dd$ddf$par)^2)
+```
+
+## Average detection
+
+To calculate the average probability of detecting individuals
+within a circle with truncation distance $r_{max}$, we need to
+integrate over the product of $g(r)$ and $h(r)$: 
+$q(r_{max})=\int_{0}^{r_{max}} g(d) h(d) dd$.
+This gives the volume of pie dough cut at $r_{max}$,
+compared to the volume of the cookie cutter ($\pi r_{max}^2$).
+
+```{r}
+q <- sapply(d[d > 0], function(z)
+  integrate(f, lower=0, upper=z, tau=tau, rmax=z)$value)
+
+plot(d, c(1, q), type="l", col=4, ylim=c(0,1),
+  xlab=expression(r[max]), ylab=expression(q(r[max])), 
+  main="Average prob. of detection")
+```
+
+For the Half-Normal detection function, the analytical solution for the 
+average probability is 
+$\pi \tau^2 [1-exp(-d^2/\tau^2)] / (\pi r_{max}^2)$,
+where the denominator is a normalizing constant
+representing the volume of a cylinder of perfect detectability.
+
+To visualize this, here is the pie analogy for 
+$\tau=2$ and $r_{max}=2$:
+
+```{r}
+tau <- 2
+rmax <- 2
+w <- 0.1
+m <- 2
+plot(0, type="n", xlim=m*c(-rmax, rmax), ylim=c(-w, 1+w), 
+  axes=FALSE, ann=FALSE)
+yh <- g(rmax, tau=tau)
+lines(seq(-rmax, rmax, rmax/100),
+  g(abs(seq(-rmax, rmax, rmax/100)), tau=tau))
+draw_ellipse(0, yh, rmax, w, lty=2)
+lines(-c(rmax, rmax), c(0, yh))
+lines(c(rmax, rmax), c(0, yh))
+draw_ellipse(0, 0, rmax, w)
+draw_ellipse(0, 1, rmax, w, border=4)
+lines(-c(rmax, rmax), c(yh, 1), col=4)
+lines(c(rmax, rmax), c(yh, 1), col=4)
+```
+
+## Binned distances
+
+The cumulative density function for the Half-Normal
+distribution ($\pi(r) = 1-e^{-(r/\tau)^2}$) is used to calculate
+cell probabilities for binned distance data
+(the normalizing constant is the area of the integral $\pi \tau^2$,
+instead of $\pi r_{max}^2$).
+It captures the proportion of the observed distances
+relative to the whole volume of the observed distance density.
+In the pie analogy, this is the dough volume inside
+the cookie cutter, compared to the dough volume inside and outside
+of the cutter (that happens to be $\pi \tau^2$ for the Half-Normal):
+
+```{r}
+plot(0, type="n", xlim=m*c(-rmax, rmax), ylim=c(-w, 1+w), 
+  axes=FALSE, ann=FALSE)
+yh <- g(rmax, tau=tau)
+lines(seq(-m*rmax, m*rmax, rmax/(m*100)),
+  g(seq(-m*rmax, m*rmax, rmax/(m*100)), tau=tau),
+  col=2)
+lines(seq(-rmax, rmax, rmax/100),
+  g(abs(seq(-rmax, rmax, rmax/100)), tau=tau))
+draw_ellipse(0, yh, rmax, w, lty=2)
+lines(-c(rmax, rmax), c(0, yh))
+lines(c(rmax, rmax), c(0, yh))
+draw_ellipse(0, 0, rmax, w)
+```
+
+In case of the Half-Normal distance function,
+$\tau$ is the _effective detection radius_ (EDR). 
+The effective detection radius is the distance from observer 
+where the number of individuals missed within EDR 
+(volume of 'air' in the cookie cutter above the dough)
+equals the number of individuals detected outside of EDR
+(dough volume outside the cookie cutter),
+EDR is the radius $r_e$ where $q(r_e)=\pi(r_e)$:
+
+```{r}
+plot(0, type="n", xlim=m*c(-rmax, rmax), ylim=c(-w, 1+w), 
+  axes=FALSE, ann=FALSE)
+yh <- g(rmax, tau=tau)
+lines(seq(-m*rmax, m*rmax, rmax/(m*100)),
+  g(seq(-m*rmax, m*rmax, rmax/(m*100)), tau=tau),
+  col=2)
+lines(seq(-rmax, rmax, rmax/100),
+  g(abs(seq(-rmax, rmax, rmax/100)), tau=tau))
+draw_ellipse(0, yh, rmax, w, lty=2)
+lines(-c(rmax, rmax), c(0, yh))
+lines(c(rmax, rmax), c(0, yh))
+draw_ellipse(0, 0, rmax, w)
+draw_ellipse(0, 1, rmax, w, border=4)
+lines(-c(rmax, rmax), c(yh, 1), col=4)
+lines(c(rmax, rmax), c(yh, 1), col=4)
+
+```
+
+```{block2, type='rmdexercise'}
+**Exercise**
+
+What would be a computational algorithm to calculate EDR
+for any distance function and truncation distance?
+
+Trye to explain how the code below is working.
+
+Why are EDRs different for different truncation distances?
+```
+
+```{r}
+find_edr <- function(dist_fun, ..., rmax=Inf) {
+  ## integral function
+  f <- function(d, ...)
+    dist_fun(d, ...) * 2*d*pi
+  ## volume under dist_fun
+  V <- integrate(f, lower=0, upper=rmax, ...)$value
+  u <- function(edr)
+    V - edr^2*pi
+  uniroot(u, c(0, 1000))$root
+}
+
+find_edr(g, tau=1)
+find_edr(g, tau=10)
+find_edr(g, tau=1, b=1)
+find_edr(g, tau=1, b=4, hazard=TRUE)
+
+find_edr(g, tau=1, rmax=1)
+```
+
+The function $\pi(r)$ increases monotonically from 0 to 1:
+
+```{r}
+curve(1-exp(-(x/tau)^2), xlim=c(0, 5), ylim=c(0,1), col=4,
+  ylab=expression(pi(d)), xlab=expression(d), 
+  main="Cumulative density")
+```
+
+Here are binned distances for the bSims data, with expected
+proportions based on $\pi()$ cell probabilities 
+(differences within the distance bins).
+The nice thing about this cumulative density formulation
+is that it applies equally to truncated and unlimited
+(not truncated) distance data, and the radius end point
+for a bin (stored in `br`) can be infinite:
+
+```{r}
+br <- c(1, 2, 3, 4, 5, Inf)
+dat$bin <- cut(da, c(0, br), include.lowest = TRUE)
+(counts <- with(dat, table(bin, detected)))
+
+pi_br <- 1-exp(-(br/tau)^2)
+
+barplot(counts[,"1"]/sum(counts[,"1"]), space=0, col=NA,
+  xlab="Distance bins (100 m)", ylab="Proportions",
+  ylim=c(0, max(diff(c(0, pi_br)))))
+lines(seq_len(length(br))-0.5, diff(c(0, pi_br)), col=3)
+```
+
+We can use the `bsims_transcribe` function for the same effect,
+and estimate $\hat{\tau}$ based on the binned data:
+
+```{r}
+(tr <- bsims_transcribe(o, rint=br))
+tr$removal
+
+Y <- matrix(drop(tr$removal), nrow=1)
+D <- matrix(br, nrow=1)
+
+tauhat <- exp(cmulti.fit(Y, D, type="dis")$coef)
+
+c(true=tau, estimate=tauhat)
+```
+
+Here are cumulative counts and the true and expected
+cumulative cell probabilities:
+
+```{r}
+plot(stepfun(1:6, c(0, cumsum(counts[,"1"])/sum(counts[,"1"]))), 
+  do.points=FALSE, main="Binned CDF",
+  ylab="Cumulative probability", 
+  xlab="Bin radius end point (100 m)")
+curve(1-exp(-(x/tau)^2), col=2, add=TRUE)
+curve(1-exp(-(x/tauhat)^2), col=4, add=TRUE)
+legend("topleft", bty="n", lty=1, col=c(2, 4, 1), 
+  legend=c("True", "Estimated", "Empirical"))
+```
+
+## Availability bias
+
+We have ignored availability so far when working with bSims, 
+but can't continue like that for real data.
+What this means, is that $g(0) < 1$, so detecting
+an individual 0 distance from the observer depends on
+an event (visual or auditory) that would trigger the detection.
+For example, if a perfecly camouflaged birds sits in silence,
+detection might be difficult. Movement, or a vocalization
+can, however, reveal the individual and its location.
+
+The `phi` and `tau` values are at the high end of plausible
+values for songbirds. The `Den`sity value is exaggerated,
+but this way we will have enough counts to prove our points
+using bSims:
+
+```{r}
+phi <- 0.5
+tau <- 2
+Den <- 10
+```
+
+Now we go through the layers of our bSims world:
+
+1. initiating the landscape,
+2. populating the landscape by individuals,
+3. breath life into the virtual birds and let them sing,
+4. put in an observer and let the observation process begin.
+
+```{r}
+set.seed(2)
+l <- bsims_init()
+a <- bsims_populate(l, density=Den)
+b <- bsims_animate(a, vocal_rate=phi)
+o <- bsims_detect(b, tau=tau)
+```
+
+Transcription is the process of turning the detections
+into a table showing new individuals detected by
+time intervals and distance bands, as defined
+by the `tint` and `rint` arguments, respectively.
+
+```{r}
+tint <- c(1, 2, 3, 4, 5)
+rint <- c(0.5, 1, 1.5, 2) # truncated at 200 m
+(tr <- bsims_transcribe(o, tint=tint, rint=rint))
+(rem <- tr$removal) # binned new individuals
+colSums(rem)
+rowSums(rem)
+```
+
+The plot method displays the detections presented as part of the `tr` object.
+
+```{r fig.width=8,fig.height=8}
+plot(tr)
+```
+
+The detection process and the transcription (following a prescribed
+protocol) is inseparable in the field. However, recordings
+made in the field can be processed by a number of different ways.
+Separating these processed gives the ability to make these
+conparisons on the exact same set of detections.
+
+## Estimating density with truncation
+
+We now fit the removal model to the data pooled by time intervals.
+`p` is the cumulative probability of availability for the total duration:
+
+```{r}
+fitp <- cmulti.fit(matrix(colSums(rem), 1), matrix(tint, 1), type="rem")
+phihat <- exp(fitp$coef)
+c(true=phi, estimate=exp(fitp$coef))
+(p <- 1-exp(-max(tint)*phihat))
+```
+
+The distance sampling model uses the distance binned counts,
+and a Half-Normal detection function, `q` is the cumulative
+probability of perceptibility within the area of 
+truncation distance `rmax`:
+
+```{r}
+fitq <- cmulti.fit(matrix(rowSums(rem), 1), matrix(rint, 1), type="dis")
+tauhat <- exp(fitq$coef)
+c(true=tau, estimate=tauhat)
+rmax <- max(rint)
+(q <- (tauhat^2/rmax^2) * (1-exp(-(rmax/tauhat)^2)))
+```
+
+The known `A`rea, `p`, and `q` makes up the correction factor,
+which is used to estimate density based on $\hat{D}=Y/(A \hat{p}\hat{q})$:
+
+```{r}
+(A <- pi * rmax^2)
+Dhat <- sum(rem) / (A * p * q)
+c(true=Den, estimate=Dhat)
+```
+
+## Unlimited distance
+
+We now change the distance bins to include the area outside of the
+previous `rmax` distance, making the counts unlimited distance counts:
+
+```{r}
+rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
+
+(tr <- bsims_transcribe(o, tint=tint, rint=rint))
+(rem <- tr$removal) # binned new individuals
+colSums(rem)
+rowSums(rem)
+```
+
+The removal model is basically the same, the only
+difference is that the counts can be higher due to
+detecting over larger area and thus potentially
+detecting more individuals:
+
+```{r}
+fitp <- cmulti.fit(matrix(colSums(rem), 1), matrix(tint, 1), type="rem")
+phihat <- exp(fitp$coef)
+c(true=phi, estimate=phihat)
+(p <- 1-exp(-max(tint)*phihat))
+```
+
+The diatance sampling model also takes the extended data set.
+
+```{r}
+fitq <- cmulti.fit(matrix(rowSums(rem), 1), matrix(rint, 1), type="dis")
+tauhat <- exp(fitq$coef)
+c(true=tau, estimate=tauhat)
+```
+
+The problem is that our truncation distance is infinite,
+thus the area that we are sampling is also infinite.
+This does not make too much sense, and not at all hepful
+in estimating density (anything divided by infinity is 0).
+So we use EDR (`tauhat` for Half-Normal) and calculate
+the estimated effective area sampled (`Ahat`; $\hat{A}=\pi \hat{\tau}^2$).
+We also set `q` to be 1, because the logic behind EDR is that its
+volume equals the volume of the integral, in other words,
+it is an area that would give on average same count under perfect detection
+Finally, we estimate density using $\hat{D}=Y/(\hat{A} \hat{p}1)$
+
+```{r}
+(Ahat <- pi * tauhat^2)
+q <- 1
+
+Dhat <- sum(rem) / (Ahat * p * q)
+c(true=Den, estimate=Dhat)
+```
+
+## Replicating landscapes
+
+Remember, that we have used so far a single location.
+We set the density unreasonably high to have enough counts
+for a reasonable estimate.
+We can independently replicate the simulation for multiple
+landscapes and analyze the results to give justice to bSims
+under idealized conditions:
+
+```{r eval=FALSE}
+phi <- 0.5
+tau <- 1
+Den <- 1
+
+tint <- c(3, 5, 10)
+rint <- c(0.5, 1, 1.5, Inf)
+
+sim_fun <- function() {
+  l <- bsims_init()
+  a <- bsims_populate(l, density=Den)
+  b <- bsims_animate(a, vocal_rate=phi)
+  o <- bsims_detect(b, tau=tau)
+  bsims_transcribe(o, tint=tint, rint=rint)$rem
+}
+
+B <- 200
+set.seed(123)
+res <- pbapply::pbreplicate(B, sim_fun(), simplify=FALSE)
+
+Ddur <- matrix(tint, B, length(tint), byrow=TRUE)
+Ydur1 <- t(sapply(res, function(z) colSums(z)))
+Ydur2 <- t(sapply(res, function(z) colSums(z[-nrow(z),])))
+colSums(Ydur1) / sum(Ydur1)
+colSums(Ydur2) / sum(Ydur2)
+fitp1 <- cmulti(Ydur1 | Ddur ~ 1, type="rem")
+fitp2 <- cmulti(Ydur2 | Ddur ~ 1, type="rem")
+phihat1 <- unname(exp(coef(fitp1)))
+phihat2 <- unname(exp(coef(fitp2)))
+
+Ddis1 <- matrix(rint, B, length(rint), byrow=TRUE)
+Ddis2 <- matrix(rint[-length(rint)], B, length(rint)-1, byrow=TRUE)
+Ydis1 <- t(sapply(res, function(z) rowSums(z)))
+Ydis2 <- t(sapply(res, function(z) rowSums(z)[-length(rint)]))
+colSums(Ydis1) / sum(Ydis1)
+colSums(Ydis2) / sum(Ydis2)
+fitq1 <- cmulti(Ydis1 | Ddis1 ~ 1, type="dis")
+fitq2 <- cmulti(Ydis2 | Ddis2 ~ 1, type="dis")
+tauhat1 <- unname(exp(fitq1$coef))
+tauhat2 <- unname(exp(fitq2$coef))
+
+## unlimited correction
+Apq1 <- pi * tauhat1^2 * (1-exp(-max(tint)*phihat1)) * 1
+rmax <- max(rint[is.finite(rint)])
+## truncated correction
+Apq2 <- pi * rmax^2 * 
+  (1-exp(-max(tint)*phihat2)) * 
+  (tauhat2^2/rmax^2) * (1-exp(-(rmax/tauhat2)^2))
+
+round(rbind(
+  phi=c(true=phi, unlimited=phihat1, truncated=phihat2),
+  tau=c(true=tau, unlimited=tauhat1, truncated=tauhat2),
+  D=c(Den, unlimited=mean(rowSums(Ydis1))/Apq1,
+      truncated=mean(rowSums(Ydis2))/Apq2)), 4)
+##     true unlimited truncated
+## phi  0.5    0.4835    0.4852
+## tau  1.0    1.0002    0.9681
+## D    1.0    1.0601    1.1048
+```
+
+```{block2, type='rmdexercise'}
+**Exercise**
+
+If time permits, try different settings and time/distance intervals.
+```
+
+## JOSM data
+
+Quickly organize the JOSM data:
+
+```{r}
+## predictors
+x <- josm$surveys
+x$FOR <- x$Decid + x$Conif+ x$ConifWet # forest
+x$AHF <- x$Agr + x$UrbInd + x$Roads # 'alienating' human footprint
+x$WET <- x$OpenWet + x$ConifWet + x$Water # wet + water
+cn <- c("Open", "Water", "Agr", "UrbInd", "SoftLin", "Roads", "Decid", 
+  "OpenWet", "Conif", "ConifWet")
+x$HAB <- droplevels(find_max(x[,cn])$index) # drop empty levels
+levels(x$HAB)[levels(x$HAB) %in% 
+  c("OpenWet", "Water", "Open", "Agr", "UrbInd", "Roads")] <- "Open"
+levels(x$HAB)[levels(x$HAB) %in% 
+  c("Conif", "ConifWet")] <- "Conif"
+x$OBS <- as.factor(x$ObserverID)
+
+## time intervals
+yall_dur <- Xtab(~ SiteID + Dur + SpeciesID, 
+  josm$counts[josm$counts$DetectType1 != "V",])
+yall_dur <- yall_dur[sapply(yall_dur, function(z) sum(rowSums(z) > 0)) > 100]
+
+## distance intervals
+yall_dis <- Xtab(~ SiteID + Dis + SpeciesID, 
+  josm$counts[josm$counts$DetectType1 != "V",])
+yall_dis <- yall_dis[sapply(yall_dis, function(z) sum(rowSums(z) > 0)) > 100]
+```
+
+Pick our most abundant species again, and organize the data:
+
+```{r}
+spp <- "TEWA"
+
+Ydur <- as.matrix(yall_dur[[spp]])
+Ddur <- matrix(c(3, 5, 10), nrow(Ydur), 3, byrow=TRUE,
+  dimnames=dimnames(Ydur))
+stopifnot(all(rownames(x) == rownames(Ydur)))
+
+Ydis <- as.matrix(yall_dis[[spp]])
+Ddis <- matrix(c(0.5, 1, Inf), nrow(Ydis), 3, byrow=TRUE,
+  dimnames=dimnames(Ydis))
+stopifnot(all(rownames(x) == rownames(Ydis)))
+
+colSums(Ydur)
+colSums(Ydis)
+```
+
+We pick a removal models with `DAY` as covariate,
+and calculate $p(t)$:
+
+```{r}
+Mdur <- cmulti(Ydur | Ddur ~ DAY, x, type="rem")
+summary(Mdur)
+phi <- exp(model.matrix(Mdur) %*% coef(Mdur))
+summary(phi)
+p <- 1-exp(-10*phi)
+```
+
+We fit the intercept only distance sampling model next:
+
+```{r}
+Mdis0 <- cmulti(Ydis | Ddis ~ 1, x, type="dis")
+summary(Mdis0)
+```
+
+Let's try a few covariates:
+
+- continuous `FOR`est cover covariate: sound attenuation increases with forest cover;
+- discrete `HAB`itat has 3 levels: open, deciduous forest, and coniferous forest (based on dominant land cover), because broad leaves and needles affect sound attenuation;
+- finally, we use observer ID as categorical variable: observers might have different hearing abilities, training/experiance levels, good times, bad times, etc.
+
+```{r}
+Mdis1 <- cmulti(Ydis | Ddis ~ FOR, x, type="dis")
+Mdis2 <- cmulti(Ydis | Ddis ~ HAB, x, type="dis")
+```
+
+We can look at AIC to find the best supported model:
+
+```{r}
+aic <- AIC(Mdis0, Mdis1, Mdis2)
+aic$delta_AIC <- aic$AIC - min(aic$AIC)
+aic[order(aic$AIC),]
+
+Mdis <- get(rownames(aic)[aic$delta_AIC == 0])
+summary(Mdis)
+```
+
+```{block2, type='rmdexercise'}
+**Exercise**
+
+Use `OBS` as predictor for `tau` and look at predicted EDRs.
+
+What is the practical issue with using observer as predictor?
+```
+
+After finding the best model, we predict `tau`:
+
+```{r}
+tau <- exp(model.matrix(Mdis) %*% coef(Mdis))
+boxplot(tau ~ HAB, x)
+```
+
+Finally, we calculate the correction factor for unlimited distances,
+and predict mean density:
+
+```{r}
+Apq <- pi * tau^2 * p * 1
+x$ytot <- rowSums(Ydur)
+mean(x$ytot / Apq)
+```
+
+Alternatively, we can use the log of the correction
+as an offset in log-linear models. This offset is 
+called the QPAD offset:
+
+```{r}
+off <- log(Apq)
+m <- glm(ytot ~ 1, data=x, offset=off, family=poisson)
+exp(coef(m))
+```
+
+```{block2, type='rmdexercise'}
+**Exercise**
+
+Try distance sampling and density estimation for another species.
+
+Fit multiple GLMs with QPAD offsets and covariates affecting density,
+interpret the results and the visualize responses.
+```
+
+Sometimes, a recording is made at the survey location
+that is listened to and transcribed in the lab
+using headphones and possibly a computer screen.
+This presents new challenges, and also new opportunities
+for analysis of count data -- and is the topic of the next chapter.
+
 
