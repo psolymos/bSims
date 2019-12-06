@@ -213,7 +213,6 @@ f_syst <- function(d)
 f_clust <- function(d)
   exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2))
 
-l0 <- bsims_init(1)
 p1 <- bsims_populate(l1, density = D, abund_fun = f_abund)
 p2 <- bsims_populate(l1, density = D, abund_fun = f_abund, xy_fun = f_syst)
 p3 <- bsims_populate(l1, density = D, abund_fun = f_abund, xy_fun = f_clust)
@@ -250,11 +249,131 @@ par(op)
 
 ### Behavior
 
-Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+The `bsims_animate` function _animates_ the population created by the `bsims_populate` function
+that is the first of the function. `bsims_animate` returns an events objec (with class 'bsims_events').
+The most important arguments are governing the `duration` of the simulation in minutes,
+the vocalization (`vocal_rate`), and the movement (`move_rate`) rates as average number of events per minute.
 
-vocal rate, link to survival analysis (no mixture)
+We can describe these behavioral events using survival modeling terminology.
+Event time ($T$) is a continuous random variable.
+In the simplest case, its probability density function is the Exponential
+distribution: $f(t)=\phi e^{-t\phi}$.
+The corresponding cumulative distribution function is:
+$F(t)=\int_{0}^{t} f(t)dt=1-e^{-t\phi}=p_t$,
+giving the probability that the event has occurred by duration $t$. 
+The parameter $\phi$ is the rate of the Exponential distribution
+with mean $1/\phi$ and variance $1/\phi^2$.
 
-duration is trivial
+In survival models, the complement of $F(t)$ is called the 
+_survival function_ ($S(t)=1-F(t)$, $S(0)=1$),
+which gives the probability that the event has not occurred by duration $t$.
+The _hazard function_ ($\lambda(t)=f(t)/S(t)$) 
+defines the instantaneous rate of occurrence of the event
+(risk, the density of events at $t$ divided by the probability of surviving).
+The cumulative hazard (cumulative risk) is the sum of the risks between duration 0 and $t$
+($\Lambda(t)=\int_{0}^{t} \lambda(t)dt$).
+
+The simplest survival distribution assumes constant risk over time ($\lambda(t)=\phi$),
+which corresponds to the Exponential distribution.
+The Exponential distribution also happens to describe the lengths of the 
+inter-event times in a homogeneous Poisson process 
+(events are independent, it is a 'memory-less' process).
+
+`bsims_animate` uses independent Exponential distributions with 
+rates `vocal_rate` and `move_rate` to simulate vocalization and movement events, respectively.
+The `get_events` function extracts the 
+
+```{r}
+l <- bsims_init()
+p <- bsims_populate(l, density = 1)
+e <- bsims_animate(p, vocal_rate = 1)
+
+head(get_events(e))
+plot(get_events(e))
+curve((1-exp(-1*x)) * sum(e$abundance), col=2, add=TRUE)
+```
+
+
+The locations can be seen as nest locations (`a$nests` stores the locations). 
+But birds don't just stay put in one place. They move and vocalize:
+
+
+```{r fig.width=8,fig.height=8}
+plot(e)
+```
+
+The `get_events` function, as the name implies, extracts the events: 
+movements (`$v` is 0) and vocalizations (`$v` is 1) alike, 
+unless filtered for vocalization events only.
+Besides the coordinates, we also have the time of event (`$t`) and
+the individual identifier (`$i` linking to the rows of the `b$nests` table):
+
+```{r}
+e <- get_events(b, event_type="both")
+head(e)
+v <- get_events(b, event_type="vocal")
+head(v)
+```
+
+
+## Vocalization events
+
+Event times in our bSims example follow a Poisson process with rate $\phi$ (`vocal_rate`)
+within `duration` $t=10$ minutes.
+
+Let's subset the vocalization events to include the time of first detections
+for each individual (`v1`). The estimated rate should match our setting,
+the plot shows the Exponential probability density function on top of
+the event times:
+
+```{r}
+v1 <- v[!duplicated(v$i),]
+
+tmp <- v1
+tmp$o <- seq_len(nrow(v1))
+plot(o ~ t, tmp, type="n", ylab="Individuals",
+  main="Vocalization events", 
+  ylim=c(1, nrow(b$nests)), xlim=c(0,10))
+for (i in tmp$o) {
+  tmp2 <- v[v$i == v1$i[i],]
+  lines(c(tmp2$t[1], 10), c(i,i), col="grey")
+  points(tmp2$t, rep(i, nrow(tmp2)), cex=0.5)
+  points(tmp2$t[1], i, pch=19, cex=0.5)
+}
+```
+
+```{r}
+(phi <- b$vocal_rate[1])
+(phi_hat <- fitdistr(v1$t, "exponential")$estimate)
+
+hist(v1$t, xlab="Time of first detection (min)", freq=FALSE, main="", 
+  col="lightgrey", ylab="f(t)")
+curve(dexp(x, phi), add=TRUE, col=2)
+curve(dexp(x, phi_hat), add=TRUE, col=4)
+legend("topright", bty="n", lty=1, col=c(2,4), 
+  legend=c("Expected", "Estimated"))
+```
+
+Now let's visualize the corresponding cumulative distribution function.
+We also bin the events into time intervals defined by interval end times
+in the vector `br` (breaks to be used with `cut`):
+
+```{r}
+br <- c(3, 5, 10)
+i <- cut(v1$t, c(0, br), include.lowest = TRUE)
+table(i)
+
+plot(stepfun(v1$t, (0:nrow(v1))/nrow(v1)), do.points=FALSE, xlim=c(0,10),
+  xlab="Time of first detection (min)", ylab="F(t)", main="")
+curve(1-exp(-phi*x), add=TRUE, col=2)
+curve(1-exp(-phi_hat*x), add=TRUE, col=4)
+legend("bottomright", bty="n", lty=c(1,1,1,NA), 
+  col=c(1,2,4,3), pch=c(NA,NA,NA,21),
+  legend=c("Empirical", "Expected", "Estimated", "Binned"))
+points(br, cumsum(table(i))/sum(table(i)), cex=2, col=3, pch=21)
+```
+
+
 
 movement: rate and SD
 
