@@ -59,6 +59,12 @@ bsims_all <- function(...) {
     }
     z
   }
-  class(out) <- c("bsims", "bsims_all")
+  class(out) <- c("bsims_all",
+                "bsims_transcript",
+                "bsims_detections",
+                "bsims_events",
+                "bsims_population",
+                "bsims_landscape",
+                "bsims")
   out
 }

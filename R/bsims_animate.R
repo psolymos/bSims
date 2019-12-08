@@ -123,6 +123,9 @@ function(
   x$allow_overlap <- allow_overlap
   x$events <- Events
   x$call <- match.call()
-  class(x) <- c("bsims", "bsims_events")
+  class(x) <- c("bsims_events",
+                "bsims_population",
+                "bsims_landscape",
+                "bsims")
   x
 }

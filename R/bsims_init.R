@@ -32,6 +32,7 @@ function(
     box=box,
     strata=strata)
   x$call <- match.call()
-  class(x) <- c("bsims", "bsims_landscape")
+  class(x) <- c("bsims_landscape",
+                "bsims")
   x
 }

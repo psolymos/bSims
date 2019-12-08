@@ -210,10 +210,15 @@ to be kept identical across runs.
 Peter Solymos
 }
 \seealso{
-\code{\link{acceptreject}}, \code{\link{events}},
-\code{\link{get_events}}, \code{\link{get_detections}}
+\code{\link{acceptreject}}, \code{\link{events}}
 
 Plotting functions: \code{\link{plot.bsims_landscape}}
+
+\code{\link{get_nests}},
+\code{\link{get_events}},
+\code{\link{get_detections}},
+\code{\link{get_abundance}},
+\code{\link{get_density}}
 
 Shiny apps: \code{\link{run_app}}
 }

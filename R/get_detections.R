@@ -2,7 +2,7 @@
 ## "event1" 1st event (move or vocal)
 ## "det1" 1st detection (inflates time-to-detection)
 ## "alldet" count all detections (double counting)
-get_detections <-
+.get_detections <-
 function(x,
   condition=c("event1", "det1", "alldet"),
   event_type=c("vocal", "move", "both"),
@@ -20,7 +20,7 @@ function(x,
   }
 
   ## get the events
-  z <- get_events(x, event_type=event_type, tlim=tlim)
+  z <- .get_events(x, event_type=event_type, tlim=tlim)
   if (nrow(z) == 0) {
     z$d <- numeric(0)
     z$j <- z$i # percieved individual id

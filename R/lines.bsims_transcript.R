@@ -2,7 +2,7 @@ lines.bsims_transcript <-
 function(x, event_type=NULL, tlim=NULL, ...) {
   if (is.null(event_type))
     event_type <- x$event_type
-  z <- get_detections(x,
+  z <- .get_detections(x,
     condition=x$condition, event_type=event_type,
     tlim=c(0, max(x$tint)), perception=x$perception)
   xy <- z[,c("x", "y")]

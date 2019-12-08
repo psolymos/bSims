@@ -62,6 +62,8 @@ function(
   x$area <- A
   x$density <- D
   x$call <- match.call()
-  class(x) <- c("bsims", "bsims_population")
+  class(x) <- c("bsims_population",
+                "bsims_landscape",
+                "bsims")
   x
 }

@@ -49,7 +49,7 @@ function(
 
   ## --- REMOVAL ---
   ## let get_detections take care of subsetting
-  detrem <- get_detections(x,
+  detrem <- .get_detections(x,
     condition=condition,
     event_type=event_type,
     perception=perception)
@@ -77,7 +77,7 @@ function(
   ## let get_detections take care of subsetting
   detvis <- NULL
   for (i in seq_along(tint)) {
-    detvis <- rbind(detvis, get_detections(x,
+    detvis <- rbind(detvis, .get_detections(x,
       condition=condition,
       event_type=event_type,
       perception=perception,
@@ -113,6 +113,11 @@ function(
   x$event_type <- event_type
   x$perception <- perception
   x$call <- match.call()
-  class(x) <- c("bsims", "bsims_transcript")
+  class(x) <- c("bsims_transcript",
+                "bsims_detections",
+                "bsims_events",
+                "bsims_population",
+                "bsims_landscape",
+                "bsims")
   x
 }

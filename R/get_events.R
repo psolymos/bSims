@@ -1,4 +1,4 @@
-get_events <-
+.get_events <-
 function(x, event_type=c("vocal", "move", "both"), tlim=NULL) {
   z <- .get_raw_events(x)
   if (nrow(z) == 0)

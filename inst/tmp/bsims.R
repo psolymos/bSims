@@ -1068,3 +1068,45 @@ coef(fit)
 D
 mean(Y)/(1.5^2*pi*p*q)
 
+## getters
+
+library(bSims)
+
+phi <- 0.5                 # singing rate
+tau <- 1:3                 # EDR by strata
+dur <- 10                  # simulation duration
+tbr <- c(3, 5, 10)         # time intervals
+rbr <- c(0.5, 1, 1.5, Inf) # counting radii
+
+l <- bsims_init(10, 0.5, 1)# landscape
+p <- bsims_populate(l, 1)  # population
+e <- bsims_animate(p,      # events
+  vocal_rate=phi, duration=dur)
+d <- bsims_detect(e,       # detections
+  tau=tau)
+x <- bsims_transcribe(d,   # transcription
+  tint=tbr, rint=rbr)
+
+get_nests(l)
+get_nests(p)
+get_nests(e)
+get_nests(d)
+get_nests(x)
+
+get_total(l)
+get_total(p)
+get_total(e)
+get_total(d)
+get_total(x)
+
+get_events(l)
+get_events(p)
+head(get_events(e))
+head(get_events(d))
+head(get_events(x))
+
+get_detections(l)
+get_detections(p)
+head(get_detections(e))
+head(get_detections(d))
+head(get_detections(x))

@@ -108,6 +108,10 @@ function(
 #  x$repel <- repel
   x$event_type <- event_type
   x$call <- match.call()
-  class(x) <- c("bsims", "bsims_detections")
+  class(x) <- c("bsims_detections",
+                "bsims_events",
+                "bsims_population",
+                "bsims_landscape",
+                "bsims")
   x
 }
