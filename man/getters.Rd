@@ -103,14 +103,12 @@ head(get_nests(d))
 head(get_nests(x))
 
 ## abundance
-get_abundance(l)
 get_abundance(p)
 get_abundance(e)
 get_abundance(d)
 get_abundance(x)
 
 ## density
-get_density(l)
 get_density(p)
 get_density(e)
 get_density(d)
