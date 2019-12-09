@@ -519,19 +519,58 @@ plot(d2)
 
 ### Transcription
 
-As part of the detection process, a skilled observer
-counts individual birds at a count station.
-New individuals are assigned to time and distance categories,
-the type of behavior also registered.
+The last layer of simulation is the `bsims_transcribe` function 
+that _transcribes_ the detections created by the `bsims_detect` function. `bsims_transcribe` returns a detections objec (with class 'bsims_transcript').
+This layer refers to the process of the observer
+assigning detected individuals to time and distance categories.
+The `tint` argument is a vector containing the
+endpoints of the the time intervals within the total duration in minutes.
+`rint` defines the distance bands in 100 m units, the maximum can be
+infinite referring to an unlimited distance count.
 
-Args and what they do, cover support functions, use examples from Rd, cover theory briefly
+The `error` argument refers to distance estimation error.
+This does not impact the actual distance between the bird and the observer,
+but it can lead to misclassification of the distance interval
+where the individual is assigned. The argument is the 
+log scale standard deviation for lognormally distributed
+random variable representing this error.
 
+The `condition` argument defines which events will be transcribed:
+`"event1"` refers to the 1st event (detected or not),
+`"det1"` refers to the 1st detection,
+`"alldet"` means all detections (possibly
+counting the same individual multiple times).
+The `event_type` argument can be redefined here, too.
 
-```{r eval=FALSE}
-bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
-  condition=c("event1", "det1", "alldet"),
-  event_type=NULL, perception=NULL, ...)
+`perception` creates individual identifiers as perceived by the observer.
+The argument defines the perceived number of individuals 
+relative to the actual number of individuals. 
+It can be a non-negative number 
+(<1 values lead to under counting, >1 values lead to over counting), 
+or `NULL` (observer correctly identifies all individuals).
+The algorithm uses the event based locations in a hierarchical clustering.
+The dendrogram is cut at a height corresponding to specified `perception`
+level and group membership is used as individual identifier.
+
+The `bsims_transcribe` eventually prepares a 'removal' table
+that counts the new individuals in each time/distance interval.
+This table is used in removal and distance sampling.
+The 'visits' table counts individuals by
+time and distance interval, but counting restarts in every time interval
+(i.e. not just the new individuals are counted). The plot method overlays the
+distance bands and a representation of the time intervals.
+
+```{r trans}
+x <- bsims_transcribe(d1,
+  tint = c(2, 4, 6, 8, 10), 
+  rint = c(0.5, 1, 1.5, Inf))
+x
+plot(x)
+
+get_table(x, "removal")
+get_table(x, "visits")
 ```
+
 
 ## Simulation workflows
 
