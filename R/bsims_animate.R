@@ -17,11 +17,11 @@ function(
     stop(">0 density ER strata cannot be avoided")
   if (avoid == "R" && sum(x$density[3]) > 0)
     stop(">0 density R stratum cannot be avoided")
-  if (movement < 0)
+  if (any(movement < 0))
     stop("movement can not be negative")
   if (any(mixture < 0))
     stop("mixture must not be negative")
-  if (move_rate < 0)
+  if (any(move_rate < 0))
     stop("move_rate must not be negative")
   if (any(vocal_rate < 0))
     stop("vocal_rate must not be negative")
@@ -68,7 +68,27 @@ function(
       mr <- move_rate
     }
   }
-  dimnames(vr) <- dimnames(mr) <- list(c("H", "E", "R"), G)
+  ## movement SD processing
+  if (length(movement) == 1L) {
+    mSD <- matrix(movement, 3, K)
+  } else {
+    if (is.null(dim(movement))) {
+      if (K > 1L) {
+        if (length(movement) != K)
+          stop("movement length must equal mixture length")
+        mSD <- matrix(movement, 3, K, byrow=TRUE)
+      } else {
+        if (length(movement) != 3L)
+          stop("movement length must equal 3 when length(mixture)=1")
+        mSD <- matrix(movement, 3, K)
+      }
+    } else {
+      if (dim(movement) != c(3L, K))
+        stop("movement dimension must be 3 x length(mixture)")
+      mSD <- movement
+    }
+  }
+  dimnames(vr) <- dimnames(mr) <- dimnames(mSD) <- list(c("H", "E", "R"), G)
   N <- sum(x$abundance)
   g <- sample(G, N, replace=TRUE, prob=P)
   x$nests$g <- factor(g, G)
@@ -92,7 +112,7 @@ function(
         vocal_rate=vr[s[i], g[i]],
         move_rate=mr[s[i], g[i]],
         duration=duration,
-        movement=movement,
+        movement=mSD[s[i], g[i]],
         avoid=a)
       ## add here tessellation based rules
       if (!allow_overlap && !is.null(x$tess)) {
@@ -103,7 +123,7 @@ function(
         for (ii in which(ti != i)) {
           tmp <- ti[ii]
           while (tmp != i) {
-            dm <- rmvn(1, c(0, 0), diag(movement^2, 2, 2))
+            dm <- rmvn(1, c(0, 0), diag(mSD[s[i], g[i]]^2, 2, 2))
             tmp <- which.tile(dm[1L]+x$nest$x[i], dm[2L]+x$nest$y[i], x$tess$tile_list)
           }
           e$x[ii] <- dm[1L]
@@ -116,7 +136,7 @@ function(
   x$vocal_rate <- vr
   x$move_rate <- mr
   x$duration <- duration
-  x$movement <- movement
+  x$movement <- mSD
   x$mixture <- P
   x$avoid <- avoid
   x$initial_location <- initial_location

@@ -95,6 +95,7 @@ total time duration to consider (in minutes), passed to \code{\link{events}}.
   \item{movement}{
 standard deviation for a bivariate Normal kernel to simulate
 locations centered at the nest location, passed to \code{\link{events}}.
+Can refer to the same stratum and behaviour based groups as \code{move_rate}.
 }
   \item{mixture}{
 behaviour based finite mixture group proportions.
