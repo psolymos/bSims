@@ -41,3 +41,10 @@ get_detections.bsims_detections <- function (x, ...) {
     condition=condition,
     perception=x$perception, ...)
 }
+
+get_table <- function (x, ...)
+  UseMethod("get_table")
+get_table.bsims_transcript <- function(x, type=c("removal", "visits"), ...)
+  switch(match.arg(type),
+    "removal"=x$removal,
+    "visits"=x$visits)

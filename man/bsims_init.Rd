@@ -11,7 +11,6 @@
 \alias{print.bsims_events}
 \alias{print.bsims_detections}
 \alias{print.bsims_transcript}
-\alias{get_table}
 \alias{bsims_all}
 \alias{print.bsims_all}
 \title{
@@ -46,8 +45,6 @@ bsims_all(...)
 \method{print}{bsims_detections}(x, ...)
 \method{print}{bsims_transcript}(x, ...)
 \method{print}{bsims_all}(x, ...)
-
-get_table(x, type = c("removal", "visits"))
 }
 \arguments{
   \item{extent}{
@@ -154,12 +151,6 @@ A non-negative number (<1 values lead to under counting,
 >1 values lead to over counting),
 or \code{NULL} (observer correctly identifies all individuals).
 }
-  \item{type}{
-character, the type of table to return:
-\code{"removal"} includes only new individuals as time progresses,
-\code{"visits"} counts individuals in each time interval independent
-of each other.
-}
   \item{\dots}{
 other arguments passed to underlying functions.
 For the \code{bsims_all} wrapper, it means all
@@ -212,17 +203,22 @@ to be kept identical across runs.
 Peter Solymos
 }
 \seealso{
-\code{\link{acceptreject}}, \code{\link{events}}
+Plotting functions:
+\code{\link{plot.bsims_landscape}}
 
-Plotting functions: \code{\link{plot.bsims_landscape}}
-
+Getter functions:
 \code{\link{get_nests}},
 \code{\link{get_events}},
 \code{\link{get_detections}},
 \code{\link{get_abundance}},
 \code{\link{get_density}}
+\code{\link{get_table}}
 
-Shiny apps: \code{\link{run_app}}
+Shiny apps:
+\code{\link{run_app}}
+
+\code{\link{acceptreject}},
+\code{\link{events}}
 }
 \examples{
 phi <- 0.5

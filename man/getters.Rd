@@ -9,6 +9,8 @@
 \alias{get_density.bsims_population}
 \alias{get_events.bsims_events}
 \alias{get_detections.bsims_detections}
+\alias{get_table}
+\alias{get_table.bsims_transcript}
 \title{
 Access nests, events, detections, and totals
 }
@@ -31,10 +33,20 @@ get_abundance(x, ...)
 
 get_density(x, ...)
 \method{get_density}{bsims_population}(x, ...)
+
+get_table(x, ...)
+\method{get_table}{bsims_transcript}(x,
+  type = c("removal", "visits"), ...)
 }
 \arguments{
   \item{x}{
 simulation object.
+}
+  \item{type}{
+character, the type of table to return:
+\code{"removal"} includes only new individuals as time progresses,
+\code{"visits"} counts individuals in each time interval independent
+of each other.
 }
   \item{\dots}{
 other arguments passed to internal functions.
@@ -49,6 +61,8 @@ other arguments passed to internal functions.
 
 \code{get_abundance} gets total abundance (N),
 \code{get_density} gets average density (abundance/area: N/A).
+
+\code{get_table} returns the removal or visits table.
 }
 \value{
 \code{get_abundance} and \code{get_density}
@@ -73,6 +87,12 @@ returns a non-negative numeric value.
 \code{d} distance from observer when detected (otherwise \code{NA}).
 \code{i} individual identifier,
 \code{j} perceived individual identifier.
+
+\code{get_table} returns a matrix with distance bands as rows
+and time intervals as columns. The cell values are counts
+if the individuals detected in a removal fashion (only new
+individuals counter over the time periods) or in a multiple-visits
+fashion (counting of individuals restrats in every time interval).
 }
 \author{
 Peter Solymos
@@ -122,5 +142,8 @@ head(get_events(x))
 ## detections
 head(get_detections(d))
 head(get_detections(x))
+
+get_table(x, "removal")
+get_table(x, "visits")
 }
 \keyword{ manip }

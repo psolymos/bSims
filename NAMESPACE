@@ -50,6 +50,7 @@ S3method(get_detections, bsims_detections)
 S3method(plot, bsims_transcript)
 S3method(lines, bsims_transcript)
 S3method(print, bsims_transcript)
+S3method(get_table, bsims_transcript)
 
 S3method(plot, bsims_events_table)
 
