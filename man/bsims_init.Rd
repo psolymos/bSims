@@ -129,6 +129,7 @@ distance function (1st argument is distance, second is \code{tau}).
 }
   \item{event_type}{
 type of events to access (vocal, movement, or both).
+Inherits value from input object when \code{NULL}.
 }
   \item{tint}{
 time interval break points in minutes.
