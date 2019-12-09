@@ -9,6 +9,7 @@ help_pages <- c(
     "dist_fun2",
     "events",
     "expand_list",
+    "get_nests",
     "rlnorm2",
     "rmvn")
 
