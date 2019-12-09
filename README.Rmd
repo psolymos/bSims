@@ -78,7 +78,6 @@ o <- bsims_detect(a, tau=tau)
 
 x <- bsims_transcribe(o, tint=tbr, rint=rbr)
 
-plot(x)
 get_table(x)
 
 head(get_events(a))

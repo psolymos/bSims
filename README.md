@@ -70,12 +70,6 @@ o <- bsims_detect(a, tau=tau)
 
 x <- bsims_transcribe(o, tint=tbr, rint=rbr)
 
-plot(x)
-```
-
-![](README-unnamed-chunk-3-1.png)<!-- -->
-
-``` r
 get_table(x)
 #>          0-3min 3-5min 5-10min
 #> 0-50m         1      0       1
@@ -156,17 +150,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.916   0.017   0.999
+#>   0.808   0.013   0.833
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.002   0.000   1.396
+#>   0.001   0.000   1.471
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.006   0.001   0.539
+#>   0.016   0.003   0.687
 stopCluster(cl)
 
 ## parallel forking
@@ -174,5 +168,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.005   0.006   0.610
+#>   0.457   0.130   0.608
 ```
