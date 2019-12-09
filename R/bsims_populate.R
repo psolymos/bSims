@@ -56,7 +56,11 @@ function(
     x$tess <- NULL
   }
   x$abund_fun <- abund_fun
-  x$xy_fun <- xy_fun
+  x$sp_settings <- list(
+    xy_fun = xy_fun,
+    margin = margin,
+    maxit = maxit,
+    fail = fail)
   x$abundance <- N
   x$lambda <- lambda
   x$area <- A
