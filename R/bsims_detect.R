@@ -104,8 +104,7 @@ function(
   }
   x$xy <- xy
   x$tau <- tau
-  #x$dist_fun <- dist_fun
-#  x$repel <- repel
+  x$dist_fun <- dist_fun
   x$event_type <- event_type
   x$call <- match.call()
   class(x) <- c("bsims_detections",

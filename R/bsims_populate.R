@@ -55,8 +55,8 @@ function(
   } else {
     x$tess <- NULL
   }
-  #x$abund_fun <- abund_fun
-  #x$xy_fun <- xy_fun
+  x$abund_fun <- abund_fun
+  x$xy_fun <- xy_fun
   x$abundance <- N
   x$lambda <- lambda
   x$area <- A
