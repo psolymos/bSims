@@ -9,7 +9,7 @@ crossing a number of boundaries of strata
 with different attenuation charactersitics.
 }
 \usage{
-dist_fun2(d, tau, dist_fun, b = numeric(0))
+dist_fun2(d, tau, dist_fun, breaks = numeric(0), ...)
 }
 \arguments{
   \item{d}{
@@ -24,10 +24,13 @@ referring to distance function parameters in the different strata
   \item{dist_fun}{
 distance funciton taking two arguments: distance, and \code{tau}, see examples.
 }
-  \item{b}{
+  \item{breaks}{
 distance breakpoints, must be \code{length(tau) - 1} in length.
 These breakpoints represent the boundaries between the intervals
 characterized by homogeneous attenuation characteristics.
+}
+  \item{\dots}{
+other arguments passed to \code{dist_fun}
 }
 }
 \value{

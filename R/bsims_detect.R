@@ -4,7 +4,6 @@ function(
   xy=c(0,0), # observer location
   tau=1, # can be vector when HER attenuation used, compatible w/ dist_fun
   dist_fun=NULL, # takes args d and tau (single parameter)
-#  repel=0, # radius within which vocalizations are invalidated
   event_type=c("vocal", "move", "both"),
   ...)
 {
@@ -18,7 +17,7 @@ function(
   if (any(xy %)(% range(x$strata)))
     stop("observer xy must be within extent")
   if (is.null(dist_fun))
-    dist_fun <- function(d, tau) exp(-d^2/tau^2)
+    dist_fun <- function(d, tau, ...) exp(-d^2/tau^2)
   N <- sum(x$abundance)
   A <- diff(x$strata) * diff(range(x$strata))
   A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
@@ -78,7 +77,7 @@ function(
         ## calculate distance breaks from x and theta
         if (length(TAU) == 1L) {
           #b <- numeric(0)
-          q[j] <- dist_fun(z$d[j], TAU)
+          q[j] <- dist_fun(z$d[j], TAU, ...)
         } else {
           ## this gives breaks along x axis
           if (sobs < sbrd[j]) { # bird right of observer
@@ -91,11 +90,11 @@ function(
           ## turn that into distance from bird (stratified attenuation)
           b <- z$d[j] - rev(b)
           ## calculate q
-          q[j] <- dist_fun2(z$d[j], TAU, dist_fun, b)
+          q[j] <- dist_fun2(z$d[j], TAU, dist_fun, b, ...)
         }
       }
     } else {
-      q <- dist_fun(z$d, tau)
+      q <- dist_fun(z$d, tau, ...)
     }
     z$det <- rbinom(length(z$d), size=1, prob=q)
     z <- z[z$det > 0,,drop=FALSE]
