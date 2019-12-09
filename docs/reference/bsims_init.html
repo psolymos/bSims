@@ -223,7 +223,8 @@ or a matrix of dimension 3 x <code><a href='https://rdrr.io/r/base/length.html'>
     <tr>
       <th>movement</th>
       <td><p>standard deviation for a bivariate Normal kernel to simulate
-locations centered at the nest location, passed to <code><a href='events.html'>events</a></code>.</p></td>
+locations centered at the nest location, passed to <code><a href='events.html'>events</a></code>.
+Can refer to the same stratum and behaviour based groups as <code>move_rate</code>.</p></td>
     </tr>
     <tr>
       <th>mixture</th>
@@ -265,7 +266,8 @@ in the 3 strata (see <code><a href='dist_fun2.html'>dist_fun2</a></code>).</p></
     </tr>
     <tr>
       <th>event_type</th>
-      <td><p>type of events to access (vocal, movement, or both).</p></td>
+      <td><p>type of events to access (vocal, movement, or both).
+Inherits value from input object when <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>tint</th>
@@ -348,9 +350,13 @@ to be kept identical across runs.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='acceptreject.html'>acceptreject</a></code>, <code><a href='events.html'>events</a></code>,
-<code><a href='get_events.html'>get_events</a></code>, <code><a href='get_events.html'>get_detections</a></code></p>
+    <div class='dont-index'><p><code><a href='acceptreject.html'>acceptreject</a></code>, <code><a href='events.html'>events</a></code></p>
 <p>Plotting functions: <code><a href='plot.html'>plot.bsims_landscape</a></code></p>
+<p><code><a href='getters.html'>get_nests</a></code>,
+<code><a href='getters.html'>get_events</a></code>,
+<code><a href='getters.html'>get_detections</a></code>,
+<code><a href='getters.html'>get_abundance</a></code>,
+<code><a href='getters.html'>get_density</a></code></p>
 <p>Shiny apps: <code><a href='run_app.html'>run_app</a></code></p></div>
     
 
@@ -392,20 +398,20 @@ to be kept identical across runs.</p>
 #&gt; 50-100m       2      1       1
 #&gt; 100-150m      2      3       5
 #&gt; 150+m         7      6       6</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='get_events.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='output co'>#&gt;            x          y          t v  i
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='getters.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='output co'>#&gt;            x          y          t v  i
 #&gt; 1 -2.3401644 -2.8527517 0.03530175 1  9
 #&gt; 2 -2.2627545  0.5759206 0.03671147 1 10
 #&gt; 3 -0.0575831  2.5478251 0.05696669 1 52
 #&gt; 4 -2.6777408  4.0848588 0.08751628 1  4
 #&gt; 5  1.2101658  1.8188797 0.10244937 1 53
-#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>))</div><div class='output co'>#&gt;             x          y          t v         d  i  j
+#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='getters.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='getters.html'>get_detections</a></span>(<span class='no'>o</span>))</div><div class='output co'>#&gt;             x          y          t v         d  i  j
 #&gt; 3  -0.0575831  2.5478251 0.05696669 1 2.5484757 52 52
 #&gt; 6  -0.6398754  0.7921080 0.13954534 1 1.0182709 36 36
 #&gt; 8  -1.8415121 -0.1032800 0.17209894 1 1.8444060 21 21
 #&gt; 30 -0.2132248  0.4793912 0.63565147 1 0.5246720 42 42
-#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44
-#&gt; 62 -2.0270036 -1.3496067 1.35772910 1 2.4351965 28 28</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='get_events.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 35 -0.2132248  0.4793912 0.77150555 1 0.5246720 42 42
+#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='getters.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='getters.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## wrapper function for all the bsims_* layers</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>road</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>)
 <span class='co'>## alternatively: supply a list</span>

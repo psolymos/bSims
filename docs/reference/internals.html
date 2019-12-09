@@ -129,11 +129,43 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>.bsims_all</span>(<span class='no'>Settings</span>)</pre>
+    <pre class="usage"><span class='fu'>.get_events</span>(<span class='no'>x</span>, <span class='kw'>event_type</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span>), <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>.get_detections</span>(<span class='no'>x</span>, <span class='kw'>condition</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"event1"</span>, <span class='st'>"det1"</span>, <span class='st'>"alldet"</span>),
+  <span class='kw'>event_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span>), <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>perception</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>.bsims_all</span>(<span class='no'>Settings</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>simulation object.</p></td>
+    </tr>
+    <tr>
+      <th>event_type</th>
+      <td><p>type of events to access.</p></td>
+    </tr>
+    <tr>
+      <th>condition</th>
+      <td><p>conditioning type to define availability for each individual:
+<code>"event1"</code>: the 1st event (detected or not);
+<code>"det1"</code>: the 1st detection;
+<code>"alldet"</code>: all detections (counting the same individual multiple times).</p></td>
+    </tr>
+    <tr>
+      <th>tlim</th>
+      <td><p>time intervals treated as [<code><a href='https://rdrr.io/r/base/Extremes.html'>min(tlim)</a></code>, <code><a href='https://rdrr.io/r/base/Extremes.html'>max(tlim)</a></code>).</p></td>
+    </tr>
+    <tr>
+      <th>perception</th>
+      <td><p>perceived number of individuals relative to the actual number of individuals.
+A non-negative number (&lt;1 values lead to under counting,
+&gt;1 values lead to over counting),
+or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
+    </tr>
     <tr>
       <th>Settings</th>
       <td><p>a list of arguments.</p></td>

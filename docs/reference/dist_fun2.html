@@ -133,7 +133,7 @@ with different attenuation charactersitics.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dist_fun2</span>(<span class='no'>d</span>, <span class='no'>tau</span>, <span class='no'>dist_fun</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>numeric</a></span>(<span class='fl'>0</span>))</pre>
+    <pre class="usage"><span class='fu'>dist_fun2</span>(<span class='no'>d</span>, <span class='no'>tau</span>, <span class='no'>dist_fun</span>, <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>numeric</a></span>(<span class='fl'>0</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,10 +154,14 @@ referring to distance function parameters in the different strata
       <td><p>distance funciton taking two arguments: distance, and <code>tau</code>, see examples.</p></td>
     </tr>
     <tr>
-      <th>b</th>
+      <th>breaks</th>
       <td><p>distance breakpoints, must be <code>length(tau) - 1</code> in length.
 These breakpoints represent the boundaries between the intervals
 characterized by homogeneous attenuation characteristics.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments passed to <code>dist_fun</code></p></td>
     </tr>
     </table>
     
