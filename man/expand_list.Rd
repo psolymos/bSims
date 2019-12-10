@@ -4,7 +4,7 @@
 Create a list from all combinations of arguments
 }
 \description{
-Create a list frame from all combinations of the supplied vectors or lists.
+Create a list from all combinations of the supplied vectors or lists.
 }
 \usage{
 expand_list(...)

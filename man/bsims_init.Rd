@@ -192,7 +192,7 @@ The \code{cl} argument is used to parallelize the work,
 can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.
 The `recover = TRUE` argument allows to run simulations with error
-catching based on \code{link{try}}.
+catching based on \code{\link{try}}.
 
 Note that simulated objects returned by \code{bsims_all}
 will contain different realizations and all the conditionally
