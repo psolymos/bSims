@@ -1,6 +1,7 @@
 #remotes::install_github("psolymos/bSims")
 library(bSims)
 library(parallel)
+library(detect)
 
 # roadside bias stuff
 # - road width -- vary
@@ -11,6 +12,7 @@ library(parallel)
 rint <- c(0.5, 1, Inf)
 tint <- c(3, 5, 10)
 s <- expand_list(
+  abund_fun = list(function(lambda, ...) as.integer(lambda)),
   road = c(0, 0.1, 0.2),
   edge = 0.5,
   density = list(c(1, 1, 0)),
@@ -24,7 +26,12 @@ for (i in seq_along(s))
   if (s[[i]]$road == 0)
     s[[i]]$edge <- 0
 b <- lapply(s, bsims_all)
-B <- 500
+
+## test run before running more extensive runs
+tmp <- lapply(b, function(z) z$new())
+
+## no error: move on
+B <- 100
 nc <- 4
 cl <- makeCluster(nc)
 tmp <- clusterEvalQ(cl, library(bSims))
@@ -220,7 +227,7 @@ P <- p * q
 
 Yq1 <- NULL
 Yq2 <- NULL
-for (i in 1:1000) {
+for (i in 1:200) {
   n <- bsims_populate(l, D)
   a <- bsims_animate(n, vocal_rate=phi, duration=dur)
   o <- bsims_detect(a, tau=tau)
@@ -234,16 +241,17 @@ for (i in 1:1000) {
 c(mean(Yq1), mean(Yq2), sd(Yq1), sd(Yq2))
 D*1.5^2*pi*p*q
 
-## distance
+## distance w/ area
 Y <- Yq1
 dat <- list(Y = Y, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
 ini <- list(N = apply(Y, 1, max) + 1)
 fit <- jags.fit(data = dat, params = c("p", "D"),
     n.update = 1000,
     model = model, inits = ini)
-coef(fit)
+coef(fit) # -- this is off
 D
 mean(Y)/(1.5^2*pi*p*q)
+
 ## binomial
 Y <- Yq2
 dat <- list(Y = Y, A=1.5^2*pi, n = nrow(Y), T = ncol(Y))
@@ -251,7 +259,7 @@ ini <- list(N = apply(Y, 1, max) + 1)
 fit <- jags.fit(data = dat, params = c("p", "D"),
     n.update = 1000,
     model = model, inits = ini)
-coef(fit)
+coef(fit) # -- this is fine
 D
 mean(Y)/(1.5^2*pi*p*q)
 
