@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Introduction to the bSims package"
 author: "Peter Solymos"
 output: rmarkdown::html_vignette
 vignette: >
@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 par(mar = c(1, 1, 1, 1))
+set.seed(429)
 ```
 
 ## Introduction
@@ -22,14 +23,41 @@ The **bSims** R package is a _highly scientific_ and _utterly addictive_ bird po
 explicit mechanistic simulation that is based on statistical models
 widely used in bird point count analysis (i.e. removal models, distance 
 sampling), and utterly addictive because the implementation
-is designed to allow rapid exploration (via Shiny apps)
+is designed to allow rapid interactive exploration (via **shiny** apps)
 and efficient simulation (supporting various parallel backends),
 thus elevating the user experience.
 
-The goals of the package are to (1) allow easy testing of
-statistical assumptions and explore effects of violating these assumptions,
-to (2) aid survey design by comparing different options, and most
-importantly, to (3) have fun while doing it.
+The goals of the package are to: 
+
+1. allow easy _testing of statistical assumptions_ and explore 
+  effects of violating these assumptions,
+2. _aid survey design_ by comparing different options, 
+3. and mostimportantly to _have fun_ while doing it via an 
+  intuitive and interactive user interface.
+
+The simulation interface was designed with the following principles in mind:
+
+1. _isolation_: the spatial scale is small (local point count scale) 
+  so that we can treat individual landscapes as more or less homogeneous 
+  units (but see below how certain stratified designs and edge effects 
+  can be incorporated) and independent independent in space and time;
+2. _realism_: the implementation of biological 
+  mechanisms and observation processes are realistic,
+  defaults are chosen to reflect common practice and assumptions;
+3. _efficiency_: implementation is computationally efficient
+  ustilizing parallel computing backends when available;
+4. _extensibility_: the package functionality is 
+  well documented and easily extensible.
+
+This documents outlines the major functionality of the package.
+First we describe the motivation for the simulation and 
+the details of the layers. Then we outline an interactive workflow
+to design simulation studies and describe how to run
+efficient simulation experiments.
+Finally we present some of the current limitations of the
+framework and how to extend the existing functionality of the
+package to incorporate more of the biological realism into
+the simulations.
 
 ## Simulation layers
 
@@ -95,28 +123,28 @@ The conditionally independent _layers_ of a
 4. the physical side of the observation process (`bsims_detect`), and
 5. the human aspect of the observation process (`bsims_transcribe`).
 
-See this example as a sneak peek that we'll explain in the following sections:
+See this example as a sneak peek that we'll explain 
+in the following subsections:
 
-```{r intro,fig.height=6,fig.width=6}
+```{r intro,fig.height=5,fig.width=5}
 library(bSims)
 
 phi <- 0.5                 # singing rate
-tau <- 1:3                 # EDR by strata
-dur <- 10                  # simulation duration
+tau <- 1:3                 # detection distances by strata
 tbr <- c(3, 5, 10)         # time intervals
-rbr <- c(0.5, 1, 1.5, Inf) # counting radii
+rbr <- c(0.5, 1, 1.5, Inf) # count radii
 
 l <- bsims_init(10, 0.5, 1)# landscape
 p <- bsims_populate(l, 1)  # population
 e <- bsims_animate(p,      # events
-  vocal_rate=phi, duration=dur)
+  vocal_rate=phi)
 d <- bsims_detect(e,       # detections
   tau=tau)
 x <- bsims_transcribe(d,   # transcription
   tint=tbr, rint=rbr)
 
+get_table(x) # removal table
 plot(x)
-get_table(x)
 ```
 
 ### Landscape
@@ -139,7 +167,7 @@ two strata.
 The `bsims_init` function returns a landscape object (with class 'bsims_landscape').
 
 
-```{r landscape,fig.width=6, fig.height=7}
+```{r landscape,fig.width=10,fig.height=10,out.width='100%'}
 (l1 <- bsims_init(extent = 10, road = 0, edge = 0, offset = 0))
 (l2 <- bsims_init(extent = 10, road = 1, edge = 0, offset = 0))
 (l3 <- bsims_init(extent = 10, road = 0.5, edge = 1, offset = 2))
@@ -238,12 +266,12 @@ par(op)
 
 The `get_nests` function extracts the nest locations. `get_abundance`
 and `get_density` gives the total abundance ($N$) and 
-density ($D=N/A$, where $A$ is `extent^2`) in the lanscape, respectively.
+density ($D=N/A$, where $A$ is `extent^2`) in the landscape, respectively.
 
 If the landscape is stratified, that has no effect on density unless we specify different values
 through the `density` argument as a vector of length 3 referring to the HER strata:
 
-```{r pop-dens,fig.width=6, fig.height=7}
+```{r pop-dens,fig.width=10,fig.height=10,out.width='100%'}
 D <- c(H = 2, E = 0.5, R = 0)
 
 op <- par(mfrow = c(2, 2))
@@ -256,7 +284,7 @@ par(op)
 
 ### Behavior
 
-The `bsims_animate` function _animates_ the population created by the `bsims_populate` function. `bsims_animate` returns an events objec (with class 'bsims_events').
+The `bsims_animate` function _animates_ the population created by the `bsims_populate` function. `bsims_animate` returns an events object (with class 'bsims_events').
 The most important arguments are governing the `duration` of the simulation in minutes,
 the vocalization (`vocal_rate`), and the movement (`move_rate`) rates as average number of events per minute.
 
@@ -293,7 +321,7 @@ of the events (`v` is 1 for vocalizations and 0 otherwise) for
 each individual (`i` gives the individual identifier
 that links individuals to the nest locations)
 
-```{r beh-events}
+```{r beh-events,fig.height=4,fig.width=6}
 l <- bsims_init()
 p <- bsims_populate(l, density = 0.5)
 e1 <- bsims_animate(p, vocal_rate = 1)
@@ -311,7 +339,7 @@ the value of `movement`, that is the standard deviation
 of bivariate Normal kernels centered around each nest location.
 This kernel is used to simulate new locations for the movement events.
 
-```{r beh-move,fig.width=6, fig.height=3.5}
+```{r beh-move,fig.width=10,fig.height=10,out.width='100%'}
 e2 <- bsims_animate(p, move_rate = 1, movement = 0.25)
 
 op <- par(mfrow = c(1, 2))
@@ -320,15 +348,15 @@ plot(e2, main = "Movement")
 par(op)
 ```
 
-Individuals in the landscape might have different volcalization
-rates depending on, e.g., berrding status. Such heterogeneity
+Individuals in the landscape might have different vocalization
+rates depending on, e.g., breeding status. Such heterogeneity
 can be added to the simulations as a finite mixture:
 `vocal_rate` and `move_rate` can be supplied as a vector,
 each element giving the rate for the groups.
 The `mixture` argument is then used to specify the mixture
 proportions.
 
-```{r beh-mix,fig.width=6, fig.height=3.5}
+```{r beh-mix,fig.width=6,fig.height=4}
 e3 <- bsims_animate(p, 
   vocal_rate = c(25, 1), mixture = c(0.33, 0.67))
 
@@ -336,35 +364,35 @@ plot(get_events(e3))
 curve((1-0.67*exp(-1*x)) * get_abundance(e3), col=2, add=TRUE)
 ```
 
-Vocal and movement rates (and corrsponding kernel stadard deviations)
+Vocal and movement rates (and corresponding kernel standard deviations)
 can be defined four different ways:
 
-- a single number: constant behaviour patterns, no groups,
-- a vector of length `length(mixture)`: behaviour based finite mixture groups,
+- a single number: constant behavior patterns, no groups,
+- a vector of length `length(mixture)`: behavior based finite mixture groups,
 - a vector of length 3 with `mixture = 1`: mixtures correspond to HER strata,
-- or a matrix of dimension 3 $\times$ `length(mixture)`: HER strata $\times$ number of behaviour based groups.
+- or a matrix of dimension 3 $\times$ `length(mixture)`: HER strata $\times$ number of behavior based groups.
 
 Strata based groups are tracked by column `s`, 
-behaviour based groups are tracked as the column `g` in
+behavior based groups are tracked as the column `g` in
 the output of `get_nests`.
 
 Here is how different territory sizes can be achieved in
 a two-habitat landscape:
 
-```{r beh-move2,fig.width=3.5, fig.height=3.5}
+```{r beh-move2,fig.width=5,fig.height=5}
 plot(bsims_animate(bsims_populate(l4, density = D), 
   move_rate = c(0.5, 1, 1), movement = c(0, 0.2, 0.2), 
   mixture = 1), main="Strata based mixtures")
 ```
 
-Stratum related behaviour groups depend on the nest location.
+Stratum related behavior groups depend on the nest location.
 Sometimes it makes sense to restrict movement even further,
 i.e. individuals do not land in certain strata
 (but can cross a stratum if `movement` is large enough).
 For example we can restrict movement into the road stratum
 (this requires density to be 0 in that stratum):
 
-```{r beh-move3,fig.width=6, fig.height=3.5}
+```{r beh-move3,fig.width=10,fig.height=5,out.width='100%'}
 op <- par(mfrow = c(1, 2))
 plot(bsims_animate(bsims_populate(l2, density = D), 
   move_rate = 1, movement = 0.3, 
@@ -382,7 +410,7 @@ here to update the `allow_overlap` argument of the
 previous call, and also the plot method from the **deldir** package
 used for tessellation.
 
-```{r beh-move4,fig.width=6, fig.height=3.5}
+```{r beh-move4,fig.width=10,fig.height=5,out.width='100%'}
 e4 <- update(e2, allow_overlap=FALSE)
 
 op <- par(mfrow = c(1, 2))
@@ -398,15 +426,14 @@ par(op)
 ```
 
 We haven't mentioned the `initial_location` argument yet.
-This allows to averride this whole layer and make all individuals
+This allows to override this whole layer and make all individuals
 fully available for the other layers applied on top.
 I.e. it is possible to study the observation process without
 any behavioral interference when `initial_location = TRUE`.
 
 ### Detection
 
-
-The `bsims_detect` function _detects_ the events created by the `bsims_animate` function. `bsims_detect` returns a detections objec (with class 'bsims_detections').
+The `bsims_detect` function _detects_ the events created by the `bsims_animate` function. `bsims_detect` returns a detections object (with class 'bsims_detections').
 The argument `xy` defines the location of the observer in the landscape.
 By default, it is in the middle, but can be moved anywhere within the
 bounds of the landscape.
@@ -435,14 +462,14 @@ Hazard rate function can be written as
 Individuals are detected via auditory and visual cues that
 are related to vocalization or movement events, respectively.
 The `event_type` argument determines what kinds of events can be detected,
-vocalization, movemnt, or both. 
+vocalization, movement, or both. 
 Detection here refers to the Bernoulli process with probability $g(d)`
 given the actual linear distance between the individual at that time
 and the observer.
 The `get_detections` function extracts the events that are detected,
 the column`d` contains the distances (in 100 m units).
 
-```{r det,fig.width=3.5, fig.height=3.5}
+```{r det,fig.width=5, fig.height=5}
 (d1 <- bsims_detect(e2, tau = 2))
 
 head(get_detections(d1))
@@ -452,13 +479,13 @@ plot(d1)
 The `tau` argument can be a vector of length 3, referring to
 detection distances in the HER strata.
 When the landscape is stratified and detection distances are different
-among the strata tha `bsims_detect` function uses a segmented
+among the strata the `bsims_detect` function uses a segmented
 attenuation model along the linear distance between the
 bird and the observer.
 The `run_app("distfunHER")` **shiny** 
 explores the segmented attenuation.
 
-```{r segm,fig.height=4,fig.width=4}
+```{r segm,fig.height=8,fig.width=6}
 tau <- c(1, 2, 3, 2, 1)
 d <- seq(0, 4, 0.01)
 dist_fun <- function(d, tau) exp(-(d/tau)^2) # half normal
@@ -506,7 +533,7 @@ lines(rev(d), dist_fun2(d, tau, dist_fun, rev(4-b)), col=2, lwd=3)
 par(op)
 ```
 
-```{r det2,fig.width=3.5, fig.height=3.5}
+```{r det2,fig.width=5,fig.height=5}
 e5 <- bsims_animate(
   bsims_populate(
     bsims_init(road = 0.2, edge = 0.4), density = D), 
@@ -520,7 +547,7 @@ plot(d2)
 ### Transcription
 
 The last layer of simulation is the `bsims_transcribe` function 
-that _transcribes_ the detections created by the `bsims_detect` function. `bsims_transcribe` returns a detections objec (with class 'bsims_transcript').
+that _transcribes_ the detections created by the `bsims_detect` function. `bsims_transcribe` returns a detections object (with class 'bsims_transcript').
 This layer refers to the process of the observer
 assigning detected individuals to time and distance categories.
 The `tint` argument is a vector containing the
@@ -560,7 +587,7 @@ time and distance interval, but counting restarts in every time interval
 (i.e. not just the new individuals are counted). The plot method overlays the
 distance bands and a representation of the time intervals.
 
-```{r trans}
+```{r trans,fig.height=6,fig.width=6}
 x <- bsims_transcribe(d1,
   tint = c(2, 4, 6, 8, 10), 
   rint = c(0.5, 1, 1.5, Inf))
@@ -571,19 +598,21 @@ get_table(x, "removal")
 get_table(x, "visits")
 ```
 
+## Statistical validity of the simulations
 
-## Simulation workflows
+We can test the validity of the simulations when all
+of the assumptions are met (that is the default)
+in the homgeneous habitat case.
+We set singing rate (`phi`), detection distance (`tau`),
+and density (`Den`) for the simulations.
+Density is in this case unrealistically high, because
+we are not using replication only a single landscape.
+This will help with the estimation.
 
-- Shiny apps: interactive exploration, copy/paste
-- define corner cases
-- use `expand_list` and `bsims_all`
-
-## Single habitat case
-
-```{r H,fig.height=10,fig.width=10}
-phi <- 0.5
-tau <- 2
-Den <- 10
+```{r H,fig.height=5,fig.width=5}
+phi <- 0.5 # singing rate
+tau <- 2   # detection distance
+Den <- 10  # density
 
 set.seed(1)
 l <- bsims_init()
@@ -593,147 +622,70 @@ o <- bsims_detect(b, tau=tau)
 
 tint <- c(1, 2, 3, 4, 5)
 rint <- c(0.5, 1, 1.5, 2) # truncated at 200 m
-(tr <- bsims_transcribe(o, tint=tint, rint=rint))
-(rem <- tr$removal) # binned new individuals
-colSums(rem)
-rowSums(rem)
-plot(tr)
+(x <- bsims_transcribe(o, tint=tint, rint=rint))
+(y <- get_table(x, "removal")) # binned new individuals
+colSums(y)
+rowSums(y)
+plot(x)
 ```
 
-Estimating density with truncation in the single habitat case:
+We use the **detect** package to fit removal model and
+distance sampling model to the simulated output.
+This is handily implemented in the `estimate` method
+for the transcription objects.
+First we estimate singing rate, effective detection distance,
+and density based on truncated distance counts:
 
 ```{r Dtr}
 library(detect)
-
-## singing rate
-fitp <- cmulti.fit(matrix(colSums(rem), 1), matrix(tint, 1), type="rem")
-phihat <- exp(fitp$coef)
-c(true=phi, estimate=exp(fitp$coef))
-(p <- 1-exp(-max(tint)*phihat))
-
-## EDR
-fitq <- cmulti.fit(matrix(rowSums(rem), 1), matrix(rint, 1), type="dis")
-tauhat <- exp(fitq$coef)
-c(true=tau, estimate=tauhat)
-rmax <- max(rint)
-(q <- (tauhat^2/rmax^2) * (1-exp(-(rmax/tauhat)^2)))
-
-## density
-(A <- pi * rmax^2)
-Dhat <- sum(rem) / (A * p * q)
-c(true=Den, estimate=Dhat)
+cbind(true = c(phi=phi, tau=tau, D=Den), 
+  estimate = estimate(x))
 ```
 
-Estimating density with unlimited distance in the single habitat case:
+Next we estimate singing rate, effective detection distance,
+and density based on unlimited distance counts:
 
 ```{r Dinf}
 rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
 
-(tr <- bsims_transcribe(o, tint=tint, rint=rint))
-(rem <- tr$removal) # binned new individuals
-colSums(rem)
-rowSums(rem)
+(x <- bsims_transcribe(o, tint=tint, rint=rint))
+(y <- get_table(x, "removal")) # binned new individuals
+colSums(y)
+rowSums(y)
 
-fitp <- cmulti.fit(matrix(colSums(rem), 1), matrix(tint, 1), type="rem")
-phihat <- exp(fitp$coef)
-c(true=phi, estimate=phihat)
-(p <- 1-exp(-max(tint)*phihat))
-
-fitq <- cmulti.fit(matrix(rowSums(rem), 1), matrix(rint, 1), type="dis")
-tauhat <- exp(fitq$coef)
-c(true=tau, estimate=tauhat)
-
-(Ahat <- pi * tauhat^2)
-q <- 1
-
-Dhat <- sum(rem) / (Ahat * p * q)
-c(true=Den, estimate=Dhat)
+cbind(true = c(phi=phi, tau=tau, D=Den), 
+  estimate = estimate(x))
 ```
 
-We have used so far a single location.
-We also set the density unreasonably high to have enough 
-counts for a reasonable estimate.
-We can independently replicate the simulation for multiple
-landscapes and analyze the results:
+Deviations from the assumptions and bias in density estimation
+can be done by systematically evaluating the simulations settings,
+which we describe in the next section.
 
-```{r Dx, eval=FALSE}
-phi <- 0.5
-tau <- 1
-Den <- 1
+## Simulation workflow
 
-tint <- c(3, 5, 10)
-rint <- c(0.5, 1, 1.5, Inf)
+We recommend exploring the simulation settings 
+interactively in the **shiny** apps
+using `run_app("distfunH")` app for the homogeneous habitat case and
+the `run_app("distfunHER")` app for the stratified habitat case.
 
-sim_fun <- function() {
-  l <- bsims_init()
-  a <- bsims_populate(l, density=Den)
-  b <- bsims_animate(a, vocal_rate=phi)
-  o <- bsims_detect(b, tau=tau)
-  bsims_transcribe(o, tint=tint, rint=rint)$rem
-}
+The apps represent the simulation layers as tabs,
+the last tab presenting the settings that can be copied onto the 
+clipboard and pasted into the R session or code.
+In simple situations, comparing results from a few different settings
+might be enough.
 
-B <- 200
-set.seed(123)
-res <- pbapply::pbreplicate(B, sim_fun(), simplify=FALSE)
+In more complex situations the apps will help identifying
+corner cases that are used to define a gradient of settings
+for single or multiple simulation options.
 
-Ddur <- matrix(tint, B, length(tint), byrow=TRUE)
-Ydur1 <- t(sapply(res, function(z) colSums(z)))
-Ydur2 <- t(sapply(res, function(z) colSums(z[-nrow(z),])))
-colSums(Ydur1) / sum(Ydur1)
-colSums(Ydur2) / sum(Ydur2)
-fitp1 <- cmulti(Ydur1 | Ddur ~ 1, type="rem")
-fitp2 <- cmulti(Ydur2 | Ddur ~ 1, type="rem")
-phihat1 <- unname(exp(coef(fitp1)))
-phihat2 <- unname(exp(coef(fitp2)))
+- Shiny apps: interactive exploration, copy/paste
+- define corner cases
+- use `expand_list` and `bsims_all`
 
-Ddis1 <- matrix(rint, B, length(rint), byrow=TRUE)
-Ddis2 <- matrix(rint[-length(rint)], B, length(rint)-1, byrow=TRUE)
-Ydis1 <- t(sapply(res, function(z) rowSums(z)))
-Ydis2 <- t(sapply(res, function(z) rowSums(z)[-length(rint)]))
-colSums(Ydis1) / sum(Ydis1)
-colSums(Ydis2) / sum(Ydis2)
-fitq1 <- cmulti(Ydis1 | Ddis1 ~ 1, type="dis")
-fitq2 <- cmulti(Ydis2 | Ddis2 ~ 1, type="dis")
-tauhat1 <- unname(exp(fitq1$coef))
-tauhat2 <- unname(exp(fitq2$coef))
+## Limitations & extensions
 
-## unlimited correction
-Apq1 <- pi * tauhat1^2 * (1-exp(-max(tint)*phihat1)) * 1
-rmax <- max(rint[is.finite(rint)])
-## truncated correction
-Apq2 <- pi * rmax^2 * 
-  (1-exp(-max(tint)*phihat2)) * 
-  (tauhat2^2/rmax^2) * (1-exp(-(rmax/tauhat2)^2))
+Interaction/dependence among layers (observer affecting behaviour,
+other individuals/species effects).
 
-round(rbind(
-  phi=c(true=phi, unlimited=phihat1, truncated=phihat2),
-  tau=c(true=tau, unlimited=tauhat1, truncated=tauhat2),
-  D=c(Den, unlimited=mean(rowSums(Ydis1))/Apq1,
-      truncated=mean(rowSums(Ydis2))/Apq2)), 4)
-```
-
-## Shiny apps
-
-Play with detection functions:
-
-```{r shiny1,eval=FALSE}
-run_app("distfunH")
-run_app("distfunHER")
-```
-
-Play with simulations and explore biases in a single-habitat setting (see also https://psolymos.shinyapps.io/bSimsH/):
-
-```{r shiny2,eval=FALSE}
-run_app("bsimsH")
-```
-
-Play with simulations and explore biases in a stratified habitat setting with road and edge (see also https://psolymos.shinyapps.io/bSimsHER/):
-
-```{r shiny3,eval=FALSE}
-run_app("bsimsHER")
-```
-
-Shiny apps can be used to play with the settings, then
-settings copied to the clipboard and eventually into R.
-
+Estimation is not part of the package, it was not intended.
 
