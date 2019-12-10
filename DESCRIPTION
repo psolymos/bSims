@@ -1,12 +1,14 @@
 Package: bSims
 Type: Package
 Title: Bird Point Count Simulator
-Version: 0.1-4
-Date: 2019-11-22
+Version: 0.2-0
+Date: 2019-12-09
 Author: Peter Solymos [aut, cre] (<https://orcid.org/0000-0001-7337-1740>)
 Maintainer: Peter Solymos <solymos@ualberta.ca>
-Description: A highly scientific and utterly addictive bird point count simulator 
-  to test statistical assumptions and to aid survey design.
+Description: A highly scientific and utterly addictive 
+  bird point count simulator 
+  to test statistical assumptions, aid survey design,
+  and have fun while doing it.
 License: GPL-2
 LazyLoad: yes
 LazyData: true

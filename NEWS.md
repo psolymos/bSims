@@ -1,3 +1,9 @@
+# Version 0.2-0, 2019-12-09
+
+* Added tutorial as vignette (#10).
+* Added `run_app` to run Shiny apps.
+* Added `estimate` method to fit simple models and estimate density.
+
 # Version 0.1-3, 2019-09-18
 
 * Incorporated feedback (GitHub issues #1-8).
