@@ -218,7 +218,8 @@ Shiny apps:
 \code{\link{run_app}}
 
 \code{\link{acceptreject}},
-\code{\link{events}}
+\code{\link{events}},
+\code{\link{estimate}}
 }
 \examples{
 phi <- 0.5

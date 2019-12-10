@@ -2,7 +2,7 @@ export("bsims_all",
   "bsims_init", "bsims_populate", "bsims_animate",
   "bsims_detect", "bsims_transcribe",
   "acceptreject", "col2hex", "dist_fun2",
-  "events",
+  "events", "estimate",
   "get_detections", "get_events", "get_nests",
   "get_abundance", "get_density","get_table",
   "rlnorm2", "rmvn", "timetoevent",
@@ -51,6 +51,7 @@ S3method(plot, bsims_transcript)
 S3method(lines, bsims_transcript)
 S3method(print, bsims_transcript)
 S3method(get_table, bsims_transcript)
+S3method(estimate, bsims_transcript)
 
 S3method(plot, bsims_events_table)
 

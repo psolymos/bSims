@@ -59,8 +59,8 @@ other arguments passed to internal functions.
 
 \code{get_detections} extracts the detections.
 
-\code{get_abundance} gets total abundance (N),
-\code{get_density} gets average density (abundance/area: N/A).
+\code{get_abundance} gets the realized total abundance (N),
+\code{get_density} gets the realized average density (abundance/area: N/A).
 
 \code{get_table} returns the removal or visits table.
 }
