@@ -24,6 +24,9 @@ other arguments passed to internal functions.
 The method evaluates removal design to estimate
 model parameters and density using the QPAD methodology
 using the 'detect' package.
+
+The function only works with multiple time and
+distance intervals. It returns \code{NA} otherwise.
 }
 \value{
 A vector with values for singing rate (phi),
