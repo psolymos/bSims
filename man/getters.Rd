@@ -72,7 +72,7 @@ returns a non-negative numeric value.
 \code{i} individual identifier,
 \code{s} spatial stratum (H: habitat, E: edge, R: road)
 \code{x} and \code{y} are coordinates of the nest locations,
-\code{g} is behavioural (mixture) group or \code{NA}.
+\code{g} is behavioral (mixture) group or \code{NA}.
 
 \code{get_events} returns a data frame with the following columns:
 \code{x} and \code{y} are locations of the individual at the time of the event,
@@ -92,7 +92,7 @@ returns a non-negative numeric value.
 and time intervals as columns. The cell values are counts
 if the individuals detected in a removal fashion (only new
 individuals counter over the time periods) or in a multiple-visits
-fashion (counting of individuals restrats in every time interval).
+fashion (counting of individuals restarts in every time interval).
 }
 \author{
 Peter Solymos

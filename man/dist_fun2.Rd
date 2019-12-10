@@ -6,7 +6,7 @@ Distance function with segmented attenuation
 \description{
 Distance function with segmented attenuation
 crossing a number of boundaries of strata
-with different attenuation charactersitics.
+with different attenuation characteristics.
 }
 \usage{
 dist_fun2(d, tau, dist_fun, breaks = numeric(0), ...)
@@ -22,7 +22,7 @@ referring to distance function parameters in the different strata
 (a stratum is defined by an interval surrounded by 1 or 2 boundaries).
 }
   \item{dist_fun}{
-distance funciton taking two arguments: distance, and \code{tau}, see examples.
+distance function taking two arguments: distance, and \code{tau}, see examples.
 }
   \item{breaks}{
 distance breakpoints, must be \code{length(tau) - 1} in length.

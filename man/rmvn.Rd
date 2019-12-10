@@ -20,7 +20,7 @@ mean vector.
 variance-covariance matrix.
 }
   \item{\dots}{
-other argumants passed to  \code{\link[MASS]{mvrnorm}}.
+other arguments passed to  \code{\link[MASS]{mvrnorm}}.
 }
 }
 \value{

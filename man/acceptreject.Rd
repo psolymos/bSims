@@ -25,7 +25,7 @@ when \code{NULL}.
 x and y ranges (bounding box).
 }
   \item{m}{
-margin width for avoidong edge effects.
+margin width for avoiding edge effects.
 }
   \item{maxit}{
 maximum number of iterations per point to try if no acceptance happens.

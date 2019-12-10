@@ -129,7 +129,7 @@ Overriding these default settings allows customization.
 These plotting functions are called for their side effects
 and silently return the input object.
 
-\code{col2hex} is modelled after \code{\link{col2rgb}}
+\code{col2hex} is modeled after \code{\link{col2rgb}}
 and returns a character vector giving hexadecimal color codes with
 or without alpha channel values.
 }

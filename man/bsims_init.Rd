@@ -81,10 +81,10 @@ to simulate nest locations.
   \item{vocal_rate, move_rate}{
 Vocal and movement rates (see \code{\link{events}}).
 Both of these rates can be: a single number;
-a vector of length \code{length(mixture)} (behaviour based finite mixture groups);
+a vector of length \code{length(mixture)} (behavior based finite mixture groups);
 a vector of length 3 with \code{mixture=1} (corresponding to HER strata);
 or a matrix of dimension 3 x \code{length(mixture)}
-(HER strata x number of behaviour based groups).
+(HER strata x number of behavior based groups).
 }
   \item{duration}{
 total time duration to consider (in minutes), passed to \code{\link{events}}.
@@ -92,10 +92,10 @@ total time duration to consider (in minutes), passed to \code{\link{events}}.
   \item{movement}{
 standard deviation for a bivariate Normal kernel to simulate
 locations centered at the nest location, passed to \code{\link{events}}.
-Can refer to the same stratum and behaviour based groups as \code{move_rate}.
+Can refer to the same stratum and behavior based groups as \code{move_rate}.
 }
   \item{mixture}{
-behaviour based finite mixture group proportions.
+behavior based finite mixture group proportions.
 }
   \item{avoid}{
 range along the x axis to avoid with respect to movement locations,

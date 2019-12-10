@@ -2,7 +2,7 @@
 \alias{estimate}
 \alias{estimate.bsims_transcript}
 \title{
-Estimate basis parameters
+Estimate basic parameters
 }
 \description{
 Estimate singing rates, effective distances, and density
@@ -31,7 +31,7 @@ distance intervals. It returns \code{NA} otherwise.
 \value{
 A vector with values for singing rate (phi),
 effective detection distance (tau),
-and dnesity.
+and density.
 }
 \author{
 Peter Solymos
