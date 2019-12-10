@@ -90,7 +90,7 @@ simulated birds in a point count." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/intro.html">Introduction</a>
+      <a href="../articles/intro.html">Introduction to the bSims package</a>
     </li>
   </ul>
 </li>
@@ -160,9 +160,7 @@ simulated birds in a point count.</p>
 <span class='co'># S3 method for bsims_transcript</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 <span class='co'># S3 method for bsims_all</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"removal"</span>, <span class='st'>"visits"</span>))</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -297,13 +295,6 @@ A non-negative number (&lt;1 values lead to under counting,
 or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>character, the type of table to return:
-<code>"removal"</code> includes only new individuals as time progresses,
-<code>"visits"</code> counts individuals in each time interval independent
-of each other.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>other arguments passed to underlying functions.
 For the <code>bsims_all</code> wrapper, it means all
@@ -342,7 +333,7 @@ The <code>cl</code> argument is used to parallelize the work,
 can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS,
 see examples.
 The `recover = TRUE` argument allows to run simulations with error
-catching based on <code>link{try}</code>.</p>
+catching based on <code><a href='https://rdrr.io/r/base/try.html'>try</a></code>.</p>
 <p>Note that simulated objects returned by <code>bsims_all</code>
 will contain different realizations and all the conditionally
 independent layers. Use a layered approach if former layers are meant
@@ -350,14 +341,20 @@ to be kept identical across runs.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='acceptreject.html'>acceptreject</a></code>, <code><a href='events.html'>events</a></code></p>
-<p>Plotting functions: <code><a href='plot.html'>plot.bsims_landscape</a></code></p>
-<p><code><a href='getters.html'>get_nests</a></code>,
+    <div class='dont-index'><p>Plotting functions:
+<code><a href='plot.html'>plot.bsims_landscape</a></code></p>
+<p>Getter functions:
+<code><a href='getters.html'>get_nests</a></code>,
 <code><a href='getters.html'>get_events</a></code>,
 <code><a href='getters.html'>get_detections</a></code>,
 <code><a href='getters.html'>get_abundance</a></code>,
-<code><a href='getters.html'>get_density</a></code></p>
-<p>Shiny apps: <code><a href='run_app.html'>run_app</a></code></p></div>
+<code><a href='getters.html'>get_density</a></code>
+<code><a href='getters.html'>get_table</a></code></p>
+<p>Shiny apps:
+<code><a href='run_app.html'>run_app</a></code></p>
+<p><code><a href='acceptreject.html'>acceptreject</a></code>,
+<code><a href='events.html'>events</a></code>,
+<code><a href='estimate.html'>estimate</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -389,11 +386,11 @@ to be kept identical across runs.</p>
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='getters.html'>get_table</a></span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      0       0
 #&gt; 100-150m      2      1       0
-#&gt; 150+m         7      0       2</div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"visits"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
+#&gt; 150+m         7      0       2</div><div class='input'><span class='fu'><a href='getters.html'>get_table</a></span>(<span class='no'>x</span>, <span class='st'>"visits"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      1       1
 #&gt; 100-150m      2      3       5

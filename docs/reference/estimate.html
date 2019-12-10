@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multivariate normal distribution — rmvn • bSims</title>
+<title>Estimate basis parameters — estimate • bSims</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,10 @@
 
 
 
-<meta property="og:title" content="Multivariate normal distribution — rmvn" />
+<meta property="og:title" content="Estimate basis parameters — estimate" />
 
-<meta property="og:description" content="A shim of mvrnorm to return matrix when n &amp;lt; 2." />
+<meta property="og:description" content="Estimate singing rates, effective distances, and density
+based on simulation objects" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,63 +119,81 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Multivariate normal distribution</h1>
+    <h1>Estimate basis parameters</h1>
     
-    <div class="hidden name"><code>rmvn.Rd</code></div>
+    <div class="hidden name"><code>estimate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A shim of <code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></code> to return matrix when n &lt; 2.</p>
+    <p>Estimate singing rates, effective distances, and density
+based on simulation objects</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rmvn</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='no'>mu</span>, <span class='no'>Sigma</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>estimate</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for bsims_transcript</span>
+<span class='fu'>estimate</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>n</th>
-      <td><p>number of random vectors desired (nonnegative integer, can be 0).</p></td>
-    </tr>
-    <tr>
-      <th>mu</th>
-      <td><p>mean vector.</p></td>
-    </tr>
-    <tr>
-      <th>Sigma</th>
-      <td><p>variance-covariance matrix.</p></td>
+      <th>object</th>
+      <td><p>simulation object.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other argumants passed to  <code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></code>.</p></td>
+      <td><p>other arguments passed to internal functions.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The method evaluates removal design to estimate
+model parameters and density using the QPAD methodology
+using the 'detect' package.</p>
+<p>The function only works with multiple time and
+distance intervals. It returns <code>NA</code> otherwise.</p>
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A matrix with <code>n</code> rows and <code><a href='https://rdrr.io/r/base/length.html'>length(mu)</a></code> columns.</p>
+    <p>A vector with values for singing rate (phi),
+effective detection distance (tau),
+and dnesity.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></code></p></div>
+    <div class='dont-index'><p><code><a href='bsims_init.html'>bsims_init</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>rmvn</span>(<span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;      a b</div><div class='input'><span class='fu'>rmvn</span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;              a          b
-#&gt; [1,] -1.459234 -0.1313106</div><div class='input'><span class='fu'>rmvn</span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;                a          b
-#&gt; [1,] -1.61011602 0.34053984
-#&gt; [2,] -0.06239165 0.05017926</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='fl'>0</span>:<span class='fl'>10</span>, <span class='kw'>function</span>(<span class='no'>n</span>) <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='fu'>rmvn</span>(<span class='no'>n</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0</span>), <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>))))</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]
-#&gt; [1,]    0    1    2    3    4    5    6    7    8     9    10
-#&gt; [2,]    2    2    2    2    2    2    2    2    2     2     2</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>2</span>)
+<span class='no'>phi</span> <span class='kw'>&lt;-</span> <span class='fl'>0.5</span>                 <span class='co'># singing rate</span>
+<span class='no'>tau</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>                   <span class='co'># EDR by strata</span>
+<span class='no'>dur</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>                  <span class='co'># simulation duration</span>
+<span class='no'>tbr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>10</span>)   <span class='co'># time intervals</span>
+<span class='no'>rbr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>Inf</span>) <span class='co'># counting radii</span>
+
+<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_init</a></span>(<span class='fl'>10</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>)<span class='co'># landscape</span>
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_populate</a></span>(<span class='no'>l</span>, <span class='fl'>10</span>)  <span class='co'># population</span>
+<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_animate</a></span>(<span class='no'>p</span>,      <span class='co'># events</span>
+  <span class='kw'>vocal_rate</span><span class='kw'>=</span><span class='no'>phi</span>, <span class='kw'>duration</span><span class='kw'>=</span><span class='no'>dur</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_detect</a></span>(<span class='no'>e</span>,       <span class='co'># detections</span>
+  <span class='kw'>tau</span><span class='kw'>=</span><span class='no'>tau</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_transcribe</a></span>(<span class='no'>d</span>,   <span class='co'># transcription</span>
+  <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>)
+
+<span class='fu'>estimate</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;       phi       tau   density 
+#&gt; 0.3579668 1.0585735 9.3506209 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
