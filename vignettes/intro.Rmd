@@ -805,4 +805,9 @@ Such scenarios are also not considered at present. Although the same
 landscape can be reused for multiple species, and building up
 the simulation that way.
 
+We do not have directionality effects of vocalization direction
+or wind related distortion of detection distances in the package,
+but that can be incorporated quite easily using a ratio relative to direct
+
+We do not have autocorrelated behaviour (vocal or movement).
 
