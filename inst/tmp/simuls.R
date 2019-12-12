@@ -9,15 +9,21 @@ library(detect)
 # - behav: 0.8, lower/higher/same, 0 -- vary
 # - EDR: 1,1,2 (same)
 
+# movement x spatial pattern (2 x 3)
+
 rint <- c(0.5, 1, Inf)
 tint <- c(3, 5, 10)
+phi <- 0.5
+tau <- 1
+D <- 1
+
 s <- expand_list(
   abund_fun = list(function(lambda, ...) as.integer(lambda)),
   road = c(0, 0.1, 0.2),
   edge = 0.5,
-  density = list(c(1, 1, 0)),
-  vocal_rate = list(c(0.5, 0.25, 0), c(0.5, 0.5, 0), c(0.5, 1, 0)),
-  tau = list(c(1, 1, 2)),
+  density = list(c(D, D, 0)),
+  vocal_rate = list(c(phi, phi/2, 0), c(phi, phi, 0), c(phi, phi*2, 0)),
+  tau = list(c(tau, tau, tau*2)),
   rint = list(rint),
   tint = list(tint)
 )
@@ -25,44 +31,92 @@ s <- expand_list(
 for (i in seq_along(s))
   if (s[[i]]$road == 0)
     s[[i]]$edge <- 0
+
+if (FALSE) {
+# movement x spatial pattern (2 x 3)
+f_syst <- function(d) {
+  (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(exp(2-1),2)) / 2
+}
+## clustered
+f_clust <- function(d) {
+  exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2))
+}
+
+s <- expand_list(
+  move_rate = 1,
+  movement = c(0, 0.5),
+  xy_fun = list(NULL, f_syst, f_clust),
+  density = D,
+  vocal_rate = phi,
+  tau = tau,
+  rint = list(rint),
+  tint = list(tint)
+)
+}
+
 b <- lapply(s, bsims_all)
 
 ## test run before running more extensive runs
 tmp <- lapply(b, function(z) z$new())
 
-## no error: move on
-B <- 100
+B <- 50 # number of times to replicate experiment
+n <- 10 # sample size in each replicate
+
 nc <- 4
 cl <- makeCluster(nc)
 tmp <- clusterEvalQ(cl, library(bSims))
-bb <- lapply(b, function(z) z$replicate(B, cl=cl))
+
+bb <- lapply(b, function(z) {
+  zz <- z$replicate(B * n, cl=cl)
+  lapply(zz, get_table)
+})
+
 stopCluster(cl)
 
-yy <- lapply(bb, function(z) lapply(z, get_table))
+Mt <- matrix(tint, nrow=n, ncol=length(tint), byrow=TRUE)
+Mr <- matrix(rint, nrow=n, ncol=length(rint), byrow=TRUE)
 
-Mr <- matrix(rint, nrow=B, ncol=length(rint), byrow=TRUE)
-tau <- sapply(yy, function(z) {
-  Y <- t(sapply(z, rowSums))
-  exp(detect::cmulti.fit(Y, Mr, type="dis")$coef)
-})
+TAU <- PHI <- DEN <- matrix(NA, length(s), B)
 
-Mt <- matrix(tint, nrow=B, ncol=length(tint), byrow=TRUE)
-phi <- sapply(yy, function(z) {
-  Y <- t(sapply(z, colSums))
-  exp(detect::cmulti.fit(Y, Mt, type="rem")$coef)
-})
+for (i in seq_len(B)) {
+  ii <- ((i-1)*n+1):(i*n)
+  yy <- lapply(bb, function(z) z[ii])
+
+  phihat <- sapply(yy, function(z) {
+    Y <- t(sapply(z, colSums))
+    exp(detect::cmulti.fit(Y, Mt, type="rem")$coef)
+  })
+
+  tauhat <- sapply(yy, function(z) {
+    Y <- t(sapply(z, rowSums))
+    exp(detect::cmulti.fit(Y, Mr, type="dis")$coef)
+  })
 
 
-Ybar <- sapply(yy, function(z) mean(sapply(z, sum)))
-p <- 1-exp(-phi*max(tint))
-Dhat <- Ybar / (p * tau^2*pi)
+  Ybar <- sapply(yy, function(z) mean(sapply(z, sum)))
+  Dhat <- Ybar / ((1-exp(-phi*max(tint))) * tau^2*pi)
 
-op <- par(mfrow=c(3,3), mar=c(1,1,1,1))
-for (i in seq_along(s))
-plot(bb[[i]][[1]],
-  main=paste(round(c(Ybar[i], phi[i], tau[i], Dhat[i]), 2), collapse=" "))
+  TAU[,i] <- tauhat
+  PHI[,i] <- phihat
+  DEN[,i] <- Dhat
+}
+
+op <- par(mfrow=c(3,3))
+for (j in seq_along(s)) {
+  boxplot(cbind(phi=PHI[j,]/0.5, tau=TAU[j,]/1, D=DEN[j,]/1), ylim=c(0, 3))
+  abline(h=1, col=2)
+}
 par(op)
 
+if (FALSE) {
+op <- par(mfrow=c(3,2))
+for (j in seq_along(s)) {
+  boxplot(cbind(phi=PHI[j,]/0.5, tau=TAU[j,]/1, D=DEN[j,]/1), ylim=c(0, 3))
+  abline(h=1, col=2)
+}
+par(op)
+
+}
 
 ## layers
 
