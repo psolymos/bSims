@@ -44,8 +44,8 @@ f_clust <- function(d) {
 
 s <- expand_list(
   move_rate = 1,
-  movement = c(0, 0.5),
   xy_fun = list(NULL, f_syst, f_clust),
+  movement = c(0, 0.5),
   density = D,
   vocal_rate = phi,
   tau = tau,
@@ -58,7 +58,17 @@ b <- lapply(s, bsims_all)
 
 ## test run before running more extensive runs
 tmp <- lapply(b, function(z) z$new())
+op <- par(mfrow=c(3,3), mar=c(1,1,1,1))
+for (i in 1:9)
+  plot(tmp[[i]])
+par(op)
 
+if (FALSE) {
+op <- par(mfrow=c(2,3), mar=c(1,1,1,1))
+for (i in 1:6)
+  plot(tmp[[i]])
+par(op)
+}
 B <- 50 # number of times to replicate experiment
 n <- 10 # sample size in each replicate
 
