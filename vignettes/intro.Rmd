@@ -126,25 +126,35 @@ The conditionally independent _layers_ of a
 See this example as a sneak peek that we'll explain 
 in the following subsections:
 
-```{r intro,fig.height=5,fig.width=5}
+```{r intro,fig.width=15,fig.height=10,out.width='100%'}
 library(bSims)
 
 phi <- 0.5                 # singing rate
 tau <- 1:3                 # detection distances by strata
 tbr <- c(3, 5, 10)         # time intervals
-rbr <- c(0.5, 1, 1.5, Inf) # count radii
+rbr <- c(0.5, 1, 1.5)      # count radii
 
-l <- bsims_init(10, 0.5, 1)# landscape
-p <- bsims_populate(l, 1)  # population
+l <- bsims_init(10,        # landscape
+  road=0.25, edge=0.5)
+p <- bsims_populate(l,     # population
+  density=c(1, 1, 0))
 e <- bsims_animate(p,      # events
-  vocal_rate=phi)
+  vocal_rate=phi,
+  move_rate=1, movement=0.2)
 d <- bsims_detect(e,       # detections
   tau=tau)
 x <- bsims_transcribe(d,   # transcription
   tint=tbr, rint=rbr)
 
 get_table(x) # removal table
-plot(x)
+
+op <- par(mfrow=c(2,3), cex.main=2)
+plot(l, main="Initialize")
+plot(p, main="Populate")
+plot(e, main="Animate")
+plot(d, main="Detect")
+plot(x, main="Transcribe")
+par(op)
 ```
 
 ### Landscape
@@ -805,9 +815,20 @@ Such scenarios are also not considered at present. Although the same
 landscape can be reused for multiple species, and building up
 the simulation that way.
 
-We do not have directionality effects of vocalization direction
-or wind related distortion of detection distances in the package,
-but that can be incorporated quite easily using a ratio relative to direct
+The package considers simulations as independent 
+in space and time. When larger landscapes need to be simulated, 
+there might be several options: 
+(1) simulate a larger extent and put multiple independent observers 
+into the landscape; or (2) simulate independent landscapes in isolation.
+The latter approach can also address spatial and temporal
+heterogeneity in density, behaviour, etc. E.g. if
+singing rate is changing as a function of time of day,
+one can define the `vocal_rate` values as a function of time,
+and simulate independent animation layers.
+When the density varies in space, one can
+simulate independent population layers.
 
-We do not have autocorrelated behaviour (vocal or movement).
-
+These limitations can be addressed as additional methods and
+modules extending the capabilities of the package, 
+or as added functionality to the core layer functions
+in future releases.
