@@ -67,7 +67,7 @@ simulated birds in a point count." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -312,6 +312,12 @@ allowing to simulate multiple realities by keeping
 preceding layers intact. Construction allows easy piping.
 The <code>bsims_all</code> function is a wrapper for the <code>bsims_*</code>
 layer functions.</p>
+<p>The simulations follow time-removal and distance sampling models based on
+Matsuoka et al. (2012) &lt;doi:10.1525/auk.2012.11190&gt;,
+Solymos et al. (2013) &lt;doi:10.1111/2041-210X.12106&gt;,
+and Solymos et al. (2018) &lt;doi:10.1650/CONDOR-18-32.1&gt;,
+and sound attenuation experiments by
+Yip et al. (2017) &lt;doi:10.1650/CONDOR-16-93.1&gt;.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -338,6 +344,33 @@ catching based on <code><a href='https://rdrr.io/r/base/try.html'>try</a></code>
 will contain different realizations and all the conditionally
 independent layers. Use a layered approach if former layers are meant
 to be kept identical across runs.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Matsuoka, S. M., Bayne, E. M., Solymos, P., Fontaine, P.,
+Cumming, S. G., Schmiegelow, F. K. A., &amp; Song, S. A., 2012.
+Using binomial distance-sampling models to estimate the
+effective detection radius of point-counts surveys across boreal Canada.
+<em>Auk</em>, <strong>129</strong>: 268--282.
+&lt;doi:10.1525/auk.2012.11190&gt;</p>
+<p>Solymos, P., Matsuoka, S. M., Bayne, E. M., Lele, S. R., Fontaine, P.,
+Cumming, S. G., Stralberg, D., Schmiegelow, F. K. A. &amp; Song, S. J., 2013.
+Calibrating indices of avian density from non-standardized survey data:
+making the most of a messy situation.
+<em>Methods in Ecology and Evolution</em>, <b>4</b>: 1047--1058.
+&lt;doi:10.1111/2041-210X.12106&gt;</p>
+<p>Solymos, P., Matsuoka, S. M., Cumming, S. G., Stralberg, D., Fontaine, P.,
+Schmiegelow, F. K. A., Song, S. J., and Bayne, E. M., 2018.
+Evaluating time-removal models for estimating availability of boreal birds
+during point-count surveys: sample size requirements and model complexity.
+<em>Condor</em>, <b>120</b>: 765--786.
+&lt;doi:10.1650/CONDOR-18-32.1&gt;</p>
+<p>Yip, D. A., Bayne, E. M., Solymos, P., Campbell, J.,
+and Proppe, J. D., 2017.
+Sound attenuation in forested and roadside environments:
+implications for avian point count surveys.
+<em>Condor</em>, <b>119</b>: 73--84.
+&lt;doi:10.1650/CONDOR-16-93.1&gt;</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -455,25 +488,26 @@ to be kept identical across runs.</p>
 #&gt; 100-150m      0      0       0
 #&gt; 150+m         0      0       0
 #&gt; </div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \donttest{</span>
 <span class='co'>## parallel simulations</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parallel</span>)
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>)
 <span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fl'>4</span>  <span class='co'># number of runs</span>
 <span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
 <span class='co'>## sequential</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))
-<span class='co'>## parallel clusters</span>
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.618   0.006   0.639 </div><div class='input'><span class='co'>## parallel clusters</span>
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span>(<span class='no'>nc</span>)
 <span class='co'>## note: loading the package is optional</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))
-<span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.001   0.000   1.264 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.009   0.001   0.491 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
 <span class='co'>## parallel forking</span>
 <span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
   <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>nc</span>))
-}
-}</div></pre>
+}</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.007   0.009   0.666 </div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -483,6 +517,8 @@ to be kept identical across runs.</p>
       <li><a href="#details">Details</a></li>
 
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
