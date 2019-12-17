@@ -1,3 +1,7 @@
+# Version 0.2-2, 2019-12-17
+
+*
+
 # Version 0.2-1, 2019-12-16
 
 * Replaced `\dontrun{}` with `\donttest{}` in Rd files.
