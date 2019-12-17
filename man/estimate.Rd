@@ -7,6 +7,7 @@ Estimate basic parameters
 \description{
 Estimate singing rates, effective distances, and density
 based on simulation objects
+using the QPAD approach (Solymos et al. 2013).
 }
 \usage{
 estimate(object, ...)
@@ -32,6 +33,14 @@ distance intervals. It returns \code{NA} otherwise.
 A vector with values for singing rate (phi),
 effective detection distance (tau),
 and density.
+}
+\references{
+Solymos, P., Matsuoka, S. M., Bayne, E. M., Lele, S. R., Fontaine, P.,
+Cumming, S. G., Stralberg, D., Schmiegelow, F. K. A. & Song, S. J., 2013.
+Calibrating indices of avian density from non-standardized survey data:
+making the most of a messy situation.
+\emph{Methods in Ecology and Evolution}, \bold{4}: 1047--1058.
+<doi:10.1111/2041-210X.12106>
 }
 \author{
 Peter Solymos

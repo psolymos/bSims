@@ -166,6 +166,13 @@ allowing to simulate multiple realities by keeping
 preceding layers intact. Construction allows easy piping.
 The \code{bsims_all} function is a wrapper for the \code{bsims_*}
 layer functions.
+
+The simulations follow time-removal and distance sampling models based on
+Matsuoka et al. (2012) <doi:10.1525/auk.2012.11190>,
+Solymos et al. (2013) <doi:10.1111/2041-210X.12106>,
+and Solymos et al. (2018) <doi:10.1650/CONDOR-18-32.1>,
+and sound attenuation experiments by
+Yip et al. (2017) <doi:10.1650/CONDOR-16-93.1>.
 }
 \value{
 \code{bsims_init} returns a landscape object.
@@ -198,6 +205,35 @@ Note that simulated objects returned by \code{bsims_all}
 will contain different realizations and all the conditionally
 independent layers. Use a layered approach if former layers are meant
 to be kept identical across runs.
+}
+\references{
+Matsuoka, S. M., Bayne, E. M., Solymos, P., Fontaine, P.,
+Cumming, S. G., Schmiegelow, F. K. A., & Song, S. A., 2012.
+Using binomial distance-sampling models to estimate the
+effective detection radius of point-counts surveys across boreal Canada.
+\emph{Auk}, \strong{129}: 268--282.
+<doi:10.1525/auk.2012.11190>
+
+Solymos, P., Matsuoka, S. M., Bayne, E. M., Lele, S. R., Fontaine, P.,
+Cumming, S. G., Stralberg, D., Schmiegelow, F. K. A. & Song, S. J., 2013.
+Calibrating indices of avian density from non-standardized survey data:
+making the most of a messy situation.
+\emph{Methods in Ecology and Evolution}, \bold{4}: 1047--1058.
+<doi:10.1111/2041-210X.12106>
+
+Solymos, P., Matsuoka, S. M., Cumming, S. G., Stralberg, D., Fontaine, P.,
+Schmiegelow, F. K. A., Song, S. J., and Bayne, E. M., 2018.
+Evaluating time-removal models for estimating availability of boreal birds
+during point-count surveys: sample size requirements and model complexity.
+\emph{Condor}, \bold{120}: 765--786.
+<doi:10.1650/CONDOR-18-32.1>
+
+Yip, D. A., Bayne, E. M., Solymos, P., Campbell, J.,
+and Proppe, J. D., 2017.
+Sound attenuation in forested and roadside environments:
+implications for avian point count surveys.
+\emph{Condor}, \bold{119}: 73--84.
+<doi:10.1650/CONDOR-16-93.1>
 }
 \author{
 Peter Solymos
@@ -254,7 +290,7 @@ b$new()
 bb <- b$replicate(3)
 lapply(bb, get_table)
 
-\dontrun{
+\donttest{
 ## parallel simulations
 library(parallel)
 b <- bsims_all(density=0.5)

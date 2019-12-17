@@ -1,3 +1,8 @@
+# Version 0.2-1, 2019-12-16
+
+* Replaced `\dontrun{}` with `\donttest{}` in Rd files.
+* Added references to Rd files and `DESCRIPTION` with DOI.
+
 # Version 0.2-0, 2019-12-09
 
 * Added tutorial as vignette (#10).

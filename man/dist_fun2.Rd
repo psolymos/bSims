@@ -6,7 +6,8 @@ Distance function with segmented attenuation
 \description{
 Distance function with segmented attenuation
 crossing a number of boundaries of strata
-with different attenuation characteristics.
+with different attenuation characteristics
+following results in Yip et al. (2017).
 }
 \usage{
 dist_fun2(d, tau, dist_fun, breaks = numeric(0), ...)
@@ -36,6 +37,14 @@ other arguments passed to \code{dist_fun}
 \value{
 Probability of detection given the distance, stratum specific parameters
 and the arrangement of breakpoints.
+}
+\references{
+Yip, D. A., Bayne, E. M., Solymos, P., Campbell, J.,
+and Proppe, J. D., 2017.
+Sound attenuation in forested and roadside environments:
+implications for avian point count surveys.
+\emph{Condor}, \bold{119}: 73--84.
+<doi:10.1650/CONDOR-16-93.1>
 }
 \author{
 Peter Solymos
