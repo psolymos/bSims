@@ -3,15 +3,9 @@
 A highly scientific and utterly addictive bird point count simulator to
 test statistical assumptions and to aid survey design.
 
-[![CRAN version](http://www.r-pkg.org/badges/version/bSims)](http://cran.rstudio.com/web/packages/bSims/index.html)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://www.rdocumentation.org/packages/bSims/)
-
 [![Linux build
 status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
 [![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
-
-[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-
 
 > *“I’ve yet to see any problem, however complicated, which when you
 > looked at it the right way didn’t become still more complicated.”* –
@@ -36,6 +30,14 @@ See the package in action in the [QPAD
 Book](https://peter.solymos.org/qpad-book/).
 
 ## Install
+
+CRAN version:
+
+``` r
+install.packages("bSims")
+```
+
+Development version:
 
 ``` r
 remotes::install_github("psolymos/bSims")
@@ -156,23 +158,21 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.808   0.013   0.833
+#>    0.40    0.02    0.42
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.001   0.000   1.471
+#>     0.0     0.0     0.7
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.016   0.003   0.687
+#>    0.02    0.00    0.26
 stopCluster(cl)
 
 ## parallel forking
 if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
-#>    user  system elapsed 
-#>   0.457   0.130   0.608
 ```

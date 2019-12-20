@@ -41,6 +41,14 @@ See the package in action in the [QPAD Book](https://peter.solymos.org/qpad-book
 
 ## Install
 
+CRAN version:
+
+```{r eval=FALSE}
+install.packages("bSims")
+```
+
+Development version:
+
 ```{r eval=FALSE}
 remotes::install_github("psolymos/bSims")
 ```
