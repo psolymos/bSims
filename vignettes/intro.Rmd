@@ -40,7 +40,7 @@ The simulation interface was designed with the following principles in mind:
 1. _isolation_: the spatial scale is small (local point count scale) 
   so that we can treat individual landscapes as more or less homogeneous 
   units (but see below how certain stratified designs and edge effects 
-  can be incorporated) and independent independent in space and time;
+  can be incorporated) and independent in space and time;
 2. _realism_: the implementation of biological 
   mechanisms and observation processes are realistic,
   defaults are chosen to reflect common practice and assumptions;
@@ -95,7 +95,7 @@ being a random variables $N \sim Poisson(DA)$, while the observed count
 being $Y \sim Binomial(N, pq)$.
 This is the exact simulation
 that we need when we want to make sure that an _estimator_
-is capable of estimating the _model_ parameters (`lambda` and `prob` here).
+can estimate the _model_ parameters (`lambda` and `prob` here).
 But such probabilistic simulations are not very useful when we are
 interested how well the _model_ captures important aspects of _reality_.
 
@@ -399,7 +399,7 @@ Stratum related behavior groups depend on the nest location.
 Sometimes it makes sense to restrict movement even further,
 i.e. individuals do not land in certain strata
 (but can cross a stratum if `movement` is large enough).
-For example we can restrict movement into the road stratum
+For example, we can restrict movement into the road stratum
 (this requires density to be 0 in that stratum):
 
 ```{r beh-move3,fig.width=10,fig.height=5,out.width='100%'}
@@ -417,7 +417,7 @@ Another way to restrict the movement of individuals is to
 prevent the overlap based on a Voronoi tessellation
 around the nest locations. Note: we are using the update method
 here to update the `allow_overlap` argument of the 
-previous call, and also the plot method from the **deldir** package
+previous call, and the plot method from the **deldir** package
 used for tessellation.
 
 ```{r beh-move4,fig.width=10,fig.height=5,out.width='100%'}
@@ -473,11 +473,11 @@ Individuals are detected via auditory and visual cues that
 are related to vocalization or movement events, respectively.
 The `event_type` argument determines what kinds of events can be detected,
 vocalization, movement, or both. 
-Detection here refers to the Bernoulli process with probability $g(d)`
+Detection here refers to the Bernoulli process with probability $g(d)$
 given the actual linear distance between the individual at that time
 and the observer.
 The `get_detections` function extracts the events that are detected,
-the column`d` contains the distances (in 100 m units).
+the column `d` contains the distances (in 100 m units).
 
 ```{r det,fig.width=5, fig.height=5}
 (d1 <- bsims_detect(e2, tau = 2))
@@ -488,7 +488,7 @@ plot(d1)
 
 The `tau` argument can be a vector of length 3, referring to
 detection distances in the HER strata.
-When the landscape is stratified and detection distances are different
+When the landscape is stratified, and detection distances are different
 among the strata the `bsims_detect` function uses a segmented
 attenuation model along the linear distance between the
 bird and the observer.
@@ -561,7 +561,7 @@ that _transcribes_ the detections created by the `bsims_detect` function. `bsims
 This layer refers to the process of the observer
 assigning detected individuals to time and distance categories.
 The `tint` argument is a vector containing the
-endpoints of the the time intervals within the total duration in minutes.
+endpoints of the time intervals within the total duration in minutes.
 `rint` defines the distance bands in 100 m units, the maximum can be
 infinite referring to an unlimited distance count.
 
@@ -643,7 +643,7 @@ We use the **detect** package to fit removal model and
 distance sampling model to the simulated output.
 This is handily implemented in the `estimate` method
 for the transcription objects.
-First we estimate singing rate, effective detection distance,
+First, we estimate singing rate, effective detection distance,
 and density based on truncated distance counts:
 
 ```{r Dtr}
@@ -652,7 +652,7 @@ cbind(true = c(phi=phi, tau=tau, D=Den),
   estimate = estimate(x))
 ```
 
-Next we estimate singing rate, effective detection distance,
+Next, we estimate singing rate, effective detection distance,
 and density based on unlimited distance counts:
 
 ```{r Dinf}
@@ -774,7 +774,7 @@ stopCluster(cl)
 ```
 
 In some cases, we want to evaluate crossed effects of multiple
-settings. For example road width and spatial pattern (random vs. clustered):
+settings. For example, road width and spatial pattern (random vs. clustered):
 
 ```{r grid3}
 s <- expand_list(
@@ -798,7 +798,11 @@ Estimating parameters for more complex situations (i.e.
 finite mixture removal models, or via Hazard rate distance functions)
 or estimating abundance via multiple-visit N-mixture models etc. is
 outside of the scope of the package and it is the responsibility of the 
-user to make sure those work as expected.
+user to make sure those work as expected. Although there is an
+ever increasing set of scripts coversing some of these aspects
+in the [`/inst/tmp`](https://github.com/psolymos/bSims/tree/master/inst/tmp) 
+folder of the package and in the 
+[_QPAD book_](https://peter.solymos.org/qpad-book/).
 
 Other intentional limitation of the package is the lack of
 reverse interactions between the layers. For example
@@ -808,7 +812,7 @@ be implemented as methods extending the current functionality.
 
 Another limitation is that this implementation considers single
 species. Observers rarely collect data on single species 
-but rather count multiple species as part of the same count.
+but rather count multiple species as part of the same survey.
 The commonness of the species, observer ability, etc. can influence
 the observation process when the whole community is considered.
 Such scenarios are also not considered at present. Although the same
