@@ -3,6 +3,7 @@
 library(bSims)
 library(dclone)
 library(rjags)
+library(unmarked)
 
 ## settings
 tint <- c(2,4,6,8,10)
@@ -57,6 +58,9 @@ ini1 <- list(N = apply(Yq1, 1, max) + 1)
 fit1 <- jags.fit(data = dat1, params = c("p", "D"),
     n.update = 1000,
     model = model, inits = ini1)
+umf1 <- unmarkedFramePCount(Yq1)
+pc1 <- pcount(~ 1 ~ 1, umf1, K=100*D*2)
+coef1 <- c(exp(coef(pc1)[1]), plogis(coef(pc1)[2]))
 
 ## binomial
 dat2 <- list(Y = Yq2, A=max(rint)^2*pi, n = nrow(Yq2), J = ncol(Yq2))
@@ -64,6 +68,9 @@ ini2 <- list(N = apply(Yq2, 1, max) + 1)
 fit2 <- jags.fit(data = dat2, params = c("p", "D"),
     n.update = 1000,
     model = model, inits = ini2)
+umf2 <- unmarkedFramePCount(Yq2)
+pc2 <- pcount(~ 1 ~ 1, umf2, K=100*D*2)
+coef2 <- c(exp(coef(pc2)[1]), plogis(coef(pc2)[2]))
 
 ## constant dfun
 dat3 <- list(Y = Yq3, A=max(rint)^2*pi, n = nrow(Yq3), J = ncol(Yq3))
@@ -71,8 +78,11 @@ ini3 <- list(N = apply(Yq3, 1, max) + 1)
 fit3 <- jags.fit(data = dat3, params = c("p", "D"),
     n.update = 1000,
     model = model, inits = ini3)
+umf3 <- unmarkedFramePCount(Yq3)
+pc3 <- pcount(~ 1 ~ 1, umf3, K=100*D*2)
+coef3 <- c(exp(coef(pc3)[1]), plogis(coef(pc3)[2]))
 
 ## summaries
 c(mean(Yq2)/(max(rint)^2*pi*p*q), mean(Yq1)/(max(rint)^2*pi*p*q), mean(Yq3)/(max(rint)^2*pi*p*q))
-cbind(True=c(D=D, pq=p*q), Nmix1=coef(fit2), Nmix2=coef(fit2), Nmix3=coef(fit3))
-
+cbind(True=c(D=D, pq=p*q), Nmix1=coef(fit1), Nmix2=coef(fit2), Nmix3=coef(fit3))
+cbind(True=c(D=D, pq=p*q), Nmix1=coef1, Nmix2=coef2, Nmix3=coef3)
