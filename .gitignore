@@ -47,5 +47,3 @@ Temporary Items
 *.Rhistory
 .Rproj.user*
 .Rproj.user
-inst/doc
-_temp
