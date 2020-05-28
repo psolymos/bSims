@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="bSims simulation functions — bsims_init" />
 <meta property="og:description" content="Functions to initialize, populate, animate, detect, and transcribe
 simulated birds in a point count." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ simulated birds in a point count." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ simulated birds in a point count." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-2</span>
       </span>
     </div>
 
@@ -103,7 +106,7 @@ simulated birds in a point count." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/psolymos/bSims">
+  <a href="https://github.com/psolymos/bSims/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -415,7 +418,7 @@ implications for avian point count surveys.
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_table</span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      0       0
 #&gt; 100-150m      2      1       0
@@ -430,14 +433,14 @@ implications for avian point count surveys.
 #&gt; 3 -0.0575831  2.5478251 0.05696669 1 52
 #&gt; 4 -2.6777408  4.0848588 0.08751628 1  4
 #&gt; 5  1.2101658  1.8188797 0.10244937 1 53
-#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>get_events</span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>get_events</span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>get_detections</span>(<span class='no'>o</span>))</div><div class='output co'>#&gt;             x          y          t v         d  i  j
 #&gt; 3  -0.0575831  2.5478251 0.05696669 1 2.5484757 52 52
 #&gt; 6  -0.6398754  0.7921080 0.13954534 1 1.0182709 36 36
 #&gt; 8  -1.8415121 -0.1032800 0.17209894 1 1.8444060 21 21
 #&gt; 30 -0.2132248  0.4793912 0.63565147 1 0.5246720 42 42
 #&gt; 35 -0.2132248  0.4793912 0.77150555 1 0.5246720 42 42
-#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>get_detections</span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>get_detections</span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>get_detections</span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>get_detections</span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## wrapper function for all the bsims_* layers</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>road</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>)
 <span class='co'>## alternatively: supply a list</span>
@@ -492,30 +495,21 @@ implications for avian point count surveys.
 <span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
 <span class='co'>## sequential</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.518   0.000   0.518 </div><div class='input'><span class='co'>## parallel clusters</span>
+#&gt;   0.506   0.000   0.506 </div><div class='input'><span class='co'>## parallel clusters</span>
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span>(<span class='no'>nc</span>)
 <span class='co'>## note: loading the package is optional</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in checkForRemoteErrors(lapply(cl, recvResult)): 2 nodes produced errors; first error: there is no package called ‘bSims’</span></div><div class='output co'>#&gt; <span class='message'>Timing stopped at: 0.002 0 0.003</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkForRemoteErrors(lapply(cl, recvResult)): 2 nodes produced errors; first error: there is no package called ‘bSims’</span></div><div class='output co'>#&gt; <span class='message'>Timing stopped at: 0.001 0 0.002</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in checkForRemoteErrors(lapply(cl, recvResult)): 2 nodes produced errors; first error: there is no package called ‘bSims’</span></div><div class='output co'>#&gt; <span class='message'>Timing stopped at: 0.001 0 0.003</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt; <span class='error'>Error in checkForRemoteErrors(lapply(cl, recvResult)): 2 nodes produced errors; first error: there is no package called ‘bSims’</span></div><div class='output co'>#&gt; <span class='message'>Timing stopped at: 0.001 0 0.003</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
 <span class='co'>## parallel forking</span>
 <span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
   <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>nc</span>))
 }</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.552   0.138   0.711 </div><div class='input'># }
+#&gt;   0.000   0.016   0.718 </div><div class='input'># }
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Peter Solymos</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -526,7 +520,7 @@ implications for avian point count surveys.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
