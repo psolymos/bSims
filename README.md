@@ -4,9 +4,9 @@ A highly scientific and utterly addictive bird point count simulator to
 test statistical assumptions and to aid survey design.
 
 [![CRAN
-version](http://www.r-pkg.org/badges/version/bSims)](http://cran.rstudio.com/web/packages/bSims/index.html)
+version](https://www.r-pkg.org/badges/version/bSims)](https://cran.rstudio.com/web/packages/bSims/index.html)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://www.rdocumentation.org/packages/bSims/)
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://www.rdocumentation.org/packages/bSims/)
 
 [![Linux build
 status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
@@ -163,17 +163,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.811   0.011   0.838
+#>   0.790   0.013   0.830
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.002   0.000   1.388
+#>   0.001   0.000   1.289
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.010   0.001   0.556
+#>   0.013   0.002   0.655
 stopCluster(cl)
 
 ## parallel forking
@@ -181,5 +181,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.479   0.146   0.635
+#>   0.413   0.108   0.544
 ```
