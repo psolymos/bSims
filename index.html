@@ -95,7 +95,7 @@
 <a href="#bsims-bird-point-count-simulator" class="anchor"></a>bSims: Bird Point Count Simulator <img src="https://raw.githubusercontent.com/psolymos/bSims/master/bsims.gif" align="right" style="padding-left:10px;background-color:white;">
 </h1></div>
 <p>A highly scientific and utterly addictive bird point count simulator to test statistical assumptions and to aid survey design.</p>
-<p><a href="http://cran.rstudio.com/web/packages/bSims/index.html"><img src="http://www.r-pkg.org/badges/version/bSims" alt="CRAN version"></a> <a href="https://www.rdocumentation.org/packages/bSims/"><img src="http://cranlogs.r-pkg.org/badges/grand-total/bSims" alt="CRAN RStudio mirror downloads"></a></p>
+<p><a href="https://cran.rstudio.com/web/packages/bSims/index.html"><img src="https://www.r-pkg.org/badges/version/bSims" alt="CRAN version"></a> <a href="https://www.rdocumentation.org/packages/bSims/"><img src="https://cranlogs.r-pkg.org/badges/grand-total/bSims" alt="CRAN RStudio mirror downloads"></a></p>
 <p><a href="https://travis-ci.org/psolymos/bSims"><img src="https://travis-ci.org/psolymos/bSims.svg?branch=master" alt="Linux build status"></a> <a href="https://codecov.io/gh/psolymos/bSims"><img src="https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg" alt="codecov"></a></p>
 <blockquote>
 <p><em>“I’ve yet to see any problem, however complicated, which when you looked at it the right way didn’t become still more complicated.”</em> – Poul Anderson, Call Me Joe</p>
@@ -218,17 +218,17 @@
 <span class="co">## sequential</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="no">bb</span> <span class="kw">&lt;-</span> <span class="no">b</span>$<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(<span class="no">B</span>, <span class="kw">cl</span><span class="kw">=</span><span class="kw">NULL</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.811   0.011   0.838</span>
+<span class="co">#&gt;   0.790   0.013   0.830</span>
 
 <span class="co">## parallel clusters</span>
 <span class="no">cl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">makeCluster</a></span>(<span class="no">nc</span>)
 <span class="co">## note: loading the package is optional</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html">clusterEvalQ</a></span>(<span class="no">cl</span>, <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">bSims</span>)))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.002   0.000   1.388</span>
+<span class="co">#&gt;   0.001   0.000   1.289</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="no">bb</span> <span class="kw">&lt;-</span> <span class="no">b</span>$<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(<span class="no">B</span>, <span class="kw">cl</span><span class="kw">=</span><span class="no">cl</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.010   0.001   0.556</span>
+<span class="co">#&gt;   0.013   0.002   0.655</span>
 <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">stopCluster</a></span>(<span class="no">cl</span>)
 
 <span class="co">## parallel forking</span>
@@ -236,7 +236,7 @@
   <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="no">bb</span> <span class="kw">&lt;-</span> <span class="no">b</span>$<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(<span class="no">B</span>, <span class="kw">cl</span><span class="kw">=</span><span class="no">nc</span>))
 }
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.479   0.146   0.635</span></pre></div>
+<span class="co">#&gt;   0.413   0.108   0.544</span></pre></div>
 </div>
 </div>
 </div>
