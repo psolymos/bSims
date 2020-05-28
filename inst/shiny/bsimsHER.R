@@ -15,6 +15,7 @@ TINT <- list(
 RINT <- list(
   "0-50-100-Inf m"=c(0.5, 1, Inf),
   "0-Inf m"=c(Inf),
+  "0-50-Inf m"=c(0.5, Inf),
   "0-50-100-150-Inf m"=c(0.5, 1, 1.5, Inf),
   "0-50-100-150-200-Inf m"=c(0.5, 1, 1.5, 2, Inf),
   "0-50-100 m"=c(0.5, 1),
@@ -163,6 +164,12 @@ ui <- navbarPage("bSims (HER)",
     column(12,
       verbatimTextOutput("settings"),
       uiOutput("clip")
+    )
+  ),
+  tabPanel("Documentation",
+    column(12,
+      tags$iframe(src="https://psolymos.github.io/bSims/",
+        height=600, width="100%", frameBorder=0)
     )
   )
 )
