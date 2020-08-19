@@ -1,9 +1,15 @@
+## tau can be:
+## - single number (all the same)
+## - length 2 vector: vocal & move
+## - length 3 vector: HER attenuation
+## - 3 x 2 matrix: HER x vocal/move
+## (does not have to match event_type but the 2 are related)
 bsims_detect <-
 function(
   x,
   xy=c(0,0), # observer location
-  tau=1, # can be vector when HER attenuation used, compatible w/ dist_fun
-  dist_fun=NULL, # takes args d and tau (single parameter)
+  tau=1,
+  dist_fun=NULL, # takes args d(istance) and tau (single parameter)
   event_type=c("vocal", "move", "both"),
   ...)
 {
@@ -22,15 +28,49 @@ function(
   A <- diff(x$strata) * diff(range(x$strata))
   A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
   names(A) <- c("H", "E", "R")
-  ## this is silent, but makes sense
-  if (length(tau) > 1L && A["H"] == sum(A))
-    tau <- tau[1L]
-  ## needed for *att*enuation
-  att <- length(tau) > 1L && A["H"] < sum(A)
-  if (att && length(tau) != 3L)
-    stop("tau length must be 3 for HER attenuation")
+  ## tau processing
+  tau <- unname(tau)
+  if (length(tau) == 1L) {
+    tau_type <- "one" # all the same
+    tau_use <- tau
+  } else {
+    if (is.null(dim(tau))) {
+      if (length(tau) == 2L) {
+        tau_type <- "vm" # vocal/movement
+        names(tau) <- c("vocal", "move")
+        tau_use <- tau
+      } else {
+        if (length(tau) == 3L) {
+          ## this is silent, but makes sense
+          if (A["H"] == sum(A)) {
+            tau_type <- "one"
+            tau_use <- tau[1L]
+          } else {
+            tau_type <- "her" # H/E/R
+            tau_use <- tau
+            names(tau_use) <- c("H", "E", "R")
+          }
+          names(tau) <- c("H", "E", "R")
+        } else {
+          stop("tau length must must be in 1:3 (or a 2 x 3 matrix)")
+        }
+      }
+    } else {
+      if (all(dim(tau) != c(3L, 2L)))
+        stop("tau dimension must be 3 x 2")
+      if (A["H"] == sum(A)) {
+        tau_type <- "vm"
+        tau_use <- tau[1L,1:2,drop=TRUE]
+        names(tau_use) <- c("vocal", "move")
+      } else {
+        tau_type <- "six" # her x vm
+      }
+      dimnames(tau) <- list(c("H", "E", "R"), c("vocal", "move"))
+    }
+  }
+  ## needed for HER *att*enuation
+  att <- tau_type %in% c("her", "six") && A["H"] < sum(A)
   if (att) {
-    names(tau) <- c("H", "E", "R")
     st <- x$strata
     st[1L] <- -Inf
     st[6L] <- Inf
@@ -71,30 +111,62 @@ function(
       theta <- atan2(yy, xx) # angle in rad
       sbrd <- cut(xxb, st, labels=FALSE)
       for (j in seq_len(nrow(z))) {
-        ## order tau as HEREH
-        #TAU <- tau[c(1,2,3,2,1)][sobs:sbrd[j]] # obs-->brd ordering = wrong!
-        TAU <- tau[c(1,2,3,2,1)][sbrd[j]:sobs] # brd-->obs ordering = good!
-        ## calculate distance breaks from x and theta
-        if (length(TAU) == 1L) {
-          #b <- numeric(0)
-          q[j] <- dist_fun(z$d[j], TAU, ...)
-        } else {
-          ## this gives breaks along x axis
-          if (sobs < sbrd[j]) { # bird right of observer
-            stj <- st[(sobs+1):sbrd[j]]
-          } else { # bird left of observer
-            stj <- st[sobs:(sbrd[j]+1)]
+        if (tau_type == "her") {
+          ## order tau as HEREH
+          #TAU <- tau[c(1,2,3,2,1)][sobs:sbrd[j]] # obs-->brd ordering = wrong!
+          TAU <- tau[c(1,2,3,2,1)][sbrd[j]:sobs] # brd-->obs ordering = good!
+          ## calculate distance breaks from x and theta
+          if (length(TAU) == 1L) {
+            #b <- numeric(0)
+            q[j] <- dist_fun(z$d[j], TAU, ...)
+          } else {
+            ## this gives breaks along x axis
+            if (sobs < sbrd[j]) { # bird right of observer
+              stj <- st[(sobs+1):sbrd[j]]
+            } else { # bird left of observer
+              stj <- st[sobs:(sbrd[j]+1)]
+            }
+            ## breaks as radial distance from observer: r=x/cos(theta)
+            b <- (stj - xy[1L]) / cos(theta[j])
+            ## turn that into distance from bird (stratified attenuation)
+            b <- z$d[j] - rev(b)
+            ## calculate q
+            q[j] <- dist_fun2(z$d[j], TAU, dist_fun, b, ...)
           }
-          ## breaks as radial distance from observer: r=x/cos(theta)
-          b <- (stj - xy[1L]) / cos(theta[j])
-          ## turn that into distance from bird (stratified attenuation)
-          b <- z$d[j] - rev(b)
-          ## calculate q
-          q[j] <- dist_fun2(z$d[j], TAU, dist_fun, b, ...)
+        } else { # tau_type == "six"
+          ## order tau as HEREH
+          TAUv <- tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs]
+          TAUm <- tau[c(1,2,3,2,1),"move"][sbrd[j]:sobs]
+          if (length(TAUv) == 1L) {
+            q[j] <- dist_fun(z$d[j],
+                if (z$v[j] > 0) TAUv else TAUm, ...)
+          } else {
+            ## this gives breaks along x axis
+            if (sobs < sbrd[j]) { # bird right of observer
+              stj <- st[(sobs+1):sbrd[j]]
+            } else { # bird left of observer
+              stj <- st[sobs:(sbrd[j]+1)]
+            }
+            ## breaks as radial distance from observer: r=x/cos(theta)
+            b <- (stj - xy[1L]) / cos(theta[j])
+            ## turn that into distance from bird (stratified attenuation)
+            b <- z$d[j] - rev(b)
+            ## calculate q
+            q[j] <- dist_fun2(z$d[j],
+                if (z$v[j] > 0) TAUv else TAUm,
+                dist_fun, b, ...)
+#            dist_fun, b)
+          }
         }
       }
     } else {
-      q <- dist_fun(z$d, tau, ...)
+      if (tau_type == "vm") {
+        q <- ifelse(z$v > 0,
+          dist_fun(z$d, tau_use["vocal"], ...),
+          dist_fun(z$d, tau_use["move"], ...))
+      } else { # tau_type == "one"
+        q <- dist_fun(z$d, tau_use, ...)
+      }
     }
     z$det <- rbinom(length(z$d), size=1, prob=q)
     z <- z[z$det > 0,,drop=FALSE]
