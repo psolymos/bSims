@@ -43,7 +43,7 @@ function(
         vr <- matrix(vocal_rate, 3, K)
       }
     } else {
-      if (dim(vocal_rate) != c(3L, K))
+      if (all(dim(vocal_rate) != c(3L, K)))
         stop("vocal_rate dimension must be 3 x length(mixture)")
       vr <- vocal_rate
     }
