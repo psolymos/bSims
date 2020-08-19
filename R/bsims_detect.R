@@ -155,7 +155,6 @@ function(
             q[j] <- dist_fun2(z$d[j],
                 if (z$v[j] > 0) TAUv else TAUm,
                 dist_fun, b, ...)
-#            dist_fun, b)
           }
         }
       }
