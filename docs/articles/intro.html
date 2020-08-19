@@ -479,7 +479,27 @@
 <a class="sourceLine" id="cb24-20" data-line-number="20"><span class="co">#&gt; 118  0.2906563 -0.3053235 0.30325080 0 0.421549 100 100</span></a>
 <a class="sourceLine" id="cb24-21" data-line-number="21"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(d2)</a></code></pre></div>
 <p><img src="intro_files/figure-html/det2-1.png" width="480"></p>
-<p>The <code>tau</code> argument can also be a vector of length 2 to provide parameters for vocalization (1st value) and movement (2nd value) related events. <code>tau</code> given as a 3 x 2 matrix combines strata (rows) and vocalization/movement (columns) related parameters.</p>
+<p>If you notice in the plot here, the detections (lines connecting the observer and the location of the events being detected) are 2 different colors. That’s because we allowed both vocalization and movement event types to be detected via the <code>event_type = "both"</code> argument. Vocalization and movement related detections might have different detection function characteristics. A flyover might be seen from larger distances, but it can also depend on body size and coloration relative to the background. For this reason, the <code>tau</code> argument can also be a vector of length 2 to provide parameters for vocalization (1st value) and movement (2nd value) related events.</p>
+<p>Let’s use the <code>e2</code> object (no landscape stratification) and see how many individuals are hear (not seen), seen (not heard), and heard &amp; seen:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">(d3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_detect</a></span>(e2, <span class="dt">tau =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.5</span>, <span class="dv">3</span>), <span class="dt">event_type =</span> <span class="st">"both"</span>))</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; bSims detections</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt;   1 km x 1 km</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt;   stratification: H</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt;   total abundance: 47</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt;   duration: 10 min</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt;   detected: 34 seen/heard</span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9">dtab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getters.html">get_detections</a></span>(d3)</a>
+<a class="sourceLine" id="cb25-10" data-line-number="10">tmp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/with.html">with</a></span>(dtab, <span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(i, v))</a>
+<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"heard"</span>=<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(tmp[,<span class="st">"0"</span>] <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>tmp[,<span class="st">"1"</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb25-12" data-line-number="12">  <span class="st">"seen"</span>=<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(tmp[,<span class="st">"0"</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>tmp[,<span class="st">"1"</span>] <span class="op">==</span><span class="st"> </span><span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb25-13" data-line-number="13">  <span class="st">"heard &amp; seen"</span>=<span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(tmp[,<span class="st">"0"</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>tmp[,<span class="st">"1"</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="co">#&gt;        heard         seen heard &amp; seen </span></a>
+<a class="sourceLine" id="cb25-15" data-line-number="15"><span class="co">#&gt;            0           24           10</span></a>
+<a class="sourceLine" id="cb25-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb25-17" data-line-number="17"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(d3)</a></code></pre></div>
+<p><img src="intro_files/figure-html/det3-1.png" width="480"></p>
+<p><code>tau</code> given as a <span class="math inline">\(3 \times 2\)</span> matrix combines strata (rows) and vocalization/movement (columns) related parameters, ths allowing the distance function to differ among the three strata and distinguish the event types.</p>
 </div>
 <div id="transcription" class="section level2">
 <h2 class="hasAnchor">
@@ -489,121 +509,121 @@
 <p>The <code>condition</code> argument defines which events will be transcribed: <code>"event1"</code> refers to the 1st event (detected or not), <code>"det1"</code> refers to the 1st detection, <code>"alldet"</code> means all detections (possibly counting the same individual multiple times). The <code>event_type</code> argument can be redefined here, too.</p>
 <p><code>perception</code> creates individual identifiers as perceived by the observer. The argument defines the perceived number of individuals relative to the actual number of individuals. It can be a non-negative number (&lt;1 values lead to under counting, &gt;1 values lead to over counting), or <code>NULL</code> (observer correctly identifies all individuals). The algorithm uses the event based locations in a hierarchical clustering. The dendrogram is cut at a height corresponding to specified <code>perception</code> level and group membership is used as individual identifier.</p>
 <p>The <code>bsims_transcribe</code> eventually prepares a ‘removal’ table that counts the new individuals in each time/distance interval. This table is used in removal and distance sampling. The ‘visits’ table counts individuals by time and distance interval, but counting restarts in every time interval (i.e. not just the new individuals are counted). The plot method overlays the distance bands and a representation of the time intervals.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_transcribe</a></span>(d1,</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">  <span class="dt">tint =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">  <span class="dt">rint =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">x</a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; bSims transcript</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt;   1 km x 1 km</span></a>
-<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt;   stratification: H</span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="co">#&gt;   total abundance: 47</span></a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co">#&gt;   duration: 10 min</span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="co">#&gt;   detected: 19 heard</span></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="co">#&gt;   1st event detected by breaks:</span></a>
-<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></a>
-<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="co">#&gt;     [0, 50, 100, 150, Inf m]</span></a>
-<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_transcribe</a></span>(d1,</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">  <span class="dt">tint =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">  <span class="dt">rint =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="ot">Inf</span>))</a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">x</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; bSims transcript</span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt;   1 km x 1 km</span></a>
+<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">#&gt;   stratification: H</span></a>
+<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co">#&gt;   total abundance: 47</span></a>
+<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co">#&gt;   duration: 10 min</span></a>
+<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt;   detected: 19 heard</span></a>
+<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt;   1st event detected by breaks:</span></a>
+<a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></a>
+<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt;     [0, 50, 100, 150, Inf m]</span></a>
+<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(x)</a></code></pre></div>
 <p><img src="intro_files/figure-html/trans-1.png" width="576"></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"removal"</span>)</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt;          0-2min 2-4min 4-6min 6-8min 8-10min</span></a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; 0-50m         0      0      1      0       0</span></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; 50-100m       0      0      0      0       0</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt; 100-150m      0      0      0      0       0</span></a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">#&gt; 150+m         7      1      0      0       0</span></a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"visits"</span>)</a>
-<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co">#&gt;          0-2min 2-4min 4-6min 6-8min 8-10min</span></a>
-<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; 0-50m         0      0      1      0       0</span></a>
-<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; 50-100m       0      0      1      0       1</span></a>
-<a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt; 100-150m      0      1      1      1       1</span></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; 150+m         7      5      2      2       6</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"removal"</span>)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt;          0-2min 2-4min 4-6min 6-8min 8-10min</span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; 0-50m         0      0      1      0       0</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; 50-100m       0      0      0      0       0</span></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; 100-150m      0      0      0      0       0</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt; 150+m         7      1      0      0       0</span></a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"visits"</span>)</a>
+<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt;          0-2min 2-4min 4-6min 6-8min 8-10min</span></a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt; 0-50m         0      0      1      0       0</span></a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt; 50-100m       0      0      1      0       1</span></a>
+<a class="sourceLine" id="cb27-12" data-line-number="12"><span class="co">#&gt; 100-150m      0      1      1      1       1</span></a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; 150+m         7      5      2      2       6</span></a></code></pre></div>
 </div>
 </div>
 <div id="statistical-validity-of-the-simulations" class="section level1">
 <h1 class="hasAnchor">
 <a href="#statistical-validity-of-the-simulations" class="anchor"></a>Statistical validity of the simulations</h1>
 <p>We can test the validity of the simulations when all of the assumptions are met (that is the default) in the homogeneous habitat case. We set singing rate (<code>phi</code>), detection distance (<code>tau</code>), and density (<code>Den</code>) for the simulations. Density is in this case unrealistically high, because we are not using replication only a single landscape. This will help with the estimation.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">phi &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="co"># singing rate</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">tau &lt;-<span class="st"> </span><span class="dv">2</span>   <span class="co"># detection distance</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">Den &lt;-<span class="st"> </span><span class="dv">10</span>  <span class="co"># density</span></a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb27-6" data-line-number="6">l &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_init</a></span>()</a>
-<a class="sourceLine" id="cb27-7" data-line-number="7">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_populate</a></span>(l, <span class="dt">density=</span>Den)</a>
-<a class="sourceLine" id="cb27-8" data-line-number="8">b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_animate</a></span>(a, <span class="dt">vocal_rate=</span>phi)</a>
-<a class="sourceLine" id="cb27-9" data-line-number="9">o &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_detect</a></span>(b, <span class="dt">tau=</span>tau)</a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb27-11" data-line-number="11">tint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb27-12" data-line-number="12">rint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>) <span class="co"># truncated at 200 m</span></a>
-<a class="sourceLine" id="cb27-13" data-line-number="13">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_transcribe</a></span>(o, <span class="dt">tint=</span>tint, <span class="dt">rint=</span>rint))</a>
-<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; bSims transcript</span></a>
-<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt;   1 km x 1 km</span></a>
-<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt;   stratification: H</span></a>
-<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="co">#&gt;   total abundance: 1014</span></a>
-<a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt;   duration: 10 min</span></a>
-<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt;   detected: 259 heard</span></a>
-<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt;   1st event detected by breaks:</span></a>
-<a class="sourceLine" id="cb27-21" data-line-number="21"><span class="co">#&gt;     [0, 1, 2, 3, 4, 5 min]</span></a>
-<a class="sourceLine" id="cb27-22" data-line-number="22"><span class="co">#&gt;     [0, 50, 100, 150, 200 m]</span></a>
-<a class="sourceLine" id="cb27-23" data-line-number="23">(y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"removal"</span>)) <span class="co"># binned new individuals</span></a>
-<a class="sourceLine" id="cb27-24" data-line-number="24"><span class="co">#&gt;          0-1min 1-2min 2-3min 3-4min 4-5min</span></a>
-<a class="sourceLine" id="cb27-25" data-line-number="25"><span class="co">#&gt; 0-50m         1      3      1      2      0</span></a>
-<a class="sourceLine" id="cb27-26" data-line-number="26"><span class="co">#&gt; 50-100m       7      3      5      1      1</span></a>
-<a class="sourceLine" id="cb27-27" data-line-number="27"><span class="co">#&gt; 100-150m     12      2      2      1      2</span></a>
-<a class="sourceLine" id="cb27-28" data-line-number="28"><span class="co">#&gt; 150-200m     13      8      2      1      1</span></a>
-<a class="sourceLine" id="cb27-29" data-line-number="29"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span>(y)</a>
-<a class="sourceLine" id="cb27-30" data-line-number="30"><span class="co">#&gt; 0-1min 1-2min 2-3min 3-4min 4-5min </span></a>
-<a class="sourceLine" id="cb27-31" data-line-number="31"><span class="co">#&gt;     33     16     10      5      4</span></a>
-<a class="sourceLine" id="cb27-32" data-line-number="32"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(y)</a>
-<a class="sourceLine" id="cb27-33" data-line-number="33"><span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m </span></a>
-<a class="sourceLine" id="cb27-34" data-line-number="34"><span class="co">#&gt;        7       17       19       25</span></a>
-<a class="sourceLine" id="cb27-35" data-line-number="35"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">phi &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="co"># singing rate</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">tau &lt;-<span class="st"> </span><span class="dv">2</span>   <span class="co"># detection distance</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">Den &lt;-<span class="st"> </span><span class="dv">10</span>  <span class="co"># density</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">l &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_init</a></span>()</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_populate</a></span>(l, <span class="dt">density=</span>Den)</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_animate</a></span>(a, <span class="dt">vocal_rate=</span>phi)</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">o &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_detect</a></span>(b, <span class="dt">tau=</span>tau)</a>
+<a class="sourceLine" id="cb28-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">tint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb28-12" data-line-number="12">rint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>) <span class="co"># truncated at 200 m</span></a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_transcribe</a></span>(o, <span class="dt">tint=</span>tint, <span class="dt">rint=</span>rint))</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">#&gt; bSims transcript</span></a>
+<a class="sourceLine" id="cb28-15" data-line-number="15"><span class="co">#&gt;   1 km x 1 km</span></a>
+<a class="sourceLine" id="cb28-16" data-line-number="16"><span class="co">#&gt;   stratification: H</span></a>
+<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="co">#&gt;   total abundance: 1014</span></a>
+<a class="sourceLine" id="cb28-18" data-line-number="18"><span class="co">#&gt;   duration: 10 min</span></a>
+<a class="sourceLine" id="cb28-19" data-line-number="19"><span class="co">#&gt;   detected: 259 heard</span></a>
+<a class="sourceLine" id="cb28-20" data-line-number="20"><span class="co">#&gt;   1st event detected by breaks:</span></a>
+<a class="sourceLine" id="cb28-21" data-line-number="21"><span class="co">#&gt;     [0, 1, 2, 3, 4, 5 min]</span></a>
+<a class="sourceLine" id="cb28-22" data-line-number="22"><span class="co">#&gt;     [0, 50, 100, 150, 200 m]</span></a>
+<a class="sourceLine" id="cb28-23" data-line-number="23">(y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"removal"</span>)) <span class="co"># binned new individuals</span></a>
+<a class="sourceLine" id="cb28-24" data-line-number="24"><span class="co">#&gt;          0-1min 1-2min 2-3min 3-4min 4-5min</span></a>
+<a class="sourceLine" id="cb28-25" data-line-number="25"><span class="co">#&gt; 0-50m         1      3      1      2      0</span></a>
+<a class="sourceLine" id="cb28-26" data-line-number="26"><span class="co">#&gt; 50-100m       7      3      5      1      1</span></a>
+<a class="sourceLine" id="cb28-27" data-line-number="27"><span class="co">#&gt; 100-150m     12      2      2      1      2</span></a>
+<a class="sourceLine" id="cb28-28" data-line-number="28"><span class="co">#&gt; 150-200m     13      8      2      1      1</span></a>
+<a class="sourceLine" id="cb28-29" data-line-number="29"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span>(y)</a>
+<a class="sourceLine" id="cb28-30" data-line-number="30"><span class="co">#&gt; 0-1min 1-2min 2-3min 3-4min 4-5min </span></a>
+<a class="sourceLine" id="cb28-31" data-line-number="31"><span class="co">#&gt;     33     16     10      5      4</span></a>
+<a class="sourceLine" id="cb28-32" data-line-number="32"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(y)</a>
+<a class="sourceLine" id="cb28-33" data-line-number="33"><span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m </span></a>
+<a class="sourceLine" id="cb28-34" data-line-number="34"><span class="co">#&gt;        7       17       19       25</span></a>
+<a class="sourceLine" id="cb28-35" data-line-number="35"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(x)</a></code></pre></div>
 <p><img src="intro_files/figure-html/H-1.png" width="480"></p>
 <p>We use the <strong>detect</strong> package to fit removal model and distance sampling model to the simulated output. This is handily implemented in the <code>estimate</code> method for the transcription objects. First, we estimate singing rate, effective detection distance, and density based on truncated distance counts:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(detect)</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; Loading required package: Formula</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; Loading required package: stats4</span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; Loading required package: pbapply</span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="co">#&gt; detect 0.4-2      2018-08-29</span></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="dt">true =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">phi=</span>phi, <span class="dt">tau=</span>tau, <span class="dt">D=</span>Den), </a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">  <span class="dt">estimate =</span> <span class="kw"><a href="../reference/estimate.html">estimate</a></span>(x))</a>
-<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt;     true  estimate</span></a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt; phi  0.5 0.5768794</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; tau  2.0 2.2733052</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; D   10.0 8.2330714</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(detect)</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; Loading required package: Formula</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; Loading required package: stats4</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; Loading required package: pbapply</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt; detect 0.4-2      2018-08-29</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="dt">true =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">phi=</span>phi, <span class="dt">tau=</span>tau, <span class="dt">D=</span>Den), </a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">  <span class="dt">estimate =</span> <span class="kw"><a href="../reference/estimate.html">estimate</a></span>(x))</a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt;     true  estimate</span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt; phi  0.5 0.5768794</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt; tau  2.0 2.2733052</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt; D   10.0 8.2330714</span></a></code></pre></div>
 <p>Next, we estimate singing rate, effective detection distance, and density based on unlimited distance counts:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">rint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="ot">Inf</span>) <span class="co"># unlimited</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_transcribe</a></span>(o, <span class="dt">tint=</span>tint, <span class="dt">rint=</span>rint))</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; bSims transcript</span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt;   1 km x 1 km</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt;   stratification: H</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt;   total abundance: 1014</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt;   duration: 10 min</span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt;   detected: 259 heard</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt;   1st event detected by breaks:</span></a>
-<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt;     [0, 1, 2, 3, 4, 5 min]</span></a>
-<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></a>
-<a class="sourceLine" id="cb29-13" data-line-number="13">(y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"removal"</span>)) <span class="co"># binned new individuals</span></a>
-<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">#&gt;          0-1min 1-2min 2-3min 3-4min 4-5min</span></a>
-<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co">#&gt; 0-50m         1      3      1      2      0</span></a>
-<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co">#&gt; 50-100m       7      3      5      1      1</span></a>
-<a class="sourceLine" id="cb29-17" data-line-number="17"><span class="co">#&gt; 100-150m     12      2      2      1      2</span></a>
-<a class="sourceLine" id="cb29-18" data-line-number="18"><span class="co">#&gt; 150-200m     13      8      2      1      1</span></a>
-<a class="sourceLine" id="cb29-19" data-line-number="19"><span class="co">#&gt; 200+m        15      9      6      6      2</span></a>
-<a class="sourceLine" id="cb29-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span>(y)</a>
-<a class="sourceLine" id="cb29-21" data-line-number="21"><span class="co">#&gt; 0-1min 1-2min 2-3min 3-4min 4-5min </span></a>
-<a class="sourceLine" id="cb29-22" data-line-number="22"><span class="co">#&gt;     48     25     16     11      6</span></a>
-<a class="sourceLine" id="cb29-23" data-line-number="23"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(y)</a>
-<a class="sourceLine" id="cb29-24" data-line-number="24"><span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m    200+m </span></a>
-<a class="sourceLine" id="cb29-25" data-line-number="25"><span class="co">#&gt;        7       17       19       25       38</span></a>
-<a class="sourceLine" id="cb29-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb29-27" data-line-number="27"><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="dt">true =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">phi=</span>phi, <span class="dt">tau=</span>tau, <span class="dt">D=</span>Den), </a>
-<a class="sourceLine" id="cb29-28" data-line-number="28">  <span class="dt">estimate =</span> <span class="kw"><a href="../reference/estimate.html">estimate</a></span>(x))</a>
-<a class="sourceLine" id="cb29-29" data-line-number="29"><span class="co">#&gt;     true  estimate</span></a>
-<a class="sourceLine" id="cb29-30" data-line-number="30"><span class="co">#&gt; phi  0.5 0.5128359</span></a>
-<a class="sourceLine" id="cb29-31" data-line-number="31"><span class="co">#&gt; tau  2.0 1.9928785</span></a>
-<a class="sourceLine" id="cb29-32" data-line-number="32"><span class="co">#&gt; D   10.0 9.2041636</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">rint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="ot">Inf</span>) <span class="co"># unlimited</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_transcribe</a></span>(o, <span class="dt">tint=</span>tint, <span class="dt">rint=</span>rint))</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co">#&gt; bSims transcript</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="co">#&gt;   1 km x 1 km</span></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co">#&gt;   stratification: H</span></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="co">#&gt;   total abundance: 1014</span></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="co">#&gt;   duration: 10 min</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="co">#&gt;   detected: 259 heard</span></a>
+<a class="sourceLine" id="cb30-10" data-line-number="10"><span class="co">#&gt;   1st event detected by breaks:</span></a>
+<a class="sourceLine" id="cb30-11" data-line-number="11"><span class="co">#&gt;     [0, 1, 2, 3, 4, 5 min]</span></a>
+<a class="sourceLine" id="cb30-12" data-line-number="12"><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></a>
+<a class="sourceLine" id="cb30-13" data-line-number="13">(y &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getters.html">get_table</a></span>(x, <span class="st">"removal"</span>)) <span class="co"># binned new individuals</span></a>
+<a class="sourceLine" id="cb30-14" data-line-number="14"><span class="co">#&gt;          0-1min 1-2min 2-3min 3-4min 4-5min</span></a>
+<a class="sourceLine" id="cb30-15" data-line-number="15"><span class="co">#&gt; 0-50m         1      3      1      2      0</span></a>
+<a class="sourceLine" id="cb30-16" data-line-number="16"><span class="co">#&gt; 50-100m       7      3      5      1      1</span></a>
+<a class="sourceLine" id="cb30-17" data-line-number="17"><span class="co">#&gt; 100-150m     12      2      2      1      2</span></a>
+<a class="sourceLine" id="cb30-18" data-line-number="18"><span class="co">#&gt; 150-200m     13      8      2      1      1</span></a>
+<a class="sourceLine" id="cb30-19" data-line-number="19"><span class="co">#&gt; 200+m        15      9      6      6      2</span></a>
+<a class="sourceLine" id="cb30-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span>(y)</a>
+<a class="sourceLine" id="cb30-21" data-line-number="21"><span class="co">#&gt; 0-1min 1-2min 2-3min 3-4min 4-5min </span></a>
+<a class="sourceLine" id="cb30-22" data-line-number="22"><span class="co">#&gt;     48     25     16     11      6</span></a>
+<a class="sourceLine" id="cb30-23" data-line-number="23"><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(y)</a>
+<a class="sourceLine" id="cb30-24" data-line-number="24"><span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m    200+m </span></a>
+<a class="sourceLine" id="cb30-25" data-line-number="25"><span class="co">#&gt;        7       17       19       25       38</span></a>
+<a class="sourceLine" id="cb30-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb30-27" data-line-number="27"><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="dt">true =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">phi=</span>phi, <span class="dt">tau=</span>tau, <span class="dt">D=</span>Den), </a>
+<a class="sourceLine" id="cb30-28" data-line-number="28">  <span class="dt">estimate =</span> <span class="kw"><a href="../reference/estimate.html">estimate</a></span>(x))</a>
+<a class="sourceLine" id="cb30-29" data-line-number="29"><span class="co">#&gt;     true  estimate</span></a>
+<a class="sourceLine" id="cb30-30" data-line-number="30"><span class="co">#&gt; phi  0.5 0.5128359</span></a>
+<a class="sourceLine" id="cb30-31" data-line-number="31"><span class="co">#&gt; tau  2.0 1.9928785</span></a>
+<a class="sourceLine" id="cb30-32" data-line-number="32"><span class="co">#&gt; D   10.0 9.2041636</span></a></code></pre></div>
 <p>Deviations from the assumptions and bias in density estimation can be done by systematically evaluating the simulations settings, which we describe in the next section.</p>
 </div>
 <div id="simulation-workflow" class="section level1">
@@ -611,129 +631,129 @@
 <a href="#simulation-workflow" class="anchor"></a>Simulation workflow</h1>
 <p>We recommend exploring the simulation settings interactively in the <strong>shiny</strong> apps using <code><a href="../reference/run_app.html">run_app("bsimsH")</a></code> app for the homogeneous habitat case and the <code><a href="../reference/run_app.html">run_app("bsimsHER")</a></code> app for the stratified habitat case. The apps represent the simulation layers as tabs, the last tab presenting the settings that can be copied onto the clipboard and pasted into the R session or code. In simple situations, comparing results from a few different settings might be enough.</p>
 <p>Let us consider the following simple comparison: we want to see how much of an effect does roads have when the only effect is that the road stratum is unsuitable. Otherwise there are no behavioral or detectability effects of the road.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">tint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">rint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="ot">Inf</span>) <span class="co"># unlimited</span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co">## no road</span></a>
-<a class="sourceLine" id="cb30-5" data-line-number="5">b1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_all</a></span>(</a>
-<a class="sourceLine" id="cb30-6" data-line-number="6">  <span class="dt">road =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb30-7" data-line-number="7">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb30-8" data-line-number="8">  <span class="dt">tint =</span> tint,</a>
-<a class="sourceLine" id="cb30-9" data-line-number="9">  <span class="dt">rint =</span> rint)</a>
-<a class="sourceLine" id="cb30-10" data-line-number="10"><span class="co">## road</span></a>
-<a class="sourceLine" id="cb30-11" data-line-number="11">b2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_all</a></span>(</a>
-<a class="sourceLine" id="cb30-12" data-line-number="12">  <span class="dt">road =</span> <span class="fl">0.5</span>,</a>
-<a class="sourceLine" id="cb30-13" data-line-number="13">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb30-14" data-line-number="14">  <span class="dt">tint =</span> tint,</a>
-<a class="sourceLine" id="cb30-15" data-line-number="15">  <span class="dt">rint =</span> rint)</a>
-<a class="sourceLine" id="cb30-16" data-line-number="16">b1</a>
-<a class="sourceLine" id="cb30-17" data-line-number="17"><span class="co">#&gt; bSims wrapper object with settings:</span></a>
-<a class="sourceLine" id="cb30-18" data-line-number="18"><span class="co">#&gt;   road   : 0</span></a>
-<a class="sourceLine" id="cb30-19" data-line-number="19"><span class="co">#&gt;   density: 1, 1, 0</span></a>
-<a class="sourceLine" id="cb30-20" data-line-number="20"><span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span></a>
-<a class="sourceLine" id="cb30-21" data-line-number="21"><span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></a>
-<a class="sourceLine" id="cb30-22" data-line-number="22">b2</a>
-<a class="sourceLine" id="cb30-23" data-line-number="23"><span class="co">#&gt; bSims wrapper object with settings:</span></a>
-<a class="sourceLine" id="cb30-24" data-line-number="24"><span class="co">#&gt;   road   : 0.5</span></a>
-<a class="sourceLine" id="cb30-25" data-line-number="25"><span class="co">#&gt;   density: 1, 1, 0</span></a>
-<a class="sourceLine" id="cb30-26" data-line-number="26"><span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span></a>
-<a class="sourceLine" id="cb30-27" data-line-number="27"><span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">tint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">rint &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="ot">Inf</span>) <span class="co"># unlimited</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">## no road</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">b1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_all</a></span>(</a>
+<a class="sourceLine" id="cb31-6" data-line-number="6">  <span class="dt">road =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb31-7" data-line-number="7">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb31-8" data-line-number="8">  <span class="dt">tint =</span> tint,</a>
+<a class="sourceLine" id="cb31-9" data-line-number="9">  <span class="dt">rint =</span> rint)</a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="co">## road</span></a>
+<a class="sourceLine" id="cb31-11" data-line-number="11">b2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bsims_init.html">bsims_all</a></span>(</a>
+<a class="sourceLine" id="cb31-12" data-line-number="12">  <span class="dt">road =</span> <span class="fl">0.5</span>,</a>
+<a class="sourceLine" id="cb31-13" data-line-number="13">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb31-14" data-line-number="14">  <span class="dt">tint =</span> tint,</a>
+<a class="sourceLine" id="cb31-15" data-line-number="15">  <span class="dt">rint =</span> rint)</a>
+<a class="sourceLine" id="cb31-16" data-line-number="16">b1</a>
+<a class="sourceLine" id="cb31-17" data-line-number="17"><span class="co">#&gt; bSims wrapper object with settings:</span></a>
+<a class="sourceLine" id="cb31-18" data-line-number="18"><span class="co">#&gt;   road   : 0</span></a>
+<a class="sourceLine" id="cb31-19" data-line-number="19"><span class="co">#&gt;   density: 1, 1, 0</span></a>
+<a class="sourceLine" id="cb31-20" data-line-number="20"><span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span></a>
+<a class="sourceLine" id="cb31-21" data-line-number="21"><span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></a>
+<a class="sourceLine" id="cb31-22" data-line-number="22">b2</a>
+<a class="sourceLine" id="cb31-23" data-line-number="23"><span class="co">#&gt; bSims wrapper object with settings:</span></a>
+<a class="sourceLine" id="cb31-24" data-line-number="24"><span class="co">#&gt;   road   : 0.5</span></a>
+<a class="sourceLine" id="cb31-25" data-line-number="25"><span class="co">#&gt;   density: 1, 1, 0</span></a>
+<a class="sourceLine" id="cb31-26" data-line-number="26"><span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span></a>
+<a class="sourceLine" id="cb31-27" data-line-number="27"><span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></a></code></pre></div>
 <p>The <code>bsims_all</code> function accepts all the arguments we discussed before for the simulation layers. Unspecified arguments will be taken to be the default value. However, <code>bsims_all</code> does not evaluate these arguments, but it creates a closure with the settings. Realizations can be drawn as:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">b1<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#&gt; bSims transcript</span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co">#&gt;   1 km x 1 km</span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">#&gt;   stratification: H</span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="co">#&gt;   total abundance: 75</span></a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#&gt;   duration: 10 min</span></a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co">#&gt;   detected: 12 heard</span></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co">#&gt;   1st event detected by breaks:</span></a>
-<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></a>
-<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></a>
-<a class="sourceLine" id="cb31-11" data-line-number="11">b2<span class="op">$</span><span class="kw">new</span>()</a>
-<a class="sourceLine" id="cb31-12" data-line-number="12"><span class="co">#&gt; bSims transcript</span></a>
-<a class="sourceLine" id="cb31-13" data-line-number="13"><span class="co">#&gt;   1 km x 1 km</span></a>
-<a class="sourceLine" id="cb31-14" data-line-number="14"><span class="co">#&gt;   stratification: HR</span></a>
-<a class="sourceLine" id="cb31-15" data-line-number="15"><span class="co">#&gt;   total abundance: 95</span></a>
-<a class="sourceLine" id="cb31-16" data-line-number="16"><span class="co">#&gt;   duration: 10 min</span></a>
-<a class="sourceLine" id="cb31-17" data-line-number="17"><span class="co">#&gt;   detected: 4 heard</span></a>
-<a class="sourceLine" id="cb31-18" data-line-number="18"><span class="co">#&gt;   1st event detected by breaks:</span></a>
-<a class="sourceLine" id="cb31-19" data-line-number="19"><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></a>
-<a class="sourceLine" id="cb31-20" data-line-number="20"><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">b1<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">#&gt; bSims transcript</span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co">#&gt;   1 km x 1 km</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt;   stratification: H</span></a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="co">#&gt;   total abundance: 75</span></a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#&gt;   duration: 10 min</span></a>
+<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="co">#&gt;   detected: 12 heard</span></a>
+<a class="sourceLine" id="cb32-8" data-line-number="8"><span class="co">#&gt;   1st event detected by breaks:</span></a>
+<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></a>
+<a class="sourceLine" id="cb32-10" data-line-number="10"><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></a>
+<a class="sourceLine" id="cb32-11" data-line-number="11">b2<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb32-12" data-line-number="12"><span class="co">#&gt; bSims transcript</span></a>
+<a class="sourceLine" id="cb32-13" data-line-number="13"><span class="co">#&gt;   1 km x 1 km</span></a>
+<a class="sourceLine" id="cb32-14" data-line-number="14"><span class="co">#&gt;   stratification: HR</span></a>
+<a class="sourceLine" id="cb32-15" data-line-number="15"><span class="co">#&gt;   total abundance: 95</span></a>
+<a class="sourceLine" id="cb32-16" data-line-number="16"><span class="co">#&gt;   duration: 10 min</span></a>
+<a class="sourceLine" id="cb32-17" data-line-number="17"><span class="co">#&gt;   detected: 4 heard</span></a>
+<a class="sourceLine" id="cb32-18" data-line-number="18"><span class="co">#&gt;   1st event detected by breaks:</span></a>
+<a class="sourceLine" id="cb32-19" data-line-number="19"><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></a>
+<a class="sourceLine" id="cb32-20" data-line-number="20"><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></a></code></pre></div>
 <p>Run multiple realizations is done as:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">B &lt;-<span class="st"> </span><span class="dv">25</span>  <span class="co"># number of runs</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2">bb1 &lt;-<span class="st"> </span>b1<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(B)</a>
-<a class="sourceLine" id="cb32-3" data-line-number="3">bb2 &lt;-<span class="st"> </span>b2<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(B)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">B &lt;-<span class="st"> </span><span class="dv">25</span>  <span class="co"># number of runs</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2">bb1 &lt;-<span class="st"> </span>b1<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(B)</a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">bb2 &lt;-<span class="st"> </span>b2<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(B)</a></code></pre></div>
 <p>The replicate function takes an argument for the number of replicates (<code>B</code>) and returns a list of transcript objects with <span class="math inline">\(B\)</span> elements. The <code>cl</code> argument can be used to parallelize the work, it can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS. The <code>recover = TRUE</code> argument allows to run simulations with error catching.</p>
 <p>Simulated objects returned by <code>bsims_all</code> will contain different realizations and all the conditionally independent layers. Use a customized layered approach if former layers are meant to be kept identical across runs.</p>
 <p>In more complex situations the <strong>shiny</strong> apps will help identifying corner cases that are used to define a gradient of settings for single or multiple simulation options. Let us consider the following scenario: we would like to evaluate how the estimates are changing with increasing road width. We will use the <code>expand_list</code> function which creates a list from all combinations of the supplied inputs. Note that we need to wrap vectors inside <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> to avoid interpreting those as values to iterate over.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/expand_list.html">expand_list</a></span>(</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">  <span class="dt">road =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)),</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4">  <span class="dt">tint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(tint),</a>
-<a class="sourceLine" id="cb33-5" data-line-number="5">  <span class="dt">rint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(rint))</a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(s)</a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt; List of 3</span></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt;  $ :List of 4</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#&gt;   ..$ road   : num 0</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="co">#&gt;  $ :List of 4</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="co">#&gt;   ..$ road   : num 0.5</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18"><span class="co">#&gt;  $ :List of 4</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19"><span class="co">#&gt;   ..$ road   : num 1</span></a>
-<a class="sourceLine" id="cb33-20" data-line-number="20"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb33-21" data-line-number="21"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb33-22" data-line-number="22"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/expand_list.html">expand_list</a></span>(</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">  <span class="dt">road =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb34-3" data-line-number="3">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)),</a>
+<a class="sourceLine" id="cb34-4" data-line-number="4">  <span class="dt">tint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(tint),</a>
+<a class="sourceLine" id="cb34-5" data-line-number="5">  <span class="dt">rint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(rint))</a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(s)</a>
+<a class="sourceLine" id="cb34-7" data-line-number="7"><span class="co">#&gt; List of 3</span></a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"><span class="co">#&gt;  $ :List of 4</span></a>
+<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co">#&gt;   ..$ road   : num 0</span></a>
+<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb34-11" data-line-number="11"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
+<a class="sourceLine" id="cb34-13" data-line-number="13"><span class="co">#&gt;  $ :List of 4</span></a>
+<a class="sourceLine" id="cb34-14" data-line-number="14"><span class="co">#&gt;   ..$ road   : num 0.5</span></a>
+<a class="sourceLine" id="cb34-15" data-line-number="15"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb34-16" data-line-number="16"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb34-17" data-line-number="17"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
+<a class="sourceLine" id="cb34-18" data-line-number="18"><span class="co">#&gt;  $ :List of 4</span></a>
+<a class="sourceLine" id="cb34-19" data-line-number="19"><span class="co">#&gt;   ..$ road   : num 1</span></a>
+<a class="sourceLine" id="cb34-20" data-line-number="20"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb34-21" data-line-number="21"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb34-22" data-line-number="22"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a></code></pre></div>
 <p>We now can use this list of settings to run simulations for each. The following illustrates the use of multiple cores:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(s, bsims_all)</a>
-<a class="sourceLine" id="cb34-2" data-line-number="2">nc &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># number of cores to use</span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parallel)</a>
-<a class="sourceLine" id="cb34-4" data-line-number="4">cl &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/parallel/makeCluster.html">makeCluster</a></span>(nc)</a>
-<a class="sourceLine" id="cb34-5" data-line-number="5">bb &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(b, <span class="cf">function</span>(z) z<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(B, <span class="dt">cl=</span>cl))</a>
-<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/parallel/makeCluster.html">stopCluster</a></span>(cl)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(s, bsims_all)</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">nc &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># number of cores to use</span></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parallel)</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">cl &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/parallel/makeCluster.html">makeCluster</a></span>(nc)</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">bb &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(b, <span class="cf">function</span>(z) z<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span>(B, <span class="dt">cl=</span>cl))</a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/parallel/makeCluster.html">stopCluster</a></span>(cl)</a></code></pre></div>
 <p>In some cases, we want to evaluate crossed effects of multiple settings. For example, road width and spatial pattern (random vs. clustered):</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/expand_list.html">expand_list</a></span>(</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2">  <span class="dt">road =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb35-3" data-line-number="3">  <span class="dt">xy_fun =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb35-4" data-line-number="4">    <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb35-5" data-line-number="5">    <span class="cf">function</span>(d) <span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>d<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">1</span><span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span><span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>d<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">4</span><span class="op">^</span><span class="dv">2</span>))),</a>
-<a class="sourceLine" id="cb35-6" data-line-number="6">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)),</a>
-<a class="sourceLine" id="cb35-7" data-line-number="7">  <span class="dt">tint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(tint),</a>
-<a class="sourceLine" id="cb35-8" data-line-number="8">  <span class="dt">rint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(rint))</a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(s)</a>
-<a class="sourceLine" id="cb35-10" data-line-number="10"><span class="co">#&gt; List of 4</span></a>
-<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="co">#&gt;  $ :List of 5</span></a>
-<a class="sourceLine" id="cb35-12" data-line-number="12"><span class="co">#&gt;   ..$ road   : num 0</span></a>
-<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="co">#&gt;   ..$ xy_fun : NULL</span></a>
-<a class="sourceLine" id="cb35-14" data-line-number="14"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb35-15" data-line-number="15"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb35-16" data-line-number="16"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
-<a class="sourceLine" id="cb35-17" data-line-number="17"><span class="co">#&gt;  $ :List of 5</span></a>
-<a class="sourceLine" id="cb35-18" data-line-number="18"><span class="co">#&gt;   ..$ road   : num 0.5</span></a>
-<a class="sourceLine" id="cb35-19" data-line-number="19"><span class="co">#&gt;   ..$ xy_fun : NULL</span></a>
-<a class="sourceLine" id="cb35-20" data-line-number="20"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb35-21" data-line-number="21"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb35-22" data-line-number="22"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
-<a class="sourceLine" id="cb35-23" data-line-number="23"><span class="co">#&gt;  $ :List of 5</span></a>
-<a class="sourceLine" id="cb35-24" data-line-number="24"><span class="co">#&gt;   ..$ road   : num 0</span></a>
-<a class="sourceLine" id="cb35-25" data-line-number="25"><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></a>
-<a class="sourceLine" id="cb35-26" data-line-number="26"><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></a>
-<a class="sourceLine" id="cb35-27" data-line-number="27"><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fac0d341f40&gt; </span></a>
-<a class="sourceLine" id="cb35-28" data-line-number="28"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb35-29" data-line-number="29"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb35-30" data-line-number="30"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
-<a class="sourceLine" id="cb35-31" data-line-number="31"><span class="co">#&gt;  $ :List of 5</span></a>
-<a class="sourceLine" id="cb35-32" data-line-number="32"><span class="co">#&gt;   ..$ road   : num 0.5</span></a>
-<a class="sourceLine" id="cb35-33" data-line-number="33"><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></a>
-<a class="sourceLine" id="cb35-34" data-line-number="34"><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></a>
-<a class="sourceLine" id="cb35-35" data-line-number="35"><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fac0d341f40&gt; </span></a>
-<a class="sourceLine" id="cb35-36" data-line-number="36"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
-<a class="sourceLine" id="cb35-37" data-line-number="37"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
-<a class="sourceLine" id="cb35-38" data-line-number="38"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/expand_list.html">expand_list</a></span>(</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">  <span class="dt">road =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3">  <span class="dt">xy_fun =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb36-4" data-line-number="4">    <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb36-5" data-line-number="5">    <span class="cf">function</span>(d) <span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>d<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">1</span><span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span><span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>d<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">4</span><span class="op">^</span><span class="dv">2</span>))),</a>
+<a class="sourceLine" id="cb36-6" data-line-number="6">  <span class="dt">density =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)),</a>
+<a class="sourceLine" id="cb36-7" data-line-number="7">  <span class="dt">tint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(tint),</a>
+<a class="sourceLine" id="cb36-8" data-line-number="8">  <span class="dt">rint =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(rint))</a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(s)</a>
+<a class="sourceLine" id="cb36-10" data-line-number="10"><span class="co">#&gt; List of 4</span></a>
+<a class="sourceLine" id="cb36-11" data-line-number="11"><span class="co">#&gt;  $ :List of 5</span></a>
+<a class="sourceLine" id="cb36-12" data-line-number="12"><span class="co">#&gt;   ..$ road   : num 0</span></a>
+<a class="sourceLine" id="cb36-13" data-line-number="13"><span class="co">#&gt;   ..$ xy_fun : NULL</span></a>
+<a class="sourceLine" id="cb36-14" data-line-number="14"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb36-15" data-line-number="15"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb36-16" data-line-number="16"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
+<a class="sourceLine" id="cb36-17" data-line-number="17"><span class="co">#&gt;  $ :List of 5</span></a>
+<a class="sourceLine" id="cb36-18" data-line-number="18"><span class="co">#&gt;   ..$ road   : num 0.5</span></a>
+<a class="sourceLine" id="cb36-19" data-line-number="19"><span class="co">#&gt;   ..$ xy_fun : NULL</span></a>
+<a class="sourceLine" id="cb36-20" data-line-number="20"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb36-21" data-line-number="21"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb36-22" data-line-number="22"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
+<a class="sourceLine" id="cb36-23" data-line-number="23"><span class="co">#&gt;  $ :List of 5</span></a>
+<a class="sourceLine" id="cb36-24" data-line-number="24"><span class="co">#&gt;   ..$ road   : num 0</span></a>
+<a class="sourceLine" id="cb36-25" data-line-number="25"><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></a>
+<a class="sourceLine" id="cb36-26" data-line-number="26"><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></a>
+<a class="sourceLine" id="cb36-27" data-line-number="27"><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fb31ee5f280&gt; </span></a>
+<a class="sourceLine" id="cb36-28" data-line-number="28"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb36-29" data-line-number="29"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb36-30" data-line-number="30"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a>
+<a class="sourceLine" id="cb36-31" data-line-number="31"><span class="co">#&gt;  $ :List of 5</span></a>
+<a class="sourceLine" id="cb36-32" data-line-number="32"><span class="co">#&gt;   ..$ road   : num 0.5</span></a>
+<a class="sourceLine" id="cb36-33" data-line-number="33"><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></a>
+<a class="sourceLine" id="cb36-34" data-line-number="34"><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></a>
+<a class="sourceLine" id="cb36-35" data-line-number="35"><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fb31ee5f280&gt; </span></a>
+<a class="sourceLine" id="cb36-36" data-line-number="36"><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></a>
+<a class="sourceLine" id="cb36-37" data-line-number="37"><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></a>
+<a class="sourceLine" id="cb36-38" data-line-number="38"><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></a></code></pre></div>
 </div>
 <div id="limitations-and-extensions" class="section level1">
 <h1 class="hasAnchor">
