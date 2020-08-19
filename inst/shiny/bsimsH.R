@@ -110,8 +110,9 @@ ui <- navbarPage("bSims (H)",
       plotOutput(outputId = "plot_dfun")
     ),
     column(6,
-      sliderInput("tau", "Detection parameter (tau)", 0, 5, 1, 0.25),
-      sliderInput("bpar", "Hazard rate parameter (b)", 0, 5, 1, 0.5),
+      sliderInput("tauV", "Detection parameter (tau), vocalizations", 0, 5, 1, 0.25),
+      sliderInput("tauM", "Detection parameter (tau), movement", 0, 5, 1, 0.25),
+      sliderInput("bpar", "Hazard rate parameter (b), vocalizations", 0, 5, 1, 0.5),
       radioButtons("dfun", "Distance function",
         c("Half Normal"="halfnormal",
           "Negative Exponential"="negexp",
@@ -216,7 +217,7 @@ server <- function(input, output) {
   o <- reactive({
     bsims_detect(b(),
       xy = c(0, 0),
-      tau = input$tau,
+      tau = c(input$tauV, input$tauM),
       dist_fun = dfun(),
 #      repel = input$repel,
       event_type = input$event)
@@ -293,7 +294,7 @@ server <- function(input, output) {
     ",\n  movement = ", input$SDm,
     ",\n  mixture = ", xc(c(input$mix, 1-input$mix)),
     ",\n  allow_overlap = ", input$overlap,
-    ",\n  tau = ", input$tau,
+    ",\n  tau = c(", input$tauV, ", ", input$tauM, ")",
     ",\n  dist_fun = ", paste0(deparse(dfun()), collapse=''),
     ",\n  xy = c(0, 0)",
     ",\n  event_type = ", xq(input$event),
@@ -335,8 +336,11 @@ server <- function(input, output) {
     par(op)
   })
   output$plot_dfun <- renderPlot({
-    plot(dis, dfun()(dis, input$tau), type="l", col=4,
+    plot(dis, dfun()(dis, input$tauV), type="l", col=4,
       ylim=c(0,1), xlab="Distance", ylab="P(detection)")
+    lines(dis, dfun()(dis, input$tauM), col=4, lty=2)
+    legend("top", horiz=TRUE, bty="n", col=4, lty=c(1,2),
+      legend=c("vocal", "move"))
   })
   output$plot_tra <- renderPlot({
     op <- par(mar=c(0,0,0,0))
