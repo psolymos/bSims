@@ -117,8 +117,14 @@ a vector of x and y coordinates describing the position of the observer.
 }
   \item{tau}{
 parameter of the distance function.
-Can be a single numeric value or a vector of length 3
-to provide parameter in the 3 strata (H: habitat, E: edge, R: road).
+Can be a single numeric value;
+a vector of length 2 to provide parameters for
+vocalization (1st value) and movement (2nd value) related events;
+(H: habitat, E: edge, R: road, in this order);
+a vector of length 3 to provide parameters for the 3 strata
+(H: habitat, E: edge, R: road);
+or a 3 x 2 matrix combining strata (rows) and
+vocalization/movement (columns) related parameters.
 Segmented sound attenuation is used when the values are different
 in the 3 strata (see \code{\link{dist_fun2}}).
 }
