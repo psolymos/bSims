@@ -17,6 +17,7 @@ function(d, tau, dist_fun, breaks=numeric(0), ...) {
       h[length(h)] * dist_fun(breaks[i], tau[i], ...) /
         dist_fun(breaks[i], tau[i+1L]), ...)
   }
+  h[is.na(h)] <- 0
   j <- cut(d, c(0, breaks, Inf), labels=FALSE, include.lowest=TRUE)
   dist_fun(d, tau[j], ...) * h[j]
 }
