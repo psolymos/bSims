@@ -66,9 +66,10 @@ Plot methods for different bSims objects.
 col2hex(col, alpha = FALSE)
 
 \method{plot}{bsims_events_table}(x,
-  xlab, ylab, xlim, ylim, ...)
+  xlab, ylab, xlim, ylim, col_det_vocal, col_det_move, ...)
 \method{plot}{bsims_detections_table}(x,
-  type=c("time", "distance"), xlab, ylab, xlim, ylim, ...)
+  type=c("time", "distance"), xlab, ylab, xlim, ylim,
+  col_det_vocal, col_det_move, ...)
 }
 \arguments{
   \item{x}{
