@@ -349,7 +349,7 @@ the value of `movement`, that is the standard deviation
 of bivariate Normal kernels centered around each nest location.
 This kernel is used to simulate new locations for the movement events.
 
-```{r beh-move,fig.width=10,fig.height=10,out.width='100%'}
+```{r beh-move,fig.width=10,fig.height=5,out.width='100%'}
 e2 <- bsims_animate(p, move_rate = 1, movement = 0.25)
 
 op <- par(mfrow = c(1, 2))
@@ -554,11 +554,37 @@ head(get_detections(d2))
 plot(d2)
 ```
 
-The `tau` argument can also be 
-a vector of length 2 to provide parameters for
-vocalization (1st value) and movement (2nd value) related events.
-`tau` given as a 3 x 2 matrix combines strata (rows) and
-vocalization/movement (columns) related parameters.
+If you notice in the plot here, the detections (lines connecting the observer
+and the location of the events being detected) are 2 different colors.
+That's because we allowed both vocalization and movement event types to be
+detected via the `event_type = "both"` argument.
+Vocalization and movement related detections might have different detection
+function characteristics. A flyover might be seen from larger distances,
+but it can also depend on body size and coloration relative to the background.
+For this reason, the `tau` argument can also be a vector of length 2 
+to provide parameters for vocalization (1st value) and 
+movement (2nd value) related events.
+
+Let's use the `e2` object (no landscape stratification)
+and see how many individuals are hear (not seen), seen (not heard),
+and heard & seen:
+
+```{r det3,fig.width=5,fig.height=5}
+(d3 <- bsims_detect(e2, tau = c(1.5, 3), event_type = "both"))
+
+dtab <- get_detections(d3)
+tmp <- with(dtab, table(i, v))
+c("heard"=sum(tmp[,"0"] == 0 & tmp[,"1"] > 0),
+  "seen"=sum(tmp[,"0"] > 0 & tmp[,"1"] == 0),
+  "heard & seen"=sum(tmp[,"0"] > 0 & tmp[,"1"] > 0))
+
+plot(d3)
+```
+
+`tau` given as a $3 \times 2$ matrix combines strata (rows) and
+vocalization/movement (columns) related parameters,
+ths allowing the distance function to differ among the three strata
+and distinguish the event types.
 
 ## Transcription
 
