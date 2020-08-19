@@ -161,7 +161,8 @@
   <span class='no'>pch_nest</span>, <span class='no'>col_nest</span>, <span class='no'>cex_nest</span>,
   <span class='no'>pch_vocal</span>, <span class='no'>col_vocal</span>, <span class='no'>cex_vocal</span>,
   <span class='no'>lty_move</span>, <span class='no'>col_move</span>, <span class='no'>lwd_move</span>,
-  <span class='no'>lty_det</span>, <span class='no'>col_det</span>, <span class='no'>lwd_det</span>,
+  <span class='no'>lty_det_vocal</span>, <span class='no'>col_det_vocal</span>, <span class='no'>lwd_det_vocal</span>,
+  <span class='no'>lty_det_move</span>, <span class='no'>col_det_move</span>, <span class='no'>lwd_det_move</span>,
   <span class='kw'>condition</span> <span class='kw'>=</span> <span class='st'>"event1"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for bsims_transcript</span>
@@ -169,7 +170,8 @@
   <span class='no'>pch_nest</span>, <span class='no'>col_nest</span>, <span class='no'>cex_nest</span>,
   <span class='no'>pch_vocal</span>, <span class='no'>col_vocal</span>, <span class='no'>cex_vocal</span>,
   <span class='no'>lty_move</span>, <span class='no'>col_move</span>, <span class='no'>lwd_move</span>,
-  <span class='no'>lty_det</span>, <span class='no'>col_det</span>, <span class='no'>lwd_det</span>,
+  <span class='no'>lty_det_vocal</span>, <span class='no'>col_det_vocal</span>, <span class='no'>lwd_det_vocal</span>,
+  <span class='no'>lty_det_move</span>, <span class='no'>col_det_move</span>, <span class='no'>lwd_det_move</span>,
   <span class='kw'>show_tint</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>show_rint</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
   <span class='no'>col_tint</span>, <span class='no'>col_rint</span>, <span class='no'>...</span>)
 
@@ -241,8 +243,12 @@ The value is inferred from the input object when <code>NULL</code>.</p></td>
       <td><p>visual characteristics of movement events.</p></td>
     </tr>
     <tr>
-      <th>lty_det, col_det, lwd_det</th>
-      <td><p>visual characteristics of detection events.</p></td>
+      <th>lty_det_vocal, col_det_vocal, lwd_det_vocal</th>
+      <td><p>visual characteristics of detection events related to vocalizations.</p></td>
+    </tr>
+    <tr>
+      <th>lty_det_move, col_det_move, lwd_det_move</th>
+      <td><p>visual characteristics of detection events related to movements.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
@@ -290,24 +296,27 @@ or without alpha channel values.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_all</a></span>(<span class='kw'>road</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>edge</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>move_rate</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>movement</span><span class='kw'>=</span><span class='fl'>0.2</span>)$<span class='fu'>new</span>()
 <span class='no'>o</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"bsims_theme"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>o</span>)</div><div class='output co'>#&gt; List of 17
-#&gt;  $ col_H    : chr "darkolivegreen1"
-#&gt;  $ col_E    : chr "burlywood1"
-#&gt;  $ col_R    : chr "lightgrey"
-#&gt;  $ col_nest : chr "darkgreen"
-#&gt;  $ pch_nest : num 3
-#&gt;  $ cex_nest : num 1
-#&gt;  $ col_vocal: chr "blue"
-#&gt;  $ pch_vocal: num 21
-#&gt;  $ cex_vocal: num 0.5
-#&gt;  $ col_move : chr "orange"
-#&gt;  $ lty_move : num 1
-#&gt;  $ lwd_move : num 1
-#&gt;  $ col_det  : chr "black"
-#&gt;  $ lty_det  : num 1
-#&gt;  $ lwd_det  : num 1
-#&gt;  $ col_tint : chr "red"
-#&gt;  $ col_rint : chr "red"</div><div class='input'><span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='no'>o</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>o</span>)</div><div class='output co'>#&gt; List of 20
+#&gt;  $ col_H        : chr "darkolivegreen1"
+#&gt;  $ col_E        : chr "burlywood1"
+#&gt;  $ col_R        : chr "lightgrey"
+#&gt;  $ col_nest     : chr "darkgreen"
+#&gt;  $ pch_nest     : num 3
+#&gt;  $ cex_nest     : num 1
+#&gt;  $ col_vocal    : chr "blue"
+#&gt;  $ pch_vocal    : num 21
+#&gt;  $ cex_vocal    : num 0.5
+#&gt;  $ col_move     : chr "orange"
+#&gt;  $ lty_move     : num 1
+#&gt;  $ lwd_move     : num 1
+#&gt;  $ col_det_vocal: chr "black"
+#&gt;  $ lty_det_vocal: num 1
+#&gt;  $ lwd_det_vocal: num 1
+#&gt;  $ col_det_move : chr "purple"
+#&gt;  $ lty_det_move : num 1
+#&gt;  $ lwd_det_move : num 1
+#&gt;  $ col_tint     : chr "red"
+#&gt;  $ col_rint     : chr "red"</div><div class='input'><span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='no'>o</span>
 <span class='no'>n</span>$<span class='no'>col_H</span> <span class='kw'>&lt;-</span> <span class='st'>"gold"</span>
 <span class='no'>n</span>$<span class='no'>col_E</span> <span class='kw'>&lt;-</span> <span class='st'>"magenta"</span>
 <span class='no'>n</span>$<span class='no'>col_R</span> <span class='kw'>&lt;-</span> <span class='st'>"black"</span>
