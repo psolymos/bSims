@@ -17,7 +17,7 @@ par(mar = c(1, 1, 1, 1))
 set.seed(429)
 ```
 
-## Introduction
+# Introduction
 
 The **bSims** R package is a _highly scientific_ and _utterly addictive_ bird point count simulator. Highly scientific, because it implements a spatially
 explicit mechanistic simulation that is based on statistical models
@@ -59,7 +59,7 @@ framework and how to extend the existing functionality of the
 package to incorporate more of the biological realism into
 the simulations.
 
-## Simulation layers
+# Simulation layers
 
 Introductory stats books begin with the coin flip to introduce
 the binomial distribution. In R we can easily simulate
@@ -157,7 +157,7 @@ plot(x, main="Transcribe")
 par(op)
 ```
 
-### Landscape
+## Landscape
 
 The `bsims_ini` function sets up the geometry of a local landscape.
 The `extent` of the landscape determines the edge lengths of a square shaped area.
@@ -199,7 +199,7 @@ points(0, 0, pch=3)
 par(op)
 ```
 
-### Population
+## Population
 
 The `bsims_populate` function _populates_ the landscape we created by the `bsims_init` function,
 which is the first argument we have to pass to `bsims_populate`. The function returns a population
@@ -292,7 +292,7 @@ plot(bsims_populate(l4, density = D), main = "2 habitats")
 par(op)
 ```
 
-### Behavior
+## Behavior
 
 The `bsims_animate` function _animates_ the population created by the `bsims_populate` function. `bsims_animate` returns an events object (with class 'bsims_events').
 The most important arguments are governing the `duration` of the simulation in minutes,
@@ -441,7 +441,7 @@ fully available for the other layers applied on top.
 I.e. it is possible to study the observation process without
 any behavioral interference when `initial_location = TRUE`.
 
-### Detection
+## Detection
 
 The `bsims_detect` function _detects_ the events created by the `bsims_animate` function. `bsims_detect` returns a detections object (with class 'bsims_detections').
 The argument `xy` defines the location of the observer in the landscape.
@@ -560,7 +560,7 @@ vocalization (1st value) and movement (2nd value) related events.
 `tau` given as a 3 x 2 matrix combines strata (rows) and
 vocalization/movement (columns) related parameters.
 
-### Transcription
+## Transcription
 
 The last layer of simulation is the `bsims_transcribe` function 
 that _transcribes_ the detections created by the `bsims_detect` function. `bsims_transcribe` returns a detections object (with class 'bsims_transcript').
@@ -614,7 +614,7 @@ get_table(x, "removal")
 get_table(x, "visits")
 ```
 
-## Statistical validity of the simulations
+# Statistical validity of the simulations
 
 We can test the validity of the simulations when all
 of the assumptions are met (that is the default)
@@ -677,7 +677,7 @@ Deviations from the assumptions and bias in density estimation
 can be done by systematically evaluating the simulations settings,
 which we describe in the next section.
 
-## Simulation workflow
+# Simulation workflow
 
 We recommend exploring the simulation settings 
 interactively in the **shiny** apps
@@ -794,7 +794,7 @@ s <- expand_list(
 str(s)
 ```
 
-## Limitations and extensions
+# Limitations and extensions
 
 The package is not equipped with all the possible ways to estimate the
 model parameters. It only has rudimentary removal modeling and 
