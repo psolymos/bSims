@@ -4,7 +4,8 @@ event_type=NULL, tlim=NULL,
 pch_nest, col_nest, cex_nest,
 pch_vocal, col_vocal, cex_vocal,
 lty_move, col_move, lwd_move,
-lty_det, col_det, lwd_det,
+lty_det_vocal, col_det_vocal, lwd_det_vocal,
+lty_det_move, col_det_move, lwd_det_move,
 condition="event1", ...) {
 
   .bsims_theme <- getOption("bsims_theme")
@@ -26,12 +27,18 @@ condition="event1", ...) {
     col_move <- .bsims_theme$col_move
   if (missing(lwd_move))
     lwd_move <- .bsims_theme$lwd_move
-  if (missing(lty_det))
-    lty_det <- .bsims_theme$lty_det
-  if (missing(col_det))
-    col_det <- .bsims_theme$col_det
-  if (missing(lwd_det))
-    lwd_det <- .bsims_theme$lwd_det
+  if (missing(lty_det_vocal))
+    lty_det_vocal <- .bsims_theme$lty_det_vocal
+  if (missing(col_det_vocal))
+    col_det_vocal <- .bsims_theme$col_det_vocal
+  if (missing(lwd_det_vocal))
+    lwd_det_vocal <- .bsims_theme$lwd_det_vocal
+  if (missing(lty_det_move))
+    lty_det_move <- .bsims_theme$lty_det_move
+  if (missing(col_det_move))
+    col_det_move <- .bsims_theme$col_det_move
+  if (missing(lwd_det_move))
+    lwd_det_move <- .bsims_theme$lwd_det_move
 
   if (is.null(event_type))
     event_type <- x$event_type
@@ -43,8 +50,14 @@ condition="event1", ...) {
     pch_nest=pch_nest, col_nest=col_nest, cex_nest=cex_nest,
     pch_vocal=pch_vocal, col_vocal=col_vocal, cex_vocal=cex_vocal,
     lty_move=lty_move, col_move=col_move, lwd_move=lwd_move, ...)
-  if (!is.na(lty_det))
-    lines(x, event_type=event_type, tlim=tlim, col=col_det, lty=lty_det,
+  if (!is.na(lty_det_vocal))
+    lines(x, event_type="vocal", tlim=tlim,
+      col=col_det_vocal, lty=lty_det_vocal, lwd=lwd_det_vocal,
       condition=condition, ...)
+  if (!is.na(lty_det_move))
+    lines(x, event_type="move", tlim=tlim,
+      col=col_det_move, lty=lty_det_move, lwd=lwd_det_move,
+      condition=condition, ...)
+
   invisible(x)
 }

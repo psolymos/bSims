@@ -38,14 +38,16 @@ Plot methods for different bSims objects.
   pch_nest, col_nest, cex_nest,
   pch_vocal, col_vocal, cex_vocal,
   lty_move, col_move, lwd_move,
-  lty_det, col_det, lwd_det,
+  lty_det_vocal, col_det_vocal, lwd_det_vocal,
+  lty_det_move, col_det_move, lwd_det_move,
   condition = "event1", ...)
 
 \method{plot}{bsims_transcript}(x,
   pch_nest, col_nest, cex_nest,
   pch_vocal, col_vocal, cex_vocal,
   lty_move, col_move, lwd_move,
-  lty_det, col_det, lwd_det,
+  lty_det_vocal, col_det_vocal, lwd_det_vocal,
+  lty_det_move, col_det_move, lwd_det_move,
   show_tint=TRUE, show_rint=TRUE,
   col_tint, col_rint, ...)
 
@@ -97,8 +99,11 @@ visual characteristics of vocalization events.
   \item{lty_move, col_move, lwd_move}{
 visual characteristics of movement events.
 }
-  \item{lty_det, col_det, lwd_det}{
-visual characteristics of detection events.
+  \item{lty_det_vocal, col_det_vocal, lwd_det_vocal}{
+visual characteristics of detection events related to vocalizations.
+}
+  \item{lty_det_move, col_det_move, lwd_det_move}{
+visual characteristics of detection events related to movements.
 }
   \item{alpha}{
 alpha channel for colors.

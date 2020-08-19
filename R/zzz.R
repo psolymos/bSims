@@ -150,10 +150,11 @@
     col_H="darkolivegreen1",
     col_E="burlywood1",
     col_R="lightgrey",
-    col_nest = "darkgreen", pch_nest = 3,   cex_nest = 1,
-    col_vocal = "blue",     pch_vocal = 21, cex_vocal = 0.5,
-    col_move = "orange",    lty_move = 1,   lwd_move = 1,
-    col_det = "black",      lty_det = 1,    lwd_det = 1,
+    col_nest = "darkgreen",  pch_nest = 3,      cex_nest = 1,
+    col_vocal = "blue",      pch_vocal = 21,    cex_vocal = 0.5,
+    col_move = "orange",     lty_move = 1,      lwd_move = 1,
+    col_det_vocal = "black", lty_det_vocal = 1, lwd_det_vocal = 1,
+    col_det_move = "purple", lty_det_move = 1,  lwd_det_move = 1,
     col_tint="red", col_rint="red"))
   invisible(NULL)
 }

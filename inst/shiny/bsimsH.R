@@ -336,10 +336,10 @@ server <- function(input, output) {
     par(op)
   })
   output$plot_dfun <- renderPlot({
-    plot(dis, dfun()(dis, input$tauV), type="l", col=4,
+    plot(dis, dfun()(dis, input$tauV), type="l", col="black",
       ylim=c(0,1), xlab="Distance", ylab="P(detection)")
-    lines(dis, dfun()(dis, input$tauM), col=4, lty=2)
-    legend("top", horiz=TRUE, bty="n", col=4, lty=c(1,2),
+    lines(dis, dfun()(dis, input$tauM), col="purple")
+    legend("top", horiz=TRUE, bty="n", col=c("black","purple"),
       legend=c("vocal", "move"))
   })
   output$plot_tra <- renderPlot({
