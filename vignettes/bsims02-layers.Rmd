@@ -1,9 +1,9 @@
 ---
-title: "Simulation layers in the bSims"
+title: "Simulation layers in bSims"
 author: "Peter Solymos"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Simulation layers in the bSims}
+  %\VignetteIndexEntry{Simulation layers in bSims}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 par(mar = c(1, 1, 1, 1))
 set.seed(429)
 ```
-
-# Simulation layers
 
 Introductory stats books begin with the coin flip to introduce
 the binomial distribution. In R we can easily simulate
@@ -541,8 +539,10 @@ plot(d3)
 
 `tau` given as a $3 \times 2$ matrix combines strata (rows) and
 vocalization/movement (columns) related parameters,
-ths allowing the distance function to differ among the three strata
+thus allowing the distance function to differ among the three strata
 and distinguish the event types.
+
+The `sensitivity` argument modifies `tau` (`tau * sensitivity`), it can be specified for movement or vocal events.This is a more didactic way of introducing observer or sensor related variability into the detection process. It is still the physical process that is being affected and not the perception.
 
 ## Transcription
 

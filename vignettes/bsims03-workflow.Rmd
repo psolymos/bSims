@@ -1,9 +1,9 @@
 ---
-title: "Simulation layers in the bSims"
+title: "Simulation workflow in bSims"
 author: "Peter Solymos"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Simulation layers in the bSims}
+  %\VignetteIndexEntry{Simulation workflow in bSims}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 par(mar = c(1, 1, 1, 1))
 set.seed(429)
 ```
-
-# Simulation workflow
 
 We recommend exploring the simulation settings 
 interactively in the **shiny** apps
@@ -35,6 +33,8 @@ effect is that the road stratum is unsuitable. Otherwise there
 are no behavioral or detectability effects of the road.
 
 ```{r sim1}
+library(bSims)
+
 tint <- c(2, 4, 6, 8, 10)
 rint <- c(0.5, 1, 1.5, 2, Inf) # unlimited
 

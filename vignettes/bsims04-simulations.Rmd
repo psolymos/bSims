@@ -1,9 +1,9 @@
 ---
-title: "Simulation layers in the bSims"
+title: "Simulations in bSims"
 author: "Peter Solymos"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Simulation layers in the bSims}
+  %\VignetteIndexEntry{Simulations in bSims}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,4 +17,4 @@ par(mar = c(1, 1, 1, 1))
 set.seed(429)
 ```
 
-# x
+More to come...

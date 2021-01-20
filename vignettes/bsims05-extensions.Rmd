@@ -1,9 +1,9 @@
 ---
-title: "Simulation layers in the bSims"
+title: "Limitations and extensions"
 author: "Peter Solymos"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Simulation layers in the bSims}
+  %\VignetteIndexEntry{Limitations and extensions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 par(mar = c(1, 1, 1, 1))
 set.seed(429)
 ```
-
-# Limitations and extensions
 
 The package is not equipped with all the possible ways to estimate the
 model parameters. It only has rudimentary removal modeling and 
