@@ -11,6 +11,7 @@ function(
   tau=1,
   dist_fun=NULL, # takes args d(istance) and tau (single parameter)
   event_type=c("vocal", "move", "both"),
+  sensitivity=1,
   ...)
 {
   if (!inherits(x, "bsims_events"))
@@ -28,19 +29,32 @@ function(
   A <- diff(x$strata) * diff(range(x$strata))
   A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
   names(A) <- c("H", "E", "R")
+  if (length(sensitivity) > 1) {
+    sensitivity <- sensitivity[c("vocal", "move")]
+  }
+  if (any(is.na(sensitivity)))
+    stop("something isn't right with sensitivity")
+  if (any(sensitivity < 0))
+    stop("sensitivity cannot be negative")
   ## tau processing
   tau <- unname(tau)
   if (length(tau) == 1L) {
+    if (length(sensitivity) > 1)
+      stop("sensitivity must be of length 1 to match tau")
     tau_type <- "one" # all the same
     tau_use <- tau
   } else {
     if (is.null(dim(tau))) {
       if (length(tau) == 2L) {
+        if (length(sensitivity) == 1)
+          sensitivity <- c(vocal=sensitivity, move=sensitivity)
         tau_type <- "vm" # vocal/movement
         names(tau) <- c("vocal", "move")
         tau_use <- tau
       } else {
         if (length(tau) == 3L) {
+          if (length(sensitivity) > 1)
+            stop("sensitivity must be of length 1 to match tau")
           ## this is silent, but makes sense
           if (A["H"] == sum(A)) {
             tau_type <- "one"
@@ -58,6 +72,8 @@ function(
     } else {
       if (all(dim(tau) != c(3L, 2L)))
         stop("tau dimension must be 3 x 2")
+      if (length(sensitivity) == 1)
+        sensitivity <- c(vocal=sensitivity, move=sensitivity)
       if (A["H"] == sum(A)) {
         tau_type <- "vm"
         tau_use <- tau[1L,1:2,drop=TRUE]
@@ -118,7 +134,7 @@ function(
           ## calculate distance breaks from x and theta
           if (length(TAU) == 1L) {
             #b <- numeric(0)
-            q[j] <- dist_fun(z$d[j], TAU, ...)
+            q[j] <- dist_fun(z$d[j], TAU*sensitivity, ...)
           } else {
             ## this gives breaks along x axis
             if (sobs < sbrd[j]) { # bird right of observer
@@ -131,12 +147,12 @@ function(
             ## turn that into distance from bird (stratified attenuation)
             b <- z$d[j] - rev(b)
             ## calculate q
-            q[j] <- dist_fun2(z$d[j], TAU, dist_fun, b, ...)
+            q[j] <- dist_fun2(z$d[j], TAU*sensitivity, dist_fun, b, ...)
           }
         } else { # tau_type == "six"
           ## order tau as HEREH
-          TAUv <- tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs]
-          TAUm <- tau[c(1,2,3,2,1),"move"][sbrd[j]:sobs]
+          TAUv <- tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs]*sensitivity["vocal"]
+          TAUm <- tau[c(1,2,3,2,1),"move"][sbrd[j]:sobs]*sensitivity["move"]
           if (length(TAUv) == 1L) {
             q[j] <- dist_fun(z$d[j],
                 if (z$v[j] > 0) TAUv else TAUm, ...)
@@ -161,9 +177,11 @@ function(
     } else {
       if (tau_type == "vm") {
         q <- ifelse(z$v > 0,
-          dist_fun(z$d, tau_use["vocal"], ...),
-          dist_fun(z$d, tau_use["move"], ...))
+          dist_fun(z$d, tau_use["vocal"]*sensitivity["vocal"], ...),
+          dist_fun(z$d, tau_use["move"]*sensitivity["move"], ...))
       } else { # tau_type == "one"
+        if (length(sensitivity) > 1)
+          stop("sensitivity must be of length 1 to match tau")
         q <- dist_fun(z$d, tau_use, ...)
       }
     }
@@ -176,6 +194,7 @@ function(
   x$tau <- tau
   x$dist_fun <- dist_fun
   x$event_type <- event_type
+  x$sensitivity <- sensitivity
   x$call <- match.call()
   class(x) <- c("bsims_detections",
                 "bsims_events",

@@ -1,6 +1,7 @@
-# Version 0.2-2, 2019-12-17
+# Version 0.2-2, 2021-01-17
 
-*
+* Added `sensitivity` argument to `bsims_detect`.
+* Revised vignettes.
 
 # Version 0.2-1, 2019-12-16
 

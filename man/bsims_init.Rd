@@ -31,7 +31,8 @@ bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
   initial_location=FALSE, allow_overlap=TRUE, ...)
 
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
-  event_type = c("vocal", "move", "both"), ...)
+  event_type = c("vocal", "move", "both"),
+  sensitivity=1, ...)
 
 bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
   condition=c("event1", "det1", "alldet"),
@@ -156,6 +157,15 @@ perceived number of individuals relative to the actual number of individuals.
 A non-negative number (<1 values lead to under counting,
 >1 values lead to over counting),
 or \code{NULL} (observer correctly identifies all individuals).
+}
+  \item{sensitivity}{
+non-negative numeric value indicating the sensitivity of the sensor
+receiving the signal. Can be of length 1 (applies to both vocal and movement events)
+or a named vector of length 2 (names should indicate which one
+is \code{"vocal"} or \code{"move"}). Sensitivity of 1 means that
+the process captured by \code{tau} is unaffected.
+Less than 1 values indicate lower sensitivity (effectively lowering tau),
+larger than 1 values indicate higher sensitivity (effectively lowering tau).
 }
   \item{\dots}{
 other arguments passed to underlying functions.
