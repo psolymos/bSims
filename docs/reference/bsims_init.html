@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="bSims simulation functions — bsims_init" />
 <meta property="og:description" content="Functions to initialize, populate, animate, detect, and transcribe
 simulated birds in a point count." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -66,7 +69,7 @@ simulated birds in a point count." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +83,7 @@ simulated birds in a point count." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-2</span>
       </span>
     </div>
 
@@ -103,7 +106,19 @@ simulated birds in a point count." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/intro.html">Introduction to the bSims package</a>
+      <a href="../articles/bsims01-intro.html">Introduction to the bSims package</a>
+    </li>
+    <li>
+      <a href="../articles/bsims02-layers.html">Simulation layers in bSims</a>
+    </li>
+    <li>
+      <a href="../articles/bsims03-workflow.html">Simulation workflow in bSims</a>
+    </li>
+    <li>
+      <a href="../articles/bsims04-simulations.html">Simulations in bSims</a>
+    </li>
+    <li>
+      <a href="../articles/bsims05-extensions.html">Limitations and extensions</a>
     </li>
   </ul>
 </li>
@@ -113,7 +128,7 @@ simulated birds in a point count." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/psolymos/bSims">
+  <a href="https://github.com/psolymos/bSims/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -141,36 +156,37 @@ simulated birds in a point count." />
 simulated birds in a point count.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bsims_init</span>(<span class='kw'>extent</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>road</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+    <pre class="usage"><span class='fu'>bsims_init</span><span class='op'>(</span>extent <span class='op'>=</span> <span class='fl'>10</span>, road <span class='op'>=</span> <span class='fl'>0</span>, edge <span class='op'>=</span> <span class='fl'>0</span>, offset <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
 
-<span class='fu'>bsims_populate</span>(<span class='no'>x</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>abund_fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xy_fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>fail</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>bsims_populate</span><span class='op'>(</span><span class='va'>x</span>, density <span class='op'>=</span> <span class='fl'>1</span>, abund_fun <span class='op'>=</span> <span class='cn'>NULL</span>, xy_fun <span class='op'>=</span> <span class='cn'>NULL</span>,
+  margin <span class='op'>=</span> <span class='fl'>0</span>, maxit <span class='op'>=</span> <span class='fl'>100</span>, fail <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>bsims_animate</span>(<span class='no'>x</span>, <span class='kw'>vocal_rate</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>move_rate</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>movement</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>mixture</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>avoid</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"R"</span>, <span class='st'>"ER"</span>),
-  <span class='kw'>initial_location</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>allow_overlap</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>bsims_animate</span><span class='op'>(</span><span class='va'>x</span>, vocal_rate <span class='op'>=</span> <span class='fl'>1</span>, move_rate <span class='op'>=</span> <span class='fl'>0</span>, duration <span class='op'>=</span> <span class='fl'>10</span>,
+  movement <span class='op'>=</span> <span class='fl'>0</span>, mixture <span class='op'>=</span> <span class='fl'>1</span>, avoid <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"R"</span>, <span class='st'>"ER"</span><span class='op'>)</span>,
+  initial_location<span class='op'>=</span><span class='cn'>FALSE</span>, allow_overlap<span class='op'>=</span><span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>bsims_detect</span>(<span class='no'>x</span>, <span class='kw'>xy</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dist_fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>event_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span>), <span class='no'>...</span>)
+<span class='fu'>bsims_detect</span><span class='op'>(</span><span class='va'>x</span>, xy <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, tau <span class='op'>=</span> <span class='fl'>1</span>, dist_fun <span class='op'>=</span> <span class='cn'>NULL</span>,
+  event_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span><span class='op'>)</span>,
+  sensitivity<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>bsims_transcribe</span>(<span class='no'>x</span>, <span class='kw'>tint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rint</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>condition</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"event1"</span>, <span class='st'>"det1"</span>, <span class='st'>"alldet"</span>),
-  <span class='kw'>event_type</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='kw'>perception</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>bsims_transcribe</span><span class='op'>(</span><span class='va'>x</span>, tint <span class='op'>=</span> <span class='cn'>NULL</span>, rint <span class='op'>=</span> <span class='cn'>Inf</span>, error <span class='op'>=</span> <span class='fl'>0</span>,
+  condition<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"event1"</span>, <span class='st'>"det1"</span>, <span class='st'>"alldet"</span><span class='op'>)</span>,
+  event_type<span class='op'>=</span><span class='cn'>NULL</span>, perception<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>bsims_all</span>(<span class='no'>...</span>)
+<span class='fu'>bsims_all</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for bsims_landscape</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for bsims_population</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for bsims_events</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for bsims_detections</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for bsims_transcript</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for bsims_all</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -311,6 +327,16 @@ A non-negative number (&lt;1 values lead to under counting,
 or <code>NULL</code> (observer correctly identifies all individuals).</p></td>
     </tr>
     <tr>
+      <th>sensitivity</th>
+      <td><p>non-negative numeric value indicating the sensitivity of the sensor
+receiving the signal. Can be of length 1 (applies to both vocal and movement events)
+or a named vector of length 2 (names should indicate which one
+is <code>"vocal"</code> or <code>"move"</code>). Sensitivity of 1 means that
+the process captured by <code>tau</code> is unaffected.
+Less than 1 values indicate lower sensitivity (effectively lowering tau),
+larger than 1 values indicate higher sensitivity (effectively lowering tau).</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>other arguments passed to underlying functions.
 For the <code>bsims_all</code> wrapper, it means all
@@ -385,17 +411,20 @@ Sound attenuation in forested and roadside environments:
 implications for avian point count surveys.
 <em>Condor</em>, <b>119</b>: 73--84.
 &lt;doi:10.1650/CONDOR-16-93.1&gt;</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Peter Solymos</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Plotting functions:
-<code><a href='plot.html'>plot.bsims_landscape</a></code></p>
+<code><a href='plot.bsims_landscape.html'>plot.bsims_landscape</a></code></p>
 <p>Getter functions:
-<code><a href='getters.html'>get_nests</a></code>,
-<code><a href='getters.html'>get_events</a></code>,
-<code><a href='getters.html'>get_detections</a></code>,
-<code><a href='getters.html'>get_abundance</a></code>,
-<code><a href='getters.html'>get_density</a></code>
-<code><a href='getters.html'>get_table</a></code></p>
+<code><a href='get_nests.html'>get_nests</a></code>,
+<code><a href='get_nests.html'>get_events</a></code>,
+<code><a href='get_nests.html'>get_detections</a></code>,
+<code><a href='get_nests.html'>get_abundance</a></code>,
+<code><a href='get_nests.html'>get_density</a></code>
+<code><a href='get_nests.html'>get_table</a></code></p>
 <p>Shiny apps:
 <code><a href='run_app.html'>run_app</a></code></p>
 <p><code><a href='acceptreject.html'>acceptreject</a></code>,
@@ -403,26 +432,31 @@ implications for avian point count surveys.
 <code><a href='estimate.html'>estimate</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>phi</span> <span class='kw'>&lt;-</span> <span class='fl'>0.5</span>
-<span class='no'>tau</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>3</span>
-<span class='no'>dur</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
-<span class='no'>rbr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>Inf</span>)
-<span class='no'>tbr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>10</span>)
-(<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_init</span>(<span class='fl'>10</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; bSims landscape
+    <pre class="examples"><div class='input'><span class='va'>phi</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span>
+<span class='va'>tau</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>
+<span class='va'>dur</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+<span class='va'>rbr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='cn'>Inf</span><span class='op'>)</span>
+<span class='va'>tbr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>l</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_init</span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bSims landscape
 #&gt;   1 km x 1 km
-#&gt;   stratification: HER</div><div class='input'>(<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_populate</span>(<span class='no'>l</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; bSims population
+#&gt;   stratification: HER</div><div class='input'><span class='op'>(</span><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_populate</span><span class='op'>(</span><span class='va'>l</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bSims population
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
-#&gt;   total abundance: 89</div><div class='input'>(<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_animate</span>(<span class='no'>p</span>, <span class='kw'>vocal_rate</span><span class='kw'>=</span><span class='no'>phi</span>, <span class='kw'>duration</span><span class='kw'>=</span><span class='no'>dur</span>))</div><div class='output co'>#&gt; bSims events
+#&gt;   total abundance: 89</div><div class='input'><span class='op'>(</span><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_animate</span><span class='op'>(</span><span class='va'>p</span>, vocal_rate<span class='op'>=</span><span class='va'>phi</span>, duration<span class='op'>=</span><span class='va'>dur</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bSims events
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
 #&gt;   total abundance: 89
-#&gt;   duration: 10 min</div><div class='input'>(<span class='no'>o</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_detect</span>(<span class='no'>a</span>, <span class='kw'>tau</span><span class='kw'>=</span><span class='no'>tau</span>))</div><div class='output co'>#&gt; bSims detections
+#&gt;   duration: 10 min</div><div class='input'><span class='op'>(</span><span class='va'>o</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_detect</span><span class='op'>(</span><span class='va'>a</span>, tau<span class='op'>=</span><span class='va'>tau</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bSims detections
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
 #&gt;   total abundance: 89
 #&gt;   duration: 10 min
-#&gt;   detected: 32 heard</div><div class='input'>(<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_transcribe</span>(<span class='no'>o</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>))</div><div class='output co'>#&gt; bSims transcript
+#&gt;   detected: 32 heard</div><div class='input'><span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_transcribe</span><span class='op'>(</span><span class='va'>o</span>, tint<span class='op'>=</span><span class='va'>tbr</span>, rint<span class='op'>=</span><span class='va'>rbr</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bSims transcript
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
 #&gt;   total abundance: 89
@@ -431,35 +465,44 @@ implications for avian point count surveys.
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='getters.html'>get_table</a></span>(<span class='no'>x</span>, <span class='st'>"removal"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='img'><img src='bsims_init-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='get_nests.html'>get_table</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"removal"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      0       0
 #&gt; 100-150m      2      1       0
-#&gt; 150+m         7      0       2</div><div class='input'><span class='fu'><a href='getters.html'>get_table</a></span>(<span class='no'>x</span>, <span class='st'>"visits"</span>)</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
+#&gt; 150+m         7      0       2</div><div class='input'><span class='fu'><a href='get_nests.html'>get_table</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"visits"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      1       1
 #&gt; 100-150m      2      3       5
 #&gt; 150+m         7      6       6</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='getters.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='output co'>#&gt;            x          y          t v  i
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_events</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            x          y          t v  i
 #&gt; 1 -2.3401644 -2.8527517 0.03530175 1  9
 #&gt; 2 -2.2627545  0.5759206 0.03671147 1 10
 #&gt; 3 -0.0575831  2.5478251 0.05696669 1 52
 #&gt; 4 -2.6777408  4.0848588 0.08751628 1  4
 #&gt; 5  1.2101658  1.8188797 0.10244937 1 53
-#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='getters.html'>get_events</a></span>(<span class='no'>a</span>))</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='getters.html'>get_detections</a></span>(<span class='no'>o</span>))</div><div class='output co'>#&gt;             x          y          t v         d  i  j
+#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_events</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             x          y          t v         d  i  j
 #&gt; 3  -0.0575831  2.5478251 0.05696669 1 2.5484757 52 52
 #&gt; 6  -0.6398754  0.7921080 0.13954534 1 1.0182709 36 36
 #&gt; 8  -1.8415121 -0.1032800 0.17209894 1 1.8444060 21 21
 #&gt; 30 -0.2132248  0.4793912 0.63565147 1 0.5246720 42 42
 #&gt; 35 -0.2132248  0.4793912 0.77150555 1 0.5246720 42 42
-#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='getters.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"time"</span>)</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='getters.html'>get_detections</a></span>(<span class='no'>o</span>), <span class='st'>"distance"</span>)</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span>, <span class='st'>"time"</span><span class='op'>)</span>
+</div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span>, <span class='st'>"distance"</span><span class='op'>)</span>
+</div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## wrapper function for all the bsims_* layers</span>
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>road</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>)
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_all</span><span class='op'>(</span>road<span class='op'>=</span><span class='fl'>1</span>, density<span class='op'>=</span><span class='fl'>0.5</span>, tint<span class='op'>=</span><span class='va'>tbr</span>, rint<span class='op'>=</span><span class='va'>rbr</span><span class='op'>)</span>
 <span class='co'>## alternatively: supply a list</span>
 <span class='co'>#settings &lt;- list(road=1, density=0.5, tint=tbr, rint=rbr)</span>
 <span class='co'>#b &lt;- bsims_all(settings)</span>
-<span class='no'>b</span>$<span class='fu'>settings</span>()</div><div class='output co'>#&gt; $road
+<span class='va'>b</span><span class='op'>$</span><span class='fu'>settings</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $road
 #&gt; [1] 1
 #&gt; 
 #&gt; $density
@@ -470,7 +513,8 @@ implications for avian point count surveys.
 #&gt; 
 #&gt; $rint
 #&gt; [1] 0.5 1.0 1.5 Inf
-#&gt; </div><div class='input'><span class='no'>b</span>$<span class='fu'>new</span>()</div><div class='output co'>#&gt; bSims transcript
+#&gt; </div><div class='input'><span class='va'>b</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bSims transcript
 #&gt;   1 km x 1 km
 #&gt;   stratification: HR
 #&gt;   total abundance: 61
@@ -478,8 +522,9 @@ implications for avian point count surveys.
 #&gt;   detected: 7 heard
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
-#&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'><span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>bb</span>, <span class='no'>get_table</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>bb</span>, <span class='va'>get_table</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       0      0       0
@@ -502,38 +547,33 @@ implications for avian point count surveys.
 #&gt; </div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## parallel simulations</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parallel</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_all</span>(<span class='kw'>density</span><span class='kw'>=</span><span class='fl'>0.5</span>)
-<span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fl'>4</span>  <span class='co'># number of runs</span>
-<span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>parallel</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_all</span><span class='op'>(</span>density<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span>
+<span class='va'>B</span> <span class='op'>&lt;-</span> <span class='fl'>4</span>  <span class='co'># number of runs</span>
+<span class='va'>nc</span> <span class='op'>&lt;-</span> <span class='fl'>2</span> <span class='co'># number of cores</span>
 <span class='co'>## sequential</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='kw'>NULL</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.690   0.006   0.712 </div><div class='input'><span class='co'>## parallel clusters</span>
-<span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span>(<span class='no'>nc</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='va'>B</span>, cl<span class='op'>=</span><span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.802   0.011   0.842 </div><div class='input'><span class='co'>## parallel clusters</span>
+<span class='va'>cl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span>
 <span class='co'>## note: loading the package is optional</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span>(<span class='no'>cl</span>, <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bSims</span>)))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.001   0.000   2.060 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>cl</span>))</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.014   0.002   0.878 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span>(<span class='no'>cl</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span><span class='op'>(</span><span class='va'>cl</span>, <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/psolymos/bSims'>bSims</a></span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.001   0.000   1.645 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='va'>B</span>, cl<span class='op'>=</span><span class='va'>cl</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.012   0.001   0.625 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>stopCluster</a></span><span class='op'>(</span><span class='va'>cl</span><span class='op'>)</span>
 <span class='co'>## parallel forking</span>
-<span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
-  <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>bb</span> <span class='kw'>&lt;-</span> <span class='no'>b</span>$<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='no'>B</span>, <span class='kw'>cl</span><span class='kw'>=</span><span class='no'>nc</span>))
-}</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.526   0.164   0.764 </div><div class='input'># }
+<span class='kw'>if</span> <span class='op'>(</span><span class='va'>.Platform</span><span class='op'>$</span><span class='va'>OS.type</span> <span class='op'>!=</span> <span class='st'>"windows"</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='va'>B</span>, cl<span class='op'>=</span><span class='va'>nc</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;   0.006   0.010   0.705 </div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Peter Solymos</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -544,7 +584,7 @@ implications for avian point count surveys.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

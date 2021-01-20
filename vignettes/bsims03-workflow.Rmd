@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 )
 par(mar = c(1, 1, 1, 1))
 set.seed(429)
+suppressPackageStartupMessages(library(bSims))
 ```
 
 We recommend exploring the simulation settings 
