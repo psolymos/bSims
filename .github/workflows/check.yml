@@ -15,8 +15,8 @@ jobs:
       - name: R setup
         uses: r-lib/actions/setup-r@v1
 
-      - name: Install pandoc
-        run: brew install pandoc
+      - name: Install sysreqs
+        run: brew install pandoc harfbuzz fribidi
 
       - name: Install dependencies
         run: |
