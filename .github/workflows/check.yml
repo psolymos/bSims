@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("pkgdown", "devtools"))'
+          Rscript -e 'install.packages(c("pkgdown", "devtools", "textshaping"))'
           Rscript -e 'devtools::install_dev_deps()'
 
       - name: Check package
