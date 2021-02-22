@@ -92,7 +92,7 @@ using the QPAD approach (Solymos et al. 2013)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -107,7 +107,19 @@ using the QPAD approach (Solymos et al. 2013)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/intro.html">Introduction to the bSims package</a>
+      <a href="../articles/bsims01-intro.html">Introduction to the bSims package</a>
+    </li>
+    <li>
+      <a href="../articles/bsims02-layers.html">Simulation layers in bSims</a>
+    </li>
+    <li>
+      <a href="../articles/bsims03-workflow.html">Simulation workflow in bSims</a>
+    </li>
+    <li>
+      <a href="../articles/bsims04-simulations.html">Simulations in bSims</a>
+    </li>
+    <li>
+      <a href="../articles/bsims05-extensions.html">Limitations and extensions</a>
     </li>
   </ul>
 </li>
@@ -118,7 +130,7 @@ using the QPAD approach (Solymos et al. 2013)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/psolymos/bSims/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -146,9 +158,9 @@ based on simulation objects
 using the QPAD approach (Solymos et al. 2013).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>estimate</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>estimate</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 <span class='co'># S3 method for bsims_transcript</span>
-<span class='fu'>estimate</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>estimate</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,28 +195,32 @@ Calibrating indices of avian density from non-standardized survey data:
 making the most of a messy situation.
 <em>Methods in Ecology and Evolution</em>, <b>4</b>: 1047--1058.
 &lt;doi:10.1111/2041-210X.12106&gt;</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Peter Solymos</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>bsims_init</code></p></div>
+    <div class='dont-index'><p><code><a href='bsims_init.html'>bsims_init</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>2</span>)
-<span class='no'>phi</span> <span class='kw'>&lt;-</span> <span class='fl'>0.5</span>                 <span class='co'># singing rate</span>
-<span class='no'>tau</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>                   <span class='co'># EDR by strata</span>
-<span class='no'>dur</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>                  <span class='co'># simulation duration</span>
-<span class='no'>tbr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>10</span>)   <span class='co'># time intervals</span>
-<span class='no'>rbr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>Inf</span>) <span class='co'># counting radii</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>phi</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span>                 <span class='co'># singing rate</span>
+<span class='va'>tau</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>                   <span class='co'># EDR by strata</span>
+<span class='va'>dur</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>                  <span class='co'># simulation duration</span>
+<span class='va'>tbr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>10</span><span class='op'>)</span>   <span class='co'># time intervals</span>
+<span class='va'>rbr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='cn'>Inf</span><span class='op'>)</span> <span class='co'># counting radii</span>
 
-<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_init</span>(<span class='fl'>10</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>)<span class='co'># landscape</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_populate</span>(<span class='no'>l</span>, <span class='fl'>10</span>)  <span class='co'># population</span>
-<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_animate</span>(<span class='no'>p</span>,      <span class='co'># events</span>
-  <span class='kw'>vocal_rate</span><span class='kw'>=</span><span class='no'>phi</span>, <span class='kw'>duration</span><span class='kw'>=</span><span class='no'>dur</span>)
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_detect</span>(<span class='no'>e</span>,       <span class='co'># detections</span>
-  <span class='kw'>tau</span><span class='kw'>=</span><span class='no'>tau</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bsims_transcribe</span>(<span class='no'>d</span>,   <span class='co'># transcription</span>
-  <span class='kw'>tint</span><span class='kw'>=</span><span class='no'>tbr</span>, <span class='kw'>rint</span><span class='kw'>=</span><span class='no'>rbr</span>)
+<span class='va'>l</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_init</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='co'># landscape</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_populate</a></span><span class='op'>(</span><span class='va'>l</span>, <span class='fl'>10</span><span class='op'>)</span>  <span class='co'># population</span>
+<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_animate</a></span><span class='op'>(</span><span class='va'>p</span>,      <span class='co'># events</span>
+  vocal_rate<span class='op'>=</span><span class='va'>phi</span>, duration<span class='op'>=</span><span class='va'>dur</span><span class='op'>)</span>
+<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_detect</a></span><span class='op'>(</span><span class='va'>e</span>,       <span class='co'># detections</span>
+  tau<span class='op'>=</span><span class='va'>tau</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bsims_init.html'>bsims_transcribe</a></span><span class='op'>(</span><span class='va'>d</span>,   <span class='co'># transcription</span>
+  tint<span class='op'>=</span><span class='va'>tbr</span>, rint<span class='op'>=</span><span class='va'>rbr</span><span class='op'>)</span>
 
-<span class='fu'>estimate</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;       phi       tau   density 
+<span class='fu'>estimate</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       phi       tau   density 
 #&gt; 0.3579668 1.0585735 9.3506209 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -221,7 +237,7 @@ making the most of a messy situation.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
