@@ -3,7 +3,7 @@
 * Added `sensitivity` argument to `bsims_detect`.
 * Revised vignettes.
 
-# Version 0.2-1, 2019-12-16
+# Version 0.2-1, 2019-12-16 (CRAN)
 
 * Replaced `\dontrun{}` with `\donttest{}` in Rd files.
 * Added references to Rd files and `DESCRIPTION` with DOI.
