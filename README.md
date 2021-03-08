@@ -16,6 +16,8 @@ status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-
 > looked at it the right way didn’t become still more complicated.”* –
 > Poul Anderson, Call Me Joe
 
+> *“Love the simulation we're dreaming in”* - Dua Lipa, Let's Get Physical
+
 The goal of the package is to:
 
   - test statistical assumptions,
