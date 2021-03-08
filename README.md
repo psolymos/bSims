@@ -7,7 +7,7 @@ test statistical assumptions and to aid survey design.
 version](https://www.r-pkg.org/badges/version/bSims)](https://cran.rstudio.com/web/packages/bSims/index.html)
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://www.rdocumentation.org/packages/bSims/)
-[![Checks](https://github.com/psolymos/bSims/workflows/deploy/badge.svg)](https://github.com/psolymos/bSims/actions)
+[![Checks](https://github.com/psolymos/bSims/workflows/check/badge.svg)](https://github.com/psolymos/bSims/actions)
 
 
 > *“I’ve yet to see any problem, however complicated, which when you
