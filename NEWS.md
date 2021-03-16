@@ -1,3 +1,7 @@
+# Version 0.2-3, 2021-03-15
+
+* Shiny app fixes to allow vocalization and movement related tau values.
+
 # Version 0.2-2, 2021-01-17
 
 * Added `sensitivity` argument to `bsims_detect`.

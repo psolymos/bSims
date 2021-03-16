@@ -91,7 +91,7 @@ tau <- 1:3                 # detection distances by strata
 tbr <- c(3, 5, 10)         # time intervals
 rbr <- c(0.5, 1, 1.5)      # count radii
 
-l <- bsims_init(10,        # landscape
+l <- bsims_init(extent=10, # landscape
   road=0.25, edge=0.5)
 p <- bsims_populate(l,     # population
   density=c(1, 1, 0))

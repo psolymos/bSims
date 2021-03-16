@@ -359,8 +359,16 @@ server <- function(input, output) {
     op <- par(mfrow=c(1,3))
     barplot(c(True=input$phi1, Estimate=v$phi),
       col=col, main=expression(phi))
-    barplot(c(True=input$tau, Estimate=v$tau),
-      col=col, main=expression(tau))
+    Taus <- switch(input$event,
+      "vocal"=c(True=input$tauV, Estimate=v$tau),
+      "move"=c(True=input$tauM, Estimate=v$tau),
+      "both"=c(TrueV=input$tauV, TrueM=input$tauM, Estimate=v$tau))
+    TauCol <- switch(input$event,
+      "vocal"=col[c(1,2)],
+      "move"=col[c(1,2)],
+      "both"=col[c(1,1,2)])
+    barplot(Taus,
+      col=TauCol, main=expression(tau))
     barplot(c(True=input$D, Estimate=v$D),
       col=col, main=expression(D))
     par(op)
