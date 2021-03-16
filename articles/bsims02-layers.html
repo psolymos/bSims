@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-3</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@
 <span class="va">tbr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>         <span class="co"># time intervals</span>
 <span class="va">rbr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span>      <span class="co"># count radii</span>
 
-<span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_init</a></span><span class="op">(</span><span class="fl">10</span>,        <span class="co"># landscape</span>
+<span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_init</a></span><span class="op">(</span>extent<span class="op">=</span><span class="fl">10</span>, <span class="co"># landscape</span>
   road<span class="op">=</span><span class="fl">0.25</span>, edge<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l</span>,     <span class="co"># population</span>
   density<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
