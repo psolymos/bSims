@@ -15,7 +15,8 @@ function(x,
   ## availability overridden
   if (x$initial_location) {
     tint <- x$duration
-    event_type <- "both"
+    ## this must be overridden in calling functions
+    #event_type <- "both"
     tlim <- NULL
   }
 

@@ -26,13 +26,17 @@ function(
     }
   }
   condition <- match.arg(condition)
-  if (is.null(event_type))
+  if (is.null(event_type)) {
     event_type <- x$event_type
-  event_type <- match.arg(event_type, c("vocal", "move", "both"))
+  } else {
+    event_type <- match.arg(event_type, c("vocal", "move", "both"))
+    if (!is.na(x$event_type) && event_type != x$event_type)
+      stop("redefining event_type is not allowed")
+  }
   ## availability overridden
   if (x$initial_location) {
     tint <- x$duration
-    event_type <- "both"
+    event_type <- "vocal" # this is the default arg value
   }
   tint <- if (is.null(tint))
     x$duration else sort(tint)

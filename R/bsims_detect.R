@@ -17,8 +17,9 @@ function(
   if (!inherits(x, "bsims_events"))
     stop("x must be a bsims_events object")
   event_type <- match.arg(event_type)
+  ## event type is silently ignored
   if (x$initial_location) {
-    event_type <- "both"
+    event_type <- "vocal"  # this is the default arg value
   }
   xy <- as.numeric(xy[1:2])
   if (any(xy %)(% range(x$strata)))
