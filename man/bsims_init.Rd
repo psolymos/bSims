@@ -32,7 +32,7 @@ bsims_animate(x, vocal_rate = 1, move_rate = 0, duration = 10,
 
 bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
   event_type = c("vocal", "move", "both"),
-  sensitivity=1, ...)
+  sensitivity=1, direction=FALSE, ...)
 
 bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
   condition=c("event1", "det1", "alldet"),
@@ -149,8 +149,9 @@ conditioning type to define availability for each individual:
 \code{"alldet"}: all detections (counting the same individual multiple times).
 }
   \item{error}{
-log scale standard deviation for distance estimation error,
+log scale standard deviation (SD) for distance estimation error,
 see \code{\link{rlnorm2}}.
+When \code{direction=TRUE}, error changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) SD is 0, when the bird is facing away (180 degrees) SD is \code{error}. In the range between 0-180 degrees the SD is changing according to the cosine of the degree: SD*(0.5-cos(degree*pi/180)/2).
 }
   \item{perception}{
 perceived number of individuals relative to the actual number of individuals.
@@ -164,8 +165,11 @@ receiving the signal. Can be of length 1 (applies to both vocal and movement eve
 or a named vector of length 2 (names should indicate which one
 is \code{"vocal"} or \code{"move"}). Sensitivity of 1 means that
 the process captured by \code{tau} is unaffected.
-Less than 1 values indicate lower sensitivity (effectively lowering tau),
-larger than 1 values indicate higher sensitivity (effectively lowering tau).
+Less than 1 values indicate lower sensitivity (effectively decreasing tau),
+larger than 1 values indicate higher sensitivity (effectively increasing tau).
+}
+  \item{direction}{
+logical. When \code{TRUE}, tau for vocalizations (not for movement) changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) tau is unaffected, when the bird is facing away (180 degrees) tau is \code{sensitivity * tau}. In the range between 0-180 degrees the effect is changing according to the cosine of the degree (0.5-cos(degree*pi/180)/2).
 }
   \item{\dots}{
 other arguments passed to underlying functions.

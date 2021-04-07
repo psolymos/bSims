@@ -133,6 +133,10 @@ function(
       }
       Events[[i]] <- e
     }
+    ## direction added for vocalization events (NA for movement)
+    ## a=angle in degrees (0:360) relative to north clockwise
+    Events[[i]]$a <- ifelse(Events[[i]]$v == 1,
+      sample(0:359, nrow(Events[[i]]), replace=TRUE), NA)
   }
   x$vocal_rate <- vr
   x$move_rate <- mr

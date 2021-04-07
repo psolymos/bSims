@@ -12,6 +12,7 @@ function(
   dist_fun=NULL, # takes args d(istance) and tau (single parameter)
   event_type=c("vocal", "move", "both"),
   sensitivity=1,
+  direction=FALSE,
   ...)
 {
   if (!inherits(x, "bsims_events"))
@@ -30,6 +31,7 @@ function(
   A <- diff(x$strata) * diff(range(x$strata))
   A <- c(h=A[1]+A[5], e=A[2]+A[4], r=A[3])
   names(A) <- c("H", "E", "R")
+  ## sensitivity: of the receiver --> affects the slope of dist fun
   if (length(sensitivity) > 1) {
     sensitivity <- sensitivity[c("vocal", "move")]
   }
@@ -37,6 +39,18 @@ function(
     stop("something isn't right with sensitivity")
   if (any(sensitivity < 0))
     stop("sensitivity cannot be negative")
+  ## direction: logical, only applies to vocalizations
+  ## describing anisotropic sound attenuation
+  ## away from the sound source
+  ## and is a function of direction relative to observer
+  direction <- as.logical(direction[1L])
+  ## tau is tau, sensitivity is sensitivity
+  ## theta ($f) is the angle (0-180)
+  ## value is tau when theta=0, sensitivity*tau when theta=180
+  dir_fun <- function(tau, sensitivity, theta) {
+    h <- (sensitivity*tau)-tau
+    tau + h*(0.5-cos(theta*pi/180)/2)
+  }
   ## tau processing
   tau <- unname(tau)
   if (length(tau) == 1L) {
@@ -106,10 +120,15 @@ function(
     xx <- xxb - xy[1L]
     yy <- yyb - xy[2L]
     z$d <- sqrt(xx^2 + yy^2) # distance from observer
-    ## repel inds within repel distance (0 just for temp object z)
-#    z$v[z$d < repel] <- 0
-    ## NA is placeholder for these vocalizations in return object
-#    x$events[[i]]$v[z$d < repel] <- NA
+    ## direction: 0=towards observer, 1=180 degrees away
+    ## angle from bird to observer relative to north, clockwise
+    if (direction) {
+      theta_obs <- round(270-180*atan2(yy, xx)/pi) %% 360
+      z$f <- abs(z$a - theta_obs) %% 180
+      z$f[z$v==0] <- 0 # movement gets 0 angle --> dist fun unmodified
+    } else {
+      z$f <- rep(0, nrow(z)) # no anisotropy
+    }
     ## subset based on event type requested
     keep <- switch(event_type,
       "vocal"=z$v > 0,
@@ -134,8 +153,9 @@ function(
           TAU <- tau[c(1,2,3,2,1)][sbrd[j]:sobs] # brd-->obs ordering = good!
           ## calculate distance breaks from x and theta
           if (length(TAU) == 1L) {
-            #b <- numeric(0)
-            q[j] <- dist_fun(z$d[j], TAU*sensitivity, ...)
+            TAUsdir <- if (direction)
+              dir_fun(TAU, sensitivity, z$f[j]) else TAU*sensitivity
+            q[j] <- dist_fun(z$d[j], TAUsdir, ...)
           } else {
             ## this gives breaks along x axis
             if (sobs < sbrd[j]) { # bird right of observer
@@ -148,11 +168,20 @@ function(
             ## turn that into distance from bird (stratified attenuation)
             b <- z$d[j] - rev(b)
             ## calculate q
-            q[j] <- dist_fun2(z$d[j], TAU*sensitivity, dist_fun, b, ...)
+            TAUsdir <- if (direction)
+              dir_fun(TAU, sensitivity, z$f[j]) else TAU*sensitivity
+            q[j] <- dist_fun2(z$d[j], TAUsdir, dist_fun, b, ...)
           }
         } else { # tau_type == "six"
           ## order tau as HEREH
-          TAUv <- tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs]*sensitivity["vocal"]
+          #TAUv <- tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs]*sensitivity["vocal"]
+          TAUv <- if (direction) {
+            dir_fun(tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs],
+                    sensitivity["vocal"],
+                    z$f[j])
+          } else {
+            tau[c(1,2,3,2,1),"vocal"][sbrd[j]:sobs]*sensitivity["vocal"]
+          }
           TAUm <- tau[c(1,2,3,2,1),"move"][sbrd[j]:sobs]*sensitivity["move"]
           if (length(TAUv) == 1L) {
             q[j] <- dist_fun(z$d[j],
@@ -177,25 +206,40 @@ function(
       }
     } else {
       if (tau_type == "vm") {
+        TAUvsdir <- if (direction) {
+          dir_fun(tau_use["vocal"], sensitivity["vocal"], z$f)
+        } else {
+          tau_use["vocal"]*sensitivity["vocal"]
+        }
         q <- ifelse(z$v > 0,
-          dist_fun(z$d, tau_use["vocal"]*sensitivity["vocal"], ...),
+          dist_fun(z$d, TAUvsdir, ...),
           dist_fun(z$d, tau_use["move"]*sensitivity["move"], ...))
       } else { # tau_type == "one"
         if (length(sensitivity) > 1)
           stop("sensitivity must be of length 1 to match tau")
-        q <- dist_fun(z$d, tau_use, ...)
+        TAUsdir <- if (direction)
+          dir_fun(tau_use, sensitivity, z$f) else tau_use
+        q <- dist_fun(z$d, TAUsdir, ...)
       }
     }
+
     z$det <- rbinom(length(z$d), size=1, prob=q)
     z <- z[z$det > 0,,drop=FALSE]
     ## distance is shown where detected, NA when not detected
     x$events[[i]]$d <- z$d[match(rownames(x$events[[i]]), rownames(z))]
+    ## $f is the angle between line to obs and face of bird ($a), or NA
+    x$events[[i]]$f <- if (direction) {
+      z$f[match(rownames(x$events[[i]]), rownames(z))]
+    } else {
+      rep(NA, nrow(x$events[[i]]))
+    }
   }
   x$xy <- xy
   x$tau <- tau
   x$dist_fun <- dist_fun
   x$event_type <- event_type
   x$sensitivity <- sensitivity
+  x$direction <- direction
   x$call <- match.call()
   class(x) <- c("bsims_detections",
                 "bsims_events",

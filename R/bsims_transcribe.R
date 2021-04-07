@@ -51,6 +51,11 @@ function(
     ifelse(is.finite(rint), paste0("-", round(100*rint)), "+"), "m")
   tLAB <- paste0(c(0, round(tint[-length(tint)], 2)), "-", tint, "min")
 
+  ## check and modify error based on direction
+  if (error < 0)
+    stop("error must be >= 0")
+  error0 <- error
+
   ## --- REMOVAL ---
   ## let get_detections take care of subsetting
   detrem <- .get_detections(x,
@@ -58,9 +63,11 @@ function(
     event_type=event_type,
     perception=perception)
   ## add distance estimation error
-  if (error < 0)
-    stop("error must be >= 0")
-  derr <- if (error > 0)
+  if (x$direction) {
+    theta <- ifelse(is.na(detrem$f), 0, detrem$f)
+    error <- error0 * (0.5-cos(theta*pi/180)/2)
+  }
+  derr <- if (error0 > 0)
     rlnorm2(nrow(detrem), detrem$d, error) else detrem$d
   detrem$error <- derr - detrem$d
   ## assign labels
@@ -88,9 +95,11 @@ function(
       tlim=c(0, tint)[c(i, i+1L)]))
   }
   ## add distance estimation error
-  if (error < 0)
-    stop("error must be >= 0")
-  derr2 <- if (error > 0)
+  if (x$direction) {
+    theta <- ifelse(is.na(detvis$f), 0, detvis$f)
+    error <- error0 * (0.5-cos(theta*pi/180)/2)
+  }
+  derr2 <- if (error0 > 0)
     rlnorm2(nrow(detvis), detvis$d, error) else detvis$d
   detvis$error <- derr2 - detvis$d
   ## assign labels
@@ -112,7 +121,7 @@ function(
   x$visits <- xtvis
   x$tint <- tint
   x$rint <- rint
-  x$error <- error
+  x$error <- error0
   x$condition <- condition
   x$event_type <- event_type
   x$perception <- perception

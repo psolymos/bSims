@@ -7,6 +7,52 @@ library(mefa4)
 
 devtools::install_github("psolymos/bSims")
 
+
+## direction effects
+
+rbr <- c(0.5, 1, 1.5, Inf)
+tbr <- c(3, 5, 10)
+l <- bsims_init()
+p <- bsims_populate(l, 20)
+a <- bsims_animate(p, vocal_rate=1)
+#a$events[[1]]
+o1 <- bsims_detect(a, tau=1.5, sensitivity=1, direction=FALSE)
+o2 <- bsims_detect(a, tau=1.5, sensitivity=0.5, direction=TRUE)
+head(get_events(o1))
+head(get_detections(o1))
+dim(get_detections(o1))
+head(get_detections(o2))
+dim(get_detections(o2))
+
+x1 <- bsims_transcribe(o1, tint=tbr, rint=rbr)
+x2 <- bsims_transcribe(o2, tint=tbr, rint=rbr)
+x3 <- bsims_transcribe(o2, tint=tbr, rint=rbr, error=2)
+rowSums(x1$removal)
+rowSums(x2$removal)
+rowSums(x3$removal)
+estimate(x1)
+estimate(x2)
+estimate(x3)
+
+z <- list()
+for (i in 1:10) {
+  cat(".")
+  a <- bsims_animate(p, vocal_rate=1, initial_location = TRUE)
+  o1 <- bsims_detect(a, tau=1.5, sensitivity=1, direction=FALSE)
+  o2 <- bsims_detect(a, tau=1.5, sensitivity=0.5, direction=TRUE)
+  x1 <- bsims_transcribe(o1, tint=tbr, rint=rbr)
+  x2 <- bsims_transcribe(o2, tint=tbr, rint=rbr)
+  z[[i]] <- list(s1=round(100*rowSums(x1$removal)/sum(x1$removal)),
+   s2=round(100*rowSums(x2$removal)/sum(x2$removal)),
+    e1=estimate(x1),
+    e2=estimate(x2))
+}
+colMeans(t(sapply(z, "[[", "s1")))
+colMeans(t(sapply(z, "[[", "s2")))
+summary(t(sapply(z, "[[", "e1")))
+summary(t(sapply(z, "[[", "e2")))
+
+
 ## spatial patterns
 ## stupid
 f <- function(d) ifelse(d > 0, 0, 0)
