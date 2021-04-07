@@ -31,8 +31,10 @@ Design objectives:
   - defaults chosen to reflect common practice and assumptions,
   - extensible (PRs are welcome).
 
-See the package in action in the [QPAD
-Book](https://peter.solymos.org/qpad-book/).
+See the package in action in the [**QPAD
+Book**](https://peter.solymos.org/qpad-book/).
+
+Check out the [**QPAD workshop**](https://peter.solymos.org/qpad-workshop/).
 
 ## Install
 
