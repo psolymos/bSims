@@ -34,7 +34,8 @@ bsims_detect(x, xy = c(0, 0), tau = 1, dist_fun = NULL,
   event_type = c("vocal", "move", "both"),
   sensitivity=1, direction=FALSE, ...)
 
-bsims_transcribe(x, tint = NULL, rint = Inf, error = 0,
+bsims_transcribe(x, tint = NULL, rint = Inf,
+  error = 0, bias = 1,
   condition=c("event1", "det1", "alldet"),
   event_type=NULL, perception=NULL, ...)
 
@@ -152,6 +153,10 @@ conditioning type to define availability for each individual:
 log scale standard deviation (SD) for distance estimation error,
 see \code{\link{rlnorm2}}.
 When \code{direction=TRUE}, error changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) SD is 0, when the bird is facing away (180 degrees) SD is \code{error}. In the range between 0-180 degrees the SD is changing according to the cosine of the degree: SD*(0.5-cos(degree*pi/180)/2).
+}
+  \item{bias}{
+nonnegative numeric, the distance estimation bias. The default value (1) means no bias, <1 indicates negative bias (perceived distance is less than true distance), >1 indicates positive bias (perceived distance is higher than true distance). This acts as a multiplier and can be combined with \code{error}.
+When \code{direction=TRUE}, bias changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) perceived distance equals the true distance, when the bird is facing away (180 degrees) perceived distance is \code{bias} * true distance. In the range between 0-180 degrees the bias is changing according to the cosine of the degree: 1+(bias-1)*(0.5-cos(degree*pi/180)/2).
 }
   \item{perception}{
 perceived number of individuals relative to the actual number of individuals.

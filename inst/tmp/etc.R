@@ -27,12 +27,24 @@ dim(get_detections(o2))
 x1 <- bsims_transcribe(o1, tint=tbr, rint=rbr)
 x2 <- bsims_transcribe(o2, tint=tbr, rint=rbr)
 x3 <- bsims_transcribe(o2, tint=tbr, rint=rbr, error=2)
-rowSums(x1$removal)
-rowSums(x2$removal)
-rowSums(x3$removal)
-estimate(x1)
-estimate(x2)
-estimate(x3)
+x4 <- bsims_transcribe(o2, tint=tbr, rint=rbr, bias=2, error=0)
+x5 <- bsims_transcribe(o2, tint=tbr, rint=rbr, bias=2, error=2)
+
+cbind(rowSums(x1$removal),
+  rowSums(x2$removal),
+  rowSums(x3$removal),
+  rowSums(x4$removal),
+  rowSums(x5$removal))
+c(estimate(x1)["tau"],
+  estimate(x2)["tau"],
+  estimate(x3)["tau"],
+  estimate(x4)["tau"],
+  estimate(x5)["tau"])
+## there are 3 key places where anisotropy can come in:
+## - sensitivity (tau impacted by direction)
+## - bias (perception in distance mean)
+## - error (perception in distance error)
+## the actual mechnaisms/magnitude is tricky to know...
 
 z <- list()
 for (i in 1:10) {
