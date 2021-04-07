@@ -9,6 +9,7 @@ function(
   tint=NULL,
   rint=Inf,
   error=0,
+  bias=1,
   condition=c("event1", "det1", "alldet"),
   event_type=NULL,
   perception=NULL,
@@ -51,6 +52,14 @@ function(
     ifelse(is.finite(rint), paste0("-", round(100*rint)), "+"), "m")
   tLAB <- paste0(c(0, round(tint[-length(tint)], 2)), "-", tint, "min")
 
+  ## check and modify error and bias based on direction
+  if (error < 0)
+    stop("error must be >= 0")
+  error0 <- error
+  if (bias < 0)
+    stop("bias must be >= 0")
+  bias0 <- bias
+
   ## --- REMOVAL ---
   ## let get_detections take care of subsetting
   detrem <- .get_detections(x,
@@ -58,10 +67,12 @@ function(
     event_type=event_type,
     perception=perception)
   ## add distance estimation error
-  if (error < 0)
-    stop("error must be >= 0")
-  derr <- if (error > 0)
-    rlnorm2(nrow(detrem), detrem$d, error) else detrem$d
+  if (x$direction) {
+    theta <- ifelse(is.na(detrem$f), 0, detrem$f)
+    error <- error0 * (0.5-cos(theta*pi/180)/2)
+    bias <- 1+(bias0-1)*(0.5-cos(theta*pi/180)/2)
+  }
+  derr <- rlnorm2(nrow(detrem), detrem$d*bias, error)
   detrem$error <- derr - detrem$d
   ## assign labels
   detrem$rint <- factor(rLAB[cut(derr, c(0, rint), labels=FALSE,
@@ -88,10 +99,12 @@ function(
       tlim=c(0, tint)[c(i, i+1L)]))
   }
   ## add distance estimation error
-  if (error < 0)
-    stop("error must be >= 0")
-  derr2 <- if (error > 0)
-    rlnorm2(nrow(detvis), detvis$d, error) else detvis$d
+  if (x$direction) {
+    theta <- ifelse(is.na(detvis$f), 0, detvis$f)
+    error <- error0 * (0.5-cos(theta*pi/180)/2)
+    bias <- 1+(bias0-1)*(0.5-cos(theta*pi/180)/2)
+  }
+  derr2 <- rlnorm2(nrow(detvis), detvis$d*bias, error)
   detvis$error <- derr2 - detvis$d
   ## assign labels
   detvis$rint <- factor(rLAB[cut(derr2, c(0, rint), labels=FALSE,
@@ -112,7 +125,8 @@ function(
   x$visits <- xtvis
   x$tint <- tint
   x$rint <- rint
-  x$error <- error
+  x$error <- error0
+  x$bias <- bias0
   x$condition <- condition
   x$event_type <- event_type
   x$perception <- perception

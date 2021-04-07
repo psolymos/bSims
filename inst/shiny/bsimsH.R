@@ -122,7 +122,8 @@ ui <- navbarPage("bSims (H)",
       radioButtons("event", "Event type",
         c("Vocalization"="vocal",
           "Movement"="move",
-          "Both"="both"))
+          "Both"="both")),
+      sliderInput("dir_sens", "Anisotropy in tau due to direction", 0, 2, 1, 0.1)
     )
   ),
   tabPanel("Transcribe",
@@ -134,6 +135,7 @@ ui <- navbarPage("bSims (H)",
         selectInput("tint", "Time intervals", names(TINT)),
         selectInput("rint", "Distance intervals", names(RINT)),
         sliderInput("derr", "Distance error", 0, 1, 0, 0.1),
+        sliderInput("dbias", "Distance bias", 0, 2, 1, 0.1),
         radioButtons("condition", "Condition",
           c("1st event"="event1",
             "1st detection"="det1",
@@ -222,8 +224,9 @@ server <- function(input, output) {
       xy = c(0, 0),
       tau = c(input$tauV, input$tauM),
       dist_fun = dfun(),
-#      repel = input$repel,
-      event_type = input$event)
+      event_type = input$event,
+      direction=input$dir_sens != 1,
+      sensitivity=input$dir_sens)
   })
   m <- reactive({
     pr <- if (!input$oucount)
@@ -232,6 +235,7 @@ server <- function(input, output) {
       tint = TINT[[input$tint]],
       rint = RINT[[input$rint]],
       error = input$derr,
+      bias = input$dbias,
       condition = input$condition,
       event_type = input$event,
       perception = pr
@@ -314,10 +318,13 @@ server <- function(input, output) {
     ",\n  tau = c(", input$tauV, ", ", input$tauM, ")",
     ",\n  dist_fun = ", paste0(deparse(dfun()), collapse=''),
     ",\n  xy = c(0, 0)",
+    ",\n  direction = ", input$dir_sens != 1,
+    ",\n  sensitivity = ", input$dir_sens,
     ",\n  event_type = ", xq(input$event),
     ",\n  tint = ", xc(TINT[[input$tint]]),
     ",\n  rint = ", xc(RINT[[input$rint]]),
     ",\n  error = ", input$derr,
+    ",\n  bias = ", input$dbias,
     ",\n  condition = ", xq(input$condition),
     ",\n  perception = ", pr,
     ")", collapse="")
