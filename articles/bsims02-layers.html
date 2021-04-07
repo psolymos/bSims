@@ -222,21 +222,21 @@
 <span class="co">#&gt; bSims population</span>
 <span class="co">#&gt;   1 km x 1 km</span>
 <span class="co">#&gt;   stratification: H</span>
-<span class="co">#&gt;   total abundance: 105</span></code></pre></div>
+<span class="co">#&gt;   total abundance: 116</span></code></pre></div>
 <p>Changing <code>abund_fun</code> can be useful to make abundance constant or allow under or overdispersion, e.g.:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="co"># Poisson variation</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   80.00   93.00  100.00   99.54  106.00  125.00</span>
+<span class="co">#&gt;   72.00   94.75  100.50  101.01  107.25  130.00</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/rnegbin.html">rnegbin</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="co"># NegBin variation</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;    0.00   29.00   70.50   92.91  128.00  504.00</span>
+<span class="co">#&gt;     0.0    15.0    64.0   105.8   158.2   567.0</span>
 <span class="va">negbin</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span>, <span class="va">...</span><span class="op">)</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/rnegbin.html">rnegbin</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">lambda</span>, <span class="va">...</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l1</span>, abund_fun <span class="op">=</span> <span class="va">negbin</span>, theta <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>
 <span class="co">#&gt; bSims population</span>
 <span class="co">#&gt;   1 km x 1 km</span>
 <span class="co">#&gt;   stratification: H</span>
-<span class="co">#&gt;   total abundance: 131</span>
+<span class="co">#&gt;   total abundance: 58</span>
 <span class="co">## constant abundance</span>
 <span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l1</span>, abund_fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">lambda</span>, <span class="va">...</span><span class="op">)</span> <span class="va">lambda</span><span class="op">)</span>
 <span class="co">#&gt; bSims population</span>
@@ -304,13 +304,13 @@
 <span class="va">e1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_animate</a></span><span class="op">(</span><span class="va">p</span>, vocal_rate <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_nests.html">get_events</a></span><span class="op">(</span><span class="va">e1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;            x          y           t v  i</span>
-<span class="co">#&gt; 1 -3.1574571 -1.9481752 0.001580241 1 20</span>
-<span class="co">#&gt; 2  3.2556064 -0.5015956 0.009923855 1 37</span>
-<span class="co">#&gt; 3 -2.7010511 -0.2211221 0.010058172 1 23</span>
-<span class="co">#&gt; 4  3.4310968  2.1861406 0.048788271 1 28</span>
-<span class="co">#&gt; 5  0.9002583 -1.3580481 0.072173809 1 24</span>
-<span class="co">#&gt; 6  3.6392110  0.4004323 0.094942885 1 42</span>
+<span class="co">#&gt;            x          y           t v   a  i</span>
+<span class="co">#&gt; 1 -1.0695308 -0.7160919 0.005626468 1 108 10</span>
+<span class="co">#&gt; 2  2.4040573  1.3196873 0.022987967 1 314 36</span>
+<span class="co">#&gt; 3  1.9208075  2.2174483 0.044264103 1 276 21</span>
+<span class="co">#&gt; 4 -1.9400019  1.1727845 0.076256107 1 123  9</span>
+<span class="co">#&gt; 5 -2.0071394 -3.4967963 0.084058107 1 178  3</span>
+<span class="co">#&gt; 6 -0.6696711 -4.1261427 0.161096144 1  86  6</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_nests.html">get_events</a></span><span class="op">(</span><span class="va">e1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="../reference/get_nests.html">get_abundance</a></span><span class="op">(</span><span class="va">e1</span><span class="op">)</span>, col<span class="op">=</span><span class="fl">2</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/beh-events-1.png" width="576"></p>
@@ -389,18 +389,18 @@
 <span class="co">#&gt; bSims detections</span>
 <span class="co">#&gt;   1 km x 1 km</span>
 <span class="co">#&gt;   stratification: H</span>
-<span class="co">#&gt;   total abundance: 47</span>
+<span class="co">#&gt;   total abundance: 43</span>
 <span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 19 heard</span>
+<span class="co">#&gt;   detected: 14 heard</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_nests.html">get_detections</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;              x          y         t v         d  i  j</span>
-<span class="co">#&gt; 36  0.56654502 -2.1103945 0.3114306 1 2.1851175 41 41</span>
-<span class="co">#&gt; 50 -4.03249134  1.4051888 0.4228829 1 4.2703094 10 10</span>
-<span class="co">#&gt; 71  1.07678536 -1.8766084 0.6886996 1 2.1635910 46 46</span>
-<span class="co">#&gt; 72 -1.04974751 -0.2095754 0.6892619 1 1.0704633 11 11</span>
-<span class="co">#&gt; 82  0.90025832 -1.3580481 0.7595139 1 1.6293433 24 24</span>
-<span class="co">#&gt; 86 -0.04955808  0.9531316 0.8354224 1 0.9544191 15 15</span>
+<span class="co">#&gt;             x          y         t v   a         d  f  i  j</span>
+<span class="co">#&gt; 59   1.033834 -0.5436307 0.6992886 1 248 1.1680526 NA 37 37</span>
+<span class="co">#&gt; 67  -1.473937  1.0003945 0.7579134 1 350 1.7813703 NA 12 12</span>
+<span class="co">#&gt; 70   1.033834 -0.5436307 0.8413722 1 234 1.1680526 NA 37 37</span>
+<span class="co">#&gt; 91  -1.088111 -0.3823201 1.1195392 1 287 1.1533228 NA 10 10</span>
+<span class="co">#&gt; 104 -2.237350 -1.1170397 1.2695494 1 247 2.5007026 NA  1  1</span>
+<span class="co">#&gt; 156  0.751192 -0.5472666 1.8167910 1 143 0.9294032 NA 37 37</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/det-1.png" width="480"></p>
 <p>The <code>tau</code> argument can be a vector of length 3, referring to detection distances in the HER strata. When the landscape is stratified, and detection distances are different among the strata the <code>bsims_detect</code> function uses a segmented attenuation model along the linear distance between the bird and the observer. The <code><a href="../reference/run_app.html">run_app("distfunHER")</a></code> <strong>shiny</strong> explores the segmented attenuation.</p>
@@ -461,18 +461,18 @@
 <span class="co">#&gt; bSims detections</span>
 <span class="co">#&gt;   1 km x 1 km</span>
 <span class="co">#&gt;   stratification: HER</span>
-<span class="co">#&gt;   total abundance: 192</span>
+<span class="co">#&gt;   total abundance: 169</span>
 <span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 48 seen/heard</span>
+<span class="co">#&gt;   detected: 42 seen/heard</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_nests.html">get_detections</a></span><span class="op">(</span><span class="va">d2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;              x          y          t v        d   i   j</span>
-<span class="co">#&gt; 25   0.7077971 -1.3834329 0.04585463 1 1.553983 148 148</span>
-<span class="co">#&gt; 31  -1.6289983 -0.2969315 0.06989294 1 1.655839  89  89</span>
-<span class="co">#&gt; 40   0.9776243 -0.8567035 0.09464514 0 1.299881 136 136</span>
-<span class="co">#&gt; 90   1.2324568  0.3251513 0.23212265 1 1.274627 161 161</span>
-<span class="co">#&gt; 110 -0.7048471  2.9448793 0.28508227 0 3.028056  91  91</span>
-<span class="co">#&gt; 118  0.2906563 -0.3053235 0.30325080 0 0.421549 100 100</span>
+<span class="co">#&gt;             x           y          t v   a         d  f  i  j</span>
+<span class="co">#&gt; 5  -0.9776217  1.36502323 0.01223095 0  NA 1.6789975 NA 13 13</span>
+<span class="co">#&gt; 18  0.7590823 -0.09204728 0.04171113 1  20 0.7646429 NA 93 93</span>
+<span class="co">#&gt; 32  0.7199966 -0.18819715 0.08127040 0  NA 0.7441863 NA 93 93</span>
+<span class="co">#&gt; 37 -1.5615347  0.99025837 0.09535332 1 352 1.8490544 NA  6  6</span>
+<span class="co">#&gt; 43 -0.5873458  0.67553887 0.11854136 0  NA 0.8951692 NA 33 33</span>
+<span class="co">#&gt; 80  0.7199966 -0.18819715 0.24575458 1 124 0.7441863 NA 93 93</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">d2</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/det2-1.png" width="480"></p>
 <p>If you notice in the plot here, the detections (lines connecting the observer and the location of the events being detected) are 2 different colors. That’s because we allowed both vocalization and movement event types to be detected via the <code>event_type = "both"</code> argument. Vocalization and movement related detections might have different detection function characteristics. A flyover might be seen from larger distances, but it can also depend on body size and coloration relative to the background. For this reason, the <code>tau</code> argument can also be a vector of length 2 to provide parameters for vocalization (1st value) and movement (2nd value) related events.</p>
@@ -482,9 +482,9 @@
 <span class="co">#&gt; bSims detections</span>
 <span class="co">#&gt;   1 km x 1 km</span>
 <span class="co">#&gt;   stratification: H</span>
-<span class="co">#&gt;   total abundance: 47</span>
+<span class="co">#&gt;   total abundance: 43</span>
 <span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 34 seen/heard</span>
+<span class="co">#&gt;   detected: 30 seen/heard</span>
 
 <span class="va">dtab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nests.html">get_detections</a></span><span class="op">(</span><span class="va">d3</span><span class="op">)</span>
 <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">dtab</span>, <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">i</span>, <span class="va">v</span><span class="op">)</span><span class="op">)</span>
@@ -492,7 +492,7 @@
   <span class="st">"seen"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span>,<span class="st">"0"</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">tmp</span><span class="op">[</span>,<span class="st">"1"</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>,
   <span class="st">"heard &amp; seen"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span>,<span class="st">"0"</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">tmp</span><span class="op">[</span>,<span class="st">"1"</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;        heard         seen heard &amp; seen </span>
-<span class="co">#&gt;            0           24           10</span>
+<span class="co">#&gt;            1           23            6</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">d3</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/det3-1.png" width="480"></p>
@@ -515,9 +515,9 @@
 <span class="co">#&gt; bSims transcript</span>
 <span class="co">#&gt;   1 km x 1 km</span>
 <span class="co">#&gt;   stratification: H</span>
-<span class="co">#&gt;   total abundance: 47</span>
+<span class="co">#&gt;   total abundance: 43</span>
 <span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 19 heard</span>
+<span class="co">#&gt;   detected: 14 heard</span>
 <span class="co">#&gt;   1st event detected by breaks:</span>
 <span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span>
 <span class="co">#&gt;     [0, 50, 100, 150, Inf m]</span>
@@ -527,16 +527,16 @@
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/get_nests.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"removal"</span><span class="op">)</span>
 <span class="co">#&gt;          0-2min 2-4min 4-6min 6-8min 8-10min</span>
-<span class="co">#&gt; 0-50m         0      0      1      0       0</span>
-<span class="co">#&gt; 50-100m       0      0      0      0       0</span>
-<span class="co">#&gt; 100-150m      0      0      0      0       0</span>
-<span class="co">#&gt; 150+m         7      1      0      0       0</span>
+<span class="co">#&gt; 0-50m         0      0      0      0       0</span>
+<span class="co">#&gt; 50-100m       0      1      0      0       0</span>
+<span class="co">#&gt; 100-150m      2      0      0      0       0</span>
+<span class="co">#&gt; 150+m         2      0      0      0       0</span>
 <span class="fu"><a href="../reference/get_nests.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"visits"</span><span class="op">)</span>
 <span class="co">#&gt;          0-2min 2-4min 4-6min 6-8min 8-10min</span>
-<span class="co">#&gt; 0-50m         0      0      1      0       0</span>
-<span class="co">#&gt; 50-100m       0      0      1      0       1</span>
-<span class="co">#&gt; 100-150m      0      1      1      1       1</span>
-<span class="co">#&gt; 150+m         7      5      2      2       6</span></code></pre></div>
+<span class="co">#&gt; 0-50m         0      0      0      0       0</span>
+<span class="co">#&gt; 50-100m       0      1      3      0       0</span>
+<span class="co">#&gt; 100-150m      2      0      0      1       2</span>
+<span class="co">#&gt; 150+m         2      2      3      2       1</span></code></pre></div>
 </div>
 <div id="statistical-validity-of-the-simulations" class="section level1">
 <h1 class="hasAnchor">
@@ -561,22 +561,22 @@
 <span class="co">#&gt;   stratification: H</span>
 <span class="co">#&gt;   total abundance: 1014</span>
 <span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 259 heard</span>
+<span class="co">#&gt;   detected: 289 heard</span>
 <span class="co">#&gt;   1st event detected by breaks:</span>
 <span class="co">#&gt;     [0, 1, 2, 3, 4, 5 min]</span>
 <span class="co">#&gt;     [0, 50, 100, 150, 200 m]</span>
 <span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nests.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"removal"</span><span class="op">)</span><span class="op">)</span> <span class="co"># binned new individuals</span>
 <span class="co">#&gt;          0-1min 1-2min 2-3min 3-4min 4-5min</span>
-<span class="co">#&gt; 0-50m         1      3      1      2      0</span>
-<span class="co">#&gt; 50-100m       7      3      5      1      1</span>
-<span class="co">#&gt; 100-150m     12      2      2      1      2</span>
-<span class="co">#&gt; 150-200m     13      8      2      1      1</span>
+<span class="co">#&gt; 0-50m         1      4      1      1      1</span>
+<span class="co">#&gt; 50-100m      10      5      3      0      1</span>
+<span class="co">#&gt; 100-150m      9      5      4      2      0</span>
+<span class="co">#&gt; 150-200m     12      5      4      1      1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; 0-1min 1-2min 2-3min 3-4min 4-5min </span>
-<span class="co">#&gt;     33     16     10      5      4</span>
+<span class="co">#&gt;     32     19     12      4      3</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m </span>
-<span class="co">#&gt;        7       17       19       25</span>
+<span class="co">#&gt;        8       19       20       23</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/H-1.png" width="480"></p>
 <p>We use the <strong>detect</strong> package to fit removal model and distance sampling model to the simulated output. This is handily implemented in the <code>estimate</code> method for the transcription objects. First, we estimate singing rate, effective detection distance, and density based on truncated distance counts:</p>
@@ -589,9 +589,9 @@
 <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>true <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>phi<span class="op">=</span><span class="va">phi</span>, tau<span class="op">=</span><span class="va">tau</span>, D<span class="op">=</span><span class="va">Den</span><span class="op">)</span>, 
   estimate <span class="op">=</span> <span class="fu"><a href="../reference/estimate.html">estimate</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;     true  estimate</span>
-<span class="co">#&gt; phi  0.5 0.5768794</span>
-<span class="co">#&gt; tau  2.0 2.2733052</span>
-<span class="co">#&gt; D   10.0 8.2330714</span></code></pre></div>
+<span class="co">#&gt; phi  0.5 0.5979187</span>
+<span class="co">#&gt; tau  2.0 1.8996806</span>
+<span class="co">#&gt; D   10.0 9.7047484</span></code></pre></div>
 <p>Next, we estimate singing rate, effective detection distance, and density based on unlimited distance counts:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">2</span>, <span class="cn">Inf</span><span class="op">)</span> <span class="co"># unlimited</span>
@@ -602,30 +602,30 @@
 <span class="co">#&gt;   stratification: H</span>
 <span class="co">#&gt;   total abundance: 1014</span>
 <span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 259 heard</span>
+<span class="co">#&gt;   detected: 289 heard</span>
 <span class="co">#&gt;   1st event detected by breaks:</span>
 <span class="co">#&gt;     [0, 1, 2, 3, 4, 5 min]</span>
 <span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span>
 <span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nests.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"removal"</span><span class="op">)</span><span class="op">)</span> <span class="co"># binned new individuals</span>
 <span class="co">#&gt;          0-1min 1-2min 2-3min 3-4min 4-5min</span>
-<span class="co">#&gt; 0-50m         1      3      1      2      0</span>
-<span class="co">#&gt; 50-100m       7      3      5      1      1</span>
-<span class="co">#&gt; 100-150m     12      2      2      1      2</span>
-<span class="co">#&gt; 150-200m     13      8      2      1      1</span>
-<span class="co">#&gt; 200+m        15      9      6      6      2</span>
+<span class="co">#&gt; 0-50m         1      4      1      1      1</span>
+<span class="co">#&gt; 50-100m      10      5      3      0      1</span>
+<span class="co">#&gt; 100-150m      9      5      4      2      0</span>
+<span class="co">#&gt; 150-200m     12      5      4      1      1</span>
+<span class="co">#&gt; 200+m        15      9      6      1      3</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; 0-1min 1-2min 2-3min 3-4min 4-5min </span>
-<span class="co">#&gt;     48     25     16     11      6</span>
+<span class="co">#&gt;     47     28     18      5      6</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m    200+m </span>
-<span class="co">#&gt;        7       17       19       25       38</span>
+<span class="co">#&gt;        8       19       20       23       34</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>true <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>phi<span class="op">=</span><span class="va">phi</span>, tau<span class="op">=</span><span class="va">tau</span>, D<span class="op">=</span><span class="va">Den</span><span class="op">)</span>, 
   estimate <span class="op">=</span> <span class="fu"><a href="../reference/estimate.html">estimate</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;     true  estimate</span>
-<span class="co">#&gt; phi  0.5 0.5128359</span>
-<span class="co">#&gt; tau  2.0 1.9928785</span>
-<span class="co">#&gt; D   10.0 9.2041636</span></code></pre></div>
+<span class="co">#&gt; phi  0.5 0.5731308</span>
+<span class="co">#&gt; tau  2.0 1.8922130</span>
+<span class="co">#&gt; D   10.0 9.8040797</span></code></pre></div>
 <p>Deviations from the assumptions and bias in density estimation can be done by systematically evaluating the simulations settings, which we describe in the next section.</p>
 </div>
   </div>

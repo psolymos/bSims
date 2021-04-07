@@ -167,9 +167,10 @@ simulated birds in a point count.</p>
 
 <span class='fu'>bsims_detect</span><span class='op'>(</span><span class='va'>x</span>, xy <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, tau <span class='op'>=</span> <span class='fl'>1</span>, dist_fun <span class='op'>=</span> <span class='cn'>NULL</span>,
   event_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vocal"</span>, <span class='st'>"move"</span>, <span class='st'>"both"</span><span class='op'>)</span>,
-  sensitivity<span class='op'>=</span><span class='fl'>1</span>, <span class='va'>...</span><span class='op'>)</span>
+  sensitivity<span class='op'>=</span><span class='fl'>1</span>, direction<span class='op'>=</span><span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>bsims_transcribe</span><span class='op'>(</span><span class='va'>x</span>, tint <span class='op'>=</span> <span class='cn'>NULL</span>, rint <span class='op'>=</span> <span class='cn'>Inf</span>, error <span class='op'>=</span> <span class='fl'>0</span>,
+<span class='fu'>bsims_transcribe</span><span class='op'>(</span><span class='va'>x</span>, tint <span class='op'>=</span> <span class='cn'>NULL</span>, rint <span class='op'>=</span> <span class='cn'>Inf</span>,
+  error <span class='op'>=</span> <span class='fl'>0</span>, bias <span class='op'>=</span> <span class='fl'>1</span>,
   condition<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"event1"</span>, <span class='st'>"det1"</span>, <span class='st'>"alldet"</span><span class='op'>)</span>,
   event_type<span class='op'>=</span><span class='cn'>NULL</span>, perception<span class='op'>=</span><span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -316,8 +317,14 @@ Inherits value from input object when <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>error</th>
-      <td><p>log scale standard deviation for distance estimation error,
-see <code><a href='rlnorm2.html'>rlnorm2</a></code>.</p></td>
+      <td><p>log scale standard deviation (SD) for distance estimation error,
+see <code><a href='rlnorm2.html'>rlnorm2</a></code>.
+When <code>direction=TRUE</code>, error changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) SD is 0, when the bird is facing away (180 degrees) SD is <code>error</code>. In the range between 0-180 degrees the SD is changing according to the cosine of the degree: SD*(0.5-cos(degree*pi/180)/2).</p></td>
+    </tr>
+    <tr>
+      <th>bias</th>
+      <td><p>nonnegative numeric, the distance estimation bias. The default value (1) means no bias, &lt;1 indicates negative bias (perceived distance is less than true distance), &gt;1 indicates positive bias (perceived distance is higher than true distance). This acts as a multiplier and can be combined with <code>error</code>.
+When <code>direction=TRUE</code>, bias changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) perceived distance equals the true distance, when the bird is facing away (180 degrees) perceived distance is <code>bias</code> * true distance. In the range between 0-180 degrees the bias is changing according to the cosine of the degree: 1+(bias-1)*(0.5-cos(degree*pi/180)/2).</p></td>
     </tr>
     <tr>
       <th>perception</th>
@@ -333,8 +340,12 @@ receiving the signal. Can be of length 1 (applies to both vocal and movement eve
 or a named vector of length 2 (names should indicate which one
 is <code>"vocal"</code> or <code>"move"</code>). Sensitivity of 1 means that
 the process captured by <code>tau</code> is unaffected.
-Less than 1 values indicate lower sensitivity (effectively lowering tau),
-larger than 1 values indicate higher sensitivity (effectively lowering tau).</p></td>
+Less than 1 values indicate lower sensitivity (effectively decreasing tau),
+larger than 1 values indicate higher sensitivity (effectively increasing tau).</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>logical. When <code>TRUE</code>, tau for vocalizations (not for movement) changes based on the angle between the observer and the individual's (random) singing direction. When the bird faces the observer (0 degrees) tau is unaffected, when the bird is facing away (180 degrees) tau is <code>sensitivity * tau</code>. In the range between 0-180 degrees the effect is changing according to the cosine of the degree (0.5-cos(degree*pi/180)/2).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -455,13 +466,13 @@ implications for avian point count surveys.
 #&gt;   stratification: HER
 #&gt;   total abundance: 89
 #&gt;   duration: 10 min
-#&gt;   detected: 32 heard</div><div class='input'><span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_transcribe</span><span class='op'>(</span><span class='va'>o</span>, tint<span class='op'>=</span><span class='va'>tbr</span>, rint<span class='op'>=</span><span class='va'>rbr</span><span class='op'>)</span><span class='op'>)</span>
+#&gt;   detected: 27 heard</div><div class='input'><span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>bsims_transcribe</span><span class='op'>(</span><span class='va'>o</span>, tint<span class='op'>=</span><span class='va'>tbr</span>, rint<span class='op'>=</span><span class='va'>rbr</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; bSims transcript
 #&gt;   1 km x 1 km
 #&gt;   stratification: HER
 #&gt;   total abundance: 89
 #&gt;   duration: 10 min
-#&gt;   detected: 32 heard
+#&gt;   detected: 27 heard
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'>
@@ -470,30 +481,30 @@ implications for avian point count surveys.
 </div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      0       0
-#&gt; 100-150m      2      1       0
-#&gt; 150+m         7      0       2</div><div class='input'><span class='fu'><a href='get_nests.html'>get_table</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"visits"</span><span class='op'>)</span>
+#&gt; 100-150m      4      0       0
+#&gt; 150+m         6      2       2</div><div class='input'><span class='fu'><a href='get_nests.html'>get_table</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"visits"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
 #&gt; 50-100m       2      1       1
-#&gt; 100-150m      2      3       5
-#&gt; 150+m         7      6       6</div><div class='input'>
+#&gt; 100-150m      4      3       2
+#&gt; 150+m         6      5      11</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_events</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;            x          y          t v  i
-#&gt; 1 -2.3401644 -2.8527517 0.03530175 1  9
-#&gt; 2 -2.2627545  0.5759206 0.03671147 1 10
-#&gt; 3 -0.0575831  2.5478251 0.05696669 1 52
-#&gt; 4 -2.6777408  4.0848588 0.08751628 1  4
-#&gt; 5  1.2101658  1.8188797 0.10244937 1 53
-#&gt; 6 -0.6398754  0.7921080 0.13954534 1 36</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_events</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           x         y          t v   a  i
+#&gt; 1 -3.442282 -4.391607 0.03829154 1  68  6
+#&gt; 2  4.293836 -4.017852 0.04325212 1 228 76
+#&gt; 3  1.210166  1.818880 0.11871163 1 200 53
+#&gt; 4  2.736663  3.298496 0.11923924 1 203 68
+#&gt; 5  3.189445  3.931345 0.13485851 1 249 79
+#&gt; 6 -2.677741  4.084859 0.22912982 1 101  4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_events</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='bsims_init-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;             x          y          t v         d  i  j
-#&gt; 3  -0.0575831  2.5478251 0.05696669 1 2.5484757 52 52
-#&gt; 6  -0.6398754  0.7921080 0.13954534 1 1.0182709 36 36
-#&gt; 8  -1.8415121 -0.1032800 0.17209894 1 1.8444060 21 21
-#&gt; 30 -0.2132248  0.4793912 0.63565147 1 0.5246720 42 42
-#&gt; 35 -0.2132248  0.4793912 0.77150555 1 0.5246720 42 42
-#&gt; 54  0.3010540 -0.5838783 1.23701148 1 0.6569227 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span>, <span class='st'>"time"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             x          y         t v   a         d  f  i  j
+#&gt; 7  -0.3210701 -1.2764715 0.2390436 1 159 1.3162316 NA 47 47
+#&gt; 15 -1.0619945  0.3420704 0.3613196 1 155 1.1157260 NA 39 39
+#&gt; 21  0.1610299  1.5025998 0.4986072 1  35 1.5112037 NA 41 41
+#&gt; 22 -1.0619945  0.3420704 0.5145775 1 208 1.1157260 NA 39 39
+#&gt; 28 -0.0575831  2.5478251 0.6074020 1 215 2.5484757 NA 52 52
+#&gt; 33  0.3010540 -0.5838783 0.6720317 1   3 0.6569227 NA 44 44</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span>, <span class='st'>"time"</span><span class='op'>)</span>
 </div><div class='img'><img src='bsims_init-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='get_nests.html'>get_detections</a></span><span class='op'>(</span><span class='va'>o</span><span class='op'>)</span>, <span class='st'>"distance"</span><span class='op'>)</span>
 </div><div class='img'><img src='bsims_init-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## wrapper function for all the bsims_* layers</span>
@@ -517,9 +528,9 @@ implications for avian point count surveys.
 </div><div class='output co'>#&gt; bSims transcript
 #&gt;   1 km x 1 km
 #&gt;   stratification: HR
-#&gt;   total abundance: 61
+#&gt;   total abundance: 56
 #&gt;   duration: 10 min
-#&gt;   detected: 7 heard
+#&gt;   detected: 2 heard
 #&gt;   1st event detected by breaks:
 #&gt;     [0, 3, 5, 10 min]
 #&gt;     [0, 50, 100, 150, Inf m]</div><div class='input'><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
@@ -527,23 +538,23 @@ implications for avian point count surveys.
 </div><div class='output co'>#&gt; [[1]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
-#&gt; 50-100m       0      0       0
-#&gt; 100-150m      1      0       0
+#&gt; 50-100m       1      0       0
+#&gt; 100-150m      0      0       0
 #&gt; 150+m         0      0       0
 #&gt; 
 #&gt; [[2]]
 #&gt;          0-3min 3-5min 5-10min
-#&gt; 0-50m         0      0       0
-#&gt; 50-100m       1      0       0
+#&gt; 0-50m         1      0       0
+#&gt; 50-100m       0      0       0
 #&gt; 100-150m      0      0       0
 #&gt; 150+m         0      0       0
 #&gt; 
 #&gt; [[3]]
 #&gt;          0-3min 3-5min 5-10min
 #&gt; 0-50m         0      0       0
-#&gt; 50-100m       3      0       0
+#&gt; 50-100m       2      0       0
 #&gt; 100-150m      0      0       0
-#&gt; 150+m         0      0       0
+#&gt; 150+m         1      0       0
 #&gt; </div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>## parallel simulations</span>
@@ -554,7 +565,7 @@ implications for avian point count surveys.
 <span class='co'>## sequential</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='va'>B</span>, cl<span class='op'>=</span><span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.910   0.022   0.940 </div><div class='input'><span class='co'>## parallel clusters</span>
+#&gt;   0.908   0.015   0.924 </div><div class='input'><span class='co'>## parallel clusters</span>
 <span class='va'>cl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/parallel/makeCluster.html'>makeCluster</a></span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span>
 <span class='co'>## note: loading the package is optional</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/parallel/clusterApply.html'>clusterEvalQ</a></span><span class='op'>(</span><span class='va'>cl</span>, <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/psolymos/bSims'>bSims</a></span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
@@ -565,7 +576,7 @@ implications for avian point count surveys.
   <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>bb</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>$</span><span class='fu'>replicate</span><span class='op'>(</span><span class='va'>B</span>, cl<span class='op'>=</span><span class='va'>nc</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   0.615   0.144   0.828 </div><div class='input'><span class='co'># }</span>
+#&gt;   0.585   0.139   0.747 </div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

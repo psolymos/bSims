@@ -1,4 +1,4 @@
-pandoc: '2.12'
+pandoc: '2.13'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -7,5 +7,5 @@ articles:
   bsims03-workflow: bsims03-workflow.html
   bsims04-simulations: bsims04-simulations.html
   bsims05-extensions: bsims05-extensions.html
-last_built: 2021-03-18T03:33Z
+last_built: 2021-04-07T19:06Z
 
