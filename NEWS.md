@@ -1,3 +1,7 @@
+# Version 0.2-4, 2021-04-09
+
+* Added singing direction related anisotropy to detection and transcription.
+
 # Version 0.2-3, 2021-03-15
 
 * Shiny app fixes to allow vocalization and movement related tau values.

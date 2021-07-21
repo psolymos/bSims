@@ -45,13 +45,15 @@ library(survival)
 library(pbapply)
 library(detect)
 
-n <- 50
 phi <- 0.5
 perc <- c(0.5, 1, 1.5)
 tint <- c(3, 5, 10)
+den <- 1
 
+if (FALSE) {
+n <- 100
 l <- expand_list(
-  density=0.5,
+  density=den,
   abund_fun = list(identity),
   duration = max(tint),
   vocal_rate = phi,
@@ -64,6 +66,21 @@ str(l[1:2])
 b <- lapply(l, bsims_all)
 
 s <- lapply(b, function(z) z$replicate(n, cl=4))
+}
+
+n <- 200
+b <- bsims_init() %>%
+  bsims_populate(
+    density=den,
+    abund_fun = identity)
+s <- list(pblapply(1:n, function(i) {
+  bsims_animate(
+    b,
+    duration = max(tint),
+    vocal_rate = phi) %>%
+  bsims_transcribe(tint = tint)
+}))
+
 
 ## abundance and detections
 lapply(s, function(r) summary(t(sapply(r, function(x) {
@@ -110,11 +127,20 @@ survfun <- function(t21, MAX=10) {
 phi_hat4 <- sapply(T21d, survfun, MAX=1)
 
 cbind(Perc=perc, Rem=phi_hat1, T21r=phi_hat2, T21d=phi_hat3, Surv=phi_hat4)
+## correcting for size bias
+data.frame(est=c(Rem=phi_hat1,
+                 T21r=phi_hat2,
+                 T21d=phi_hat3,
+                 Surv=phi_hat4,
+                 T21dCorr=phi_hat3/sum(b$abundance),
+                 SurvCorr=phi_hat4/sum(b$abundance)))
+
+
 
 x <- bsims_all()$new()
-.get_detections(x, condition="event1")
-.get_detections(x, condition="det1")
-.get_detections(x, condition="alldet")
+bSims:::.get_detections(x, condition="event1")
+bSims:::.get_detections(x, condition="det1")
+bSims:::.get_detections(x, condition="alldet")
 
 ## Lessons:
 ## density needs to be low enough to lead to small counts

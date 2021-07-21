@@ -5,7 +5,7 @@ library(MASS)
 library(mefa4)
 #library(spatstat)
 
-devtools::install_github("psolymos/bSims")
+remotes::install_github("psolymos/bSims")
 
 
 ## direction effects
