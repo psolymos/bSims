@@ -348,7 +348,8 @@ server <- function(input, output) {
     op <- par(mar=c(0,0,0,0))
     plot(b(), event_type=input$event)
     if (input$show_tess && !is.null(b()$tess))
-      plot(b()$tess, TRUE, "tess", "none", col="grey", lty=1)
+      plot(b()$tess, add=TRUE, wlines="tess",
+        showpoints=FALSE, cmpnt_col="grey", cmpnt_lty=1)
     par(op)
   })
   output$plot_det <- renderPlot({

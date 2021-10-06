@@ -889,7 +889,7 @@ ct <- cutree(hc, k=min(nrow(d), max(1, round(N*h))))
 
 plot(y ~ x, e, pch=3, cex=0.6, col="grey")
 points(0,0,pch=3, cex=2, col=2)
-plot(x$tess, add=TRUE, "tess", "none", col="grey")
+plot(x$tess, add=TRUE, wlines="tess", showpoints=FALSE, cmpnt_col="grey", cmpnt_lty=1)
 points(y ~ x, d, pch=19, col=ct)
 
 ## NULL vs 1
