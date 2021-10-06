@@ -60,40 +60,88 @@ framework and how to extend the existing functionality of the
 package to incorporate more of the biological realism into
 the simulations.
 
+# Motivation
 
+Point-count surveys are one of the most widely used survey techniques for birds. This method involves an observer standing at a location and recording all the birds that are detected during a set amount of time within a fixed or unlimited distance away from the observer. The data collected this way are often used in trend monitoring, assessing landscape and climate change effects on bird populations, and setting population goals for conservation.
 
+Point counts provide an index of the true abundance at the survey location due to imperfect detection. A plethora of design and model based solutions exist to minimize the impacts and account for the biases due to imperfect detection. Contrary to the importance of point counts among other field methods for landbirds, there is no generally applicable simulation tool that would help better understand the possible biases and would help in aiding survey design.
 
+Currently available simulation tools are either concerned by movement trajectories of bird flocks to mitigate mortality near airports and wind farms or are very specific to statistical models. Statistical techniques are expected to provide unbiased estimates when the data generation process follows the assumptions of the model. However, testing if the model assumptions are realistic is rarely evaluated with the same rigor.
 
+The apparent lack of general purpose simulation tools for point counts can probably be attributed to the fact that reality is very complex in these situations and it is not immediately straightforward how to best tackle this complexity. To illustrate this claim, here is how ecological modellers approach bird density. Counts (Y) are described by the marginal distribution, e.g. Y ~ Poisson(DApq) where D is density (abundance per unit area), A is the survey area, p is the probability of individuals being available for sampling, whereas q is the detection probability given availability. Such a model is also viewed as a mixture distribution: N ~ Poisson(DA), Y ~ Binomial(N, pq). This gives a straightforward algorithm for generating counts under known D, A, p, q parameters, that can in turn be used to test statistical performance (unbiasedness, consistency) of N-mixture, time-removal, and distance sampling models among others.
 
-Point-count surveys (Blondel et al. 1970, 1981) are one of the most widely used survey techniques for birds (Ralph et al. 1995, Bart 2005, Bibby et al. 2000). This method involves an observer standing at a location and recording all the birds that are detected during a set amount of time within a fixed or unlimited distance away from the observer. The data collected this way are often used in trend monitoring, assessing landscape and climate change effects on bird populations, and setting population goals for conservation (Ralph et al. 1995b, Scott et al. 2002, Richet al. 2004, Fontaine and Kennedy 2012, Sauer et al. 2013).
+Reality, however, is often more complicated. Take for example roadside counts, which served as the main motivations for developing the simulation approaches presented in here. Bird surveys along roads are widespread due to logistical, safety, and cost considerations. This is the case, even though differences between roadside and off-road counts are well documented.These differences indicate a roadside bias due to, e.g., density, behaviour and detectability being different depending on the distance from the road. Understanding the nature and sources of roadside count bias might not lend itself to simple simulations based on the marginal distributions. Understanding roadside counts requires a spatially explicit and more mechanistic simulation approach.
 
-Point counts provide an index of the true abundance at the survey location due to imperfect detection (ref). A plethora of design and model based solutions exist to minimize the impacts and account for the biases due to imperfect detection. Contrary to the importance of point counts among other field methods for landbirds, there is no generally applicable simulation tool that would help better understand the possible biases and would help in aiding survey design.
+The bSims R package presents a spatially explicit mechanistic simulation framework. Its design is informed by statistical models widely used in the analyses of bird point count data (i.e. removal models, distance sampling). The implementation allows real time interactive exploration via Shiny apps followed by efficient simulations supporting various parallel backends.
 
-Currently available simulation tools are either concerned by movement trajectories of bird flocks to mitigate mortality near airports and wind farms (ref) or are very specific to statistical models. Statistical techniques are expected to provide unbiased estimates when the data generation process follows the assumptions of the model. However, testing if the model assumptions are realistic is rarely evaluated with the same rigor. An example of such a testing suite is the work of Rigby (...) who evaluated how statistical techniques can be affected by bird behaviour and processes affecting detectability. The implementation details from this important study are in the appendices and not easily accessible or extendable for more general purposes.
+The goals of the package are to (1) allow easy testing of statistical assumptions and explore the effects of violating these assumptions; to (2) aid survey design by comparing different options; and (3) to have fun while doing this. 
 
-The apparent lack of general purpose simulation tools for point counts can probably be attributed to the fact that reality is very complex in these situations and it is not immediately straightforward how to best tackle this complexity. To illustrate this claim, here is how ecological modellers approach bird density. Counts (Y) are described by the marginal distribution, e.g. Y ~ Poisson(DApq) where D is density (abundance per unit area), A is the survey area, p is the probability of individuals being available for sampling, whereas q is the detection probability given availability (Nichols, Solymos, Amundson). Such a model is also viewed as a mixture distribution: N ~ Poisson(DA), Y ~ Binomial(N, pq). This gives a straightforward algorithm for generating counts under known D, A, p, q parameters, that can in turn be used to test statistical performance (unbiasedness, consistency) of N-mixture, time-removal, and distance sampling models among others.
+In this paper, we demonstrate the main functionality of the package, then outline the interactive workflow to design and efficiently run simulation experiments, finally we present future directions to extend the existing functionality of the package by incorporating more biological realism into the simulations.
 
-Reality, however, is often more complicated. Take for example roadside counts, which served as the main motivations for developing the simulation approaches presented in here. Bird surveys along roads are widespread due to logistical, safety, and cost considerations (ref). This is the case, even though differences between roadside and off-road counts are well documented.These differences indicate a roadside bias due to, e.g., density (Marquez), behaviour (ref) and detectability (Yip) being different depending on the distance from the road. Understanding the nature and sources of roadside count bias might not lend itself to simple simulations based on the marginal distributions. Understanding roadside counts requires a spatially explicit and more mechanistic simulation approach.
-
-The bSims R package presents a spatially explicit mechanistic simulation framework. Its design is informed by statistical models widely used in the analyses of bird point count data (i.e. removal models, distance sampling). The implementation allows real time interactive exploration via Shiny (ref) apps followed by efficient simulations supporting various parallel backends (ref). The goals of the package are to (1) allow easy testing of statistical assumptions and explore the effects of violating these assumptions; and to (2) aid survey design by comparing different options. In this paper, we demonstrate the main functionality of the package, then outline the interactive workflow to design and efficiently run simulation experiments, finally we present future directions to extend the existing functionality of the package by incorporating more biological realism into the simulations.
-
-Design and implementation
+## Design and implementation
 
 The simulation interface was designed with the following principles in mind:
 
-isolation: the spatial scale is small (local point count scale) so that we can treat individual landscapes as more or less homogeneous units (but see below how certain stratified designs and edge effects can be incorporated) and independent in space and time;
-realism: the implementation of biological mechanisms and observation processes are realistic, defaults are chosen to reflect common practice and assumptions;
-efficiency: implementation is computationally efficient utilizing parallel computing backends when available;
-extensibility: the package functionality is well documented and easily extensible.
+- Isolation: the spatial scale is small (local point count scale) so that we can treat individual landscapes as more or less homogeneous units (but see below how certain stratified designs and edge effects can be incorporated) and independent in space and time;
+- Realism: the implementation of biological mechanisms and observation processes are realistic, defaults are chosen to reflect common practice and assumptions;
+- Efficiency: implementation is computationally efficient utilizing parallel computing backends when available;
+- Extensibility: the package functionality is well documented and easily extensible.
 
 Going back to the Poisson–Binomial example, N would be a result of all the factors influencing bird abundance, such as geographic location, season, habitat suitability, number of conspecifics, competitors, or predators. Y, however, would largely depend on how the birds behave depending on the time of the day, or how the observer might detect or miss the different individuals, or count the same individual twice, etc.
-This series of conditional filtering of events lends itself to be represented as layers. These simulation layers are conditionally independent of each other. This design can facilitate the comparison of certain settings while keeping all the underlying layers of the realizations identical. This can help pinpointing the effects without the extra variability introduced by all the other underlying layers.
-The bSims package implements the following main 'verb' functions for simulating the conditionally independent layers (FIG):
-Initialize (bsims_init): the landscape is defined by the extent and possible habitat stratification;
-Populate (bsims_populate): the population of finite number of individuals within the extent of the landscape;
-Animate (bsims_animate): individual behaviours described by movement and vocalization events, i.e. the frequency of sending various types of signals;
-Detect (bsims_detect): the physical side of the observation process, i.e. transmitting and receiving the signal;
-Transcribe (bsims_transcribe): the "human" aspect of the observation process, i.e. the perception of the received signal.
-The bsims_ part of the function helps finding the functions via autocomplete functionality of the developer environment, such as RStudio VSCode. In the next sections we will review the main options available for each of the simulation layers (see Appendix for worked examples and reproducible code).
 
-Add also install stuff etc from README?
+This series of conditional filtering of events lends itself to be represented as layers. These simulation layers are conditionally independent of each other. This design can facilitate the comparison of certain settings while keeping all the underlying layers of the realizations identical. This can help pinpointing the effects without the extra variability introduced by all the other underlying layers.
+
+The bSims package implements the following main 'verb' functions for simulating the conditionally independent layers:
+
+- Initialize (`bsims_init`): the landscape is defined by the extent and possible habitat stratification;
+- Populate (`bsims_populate`): the population of finite number of individuals within the extent of the landscape;
+- Animate (`bsims_animate`): individual behaviours described by movement and vocalization events, i.e. the frequency of sending various types of signals;
+- Detect (`bsims_detect`): the physical side of the observation process, i.e. transmitting and receiving the signal;
+- Transcribe (`bsims_transcribe`): the "human" aspect of the observation process, i.e. the perception of the received signal.
+
+The `bsims_` part of the function helps finding the functions via autocomplete functionality of the developer environment, such as RStudio VSCode. In the next sections we will review the main options available for each of the simulation layers (see Appendix for worked examples and reproducible code).
+
+# Limitations
+
+The package is not equipped with all the possible ways to estimate the
+model parameters. It only has rudimentary removal modeling and 
+distance sampling functionality implemented for the interactive
+visualization and testing purposes.
+Estimating parameters for more complex situations (i.e.
+finite mixture removal models, or via Hazard rate distance functions)
+or estimating abundance via multiple-visit N-mixture models etc. is
+outside of the scope of the package and it is the responsibility of the 
+user to make sure those work as expected.
+
+Other intentional limitation of the package is the lack of
+reverse interactions between the layers. For example
+the presence of an observer could influence behavior
+of the birds close to the observer. Such features can
+be implemented as methods extending the current functionality.
+
+Another limitation is that this implementation considers single
+species. Observers rarely collect data on single species 
+but rather count multiple species as part of the same survey.
+The commonness of the species, observer ability, etc. can influence
+the observation process when the whole community is considered.
+Such scenarios are also not considered at present. Although the same
+landscape can be reused for multiple species, and building up
+the simulation that way.
+
+The package considers simulations as independent 
+in space and time. When larger landscapes need to be simulated, 
+there might be several options: 
+(1) simulate a larger extent and put multiple independent observers 
+into the landscape; or (2) simulate independent landscapes in isolation.
+The latter approach can also address spatial and temporal
+heterogeneity in density, behaviour, etc. E.g. if
+singing rate is changing as a function of time of day,
+one can define the `vocal_rate` values as a function of time,
+and simulate independent animation layers.
+When the density varies in space, one can
+simulate independent population layers.
+
+These limitations can be addressed as additional methods and
+modules extending the capabilities of the package, 
+or as added functionality to the core layer functions
+in future releases.

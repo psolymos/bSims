@@ -383,12 +383,12 @@ e4 <- update(e2, allow_overlap=FALSE)
 op <- par(mfrow = c(1, 2))
 plot(e2, main = "Overlap")
 plot(e2$tess, add = TRUE, 
-  wlines = "tess", wpoints = "none", 
-  col = "grey", lty = 1)
+  wlines = "tess", 
+  lty = 1)
 plot(e4, main = "No overlap")
 plot(e4$tess, add = TRUE, 
-  wlines = "tess", wpoints = "none", 
-  col = "grey", lty = 1)
+  wlines = "tess", 
+  lty = 1)
 par(op)
 ```
 

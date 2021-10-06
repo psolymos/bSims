@@ -77,7 +77,7 @@ bb2 <- b2$replicate(B)
 
 The replicate function takes an argument for the
 number of replicates (`B`) and returns a list of transcript objects
-with $B$ elements.
+with B elements.
 The `cl` argument can be used to parallelize the work,
 it can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS.
 The `recover = TRUE` argument allows to run simulations with error

@@ -1,3 +1,9 @@
+# Version 0.3-0, 2021-10-05
+
+* Updated vignettes.
+* Addressed deldir issues in vignette due to deldir CRAN update.
+* Specified deldir version (>= 1.0-2) in `DESCRIPTION`.
+
 # Version 0.2-4, 2021-04-09
 
 * Added singing direction related anisotropy to detection and transcription.
