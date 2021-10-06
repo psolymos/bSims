@@ -140,9 +140,10 @@
 <p>The bSims R package presents a spatially explicit mechanistic simulation framework. Its design is informed by statistical models widely used in the analyses of bird point count data (i.e. removal models, distance sampling). The implementation allows real time interactive exploration via Shiny apps followed by efficient simulations supporting various parallel backends.</p>
 <p>The goals of the package are to (1) allow easy testing of statistical assumptions and explore the effects of violating these assumptions; to (2) aid survey design by comparing different options; and (3) to have fun while doing this.</p>
 <p>In this paper, we demonstrate the main functionality of the package, then outline the interactive workflow to design and efficiently run simulation experiments, finally we present future directions to extend the existing functionality of the package by incorporating more biological realism into the simulations.</p>
-<div id="design-and-implementation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#design-and-implementation" class="anchor"></a>Design and implementation</h2>
+</div>
+<div id="design-and-implementation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#design-and-implementation" class="anchor"></a>Design and implementation</h1>
 <p>The simulation interface was designed with the following principles in mind:</p>
 <ul>
 <li>Isolation: the spatial scale is small (local point count scale) so that we can treat individual landscapes as more or less homogeneous units (but see below how certain stratified designs and edge effects can be incorporated) and independent in space and time;</li>
@@ -161,7 +162,6 @@
 <li>Transcribe (<code>bsims_transcribe</code>): the “human” aspect of the observation process, i.e. the perception of the received signal.</li>
 </ul>
 <p>The <code>bsims_</code> part of the function helps finding the functions via autocomplete functionality of the developer environment, such as RStudio VSCode. In the next sections we will review the main options available for each of the simulation layers (see Appendix for worked examples and reproducible code).</p>
-</div>
 </div>
 <div id="limitations" class="section level1">
 <h1 class="hasAnchor">
