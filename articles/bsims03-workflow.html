@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3-0</span>
       </span>
     </div>
 
@@ -68,12 +68,6 @@
     <li>
       <a href="../articles/bsims03-workflow.html">Simulation workflow in bSims</a>
     </li>
-    <li>
-      <a href="../articles/bsims04-simulations.html">Simulations in bSims</a>
-    </li>
-    <li>
-      <a href="../articles/bsims05-extensions.html">Limitations and extensions</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -97,7 +91,7 @@
 
       
 
-      </header><script src="bsims03-workflow_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="bsims03-workflow_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simulation workflow in bSims</h1>
@@ -170,7 +164,7 @@
 <code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">25</span>  <span class="co"># number of runs</span>
 <span class="va">bb1</span> <span class="op">&lt;-</span> <span class="va">b1</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
 <span class="va">bb2</span> <span class="op">&lt;-</span> <span class="va">b2</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
-<p>The replicate function takes an argument for the number of replicates (<code>B</code>) and returns a list of transcript objects with <span class="math inline">\(B\)</span> elements. The <code>cl</code> argument can be used to parallelize the work, it can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS. The <code>recover = TRUE</code> argument allows to run simulations with error catching.</p>
+<p>The replicate function takes an argument for the number of replicates (<code>B</code>) and returns a list of transcript objects with B elements. The <code>cl</code> argument can be used to parallelize the work, it can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS. The <code>recover = TRUE</code> argument allows to run simulations with error catching.</p>
 <p>Simulated objects returned by <code>bsims_all</code> will contain different realizations and all the conditionally independent layers. Use a customized layered approach if former layers are meant to be kept identical across runs.</p>
 <p>In more complex situations the <strong>shiny</strong> apps will help identifying corner cases that are used to define a gradient of settings for single or multiple simulation options. Let us consider the following scenario: we would like to evaluate how the estimates are changing with increasing road width. We will use the <code>expand_list</code> function which creates a list from all combinations of the supplied inputs. Note that we need to wrap vectors inside <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> to avoid interpreting those as values to iterate over.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -232,7 +226,7 @@
 <span class="co">#&gt;   ..$ road   : num 0</span>
 <span class="co">#&gt;   ..$ xy_fun :function (d)  </span>
 <span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span>
-<span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fe9539c1e20&gt; </span>
+<span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7f8067a540b8&gt; </span>
 <span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
 <span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
 <span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span>
@@ -240,7 +234,7 @@
 <span class="co">#&gt;   ..$ road   : num 0.5</span>
 <span class="co">#&gt;   ..$ xy_fun :function (d)  </span>
 <span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span>
-<span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fe9539c1e20&gt; </span>
+<span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7f8067a540b8&gt; </span>
 <span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
 <span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
 <span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></code></pre></div>

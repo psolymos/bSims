@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3-0</span>
       </span>
     </div>
 
@@ -68,12 +68,6 @@
     <li>
       <a href="../articles/bsims03-workflow.html">Simulation workflow in bSims</a>
     </li>
-    <li>
-      <a href="../articles/bsims04-simulations.html">Simulations in bSims</a>
-    </li>
-    <li>
-      <a href="../articles/bsims05-extensions.html">Limitations and extensions</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -97,7 +91,7 @@
 
       
 
-      </header><script src="bsims02-layers_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="bsims02-layers_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simulation layers in bSims</h1>
@@ -365,12 +359,12 @@
 <span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e2</span>, main <span class="op">=</span> <span class="st">"Overlap"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e2</span><span class="op">$</span><span class="va">tess</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, 
-  wlines <span class="op">=</span> <span class="st">"tess"</span>, wpoints <span class="op">=</span> <span class="st">"none"</span>, 
-  col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  wlines <span class="op">=</span> <span class="st">"tess"</span>, 
+  lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e4</span>, main <span class="op">=</span> <span class="st">"No overlap"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e4</span><span class="op">$</span><span class="va">tess</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, 
-  wlines <span class="op">=</span> <span class="st">"tess"</span>, wpoints <span class="op">=</span> <span class="st">"none"</span>, 
-  col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+  wlines <span class="op">=</span> <span class="st">"tess"</span>, 
+  lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/beh-move4-1.png" width="100%"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></code></pre></div>
