@@ -3,12 +3,9 @@
 A highly scientific and utterly addictive bird point count simulator to
 test statistical assumptions and to aid survey design.
 
-[![CRAN
-version](https://www.r-pkg.org/badges/version/bSims)](https://cran.rstudio.com/web/packages/bSims/index.html)
-[![CRAN RStudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://www.rdocumentation.org/packages/bSims/)
-[![Checks](https://github.com/psolymos/bSims/workflows/check/badge.svg)](https://github.com/psolymos/bSims/actions)
-
+[![CRAN version](https://www.r-pkg.org/badges/version/bSims)](https://CRAN.R-project.org/package=bSims)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://peter.solymos.org/bSims/)
+[![check](https://github.com/psolymos/bSims/actions/workflows/check.yml/badge.svg)](https://github.com/psolymos/bSims/actions/workflows/check.yml)
 
 > *“I’ve yet to see any problem, however complicated, which when you
 > looked at it the right way didn’t become still more complicated.”* –

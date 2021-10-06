@@ -17,14 +17,14 @@ set.seed(0)
 
 A highly scientific and utterly addictive bird point count simulator to test statistical assumptions and to aid survey design.
 
-[![CRAN version](https://www.r-pkg.org/badges/version/bSims)](https://cran.rstudio.com/web/packages/bSims/index.html)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://www.rdocumentation.org/packages/bSims/)
-
-[![Linux build status](https://travis-ci.org/psolymos/bSims.svg?branch=master)](https://travis-ci.org/psolymos/bSims)
-[![codecov](https://codecov.io/gh/psolymos/bSims/branch/master/graph/badge.svg)](https://codecov.io/gh/psolymos/bSims)
+[![CRAN version](https://www.r-pkg.org/badges/version/bSims)](https://CRAN.R-project.org/package=bSims)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://peter.solymos.org/bSims/)
+[![check](https://github.com/psolymos/bSims/actions/workflows/check.yml/badge.svg)](https://github.com/psolymos/bSims/actions/workflows/check.yml)
 
 > _"I've yet to see any problem, however complicated, which when you looked at it the right way didn't become still more complicated."_
 > -- Poul Anderson, Call Me Joe 
+
+> *“Love the simulation we're dreaming in”* - Dua Lipa, Physical
 
 The goal of the package is to:
 
@@ -40,7 +40,10 @@ Design objectives:
 - defaults chosen to reflect common practice and assumptions,
 - extensible (PRs are welcome).
 
-See the package in action in the [QPAD Book](https://peter.solymos.org/qpad-book/).
+See the package in action in the [**QPAD
+Book**](https://peter.solymos.org/qpad-book/).
+
+Check out the [**QPAD workshop**](https://peter.solymos.org/qpad-workshop/).
 
 ## Install
 
