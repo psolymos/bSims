@@ -358,13 +358,11 @@
 
 <span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e2</span>, main <span class="op">=</span> <span class="st">"Overlap"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e2</span><span class="op">$</span><span class="va">tess</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, 
-  wlines <span class="op">=</span> <span class="st">"tess"</span>, 
-  lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e2</span><span class="op">$</span><span class="va">tess</span>, add<span class="op">=</span><span class="cn">TRUE</span>, wlines<span class="op">=</span><span class="st">"tess"</span>,
+  showpoints<span class="op">=</span><span class="cn">FALSE</span>, cmpnt_lty<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e4</span>, main <span class="op">=</span> <span class="st">"No overlap"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e4</span><span class="op">$</span><span class="va">tess</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, 
-  wlines <span class="op">=</span> <span class="st">"tess"</span>, 
-  lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">e4</span><span class="op">$</span><span class="va">tess</span>, add<span class="op">=</span><span class="cn">TRUE</span>, wlines<span class="op">=</span><span class="st">"tess"</span>,
+  showpoints<span class="op">=</span><span class="cn">FALSE</span>, cmpnt_lty<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="bsims02-layers_files/figure-html/beh-move4-1.png" width="100%"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></code></pre></div>
