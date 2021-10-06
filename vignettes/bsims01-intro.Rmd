@@ -78,7 +78,7 @@ The goals of the package are to (1) allow easy testing of statistical assumption
 
 In this paper, we demonstrate the main functionality of the package, then outline the interactive workflow to design and efficiently run simulation experiments, finally we present future directions to extend the existing functionality of the package by incorporating more biological realism into the simulations.
 
-## Design and implementation
+# Design and implementation
 
 The simulation interface was designed with the following principles in mind:
 
