@@ -1,3 +1,7 @@
+# Version 0.3-1, 2022-11-11
+
+* Better print method for `bsims_all` (#18).
+
 # Version 0.3-0, 2021-10-05
 
 * Updated vignettes.
