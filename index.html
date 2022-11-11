@@ -34,6 +34,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,23 +48,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3-0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -85,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/psolymos/bSims/">
+  <a href="https://github.com/psolymos/bSims/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,12 +98,11 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="bsims-bird-point-count-simulator-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bsims-bird-point-count-simulator-" class="anchor"></a>bSims: Bird Point Count Simulator <img src="https://raw.githubusercontent.com/psolymos/bSims/master/bsims.gif" align="right" style="padding-left:10px;background-color:white;">
+<div class="section level1">
+<div class="page-header"><h1 id="bsims-bird-point-count-simulator-">bSims: Bird Point Count Simulator <img src="https://raw.githubusercontent.com/psolymos/bSims/master/bsims.gif" align="right" style="padding-left:10px;background-color:white;"><a class="anchor" aria-label="anchor" href="#bsims-bird-point-count-simulator-"></a>
 </h1></div>
 <p>A highly scientific and utterly addictive bird point count simulator to test statistical assumptions and to aid survey design.</p>
-<p><a href="https://CRAN.R-project.org/package=bSims"><img src="https://www.r-pkg.org/badges/version/bSims" alt="CRAN version"></a> <a href="https://peter.solymos.org/bSims/"><img src="https://cranlogs.r-pkg.org/badges/grand-total/bSims" alt="CRAN RStudio mirror downloads"></a> <a href="https://github.com/psolymos/bSims/actions/workflows/check.yml"><img src="https://github.com/psolymos/bSims/actions/workflows/check.yml/badge.svg" alt="check"></a></p>
+<p><a href="https://CRAN.R-project.org/package=bSims" class="external-link"><img src="https://www.r-pkg.org/badges/version/bSims" alt="CRAN version"></a> <a href="https://peter.solymos.org/bSims/" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/bSims" alt="CRAN RStudio mirror downloads"></a> <a href="https://github.com/psolymos/bSims/actions/workflows/check.yml" class="external-link"><img src="https://github.com/psolymos/bSims/actions/workflows/check.yml/badge.svg" alt="check"></a></p>
 <blockquote>
 <p><em>“I’ve yet to see any problem, however complicated, which when you looked at it the right way didn’t become still more complicated.”</em> – Poul Anderson, Call Me Joe</p>
 </blockquote>
@@ -128,138 +123,138 @@
 <li>defaults chosen to reflect common practice and assumptions,</li>
 <li>extensible (PRs are welcome).</li>
 </ul>
-<p>See the package in action in the <a href="https://peter.solymos.org/qpad-book/"><strong>QPAD Book</strong></a>.</p>
-<p>Check out the <a href="https://peter.solymos.org/qpad-workshop/"><strong>QPAD workshop</strong></a>.</p>
-<div id="install" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
+<p>See the package in action in the <a href="https://peter.solymos.org/qpad-book/" class="external-link"><strong>QPAD Book</strong></a>.</p>
+<p>Check out the <a href="https://peter.solymos.org/qpad-workshop/" class="external-link"><strong>QPAD workshop</strong></a>.</p>
+<div class="section level2">
+<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+</h2>
 <p>CRAN version:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"bSims"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bSims"</span><span class="op">)</span></span></code></pre></div>
 <p>Development version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"psolymos/bSims"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"psolymos/bSims"</span><span class="op">)</span></span></code></pre></div>
 <p>See what is new in the <a href="NEWS.html">NEWS</a> file.</p>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
-<p><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPL-2</a></p>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" class="external-link">GPL-2</a></p>
 </div>
-<div id="contributing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing" class="anchor"></a>Contributing</h2>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
 <p>Feedback and contributions are welcome:</p>
 <ul>
-<li>submit feature request or report issues <a href="https://github.com/psolymos/bSims/issues">here</a>,</li>
+<li>submit feature request or report issues <a href="https://github.com/psolymos/bSims/issues" class="external-link">here</a>,</li>
 <li>fork the project and submit pull request, see <a href="CODE_OF_CONDUCT.html">CoC</a>.</li>
 </ul>
 </div>
-<div id="examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h2>
-<div id="command-line" class="section level3">
-<h3 class="hasAnchor">
-<a href="#command-line" class="anchor"></a>Command line</h3>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
+<div class="section level3">
+<h3 id="command-line">Command line<a class="anchor" aria-label="anchor" href="#command-line"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims">bSims</a></span><span class="op">)</span>
-
-<span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>
-<span class="va">tau</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>
-<span class="va">dur</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-<span class="va">rbr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="cn">Inf</span><span class="op">)</span>
-<span class="va">tbr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>
-
-<span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_init</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_animate</a></span><span class="op">(</span><span class="va">p</span>, vocal_rate<span class="op">=</span><span class="va">phi</span>, duration<span class="op">=</span><span class="va">dur</span><span class="op">)</span>
-<span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_detect</a></span><span class="op">(</span><span class="va">a</span>, tau<span class="op">=</span><span class="va">tau</span><span class="op">)</span>
-
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_transcribe</a></span><span class="op">(</span><span class="va">o</span>, tint<span class="op">=</span><span class="va">tbr</span>, rint<span class="op">=</span><span class="va">rbr</span><span class="op">)</span>
-
-<span class="fu"><a href="reference/get_nests.html">get_table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt;          0-3min 3-5min 5-10min</span>
-<span class="co">#&gt; 0-50m         1      0       1</span>
-<span class="co">#&gt; 50-100m       2      0       0</span>
-<span class="co">#&gt; 100-150m      5      0       0</span>
-<span class="co">#&gt; 150+m         5      3       1</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="reference/get_nests.html">get_events</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;            x         y          t v  i</span>
-<span class="co">#&gt; 1 -3.6616422 -1.676053 0.01126843 1 12</span>
-<span class="co">#&gt; 2  4.6607856  4.537327 0.02661606 1 96</span>
-<span class="co">#&gt; 3 -0.2867919  2.155661 0.05207233 1 47</span>
-<span class="co">#&gt; 4  2.6507206 -1.110949 0.06329550 1 69</span>
-<span class="co">#&gt; 5  2.1330323 -2.167675 0.11365119 1 72</span>
-<span class="co">#&gt; 6  0.4926841 -3.517884 0.12323517 1 45</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="reference/get_nests.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;             x           y          t v         d  i  j</span>
-<span class="co">#&gt; 3  -0.2867919  2.15566066 0.05207233 1 2.1746546 47 47</span>
-<span class="co">#&gt; 10  0.7075451  1.01541218 0.26632984 1 1.2376114 58 58</span>
-<span class="co">#&gt; 14  0.5770644 -0.47429169 0.35091111 1 0.7469645 62 62</span>
-<span class="co">#&gt; 16  0.4761707 -0.04406422 0.35179595 1 0.4782052 52 52</span>
-<span class="co">#&gt; 18  1.0957120 -2.41834073 0.45279692 1 2.6549871 60 60</span>
-<span class="co">#&gt; 33  1.0111698  1.82788079 0.87025627 1 2.0889262 57 57</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="va">tau</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span>
+<span><span class="va">dur</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">rbr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="cn">Inf</span><span class="op">)</span></span>
+<span><span class="va">tbr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_init</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_animate</a></span><span class="op">(</span><span class="va">p</span>, vocal_rate<span class="op">=</span><span class="va">phi</span>, duration<span class="op">=</span><span class="va">dur</span><span class="op">)</span></span>
+<span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_detect</a></span><span class="op">(</span><span class="va">a</span>, tau<span class="op">=</span><span class="va">tau</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_transcribe</a></span><span class="op">(</span><span class="va">o</span>, tint<span class="op">=</span><span class="va">tbr</span>, rint<span class="op">=</span><span class="va">rbr</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/getters.html">get_table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          0-3min 3-5min 5-10min</span></span>
+<span><span class="co">#&gt; 0-50m         1      0       1</span></span>
+<span><span class="co">#&gt; 50-100m       2      0       0</span></span>
+<span><span class="co">#&gt; 100-150m      5      0       0</span></span>
+<span><span class="co">#&gt; 150+m         5      3       1</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/getters.html">get_events</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            x         y          t v  i</span></span>
+<span><span class="co">#&gt; 1 -3.6616422 -1.676053 0.01126843 1 12</span></span>
+<span><span class="co">#&gt; 2  4.6607856  4.537327 0.02661606 1 96</span></span>
+<span><span class="co">#&gt; 3 -0.2867919  2.155661 0.05207233 1 47</span></span>
+<span><span class="co">#&gt; 4  2.6507206 -1.110949 0.06329550 1 69</span></span>
+<span><span class="co">#&gt; 5  2.1330323 -2.167675 0.11365119 1 72</span></span>
+<span><span class="co">#&gt; 6  0.4926841 -3.517884 0.12323517 1 45</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/getters.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             x           y          t v         d  i  j</span></span>
+<span><span class="co">#&gt; 3  -0.2867919  2.15566066 0.05207233 1 2.1746546 47 47</span></span>
+<span><span class="co">#&gt; 10  0.7075451  1.01541218 0.26632984 1 1.2376114 58 58</span></span>
+<span><span class="co">#&gt; 14  0.5770644 -0.47429169 0.35091111 1 0.7469645 62 62</span></span>
+<span><span class="co">#&gt; 16  0.4761707 -0.04406422 0.35179595 1 0.4782052 52 52</span></span>
+<span><span class="co">#&gt; 18  1.0957120 -2.41834073 0.45279692 1 2.6549871 60 60</span></span>
+<span><span class="co">#&gt; 33  1.0111698  1.82788079 0.87025627 1 2.0889262 57 57</span></span></code></pre></div>
 </div>
-<div id="shiny-apps" class="section level3">
-<h3 class="hasAnchor">
-<a href="#shiny-apps" class="anchor"></a>Shiny apps</h3>
-<p>A few <a href="https://shiny.rstudio.com/">Shiny</a> apps come with the package. These can be used to interactively explore the effects of different settings.</p>
+<div class="section level3">
+<h3 id="shiny-apps">Shiny apps<a class="anchor" aria-label="anchor" href="#shiny-apps"></a>
+</h3>
+<p>A few <a href="https://shiny.rstudio.com/" class="external-link">Shiny</a> apps come with the package. These can be used to interactively explore the effects of different settings.</p>
 <p>Compare distance functions:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"distfunH"</span><span class="op">)</span>
-<span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"distfunHER"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"distfunH"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"distfunHER"</span><span class="op">)</span></span></code></pre></div>
 <p>Compare simulation settings for single landscape:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"bsimsH"</span><span class="op">)</span>
-<span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"bsimsHER"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"bsimsH"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"bsimsHER"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="replicating-simulations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#replicating-simulations" class="anchor"></a>Replicating simulations</h3>
+<div class="section level3">
+<h3 id="replicating-simulations">Replicating simulations<a class="anchor" aria-label="anchor" href="#replicating-simulations"></a>
+</h3>
 <p>Interactive sessions can be used to explore different settings. Settings can be copied from the Shiny apps and replicated using the <code>bsims_all</code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>extent<span class="op">=</span><span class="fl">5</span>, road<span class="op">=</span><span class="fl">1</span>, density<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">b</span>
-<span class="co">#&gt; bSims wrapper object with settings:</span>
-<span class="co">#&gt;   extent : 5</span>
-<span class="co">#&gt;   road   : 1</span>
-<span class="co">#&gt;   density: 1, 1, 0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>extent<span class="op">=</span><span class="fl">5</span>, road<span class="op">=</span><span class="fl">1</span>, density<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">b</span></span>
+<span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
+<span><span class="co">#&gt;   extent : 5</span></span>
+<span><span class="co">#&gt;   road   : 1</span></span>
+<span><span class="co">#&gt;   density: 1, 1, 0</span></span></code></pre></div>
 <p>The object has handy methods:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b</span><span class="op">$</span><span class="fu">settings</span><span class="op">(</span><span class="op">)</span>      <span class="co"># retrieve settings</span>
-<span class="va">b</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>           <span class="co"># replicate once</span>
-<span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>   <span class="co"># replicate 10x</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">b</span><span class="op">$</span><span class="fu">settings</span><span class="op">(</span><span class="op">)</span>      <span class="co"># retrieve settings</span></span>
+<span><span class="va">b</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>           <span class="co"># replicate once</span></span>
+<span><span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>   <span class="co"># replicate 10x</span></span></code></pre></div>
 <p>The <code>$replicate()</code> function also runs on multiple cores:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span>
-<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>density<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span>
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">4</span>  <span class="co"># number of runs</span>
-<span class="va">nc</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="co"># number of cores</span>
-
-<span class="co">## sequential</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.790   0.013   0.830</span>
-
-<span class="co">## parallel clusters</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span>
-<span class="co">## note: loading the package is optional</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.001   0.000   1.289</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.013   0.002   0.655</span>
-<span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span>
-
-<span class="co">## parallel forking</span>
-<span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;   0.413   0.108   0.544</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>density<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">4</span>  <span class="co"># number of runs</span></span>
+<span><span class="va">nc</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="co"># number of cores</span></span>
+<span></span>
+<span><span class="co">## sequential</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    user  system elapsed </span></span>
+<span><span class="co">#&gt;   0.790   0.013   0.830</span></span>
+<span></span>
+<span><span class="co">## parallel clusters</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span>
+<span><span class="co">## note: loading the package is optional</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    user  system elapsed </span></span>
+<span><span class="co">#&gt;   0.001   0.000   1.289</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    user  system elapsed </span></span>
+<span><span class="co">#&gt;   0.013   0.002   0.655</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## parallel forking</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt;    user  system elapsed </span></span>
+<span><span class="co">#&gt;   0.413   0.108   0.544</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -267,45 +262,56 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=bSims">https://​cloud.r-project.org/​package=bSims</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/psolymos/bSims/">https://​github.com/​psolymos/​bSims/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/psolymos/bSims/issues">https://​github.com/​psolymos/​bSims/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=bSims" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/psolymos/bSims/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/psolymos/bSims/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-2">GPL-2</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-2" class="external-link">GPL-2</a></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing bSims</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Peter Solymos <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Peter Solymos.</p>
+  <p></p>
+<p>Developed by Peter Solymos.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -313,6 +319,8 @@
 
   
 
+
+  
 
   </body>
 </html>

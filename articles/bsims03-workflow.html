@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,23 +39,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bSims</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3-0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/psolymos/bSims/">
+  <a href="https://github.com/psolymos/bSims/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,153 +87,186 @@
 
       
 
-      </header><script src="bsims03-workflow_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simulation workflow in bSims</h1>
-                        <h4 class="author">Peter Solymos</h4>
+                        <h4 data-toc-skip class="author">Peter
+Solymos</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/psolymos/bSims/blob/master/vignettes/bsims03-workflow.Rmd"><code>vignettes/bsims03-workflow.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/psolymos/bSims/blob/HEAD/vignettes/bsims03-workflow.Rmd" class="external-link"><code>vignettes/bsims03-workflow.Rmd</code></a></small>
       <div class="hidden name"><code>bsims03-workflow.Rmd</code></div>
 
     </div>
 
     
     
-<p>We recommend exploring the simulation settings interactively in the <strong>shiny</strong> apps using <code><a href="../reference/run_app.html">run_app("bsimsH")</a></code> app for the homogeneous habitat case and the <code><a href="../reference/run_app.html">run_app("bsimsHER")</a></code> app for the stratified habitat case. The apps represent the simulation layers as tabs, the last tab presenting the settings that can be copied onto the clipboard and pasted into the R session or code. In simple situations, comparing results from a few different settings might be enough.</p>
-<p>Let us consider the following simple comparison: we want to see how much of an effect does roads have when the only effect is that the road stratum is unsuitable. Otherwise there are no behavioral or detectability effects of the road.</p>
+<p>We recommend exploring the simulation settings interactively in the
+<strong>shiny</strong> apps using <code>run_app("bsimsH")</code> app for
+the homogeneous habitat case and the <code>run_app("bsimsHER")</code>
+app for the stratified habitat case. The apps represent the simulation
+layers as tabs, the last tab presenting the settings that can be copied
+onto the clipboard and pasted into the R session or code. In simple
+situations, comparing results from a few different settings might be
+enough.</p>
+<p>Let us consider the following simple comparison: we want to see how
+much of an effect does roads have when the only effect is that the road
+stratum is unsuitable. Otherwise there are no behavioral or
+detectability effects of the road.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims">bSims</a></span><span class="op">)</span>
-
-<span class="va">tint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="va">rint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">2</span>, <span class="cn">Inf</span><span class="op">)</span> <span class="co"># unlimited</span>
-
-<span class="co">## no road</span>
-<span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>
-  road <span class="op">=</span> <span class="fl">0</span>,
-  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-  tint <span class="op">=</span> <span class="va">tint</span>,
-  rint <span class="op">=</span> <span class="va">rint</span><span class="op">)</span>
-<span class="co">## road</span>
-<span class="va">b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>
-  road <span class="op">=</span> <span class="fl">0.5</span>,
-  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-  tint <span class="op">=</span> <span class="va">tint</span>,
-  rint <span class="op">=</span> <span class="va">rint</span><span class="op">)</span>
-<span class="va">b1</span>
-<span class="co">#&gt; bSims wrapper object with settings:</span>
-<span class="co">#&gt;   road   : 0</span>
-<span class="co">#&gt;   density: 1, 1, 0</span>
-<span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span>
-<span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span>
-<span class="va">b2</span>
-<span class="co">#&gt; bSims wrapper object with settings:</span>
-<span class="co">#&gt;   road   : 0.5</span>
-<span class="co">#&gt;   density: 1, 1, 0</span>
-<span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span>
-<span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></code></pre></div>
-<p>The <code>bsims_all</code> function accepts all the arguments we discussed before for the simulation layers. Unspecified arguments will be taken to be the default value. However, <code>bsims_all</code> does not evaluate these arguments, but it creates a closure with the settings. Realizations can be drawn as:</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">rint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">2</span>, <span class="cn">Inf</span><span class="op">)</span> <span class="co"># unlimited</span></span>
+<span></span>
+<span><span class="co">## no road</span></span>
+<span><span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span></span>
+<span>  road <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  tint <span class="op">=</span> <span class="va">tint</span>,</span>
+<span>  rint <span class="op">=</span> <span class="va">rint</span><span class="op">)</span></span>
+<span><span class="co">## road</span></span>
+<span><span class="va">b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span></span>
+<span>  road <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  tint <span class="op">=</span> <span class="va">tint</span>,</span>
+<span>  rint <span class="op">=</span> <span class="va">rint</span><span class="op">)</span></span>
+<span><span class="va">b1</span></span>
+<span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
+<span><span class="co">#&gt;   road   : 0</span></span>
+<span><span class="co">#&gt;   density: 1, 1, 0</span></span>
+<span><span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span></span>
+<span><span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></span>
+<span><span class="va">b2</span></span>
+<span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
+<span><span class="co">#&gt;   road   : 0.5</span></span>
+<span><span class="co">#&gt;   density: 1, 1, 0</span></span>
+<span><span class="co">#&gt;   tint   : 2, 4, 6, 8, 10</span></span>
+<span><span class="co">#&gt;   rint   : 0.5, 1, 1.5, 2, Inf</span></span></code></pre></div>
+<p>The <code>bsims_all</code> function accepts all the arguments we
+discussed before for the simulation layers. Unspecified arguments will
+be taken to be the default value. However, <code>bsims_all</code> does
+not evaluate these arguments, but it creates a closure with the
+settings. Realizations can be drawn as:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b1</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; bSims transcript</span>
-<span class="co">#&gt;   1 km x 1 km</span>
-<span class="co">#&gt;   stratification: H</span>
-<span class="co">#&gt;   total abundance: 92</span>
-<span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 8 heard</span>
-<span class="co">#&gt;   1st event detected by breaks:</span>
-<span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span>
-<span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span>
-<span class="va">b2</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; bSims transcript</span>
-<span class="co">#&gt;   1 km x 1 km</span>
-<span class="co">#&gt;   stratification: HR</span>
-<span class="co">#&gt;   total abundance: 91</span>
-<span class="co">#&gt;   duration: 10 min</span>
-<span class="co">#&gt;   detected: 3 heard</span>
-<span class="co">#&gt;   1st event detected by breaks:</span>
-<span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span>
-<span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">b1</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; bSims transcript</span></span>
+<span><span class="co">#&gt;   1 km x 1 km</span></span>
+<span><span class="co">#&gt;   stratification: H</span></span>
+<span><span class="co">#&gt;   total abundance: 92</span></span>
+<span><span class="co">#&gt;   duration: 10 min</span></span>
+<span><span class="co">#&gt;   detected: 8 heard</span></span>
+<span><span class="co">#&gt;   1st event detected by breaks:</span></span>
+<span><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></span>
+<span><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></span>
+<span><span class="va">b2</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; bSims transcript</span></span>
+<span><span class="co">#&gt;   1 km x 1 km</span></span>
+<span><span class="co">#&gt;   stratification: HR</span></span>
+<span><span class="co">#&gt;   total abundance: 91</span></span>
+<span><span class="co">#&gt;   duration: 10 min</span></span>
+<span><span class="co">#&gt;   detected: 3 heard</span></span>
+<span><span class="co">#&gt;   1st event detected by breaks:</span></span>
+<span><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></span>
+<span><span class="co">#&gt;     [0, 50, 100, 150, 200, Inf m]</span></span></code></pre></div>
 <p>Run multiple realizations is done as:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">25</span>  <span class="co"># number of runs</span>
-<span class="va">bb1</span> <span class="op">&lt;-</span> <span class="va">b1</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span><span class="op">)</span>
-<span class="va">bb2</span> <span class="op">&lt;-</span> <span class="va">b2</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
-<p>The replicate function takes an argument for the number of replicates (<code>B</code>) and returns a list of transcript objects with B elements. The <code>cl</code> argument can be used to parallelize the work, it can be a numeric value on Unix/Linux/OSX, or a cluster object on any OS. The <code>recover = TRUE</code> argument allows to run simulations with error catching.</p>
-<p>Simulated objects returned by <code>bsims_all</code> will contain different realizations and all the conditionally independent layers. Use a customized layered approach if former layers are meant to be kept identical across runs.</p>
-<p>In more complex situations the <strong>shiny</strong> apps will help identifying corner cases that are used to define a gradient of settings for single or multiple simulation options. Let us consider the following scenario: we would like to evaluate how the estimates are changing with increasing road width. We will use the <code>expand_list</code> function which creates a list from all combinations of the supplied inputs. Note that we need to wrap vectors inside <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> to avoid interpreting those as values to iterate over.</p>
+<code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">25</span>  <span class="co"># number of runs</span></span>
+<span><span class="va">bb1</span> <span class="op">&lt;-</span> <span class="va">b1</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span><span class="va">bb2</span> <span class="op">&lt;-</span> <span class="va">b2</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
+<p>The replicate function takes an argument for the number of replicates
+(<code>B</code>) and returns a list of transcript objects with B
+elements. The <code>cl</code> argument can be used to parallelize the
+work, it can be a numeric value on Unix/Linux/OSX, or a cluster object
+on any OS. The <code>recover = TRUE</code> argument allows to run
+simulations with error catching.</p>
+<p>Simulated objects returned by <code>bsims_all</code> will contain
+different realizations and all the conditionally independent layers. Use
+a customized layered approach if former layers are meant to be kept
+identical across runs.</p>
+<p>In more complex situations the <strong>shiny</strong> apps will help
+identifying corner cases that are used to define a gradient of settings
+for single or multiple simulation options. Let us consider the following
+scenario: we would like to evaluate how the estimates are changing with
+increasing road width. We will use the <code>expand_list</code> function
+which creates a list from all combinations of the supplied inputs. Note
+that we need to wrap vectors inside <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> to avoid
+interpreting those as values to iterate over.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_list.html">expand_list</a></span><span class="op">(</span>
-  road <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>,
-  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,
-  tint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tint</span><span class="op">)</span>,
-  rint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">rint</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span>
-<span class="co">#&gt; List of 3</span>
-<span class="co">#&gt;  $ :List of 4</span>
-<span class="co">#&gt;   ..$ road   : num 0</span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span>
-<span class="co">#&gt;  $ :List of 4</span>
-<span class="co">#&gt;   ..$ road   : num 0.5</span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span>
-<span class="co">#&gt;  $ :List of 4</span>
-<span class="co">#&gt;   ..$ road   : num 1</span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></code></pre></div>
-<p>We now can use this list of settings to run simulations for each. The following illustrates the use of multiple cores:</p>
+<code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_list.html">expand_list</a></span><span class="op">(</span></span>
+<span>  road <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  tint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tint</span><span class="op">)</span>,</span>
+<span>  rint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rint</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ :List of 4</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 0</span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span>
+<span><span class="co">#&gt;  $ :List of 4</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 0.5</span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span>
+<span><span class="co">#&gt;  $ :List of 4</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 1</span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span></code></pre></div>
+<p>We now can use this list of settings to run simulations for each. The
+following illustrates the use of multiple cores:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">bsims_all</span><span class="op">)</span>
-<span class="va">nc</span> <span class="op">&lt;-</span> <span class="fl">4</span> <span class="co"># number of cores to use</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span>
-<span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">b</span>, <span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="va">z</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></code></pre></div>
-<p>In some cases, we want to evaluate crossed effects of multiple settings. For example, road width and spatial pattern (random vs. clustered):</p>
+<code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">bsims_all</span><span class="op">)</span></span>
+<span><span class="va">nc</span> <span class="op">&lt;-</span> <span class="fl">4</span> <span class="co"># number of cores to use</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span>
+<span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">b</span>, <span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="va">z</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<p>In some cases, we want to evaluate crossed effects of multiple
+settings. For example, road width and spatial pattern (random
+vs. clustered):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_list.html">expand_list</a></span><span class="op">(</span>
-  road <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,
-  xy_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    <span class="cn">NULL</span>,
-    <span class="kw">function</span><span class="op">(</span><span class="va">d</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">d</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">d</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">4</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,
-  tint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">tint</span><span class="op">)</span>,
-  rint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">rint</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span>
-<span class="co">#&gt; List of 4</span>
-<span class="co">#&gt;  $ :List of 5</span>
-<span class="co">#&gt;   ..$ road   : num 0</span>
-<span class="co">#&gt;   ..$ xy_fun : NULL</span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span>
-<span class="co">#&gt;  $ :List of 5</span>
-<span class="co">#&gt;   ..$ road   : num 0.5</span>
-<span class="co">#&gt;   ..$ xy_fun : NULL</span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span>
-<span class="co">#&gt;  $ :List of 5</span>
-<span class="co">#&gt;   ..$ road   : num 0</span>
-<span class="co">#&gt;   ..$ xy_fun :function (d)  </span>
-<span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span>
-<span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7f8ccf5de928&gt; </span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span>
-<span class="co">#&gt;  $ :List of 5</span>
-<span class="co">#&gt;   ..$ road   : num 0.5</span>
-<span class="co">#&gt;   ..$ xy_fun :function (d)  </span>
-<span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span>
-<span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7f8ccf5de928&gt; </span>
-<span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span>
-<span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span>
-<span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_list.html">expand_list</a></span><span class="op">(</span></span>
+<span>  road <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  xy_fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>,</span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">d</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">d</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">d</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">4</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  tint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tint</span><span class="op">)</span>,</span>
+<span>  rint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rint</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 4</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 0</span></span>
+<span><span class="co">#&gt;   ..$ xy_fun : NULL</span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 0.5</span></span>
+<span><span class="co">#&gt;   ..$ xy_fun : NULL</span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 0</span></span>
+<span><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fe17e191cf0&gt; </span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span>
+<span><span class="co">#&gt;  $ :List of 5</span></span>
+<span><span class="co">#&gt;   ..$ road   : num 0.5</span></span>
+<span><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fe17e191cf0&gt; </span></span>
+<span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
+<span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
+<span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -249,11 +278,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Peter Solymos.</p>
+  <p></p>
+<p>Developed by Peter Solymos.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -261,6 +292,8 @@
 
   
 
+
+  
 
   </body>
 </html>
