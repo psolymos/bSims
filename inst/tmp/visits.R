@@ -6,11 +6,11 @@ library(rjags)
 library(pbapply)
 
 # Estimation
-fit_fun <- function(Y, rint, D, p) {
+fit_fun <- function(Y, rint, D, p, n.update = 1000, ...) {
   f <- jags.fit(
     data = list(Y = Y, A=max(rint)^2*pi, n = nrow(Y), J = ncol(Y)),
     params = c("D", "p"),
-    n.update = 1000,
+    n.update = n.update,
     model = custommodel("model {
         for (i in 1:n) {
             N[i] ~ dpois(D*A)
@@ -21,7 +21,7 @@ fit_fun <- function(Y, rint, D, p) {
         p ~ dunif(0.001, 0.999)
         D ~ dlnorm(0, 0.001)
     }"),
-    inits = list(N = apply(Y, 1, max) + 1))
+    inits = list(N = apply(Y, 1, max) + 1), ...)
   cbind(True=c(D=D, p=p),
         JAGS=unname(coef(f)))
 }
