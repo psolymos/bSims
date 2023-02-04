@@ -53,7 +53,7 @@ other arguments passed to internal functions.
 }
 }
 \details{
-\code{get_nests} extracts the next locations.
+\code{get_nests} extracts the nest locations.
 
 \code{get_events} extracts the events.
 
@@ -78,13 +78,16 @@ returns a non-negative numeric value.
 \code{x} and \code{y} are locations of the individual at the time of the event,
 \code{t} time of the event within the duration interval,
 \code{v} indicator variable for vocal (1) vs. movement (0) event,
+\code{a} direction for vocalization events (\code{NA} for movement) in degrees clockwise relative to north,
 \code{i} individual identifier.
 
 \code{get_detections} returns a data frame with the following columns:
 \code{x} and \code{y} are locations of the individual at the time of the event,
 \code{t} time of the event within the duration interval,
 \code{v} indicator variable for vocal (1) vs. movement (0) event,
+\code{a} direction for vocalization events (\code{NA} for movement) in degrees clockwise relative to north,
 \code{d} distance from observer when detected (otherwise \code{NA}).
+\code{f} indicates the angle between the bird's vocalization direction (column \code{a}) relative to the observer (the value is 0 for movement events by default),
 \code{i} individual identifier,
 \code{j} perceived individual identifier.
 
