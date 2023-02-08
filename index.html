@@ -168,28 +168,28 @@
 <span></span>
 <span><span class="fu"><a href="reference/getters.html">get_table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          0-3min 3-5min 5-10min</span></span>
-<span><span class="co">#&gt; 0-50m         1      0       1</span></span>
-<span><span class="co">#&gt; 50-100m       2      0       0</span></span>
-<span><span class="co">#&gt; 100-150m      5      0       0</span></span>
-<span><span class="co">#&gt; 150+m         5      3       1</span></span>
+<span><span class="co">#&gt; 0-50m         2      0       0</span></span>
+<span><span class="co">#&gt; 50-100m       3      0       1</span></span>
+<span><span class="co">#&gt; 100-150m      4      1       0</span></span>
+<span><span class="co">#&gt; 150+m         8      3       0</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/getters.html">get_events</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            x         y          t v  i</span></span>
-<span><span class="co">#&gt; 1 -3.6616422 -1.676053 0.01126843 1 12</span></span>
-<span><span class="co">#&gt; 2  4.6607856  4.537327 0.02661606 1 96</span></span>
-<span><span class="co">#&gt; 3 -0.2867919  2.155661 0.05207233 1 47</span></span>
-<span><span class="co">#&gt; 4  2.6507206 -1.110949 0.06329550 1 69</span></span>
-<span><span class="co">#&gt; 5  2.1330323 -2.167675 0.11365119 1 72</span></span>
-<span><span class="co">#&gt; 6  0.4926841 -3.517884 0.12323517 1 45</span></span>
+<span><span class="co">#&gt;            x          y          t v   a  i</span></span>
+<span><span class="co">#&gt; 1  4.6025783 -3.3454607 0.02565467 1 302 99</span></span>
+<span><span class="co">#&gt; 2 -0.7210853 -1.4680273 0.03151759 1 190 43</span></span>
+<span><span class="co">#&gt; 3 -2.7191418  1.6200508 0.03152603 1  78  7</span></span>
+<span><span class="co">#&gt; 4 -2.1041934 -1.6092706 0.03936096 1 295 19</span></span>
+<span><span class="co">#&gt; 5 -4.9531338 -0.4093427 0.04890537 1 217 11</span></span>
+<span><span class="co">#&gt; 6 -3.3127196 -0.2145475 0.08899310 1 215 15</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/getters.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             x           y          t v         d  i  j</span></span>
-<span><span class="co">#&gt; 3  -0.2867919  2.15566066 0.05207233 1 2.1746546 47 47</span></span>
-<span><span class="co">#&gt; 10  0.7075451  1.01541218 0.26632984 1 1.2376114 58 58</span></span>
-<span><span class="co">#&gt; 14  0.5770644 -0.47429169 0.35091111 1 0.7469645 62 62</span></span>
-<span><span class="co">#&gt; 16  0.4761707 -0.04406422 0.35179595 1 0.4782052 52 52</span></span>
-<span><span class="co">#&gt; 18  1.0957120 -2.41834073 0.45279692 1 2.6549871 60 60</span></span>
-<span><span class="co">#&gt; 33  1.0111698  1.82788079 0.87025627 1 2.0889262 57 57</span></span></code></pre></div>
+<span><span class="co">#&gt;             x           y          t v   a         d  f  i  j</span></span>
+<span><span class="co">#&gt; 2  -0.7210853 -1.46802728 0.03151759 1 190 1.6355636 NA 43 43</span></span>
+<span><span class="co">#&gt; 8  -0.7210853 -1.46802728 0.11174961 1 323 1.6355636 NA 43 43</span></span>
+<span><span class="co">#&gt; 13  0.5770644 -0.47429169 0.17337408 1 152 0.7469645 NA 62 62</span></span>
+<span><span class="co">#&gt; 17 -1.3566956 -0.44725546 0.20776472 1 213 1.4285169 NA 38 38</span></span>
+<span><span class="co">#&gt; 25  0.5355406 -3.24873232 0.42514210 1 330 3.2925773 NA 63 63</span></span>
+<span><span class="co">#&gt; 29  0.9538955  0.07641822 0.48471447 1 160 0.9569516 NA 56 56</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="shiny-apps">Shiny apps<a class="anchor" aria-label="anchor" href="#shiny-apps"></a>
@@ -230,17 +230,17 @@
 <span><span class="co">## sequential</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.790   0.013   0.830</span></span>
+<span><span class="co">#&gt;   0.234   0.004   0.239</span></span>
 <span></span>
 <span><span class="co">## parallel clusters</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span>
 <span><span class="co">## note: loading the package is optional</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.001   0.000   1.289</span></span>
+<span><span class="co">#&gt;   0.000   0.001   0.533</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.013   0.002   0.655</span></span>
+<span><span class="co">#&gt;   0.004   0.001   0.190</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## parallel forking</span></span>
@@ -248,7 +248,7 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.413   0.108   0.544</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.119   0.038   0.160</span></span></code></pre></div>
 </div>
 </div>
 </div>
