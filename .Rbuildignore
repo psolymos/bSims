@@ -10,6 +10,7 @@
 ^pkgdown$
 ^README\.Rmd$
 ^README\.md$
+^RELEASE\.R$
 ^CODE_OF_CONDUCT\.md$
 .png
 .gif
