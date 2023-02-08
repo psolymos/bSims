@@ -3,35 +3,38 @@
 A highly scientific and utterly addictive bird point count simulator to
 test statistical assumptions and to aid survey design.
 
-[![CRAN version](https://www.r-pkg.org/badges/version/bSims)](https://CRAN.R-project.org/package=bSims)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://peter.solymos.org/bSims/)
+[![CRAN
+version](https://www.r-pkg.org/badges/version/bSims)](https://CRAN.R-project.org/package=bSims)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/bSims)](https://peter.solymos.org/bSims/)
 [![check](https://github.com/psolymos/bSims/actions/workflows/check.yml/badge.svg)](https://github.com/psolymos/bSims/actions/workflows/check.yml)
 
 > *“I’ve yet to see any problem, however complicated, which when you
 > looked at it the right way didn’t become still more complicated.”* –
 > Poul Anderson, Call Me Joe
 
-> *“Love the simulation we're dreaming in”* - Dua Lipa, Physical
+> *“Love the simulation we’re dreaming in”* - Dua Lipa, Physical
 
 The goal of the package is to:
 
-  - test statistical assumptions,
-  - aid survey design,
-  - and have fun while doing it\!
+- test statistical assumptions,
+- aid survey design,
+- and have fun while doing it!
 
 Design objectives:
 
-  - small (point count) scale implementation,
-  - habitat is considered homogeneous except for edge effects,
-  - realistic but efficient implementation of biological mechanisms and
-    observation process,
-  - defaults chosen to reflect common practice and assumptions,
-  - extensible (PRs are welcome).
+- small (point count) scale implementation,
+- habitat is considered homogeneous except for edge effects,
+- realistic but efficient implementation of biological mechanisms and
+  observation process,
+- defaults chosen to reflect common practice and assumptions,
+- extensible (PRs are welcome).
 
 See the package in action in the [**QPAD
 Book**](https://peter.solymos.org/qpad-book/).
 
-Check out the [**QPAD workshop**](https://peter.solymos.org/qpad-workshop/).
+Check out the [**QPAD
+workshop**](https://peter.solymos.org/qpad-workshop/).
 
 ## Install
 
@@ -57,10 +60,10 @@ See what is new in the [NEWS](NEWS.md) file.
 
 Feedback and contributions are welcome:
 
-  - submit feature request or report issues
-    [here](https://github.com/psolymos/bSims/issues),
-  - fork the project and submit pull request, see
-    [CoC](CODE_OF_CONDUCT.md).
+- submit feature request or report issues
+  [here](https://github.com/psolymos/bSims/issues),
+- fork the project and submit pull request, see
+  [CoC](CODE_OF_CONDUCT.md).
 
 ## Examples
 
@@ -84,28 +87,28 @@ x <- bsims_transcribe(o, tint=tbr, rint=rbr)
 
 get_table(x)
 #>          0-3min 3-5min 5-10min
-#> 0-50m         1      0       1
-#> 50-100m       2      0       0
-#> 100-150m      5      0       0
-#> 150+m         5      3       1
+#> 0-50m         2      0       0
+#> 50-100m       3      0       1
+#> 100-150m      4      1       0
+#> 150+m         8      3       0
 
 head(get_events(a))
-#>            x         y          t v  i
-#> 1 -3.6616422 -1.676053 0.01126843 1 12
-#> 2  4.6607856  4.537327 0.02661606 1 96
-#> 3 -0.2867919  2.155661 0.05207233 1 47
-#> 4  2.6507206 -1.110949 0.06329550 1 69
-#> 5  2.1330323 -2.167675 0.11365119 1 72
-#> 6  0.4926841 -3.517884 0.12323517 1 45
+#>            x          y          t v   a  i
+#> 1  4.6025783 -3.3454607 0.02565467 1 302 99
+#> 2 -0.7210853 -1.4680273 0.03151759 1 190 43
+#> 3 -2.7191418  1.6200508 0.03152603 1  78  7
+#> 4 -2.1041934 -1.6092706 0.03936096 1 295 19
+#> 5 -4.9531338 -0.4093427 0.04890537 1 217 11
+#> 6 -3.3127196 -0.2145475 0.08899310 1 215 15
 
 head(get_detections(o))
-#>             x           y          t v         d  i  j
-#> 3  -0.2867919  2.15566066 0.05207233 1 2.1746546 47 47
-#> 10  0.7075451  1.01541218 0.26632984 1 1.2376114 58 58
-#> 14  0.5770644 -0.47429169 0.35091111 1 0.7469645 62 62
-#> 16  0.4761707 -0.04406422 0.35179595 1 0.4782052 52 52
-#> 18  1.0957120 -2.41834073 0.45279692 1 2.6549871 60 60
-#> 33  1.0111698  1.82788079 0.87025627 1 2.0889262 57 57
+#>             x           y          t v   a         d  f  i  j
+#> 2  -0.7210853 -1.46802728 0.03151759 1 190 1.6355636 NA 43 43
+#> 8  -0.7210853 -1.46802728 0.11174961 1 323 1.6355636 NA 43 43
+#> 13  0.5770644 -0.47429169 0.17337408 1 152 0.7469645 NA 62 62
+#> 17 -1.3566956 -0.44725546 0.20776472 1 213 1.4285169 NA 38 38
+#> 25  0.5355406 -3.24873232 0.42514210 1 330 3.2925773 NA 63 63
+#> 29  0.9538955  0.07641822 0.48471447 1 160 0.9569516 NA 56 56
 ```
 
 ### Shiny apps
@@ -162,17 +165,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.790   0.013   0.830
+#>   0.234   0.004   0.239
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.001   0.000   1.289
+#>   0.000   0.001   0.533
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.013   0.002   0.655
+#>   0.004   0.001   0.190
 stopCluster(cl)
 
 ## parallel forking
@@ -180,5 +183,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.413   0.108   0.544
+#>   0.119   0.038   0.160
 ```
