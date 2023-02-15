@@ -175,12 +175,21 @@ a customized layered approach if former layers are meant to be kept
 identical across runs.</p>
 <p>In more complex situations the <strong>shiny</strong> apps will help
 identifying corner cases that are used to define a gradient of settings
-for single or multiple simulation options. Let us consider the following
-scenario: we would like to evaluate how the estimates are changing with
-increasing road width. We will use the <code>expand_list</code> function
-which creates a list from all combinations of the supplied inputs. Note
-that we need to wrap vectors inside <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> to avoid
-interpreting those as values to iterate over.</p>
+for single or multiple simulation options. You can copy the
+<code>bsims_all</code> settings from the app to be used in
+simulations.</p>
+<div class="section level2">
+<h2 id="sensitivity-analysis">Sensitivity analysis<a class="anchor" aria-label="anchor" href="#sensitivity-analysis"></a>
+</h2>
+<p>In a sensitivity analysis we evaluate how varying one or more
+settings affect the estimates. This requires setting up a series of
+values for a setting (argument) while keeping others constant.</p>
+<p>Let us consider the following scenario: we would like to evaluate how
+the estimates are changing with increasing road width. We will use the
+<code>expand_list</code> function which creates a list from all
+combinations of the supplied inputs. Note that we need to wrap vectors
+inside <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> to avoid interpreting those as values to
+iterate over.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_list.html">expand_list</a></span><span class="op">(</span></span>
 <span>  road <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -214,7 +223,8 @@ following illustrates the use of multiple cores:</p>
 <span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">b</span>, <span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="va">z</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <p>In some cases, we want to evaluate crossed effects of multiple
-settings. For example, road width and spatial pattern (random
+settings. This will give us information about how these settings
+interact. For example, road width and spatial pattern (random
 vs. clustered):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_list.html">expand_list</a></span><span class="op">(</span></span>
@@ -243,7 +253,7 @@ vs. clustered):</p>
 <span><span class="co">#&gt;   ..$ road   : num 0</span></span>
 <span><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7f8789a8afc0&gt; </span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fb2aa448560&gt; </span></span>
 <span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
 <span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
 <span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span>
@@ -251,11 +261,91 @@ vs. clustered):</p>
 <span><span class="co">#&gt;   ..$ road   : num 0.5</span></span>
 <span><span class="co">#&gt;   ..$ xy_fun :function (d)  </span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 5 5 5 53 5 53 5 5</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7f8789a8afc0&gt; </span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' &lt;environment: 0x7fb2aa448560&gt; </span></span>
 <span><span class="co">#&gt;   ..$ density: num [1:3] 1 1 0</span></span>
 <span><span class="co">#&gt;   ..$ tint   : num [1:5] 2 4 6 8 10</span></span>
 <span><span class="co">#&gt;   ..$ rint   : num [1:5] 0.5 1 1.5 2 Inf</span></span></code></pre></div>
-  </main>
+</div>
+<div class="section level2">
+<h2 id="varying-landscapes">Varying landscapes<a class="anchor" aria-label="anchor" href="#varying-landscapes"></a>
+</h2>
+<p>Studying covariate effects on density, cue rates, and detection
+distances sometimes require that we simulate a series of landscapes that
+differ.</p>
+<p>We exploit the fact that arguments to <code>bsims_all</code> can be
+supplied as a list, which is the same as a single-row data frame. This
+should work for all arguments that accept atomic vectors as
+arguments:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span></span>
+<span>  road <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  density <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
+<span><span class="co">#&gt;   road   : 0.5</span></span>
+<span><span class="co">#&gt;   density: 1</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    road <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    density <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
+<span><span class="co">#&gt;   road   : 0.5</span></span>
+<span><span class="co">#&gt;   density: 1</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    road <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    density <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
+<span><span class="co">#&gt;   road   : 0.5</span></span>
+<span><span class="co">#&gt;   density: 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># number of stations to visit</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
+<span></span>
+<span><span class="co"># random predictors: continuous and discrete</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, x2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># density</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/drop.html" class="external-link">drop</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span><span class="va">x2</span>, <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="op">-</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">#&gt;  0.3504  0.5350  0.8555  1.0259  1.1943  2.1945</span></span>
+<span></span>
+<span><span class="co"># cue rate</span></span>
+<span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/drop.html" class="external-link">drop</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span><span class="va">x1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">x1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">0.25</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">#&gt;  0.1288  0.2333  0.2734  0.2616  0.3053  0.3673</span></span>
+<span></span>
+<span><span class="co"># this data frame collects the columns to be used as arguments</span></span>
+<span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    D<span class="op">=</span><span class="va">D</span>,</span>
+<span>    vocal_rate <span class="op">=</span> <span class="va">phi</span>, </span>
+<span>    duration <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    condition <span class="op">=</span> <span class="st">"det1"</span>,</span>
+<span>    tau <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># each row from s becomes a simulation settings object</span></span>
+<span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="../reference/bsims_init.html">bsims_all</a></span><span class="op">(</span><span class="va">s</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># define how you want the data extracted</span></span>
+<span><span class="va">get_counts</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">b</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">o</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="co"># simulate</span></span>
+<span>    <span class="fu"><a href="../reference/getters.html">get_table</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">x</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">bb</span>, <span class="va">get_counts</span><span class="op">)</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt;           x1         x2 y</span></span>
+<span><span class="co">#&gt; 1  0.9069551 -1.5718783 2</span></span>
+<span><span class="co">#&gt; 2  0.4338611  2.0973895 6</span></span>
+<span><span class="co">#&gt; 3 -0.2565603 -0.3550863 4</span></span>
+<span><span class="co">#&gt; 4  0.3244926  1.2508359 6</span></span>
+<span><span class="co">#&gt; 5  0.5613159  0.3122454 7</span></span></code></pre></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
