@@ -91,6 +91,14 @@ identical across runs.
 In more complex situations the **shiny** apps will help identifying
 corner cases that are used to define a gradient of settings
 for single or multiple simulation options.
+You can copy the `bsims_all` settings from the app to be used in simulations.
+
+## Sensitivity analysis
+
+In a sensitivity analysis we evaluate how varying one or more settings
+affect the estimates. This requires setting up a series of values for
+a setting (argument) while keeping others constant.
+
 Let us consider the following scenario:
 we would like to evaluate how the estimates are changing with
 increasing road width. We will use the `expand_list` function
@@ -105,7 +113,6 @@ s <- expand_list(
   tint = list(tint),
   rint = list(rint))
 str(s)
-
 ```
 
 We now can use this list of settings to run simulations for each.
@@ -121,7 +128,8 @@ stopCluster(cl)
 ```
 
 In some cases, we want to evaluate crossed effects of multiple
-settings. For example, road width and spatial pattern (random vs. clustered):
+settings. This will give us information about how these settings interact.
+For example, road width and spatial pattern (random vs. clustered):
 
 ```{r grid3}
 s <- expand_list(
@@ -135,4 +143,63 @@ s <- expand_list(
 str(s)
 ```
 
+## Varying landscapes
 
+Studying covariate effects on density, cue rates, and detection distances sometimes require
+that we simulate a series of landscapes that differ.
+
+We exploit the fact that arguments to `bsims_all` can be supplied as a list,
+which is the same as a single-row data frame. This should work for all arguments
+that accept atomic vectors as arguments:
+
+```{r equal}
+bsims_all(
+  road = 0.5,
+  density = 1)
+
+bsims_all(
+  list(
+    road = 0.5,
+    density = 1))
+
+bsims_all(
+  data.frame(
+    road = 0.5,
+    density = 1))
+```
+
+```{r variables}
+# number of stations to visit
+n <- 5
+
+# random predictors: continuous and discrete
+x <- data.frame(x1=runif(n,-1,2), x2=rnorm(n))
+
+# density
+D <- drop(exp(model.matrix(~x2, x) %*% c(0,-0.5)))
+summary(D)
+
+# cue rate
+phi <- drop(exp(model.matrix(~x1+I(x1^2), x) %*% c(-1,-0.25,-1)))
+summary(phi)
+
+# this data frame collects the columns to be used as arguments
+s <- data.frame(
+    D=D,
+    vocal_rate = phi, 
+    duration = 10,
+    condition = "det1",
+    tau = 1)
+
+# each row from s becomes a simulation settings object
+bb <- lapply(1:n, function(i) bsims_all(s[i,]))
+
+# define how you want the data extracted
+get_counts <- function(b) {
+    o <- b$new() # simulate
+    get_table(o)[1,1]
+}
+
+x$y <- sapply(bb, get_counts)
+x
+```
