@@ -364,27 +364,27 @@ implications for avian point count surveys.
 <span class="r-out co"><span class="r-pr">#&gt;</span> bSims population</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 km x 1 km</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   stratification: HER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 113</span>
 <span class="r-in"><span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">bsims_animate</span><span class="op">(</span><span class="va">p</span>, vocal_rate<span class="op">=</span><span class="va">phi</span>, duration<span class="op">=</span><span class="va">dur</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bSims events</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 km x 1 km</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   stratification: HER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   duration: 10 min</span>
 <span class="r-in"><span><span class="op">(</span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu">bsims_detect</span><span class="op">(</span><span class="va">a</span>, tau<span class="op">=</span><span class="va">tau</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bSims detections</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 km x 1 km</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   stratification: HER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   duration: 10 min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   detected: 31 heard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   detected: 33 heard</span>
 <span class="r-in"><span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">bsims_transcribe</span><span class="op">(</span><span class="va">o</span>, tint<span class="op">=</span><span class="va">tbr</span>, rint<span class="op">=</span><span class="va">rbr</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bSims transcript</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 km x 1 km</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   stratification: HER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   duration: 10 min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   detected: 31 heard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   detected: 33 heard</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1st event detected by breaks:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     [0, 3, 5, 10 min]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     [0, 50, 100, 150, Inf m]</span>
@@ -393,36 +393,36 @@ implications for avian point count surveys.
 <span class="r-plt img"><img src="bsims_init-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="getters.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"removal"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          0-3min 3-5min 5-10min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         1      1       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       6      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      3      1       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         8      1       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         2      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       1      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      2      1       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         6      1       0</span>
 <span class="r-in"><span><span class="fu"><a href="getters.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"visits"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          0-3min 3-5min 5-10min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         1      2       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       6      4       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      3      3       3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         8      4       4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         2      0       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       1      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      2      2       4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         6      4      11</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="getters.html">get_events</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            x          y           t v   a  i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  3.0677134 -4.1055249 0.008621303 1 132 85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -1.9468593  2.2898507 0.016972327 1 324  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -1.4789582 -0.2158239 0.028962483 1  61 38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -2.1369272  2.1508819 0.057905930 1  37 32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -2.8289249  2.8046653 0.078533466 1 163 21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -0.6948024  0.3952488 0.143562640 1 229 42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            x           y           t v   a   i</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -4.2827516  0.01524698 0.001067919 1 248  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.4053242 -1.22366737 0.024378584 1 329  63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3.0602071  3.61225219 0.025175880 1 299 108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -2.3675899 -0.81971886 0.047487726 1 184  14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  4.8932753  1.14939276 0.048534019 1 164  88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -2.4553375 -2.03260715 0.049922039 1 323  40</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="getters.html">get_events</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="bsims_init-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="getters.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             x          y          t v   a         d  f  i  j</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -1.4789582 -0.2158239 0.02896248 1  61 1.4946227 NA 38 38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.6948024  0.3952488 0.14356264 1 229 0.7993572 NA 42 42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.7859343 -0.3113645 0.14855756 1 294 0.8453641 NA 59 59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.7309201  1.3795196 0.24991738 1 152 1.5611914 NA 65 65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -0.2125348  3.5024520 0.33585016 1 219 3.5088946 NA 56 56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -0.5125097  0.3129519 0.40080468 1  51 0.6005040 NA 43 43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x            y          t v   a         d  f  i  j</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.4053242 -1.223667366 0.02437858 1 329 1.2890499 NA 63 63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.2178534  0.079330485 0.09829898 1 126 0.2318479 NA 64 64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -0.2247699  1.514891980 0.32218284 1  42 1.5314762 NA 58 58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  1.1453089 -0.003284998 0.36783099 1 254 1.1453136 NA 71 71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  1.4712025 -1.015828697 0.48514110 1 341 1.7878325 NA 69 69</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46  0.3849310  2.176430409 0.72229464 1 272 2.2102084 NA 62 62</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="getters.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span>, <span class="st">"time"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="bsims_init-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="getters.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span>, <span class="st">"distance"</span><span class="op">)</span></span></span>
@@ -450,9 +450,9 @@ implications for avian point count surveys.
 <span class="r-out co"><span class="r-pr">#&gt;</span> bSims transcript</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 km x 1 km</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   stratification: HR</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   total abundance: 45</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   duration: 10 min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   detected: 2 heard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   detected: 5 heard</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1st event detected by breaks:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     [0, 3, 5, 10 min]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     [0, 50, 100, 150, Inf m]</span>
@@ -460,22 +460,22 @@ implications for avian point count surveys.
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">bb</span>, <span class="va">get_table</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          0-3min 3-5min 5-10min</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         1      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       0      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      0      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         0      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       1      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      1      0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         0      0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          0-3min 3-5min 5-10min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         0      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       0      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      1      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         0      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       2      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      0      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         1      0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          0-3min 3-5min 5-10min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0-50m         0      0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       0      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50-100m       1      0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100-150m      0      0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150+m         0      0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -489,23 +489,23 @@ implications for avian point count surveys.
 <span class="r-in"><span><span class="co">## sequential</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1.164   0.011   1.180 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.870   0.003   0.879 </span>
 <span class="r-in"><span><span class="co">## parallel clusters</span></span></span>
 <span class="r-in"><span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## note: loading the package is optional</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in checkForRemoteErrors(lapply(cl, recvResult)):</span> 2 nodes produced errors; first error: there is no package called ‘bSims’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Timing stopped at: 0.001 0 0.002</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Timing stopped at: 0.001 0 0.001</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in checkForRemoteErrors(lapply(cl, recvResult)):</span> 2 nodes produced errors; first error: there is no package called ‘bSims’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Timing stopped at: 0.001 0.001 0.002</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Timing stopped at: 0 0 0.001</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## parallel forking</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.681   0.250   0.998 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.689   0.222   0.919 </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
