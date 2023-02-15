@@ -30,10 +30,32 @@
   Last
 }
 
+# list all arguments
+.bsims_args <- function() {
+  Functions <- list(
+    bsims_init=bsims_init,
+    bsims_populate=bsims_populate,
+    bsims_animate=bsims_animate,
+    bsims_detect=bsims_detect,
+    bsims_transcribe=bsims_transcribe)
+  Formals <- lapply(Functions, formals)
+  Formals <- lapply(Formals, function(z) z[names(z) != "..."])
+  Formals <- lapply(Formals, function(z) z[names(z) != "x"])
+  out <- NULL
+  for (i in Formals)
+    out <- c(out, i)
+  unique(names(out))
+}
+
 bsims_all <- function(...) {
   Settings <- list(...)
   if (length(Settings) == 1L && is.list(Settings[[1L]]))
     Settings <- Settings[[1L]]
+  if (is.null(names(Settings)))
+    stop("Settings must be a named list.")
+  if (any(duplicated(names(Settings))))
+    stop("Duplicate arguments are not allowed.")
+  Settings <- Settings[names(Settings) %in% .bsims_args()]
   out <- list()
   out$settings <- function() Settings
   out$new <- function(recover=FALSE) {
