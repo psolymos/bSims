@@ -18,6 +18,8 @@ function(
     density <- unname(density)
   if (!is.null(names(density)))
     density <- density[c("H", "E", "R")]
+  if (any(is.na(density)))
+    stop("density cannot be NA")
   D <- rep(density, 3)[c(1,2,3,2,1)]
   lambda <- A * D
   if (is.null(abund_fun))
