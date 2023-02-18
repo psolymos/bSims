@@ -12,10 +12,12 @@ function(
   if (!inherits(x, "bsims_landscape"))
     stop("x must be a bsims_landscape object")
   A <- diff(x$strata) * diff(range(x$strata))
-  if (!is.null(names(density)))
-    density <- density[c("H", "E", "R")]
   if (!(length(density) == 1L || length(density) == 3L))
     stop("density must be of length 1 (H) or 3 (HER)")
+  if (length(density) == 1L) # single value implies homogeneous H stratum
+    density <- unname(density)
+  if (!is.null(names(density)))
+    density <- density[c("H", "E", "R")]
   D <- rep(density, 3)[c(1,2,3,2,1)]
   lambda <- A * D
   if (is.null(abund_fun))
