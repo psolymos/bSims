@@ -31,16 +31,17 @@ function(x,
   ## note: this is not necessarily meaningful
   ## when condition="alldet" (it is already double counting
   ## to the max degree possible)
+  z$j <- z$i
   if (!is.null(perception)) {
     if (!is.numeric(perception))
       stop("perception must be numeric")
     if (perception < 0)
       stop("perception must be >= 0")
-    hc <- hclust(dist(cbind(z$x, z$y)), method="ward.D2")
-    h <- length(unique(z$i)) * perception
-    z$j <- cutree(hc, k=min(nrow(z), max(1, round(h))))
-  } else {
-    z$j <- z$i
+    if (nrow(z) < 2L) {
+      hc <- hclust(dist(cbind(z$x, z$y)), method="ward.D2")
+      h <- length(unique(z$i)) * perception
+      z$j <- cutree(hc, k=min(nrow(z), max(1, round(h))))
+    }
   }
 
   if (condition == "event1") {
