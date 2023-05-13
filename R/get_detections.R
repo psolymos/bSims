@@ -37,7 +37,7 @@ function(x,
       stop("perception must be numeric")
     if (perception < 0)
       stop("perception must be >= 0")
-    if (nrow(z) < 2L) {
+    if (nrow(z) >= 2L) {
       hc <- hclust(dist(cbind(z$x, z$y)), method="ward.D2")
       h <- length(unique(z$i)) * perception
       z$j <- cutree(hc, k=min(nrow(z), max(1, round(h))))
