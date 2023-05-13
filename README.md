@@ -113,9 +113,8 @@ head(get_detections(o))
 
 ### Shiny apps
 
-A few [Shiny](https://shiny.rstudio.com/) apps come with the package.
-These can be used to interactively explore the effects of different
-settings.
+A few [Shiny](https://shiny.posit.co/) apps come with the package. These
+can be used to interactively explore the effects of different settings.
 
 Compare distance functions:
 
@@ -165,17 +164,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.234   0.004   0.239
+#>   0.226   0.002   0.227
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.000   0.001   0.533
+#>   0.000   0.000   0.502
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.004   0.001   0.190
+#>   0.004   0.001   0.186
 stopCluster(cl)
 
 ## parallel forking
@@ -183,5 +182,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.119   0.038   0.160
+#>   0.132   0.036   0.169
 ```

@@ -101,7 +101,7 @@ head(get_detections(o))
 
 ### Shiny apps
 
-A few [Shiny](https://shiny.rstudio.com/) apps come with the package.
+A few [Shiny](https://shiny.posit.co/) apps come with the package.
 These can be used to interactively explore the effects of different settings.
 
 Compare distance functions:
