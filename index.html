@@ -119,7 +119,7 @@
 </ul>
 <p>See the package in action in the <a href="https://peter.solymos.org/qpad-book/" class="external-link"><strong>QPAD Book</strong></a>.</p>
 <p>Check out the <a href="https://peter.solymos.org/qpad-workshop/" class="external-link"><strong>QPAD workshop</strong></a>.</p>
-<p>Read/cite the paper <em>Agent-based simulations improve abundance estimation</em>, <a href="https://doi.org/10.1007/s42977-023-00183-2" class="external-link">DOI</a>.</p>
+<p>Read/cite the paper <a href="https://rdcu.be/doDwI" class="external-link"><strong>Agent-based simulations improve abundance estimation</strong></a> (DOI 10.1007/s42977-023-00183-2).</p>
 <div class="section level2">
 <h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
@@ -136,7 +136,7 @@
 </h2>
 <p><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" class="external-link">GPL-2</a></p>
 <p>Please cite (see <code>citation("bSims")</code>) the paper:</p>
-<p>Solymos, P. 2023. Agent-based simulations improve abundance estimation. <em>Biologia Futura</em>, <a href="https://doi.org/10.1007/s42977-023-00183-2" class="external-link">DOI</a>.</p>
+<p>Solymos, P. 2023. Agent-based simulations improve abundance estimation. <em>Biologia Futura</em>, <a href="https://doi.org/10.1007/s42977-023-00183-2" class="external-link">DOI 10.1007/s42977-023-00183-2</a>, <a href="https://rdcu.be/doDwI" class="external-link">link to PDF</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
@@ -233,17 +233,17 @@
 <span><span class="co">## sequential</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.225   0.003   0.227</span></span>
+<span><span class="co">#&gt;   0.226   0.001   0.228</span></span>
 <span></span>
 <span><span class="co">## parallel clusters</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span>
 <span><span class="co">## note: loading the package is optional</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.000   0.000   0.514</span></span>
+<span><span class="co">#&gt;   0.001   0.000   0.521</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.005   0.001   0.180</span></span>
+<span><span class="co">#&gt;   0.004   0.001   0.185</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## parallel forking</span></span>
@@ -251,7 +251,7 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.130   0.039   0.171</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.119   0.034   0.152</span></span></code></pre></div>
 </div>
 </div>
 </div>
