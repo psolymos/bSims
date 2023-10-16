@@ -45,6 +45,8 @@ Book**](https://peter.solymos.org/qpad-book/).
 
 Check out the [**QPAD workshop**](https://peter.solymos.org/qpad-workshop/).
 
+Read/cite the paper _Agent-based simulations improve abundance estimation_, [DOI](https://doi.org/10.1007/s42977-023-00183-2).
+
 ## Install
 
 CRAN version:
