@@ -36,8 +36,8 @@ Book**](https://peter.solymos.org/qpad-book/).
 Check out the [**QPAD
 workshop**](https://peter.solymos.org/qpad-workshop/).
 
-Read/cite the paper *Agent-based simulations improve abundance
-estimation*, [DOI](https://doi.org/10.1007/s42977-023-00183-2).
+Read/cite the paper [**Agent-based simulations improve abundance
+estimation**](https://rdcu.be/doDwI) (DOI 10.1007/s42977-023-00183-2).
 
 ## Install
 
@@ -62,7 +62,9 @@ See what is new in the [NEWS](NEWS.md) file.
 Please cite (see `citation("bSims")`) the paper:
 
 Solymos, P. 2023. Agent-based simulations improve abundance estimation.
-*Biologia Futura*, [DOI](https://doi.org/10.1007/s42977-023-00183-2).
+*Biologia Futura*, [DOI
+10.1007/s42977-023-00183-2](https://doi.org/10.1007/s42977-023-00183-2),
+[link to PDF](https://rdcu.be/doDwI).
 
 ## Contributing
 
@@ -172,17 +174,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.225   0.003   0.227
+#>   0.226   0.001   0.228
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.000   0.000   0.514
+#>   0.001   0.000   0.521
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.005   0.001   0.180
+#>   0.004   0.001   0.185
 stopCluster(cl)
 
 ## parallel forking
@@ -190,5 +192,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.130   0.039   0.171
+#>   0.119   0.034   0.152
 ```
