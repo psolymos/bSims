@@ -36,6 +36,9 @@ Book**](https://peter.solymos.org/qpad-book/).
 Check out the [**QPAD
 workshop**](https://peter.solymos.org/qpad-workshop/).
 
+Read/cite the paper *Agent-based simulations improve abundance
+estimation*, [DOI](https://doi.org/10.1007/s42977-023-00183-2).
+
 ## Install
 
 CRAN version:
@@ -55,6 +58,11 @@ See what is new in the [NEWS](NEWS.md) file.
 ## License
 
 [GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
+Please cite (see `citation("bSims")`) the paper:
+
+Solymos, P. 2023. Agent-based simulations improve abundance estimation.
+*Biologia Futura*, [DOI](https://doi.org/10.1007/s42977-023-00183-2).
 
 ## Contributing
 
@@ -164,17 +172,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.226   0.002   0.227
+#>   0.225   0.003   0.227
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.000   0.000   0.502
+#>   0.000   0.000   0.514
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.004   0.001   0.186
+#>   0.005   0.001   0.180
 stopCluster(cl)
 
 ## parallel forking
@@ -182,5 +190,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.132   0.036   0.169
+#>   0.130   0.039   0.171
 ```
