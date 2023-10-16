@@ -65,6 +65,10 @@ See what is new in the [NEWS](NEWS.md) file.
 
 [GPL-2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
+Please cite (see `citation("bSims")`) the paper:
+
+Solymos, P. 2023. Agent-based simulations improve abundance estimation. _Biologia Futura_, [DOI](https://doi.org/10.1007/s42977-023-00183-2).
+
 ## Contributing
 
 Feedback and contributions are welcome:
