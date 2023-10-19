@@ -1,4 +1,4 @@
-# bSims: Bird Point Count Simulator 
+# bSims: Bird Point Count Simulator
 
 <img src="https://raw.githubusercontent.com/psolymos/bSims/master/bsims.gif" align="right" style="padding-left:10px;background-color:white;" />
 
@@ -176,17 +176,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.226   0.001   0.228
+#>   0.225   0.001   0.227
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.001   0.000   0.521
+#>   0.001   0.000   0.519
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.004   0.001   0.185
+#>   0.004   0.001   0.188
 stopCluster(cl)
 
 ## parallel forking
@@ -194,5 +194,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.119   0.034   0.152
+#>   0.128   0.032   0.168
 ```
