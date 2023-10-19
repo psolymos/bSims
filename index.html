@@ -234,17 +234,17 @@
 <span><span class="co">## sequential</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.226   0.001   0.228</span></span>
+<span><span class="co">#&gt;   0.225   0.001   0.227</span></span>
 <span></span>
 <span><span class="co">## parallel clusters</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span>
 <span><span class="co">## note: loading the package is optional</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.001   0.000   0.521</span></span>
+<span><span class="co">#&gt;   0.001   0.000   0.519</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.004   0.001   0.185</span></span>
+<span><span class="co">#&gt;   0.004   0.001   0.188</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## parallel forking</span></span>
@@ -252,7 +252,7 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.119   0.034   0.152</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.128   0.032   0.168</span></span></code></pre></div>
 </div>
 </div>
 </div>
