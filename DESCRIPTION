@@ -6,9 +6,9 @@ Date: 2024-05-20
 Author: Peter Solymos [aut, cre] (<https://orcid.org/0000-0001-7337-1740>)
 Maintainer: Peter Solymos <solymos@ualberta.ca>
 Description: A highly scientific and utterly addictive 
-  bird point count simulator 
+  bird point count simulator
   to test statistical assumptions, aid survey design,
-  and have fun while doing it.
+  and have fun while doing it (Solymos 2024 <doi:10.1007/s42977-023-00183-2>).
   The simulations follow time-removal and distance sampling models 
   based on Matsuoka et al. (2012) <doi:10.1525/auk.2012.11190>,
   Solymos et al. (2013) <doi:10.1111/2041-210X.12106>,
