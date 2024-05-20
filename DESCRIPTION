@@ -4,7 +4,7 @@ Title: Agent-based Bird Point Count Simulator
 Version: 0.3-1
 Date: 2024-05-20
 Author: Peter Solymos [aut, cre] (<https://orcid.org/0000-0001-7337-1740>)
-Maintainer: Peter Solymos <solymos@ualberta.ca>
+Maintainer: Peter Solymos <psolymos@gmail.com>
 Description: A highly scientific and utterly addictive 
   bird point count simulator
   to test statistical assumptions, aid survey design,

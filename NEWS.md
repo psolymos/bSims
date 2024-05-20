@@ -3,6 +3,7 @@
 * Better print method for `bsims_all` (#18).
 * Fix `hclust` error when fewer than 2 individuals were detected.
 * Added `CITATION` info.
+* Change maintainer email address.
 
 # Version 0.3-0, 2021-10-05
 
