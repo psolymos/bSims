@@ -64,7 +64,7 @@ See what is new in the [NEWS](NEWS.md) file.
 Please cite (see `citation("bSims")`) the paper:
 
 Solymos, P. 2023. Agent-based simulations improve abundance estimation.
-*Biologia Futura*, [DOI
+*Biologia Futura* 74, 377–392 [DOI
 10.1007/s42977-023-00183-2](https://doi.org/10.1007/s42977-023-00183-2),
 [link to PDF](https://rdcu.be/doDwI).
 
@@ -103,6 +103,9 @@ get_table(x)
 #> 50-100m       3      0       1
 #> 100-150m      4      1       0
 #> 150+m         8      3       0
+```
+
+``` r
 
 head(get_events(a))
 #>            x          y          t v   a  i
@@ -112,6 +115,9 @@ head(get_events(a))
 #> 4 -2.1041934 -1.6092706 0.03936096 1 295 19
 #> 5 -4.9531338 -0.4093427 0.04890537 1 217 11
 #> 6 -3.3127196 -0.2145475 0.08899310 1 215 15
+```
+
+``` r
 
 head(get_detections(o))
 #>             x           y          t v   a         d  f  i  j
@@ -176,17 +182,26 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.225   0.001   0.227
+#>   0.232   0.001   0.233
+```
+
+``` r
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.001   0.000   0.519
+#>   0.000   0.000   0.439
+```
+
+``` r
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.004   0.001   0.188
+#>   0.004   0.001   0.194
+```
+
+``` r
 stopCluster(cl)
 
 ## parallel forking
@@ -194,5 +209,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.128   0.032   0.168
+#>   0.119   0.046   0.182
 ```

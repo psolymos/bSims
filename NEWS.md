@@ -1,4 +1,4 @@
-# Version 0.3-1, 2023-05-13
+# Version 0.3-1, 2024-05-20
 
 * Better print method for `bsims_all` (#18).
 * Fix `hclust` error when fewer than 2 individuals were detected.

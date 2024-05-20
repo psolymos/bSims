@@ -2,7 +2,7 @@ Package: bSims
 Type: Package
 Title: Agent-based Bird Point Count Simulator
 Version: 0.3-1
-Date: 2023-05-13
+Date: 2024-05-20
 Author: Peter Solymos [aut, cre] (<https://orcid.org/0000-0001-7337-1740>)
 Maintainer: Peter Solymos <solymos@ualberta.ca>
 Description: A highly scientific and utterly addictive 
@@ -23,3 +23,4 @@ URL: https://github.com/psolymos/bSims
 BugReports: https://github.com/psolymos/bSims/issues
 Suggests: knitr, rmarkdown, detect, shiny
 VignetteBuilder: knitr
+Language: en-US
