@@ -30,14 +30,14 @@ thus elevating the user experience.
 
 Read more in the paper:
 
-Solymos, P. 2023. Agent-based simulations improve abundance estimation. _Biologia Futura_ 74, 377--392 [DOI 10.1007/s42977-023-00183-2](https://doi.org/10.1007/s42977-023-00183-2), [link to PDF](https://rdcu.be/doDwI).
+Solymos, P. 2023. Agent-based simulations improve abundance estimation. _Biologia Futura_ 74, 377--392 [DOI 10.1007/s42977-023-00183-2](https://doi.org/10.1007/s42977-023-00183-2).
 
 The goals of the package are to: 
 
 1. allow easy _testing of statistical assumptions_ and explore 
   effects of violating these assumptions,
-2. _aid survey design_ by comparing different options, 
-3. and most importantly, to _have fun_ while doing it via an 
+1. _aid survey design_ by comparing different options, 
+2. and most importantly, to _have fun_ while doing it via an 
   intuitive and interactive user interface.
 
 The simulation interface was designed with the following principles in mind:

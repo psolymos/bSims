@@ -1,3 +1,7 @@
+# Version 0.3-2, 2024-05-21
+
+* Addressing CRAN requirements using title case and removing redirected URLs.
+
 # Version 0.3-1, 2024-05-20
 
 * Better print method for `bsims_all` (#18).
