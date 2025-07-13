@@ -1,3 +1,7 @@
+# Version 0.3-3, 2025-07-12
+
+* Use `Authors@R` field in `DESCRIPTION`.
+
 # Version 0.3-2, 2024-05-21
 
 * Addressing CRAN requirements using title case and removing redirected URLs.
