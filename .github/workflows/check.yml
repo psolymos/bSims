@@ -31,6 +31,9 @@ jobs:
       - name: Build site
         run: Rscript -e 'pkgdown::build_site_github_pages(install=TRUE)'
 
+      - name: Copy apps
+        run: cp -r ./apps/ ./docs
+
       - name: Deploy site
         uses: JamesIves/github-pages-deploy-action@v4
         with:
