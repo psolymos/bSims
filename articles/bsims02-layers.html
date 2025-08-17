@@ -836,10 +836,14 @@ and density based on truncated distance counts:</p>
 <span><span class="co">#&gt; detect 0.4-6      2023-03-08</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>true <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>phi<span class="op">=</span><span class="va">phi</span>, tau<span class="op">=</span><span class="va">tau</span>, D<span class="op">=</span><span class="va">Den</span><span class="op">)</span>, </span>
 <span>  estimate <span class="op">=</span> <span class="fu"><a href="../reference/estimate.html">estimate</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     true  estimate</span></span>
-<span><span class="co">#&gt; phi  0.5 0.5979187</span></span>
-<span><span class="co">#&gt; tau  2.0 1.8996806</span></span>
-<span><span class="co">#&gt; D   10.0 9.7047484</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in cbind(true = c(phi = phi, tau = tau, D = Den), estimate =</span></span>
+<span><span class="co">#&gt; estimate(x)): number of rows of result is not a multiple of vector length (arg</span></span>
+<span><span class="co">#&gt; 1)</span></span>
+<span><span class="co">#&gt;         true   estimate</span></span>
+<span><span class="co">#&gt; phi      0.5  0.5979187</span></span>
+<span><span class="co">#&gt; tau      2.0  1.8996806</span></span>
+<span><span class="co">#&gt; density 10.0  9.7047484</span></span>
+<span><span class="co">#&gt; area     0.5 12.5663706</span></span></code></pre></div>
 <p>Next, we estimate singing rate, effective detection distance, and
 density based on unlimited distance counts:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
@@ -871,10 +875,14 @@ density based on unlimited distance counts:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>true <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>phi<span class="op">=</span><span class="va">phi</span>, tau<span class="op">=</span><span class="va">tau</span>, D<span class="op">=</span><span class="va">Den</span><span class="op">)</span>, </span>
 <span>  estimate <span class="op">=</span> <span class="fu"><a href="../reference/estimate.html">estimate</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     true  estimate</span></span>
-<span><span class="co">#&gt; phi  0.5 0.5731308</span></span>
-<span><span class="co">#&gt; tau  2.0 1.8922130</span></span>
-<span><span class="co">#&gt; D   10.0 9.8040797</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in cbind(true = c(phi = phi, tau = tau, D = Den), estimate =</span></span>
+<span><span class="co">#&gt; estimate(x)): number of rows of result is not a multiple of vector length (arg</span></span>
+<span><span class="co">#&gt; 1)</span></span>
+<span><span class="co">#&gt;         true   estimate</span></span>
+<span><span class="co">#&gt; phi      0.5  0.5731308</span></span>
+<span><span class="co">#&gt; tau      2.0  1.8922130</span></span>
+<span><span class="co">#&gt; density 10.0  9.8040797</span></span>
+<span><span class="co">#&gt; area     0.5 11.2483778</span></span></code></pre></div>
 <p>Deviations from the assumptions and bias in density estimation can be
 done by systematically evaluating the simulations settings, which we
 describe in the next section.</p>
