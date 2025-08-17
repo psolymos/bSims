@@ -1,5 +1,3 @@
-# bsimsH
-
 for (app in c("bsimsH", "bsimsHER", "distfunH", "distfunHER")) {
 
 message(app)
