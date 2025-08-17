@@ -1,5 +1,10 @@
 # Version 0.3-3, 2025-07-12
 
+* Updated package website with Shinylive versions of the apps.
+* `estimate` can uses multiple methods (QPAD, naive, etc.).
+
+# Version 0.3-3, 2025-07-12
+
 * Use `Authors@R` field in `DESCRIPTION`.
 
 # Version 0.3-2, 2024-05-21
