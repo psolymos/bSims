@@ -39,6 +39,7 @@
 <li><a class="dropdown-item" href="articles/bsims01-intro.html">Introduction to the bSims package</a></li>
     <li><a class="dropdown-item" href="articles/bsims02-layers.html">Simulation layers in bSims</a></li>
     <li><a class="dropdown-item" href="articles/bsims03-workflow.html">Simulation workflow in bSims</a></li>
+    <li><a class="dropdown-item" href="articles/bsims04-apps.html">Explore bSims with Shiny apps</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -140,9 +141,8 @@
 <span><span class="co">#&gt; 0-50m         2      0       0</span></span>
 <span><span class="co">#&gt; 50-100m       3      0       1</span></span>
 <span><span class="co">#&gt; 100-150m      4      1       0</span></span>
-<span><span class="co">#&gt; 150+m         8      3       0</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; 150+m         8      3       0</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/getters.html">get_events</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            x          y          t v   a  i</span></span>
 <span><span class="co">#&gt; 1  4.6025783 -3.3454607 0.02565467 1 302 99</span></span>
@@ -150,9 +150,8 @@
 <span><span class="co">#&gt; 3 -2.7191418  1.6200508 0.03152603 1  78  7</span></span>
 <span><span class="co">#&gt; 4 -2.1041934 -1.6092706 0.03936096 1 295 19</span></span>
 <span><span class="co">#&gt; 5 -4.9531338 -0.4093427 0.04890537 1 217 11</span></span>
-<span><span class="co">#&gt; 6 -3.3127196 -0.2145475 0.08899310 1 215 15</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; 6 -3.3127196 -0.2145475 0.08899310 1 215 15</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/getters.html">get_detections</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             x           y          t v   a         d  f  i  j</span></span>
 <span><span class="co">#&gt; 2  -0.7210853 -1.46802728 0.03151759 1 190 1.6355636 NA 43 43</span></span>
@@ -167,19 +166,26 @@
 </h3>
 <p>A few <a href="https://shiny.posit.co/" class="external-link">Shiny</a> apps come with the package. These can be used to interactively explore the effects of different settings.</p>
 <p>Compare distance functions:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"distfunH"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"distfunHER"</span><span class="op">)</span></span></code></pre></div>
-<p>Compare simulation settings for single landscape:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Compare simulation settings for a single landscape:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"bsimsH"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="st">"bsimsHER"</span><span class="op">)</span></span></code></pre></div>
+<p>The <a href="https://shinylive.io/r/examples/" class="external-link">Shinylive</a> versions of the apps can be found here:</p>
+<ul>
+<li><a href="https://peter.solymos.org/bSims/apps/distfunH/" class="external-link"><code>distfunH</code></a></li>
+<li><a href="https://peter.solymos.org/bSims/apps/distfunHER/" class="external-link"><code>distfunHER</code></a></li>
+<li><a href="https://peter.solymos.org/bSims/apps/bsimsH/" class="external-link"><code>bsimsH</code></a></li>
+<li><a href="https://peter.solymos.org/bSims/apps/bsimsHER/" class="external-link"><code>bsimsHER</code></a></li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="replicating-simulations">Replicating simulations<a class="anchor" aria-label="anchor" href="#replicating-simulations"></a>
 </h3>
 <p>Interactive sessions can be used to explore different settings. Settings can be copied from the Shiny apps and replicated using the <code>bsims_all</code> function:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>extent<span class="op">=</span><span class="fl">5</span>, road<span class="op">=</span><span class="fl">1</span>, density<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">b</span></span>
 <span><span class="co">#&gt; bSims wrapper object with settings:</span></span>
@@ -187,12 +193,12 @@
 <span><span class="co">#&gt;   road   : 1</span></span>
 <span><span class="co">#&gt;   density: 1, 1, 0</span></span></code></pre></div>
 <p>The object has handy methods:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span><span class="op">$</span><span class="fu">settings</span><span class="op">(</span><span class="op">)</span>      <span class="co"># retrieve settings</span></span>
 <span><span class="va">b</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>           <span class="co"># replicate once</span></span>
 <span><span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>   <span class="co"># replicate 10x</span></span></code></pre></div>
 <p>The <code>$replicate()</code> function also runs on multiple cores:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bsims_init.html">bsims_all</a></span><span class="op">(</span>density<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">4</span>  <span class="co"># number of runs</span></span>
@@ -201,28 +207,25 @@
 <span><span class="co">## sequential</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.232   0.001   0.233</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt;   0.235   0.002   0.237</span></span>
+<span></span>
 <span><span class="co">## parallel clusters</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span></span>
 <span><span class="co">## note: loading the package is optional</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterEvalQ</a></span><span class="op">(</span><span class="va">cl</span>, <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/bSims" class="external-link">bSims</a></span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.000   0.000   0.439</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   0.000   0.000   0.444</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">cl</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.004   0.001   0.194</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   0.004   0.001   0.189</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## parallel forking</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">b</span><span class="op">$</span><span class="fu">replicate</span><span class="op">(</span><span class="va">B</span>, cl<span class="op">=</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.119   0.046   0.182</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.127   0.048   0.177</span></span></code></pre></div>
 </div>
 </div>
 </div>
