@@ -10,8 +10,9 @@ based on simulation objects
 using the QPAD approach (Solymos et al. 2013).
 }
 \usage{
-estimate(object, method = c("qpad", "sqpad", "naive"), ...)
-\method{estimate}{bsims_transcript}(object, ...)
+estimate(object, ...)
+\method{estimate}{bsims_transcript}(object, 
+  method = c("qpad", "sqpad", "naive"), ...)
 }
 \arguments{
   \item{object}{

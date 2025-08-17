@@ -96,7 +96,8 @@ estimate_sqpad <- function (object, ...) {
     }
   }
 
-  m <- detect::sqpad.fit(Y=d$y, dis=d$dis, dur=d$dur, ...)
-  est <- unname(exp(coef(m)))
-  c(phi=est[2], tau=est[3], density=est[1], area=A)
+  # m <- detect::sqpad.fit(Y=d$y, dis=d$dis, dur=d$dur, ...)
+  # est <- unname(exp(stats::coef(m)))
+  # c(phi=est[2], tau=est[3], density=est[1], area=A)
+  stop("not yet implemented")
 }
