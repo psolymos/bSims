@@ -119,12 +119,19 @@ run_app("distfunH")
 run_app("distfunHER")
 ```
 
-Compare simulation settings for single landscape:
+Compare simulation settings for a single landscape:
 
 ```{r eval=FALSE}
 run_app("bsimsH")
 run_app("bsimsHER")
 ```
+
+The [Shinylive](https://shinylive.io/r/examples/) versions of the apps can be found here:
+
+- [`distfunH`](https://peter.solymos.org/bSims/apps/distfunH/)
+- [`distfunHER`](https://peter.solymos.org/bSims/apps/distfunHER/)
+- [`bsimsH`](https://peter.solymos.org/bSims/apps/bsimsH/)
+- [`bsimsHER`](https://peter.solymos.org/bSims/apps/bsimsHER/)
 
 ### Replicating simulations
 

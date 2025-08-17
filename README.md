@@ -103,9 +103,6 @@ get_table(x)
 #> 50-100m       3      0       1
 #> 100-150m      4      1       0
 #> 150+m         8      3       0
-```
-
-``` r
 
 head(get_events(a))
 #>            x          y          t v   a  i
@@ -115,9 +112,6 @@ head(get_events(a))
 #> 4 -2.1041934 -1.6092706 0.03936096 1 295 19
 #> 5 -4.9531338 -0.4093427 0.04890537 1 217 11
 #> 6 -3.3127196 -0.2145475 0.08899310 1 215 15
-```
-
-``` r
 
 head(get_detections(o))
 #>             x           y          t v   a         d  f  i  j
@@ -141,12 +135,20 @@ run_app("distfunH")
 run_app("distfunHER")
 ```
 
-Compare simulation settings for single landscape:
+Compare simulation settings for a single landscape:
 
 ``` r
 run_app("bsimsH")
 run_app("bsimsHER")
 ```
+
+The [Shinylive](https://shinylive.io/r/examples/) versions of the apps
+can be found here:
+
+- [`distfunH`](https://peter.solymos.org/bSims/apps/distfunH/)
+- [`distfunHER`](https://peter.solymos.org/bSims/apps/distfunHER/)
+- [`bsimsH`](https://peter.solymos.org/bSims/apps/bsimsH/)
+- [`bsimsHER`](https://peter.solymos.org/bSims/apps/bsimsHER/)
 
 ### Replicating simulations
 
@@ -182,26 +184,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.232   0.001   0.233
-```
-
-``` r
+#>   0.235   0.002   0.237
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.000   0.000   0.439
-```
-
-``` r
+#>   0.000   0.000   0.444
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.004   0.001   0.194
-```
-
-``` r
+#>   0.004   0.001   0.189
 stopCluster(cl)
 
 ## parallel forking
@@ -209,5 +202,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.119   0.046   0.182
+#>   0.127   0.048   0.177
 ```
