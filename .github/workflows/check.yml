@@ -32,7 +32,7 @@ jobs:
         run: Rscript -e 'pkgdown::build_site_github_pages(install=TRUE)'
 
       - name: Copy apps
-        run: cp -r ./apps/ ./docs
+        run: cp -r ./apps/ ./docs/apps
 
       - name: Deploy site
         uses: JamesIves/github-pages-deploy-action@v4
