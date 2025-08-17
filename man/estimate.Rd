@@ -10,12 +10,15 @@ based on simulation objects
 using the QPAD approach (Solymos et al. 2013).
 }
 \usage{
-estimate(object, ...)
+estimate(object, method = c("qpad", "sqpad", "naive"), ...)
 \method{estimate}{bsims_transcript}(object, ...)
 }
 \arguments{
   \item{object}{
 simulation object.
+}
+  \item{method}{
+method.
 }
   \item{\dots}{
 other arguments passed to internal functions.
@@ -57,7 +60,7 @@ tbr <- c(2, 4, 6, 8, 10)   # time intervals
 rbr <- c(0.5, 1, 1.5, Inf) # counting radii
 
 l <- bsims_init(10, 0.5, 1)# landscape
-p <- bsims_populate(l, 10)  # population
+p <- bsims_populate(l, 10) # population
 e <- bsims_animate(p,      # events
   vocal_rate=phi, duration=dur)
 d <- bsims_detect(e,       # detections

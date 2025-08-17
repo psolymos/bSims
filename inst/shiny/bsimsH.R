@@ -24,53 +24,6 @@ RINT <- list(
   "0-50-100-150 m"=c(0.5, 1, 1.5),
   "0-50-100-150-200 m"=c(0.5, 1, 1.5, 2)
 )
-rv <- reactiveValues(seed=0)
-
-estimate_bsims <- function(REM) {
-  MaxDur <- max(tint)
-  MaxDis <- max(rint)
-  Ydur <- matrix(colSums(REM), 1)
-  Ddur <- matrix(tint, 1)
-  Ydis <- matrix(rowSums(REM), 1)
-  Ddis <- matrix(rint, 1)
-  if (length(tint) > 1 && sum(REM) > 0) {
-    Mrem <- cmulti.fit(Ydur, Ddur, type="rem")
-    phi <- exp(Mrem$coef)
-    p <- 1-exp(-MaxDur*phi)
-  } else {
-    Mrem <- NULL
-    phi <- NA
-    p <- NA
-  }
-  if (length(rint) > 1 && sum(REM) > 0) {
-    Mdis <- cmulti.fit(Ydis, Ddis, type="dis")
-    tau <- exp(Mdis$coef)
-    q <- if (is.infinite(MaxDis))
-      1 else (tau^2/MaxDis^2) * (1-exp(-(MaxDis/tau)^2))
-    A <- if (is.infinite(MaxDis))
-      pi * tau^2 else pi * MaxDis^2
-  } else {
-    Mdis <- NULL
-    tau <- NA
-    q <- NA
-    A <- NA
-  }
-  D <- sum(REM) / (A * p * q)
-  list(
-    Ydur=Ydur, Ddur=Ddur,
-    Ydis=Ydis, Ddis=Ddis,
-    Mrem=Mrem,
-    Mdis=Mdis,
-    phi=phi, tau=tau,
-    A=A, p=p, q=q,
-    D=D)
-}
-summarize_bsims <- function(res) {
-  data.frame(
-    D=sapply(res, "[[", "D"),
-    phi=sapply(res, "[[", "phi"),
-    tau=sapply(res, "[[", "tau"))
-}
 
 ui <- navbarPage("bSims (H)",
   tabPanel("Initialize",
@@ -175,6 +128,7 @@ ui <- navbarPage("bSims (H)",
 )
 
 server <- function(input, output) {
+  rv <- reactiveValues(seed=0)
   observeEvent(input$seed, {
     rv$seed <- rv$seed + 1
   })
