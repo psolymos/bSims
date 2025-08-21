@@ -15,4 +15,4 @@ for (app in c("bsimsH", "bsimsHER", "distfunH", "distfunHER")) {
 unlink("apps/shiny", recursive = TRUE)
 
 # check shinylive apps
-# httpuv::runStaticServer("apps/shinylive/distfunH")
+# httpuv::runStaticServer("apps/bsimsH")
