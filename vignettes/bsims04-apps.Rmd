@@ -3,7 +3,7 @@ title: "Explore bSims with Shiny apps"
 author: "Peter Solymos"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Simulation workflow in bSims}
+  %\VignetteIndexEntry{Explore bSims with Shiny apps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
