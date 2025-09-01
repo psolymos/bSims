@@ -2,7 +2,7 @@ Package: bSims
 Type: Package
 Title: Agent-Based Bird Point Count Simulator
 Version: 0.3-4
-Date: 2025-08-12
+Date: 2025-08-31
 Authors@R: 
     c(person(given = "Peter",
              family = "Solymos",

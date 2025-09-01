@@ -184,17 +184,17 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.235   0.002   0.237
+#>   0.237   0.002   0.239
 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #>    user  system elapsed 
-#>   0.000   0.000   0.444
+#>   0.001   0.000   0.442
 system.time(bb <- b$replicate(B, cl=cl))
 #>    user  system elapsed 
-#>   0.004   0.001   0.189
+#>   0.003   0.001   0.196
 stopCluster(cl)
 
 ## parallel forking
@@ -202,5 +202,5 @@ if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.127   0.048   0.177
+#>   0.129   0.044   0.183
 ```
