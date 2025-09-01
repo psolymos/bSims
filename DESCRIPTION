@@ -26,6 +26,6 @@ Depends: intrval, mefa4, MASS, deldir (>= 1.0-2)
 Imports: parallel, pbapply
 URL: https://github.com/psolymos/bSims
 BugReports: https://github.com/psolymos/bSims/issues
-Suggests: knitr, rmarkdown, detect, shiny
+Suggests: knitr, rmarkdown, detect (>= 0.5-0), shiny
 VignetteBuilder: knitr
 Language: en-US
