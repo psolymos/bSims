@@ -12,7 +12,7 @@ using the QPAD approach (Solymos et al. 2013).
 \usage{
 estimate(object, ...)
 \method{estimate}{bsims_transcript}(object, 
-  method = c("qpad", "sqpad", "naive"), ...)
+  method = c("qpad", "sqpad", "convolution", "naive"), ...)
 }
 \arguments{
   \item{object}{
@@ -27,8 +27,9 @@ other arguments passed to internal functions.
 }
 \details{
 The method evaluates removal design to estimate
-model parameters and density using the QPAD methodology
-using the 'detect' package.
+model parameters and density using the QPAD and SQPAD methodologies
+using the 'detect' package. Convolution implements the full-information
+likelihood. The Navive estimator fits GLM assuming no detection error.
 
 The function only works with multiple time and
 distance intervals. It returns \code{NA} otherwise.
@@ -36,7 +37,7 @@ distance intervals. It returns \code{NA} otherwise.
 \value{
 A vector with values for singing rate (phi),
 effective detection distance (tau),
-and density.
+density, and survey area.
 }
 \references{
 Solymos, P., Matsuoka, S. M., Bayne, E. M., Lele, S. R., Fontaine, P.,
@@ -45,6 +46,10 @@ Calibrating indices of avian density from non-standardized survey data:
 making the most of a messy situation.
 \emph{Methods in Ecology and Evolution}, \bold{4}: 1047--1058.
 <doi:10.1111/2041-210X.12106>
+
+Solymos, P., Lele, S. R., 2025. Single bin QPAD (SQPAD) approach for robust 
+analysis of point count data with detection error.
+\emph{Ornithological Applications}, \bold{xx}, xx--xx.
 }
 \author{
 Peter Solymos
