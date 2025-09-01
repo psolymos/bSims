@@ -94,7 +94,8 @@ ui <- navbarPage("bSims (H)",
             "1st detection"="det1",
             "All detections"="alldet")),
         sliderInput("percept", "Percepted ratio", 0, 2, 1, 0.05),
-        checkboxInput("oucount", "Over/under count", FALSE)
+        checkboxInput("oucount", "Over/under count", FALSE),
+        selectInput("estmethod", "Estimation method", c("QPAD", "SQPAD", "Convolution", "Naive"))
       )
     ),
     fluidRow(
@@ -196,57 +197,13 @@ server <- function(input, output) {
     )
   })
   e <- reactive({
-    REM <- get_table(m())
-    MaxDur <- max(TINT[[input$tint]])
-    MaxDis <- max(RINT[[input$rint]])
-    Ydur <- matrix(colSums(REM), 1)
-    Ddur <- matrix(TINT[[input$tint]], 1)
-    Ydis <- matrix(rowSums(REM), 1)
-    Ddis <- matrix(RINT[[input$rint]], 1)
-    if (length(TINT[[input$tint]]) > 1 && sum(REM) > 0) {
-      Mrem <- try(cmulti.fit(Ydur, Ddur, type="rem"))
-      if (!inherits(Mrem, "try-error")) {
-        phi <- exp(Mrem$coef)
-        p <- 1-exp(-MaxDur*phi)
-      } else {
-        Mrem <- NULL
-        phi <- NA
-        p <- NA
-      }
-    } else {
-      Mrem <- NULL
-      phi <- NA
-      p <- NA
-    }
-    if (length(RINT[[input$rint]]) > 1 && sum(REM) > 0) {
-      Mdis <- try(cmulti.fit(Ydis, Ddis, type="dis"))
-      if (!inherits(Mdis, "try-error")) {
-        tau <- exp(Mdis$coef)
-        q <- if (is.infinite(MaxDis))
-          1 else (tau^2/MaxDis^2) * (1-exp(-(MaxDis/tau)^2))
-        A <- if (is.infinite(MaxDis))
-          pi * tau^2 else pi * MaxDis^2
-      } else {
-        Mdis <- NULL
-        tau <- NA
-        q <- NA
-        A <- NA
-      }
-    } else {
-      Mdis <- NULL
-      tau <- NA
-      q <- NA
-      A <- NA
-    }
-    D <- sum(REM) / (A * p * q)
+    est <- estimate(m(),
+      tolower(input$estmethod))
     list(
-      Ydur=Ydur, Ddur=Ddur,
-      Ydis=Ydis, Ddis=Ddis,
-      Mrem=Mrem,
-      Mdis=Mdis,
-      phi=phi, tau=tau,
-      A=A, p=p, q=q,
-      D=D)
+      phi=est["phi"],
+      tau=est["tau"],
+      A=est["area"],
+      D=est["density"])
   })
   getset <- reactive({
     xc <- function(x) paste0("c(", paste0(x, collapse=", "), ")")
