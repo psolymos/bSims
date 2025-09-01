@@ -9,7 +9,8 @@ estimate.bsims_transcript <- function (object, method = c("qpad", "sqpad", "conv
     "sqpad" = estimate_sqpad,
     "convolution" = estimate_conv,
     stop("Method not found"))
-  FUN(object, ...)
+  est <- FUN(object, ...)
+  est[c("density", "area", "cue_rate", "distance_param")]
 }
 
 estimate_qpad <- function (object, ...) {
@@ -59,7 +60,7 @@ estimate_qpad <- function (object, ...) {
     q <- NA
   }
   Dhat <- sum(y) / (A * p * q)
-  c(phi=phihat, tau=tauhat, density=Dhat, area=A)
+  c(density=Dhat, area=A, cue_rate=phihat, distance_param=tauhat)
 }
 
 estimate_naive <- function (object, ...) {
@@ -72,7 +73,7 @@ estimate_naive <- function (object, ...) {
   rmax <- max(rint)
   A <- pi * rmax^2
   Dhat <- sum(y) / A
-  c(phi=NA_real_, tau=NA_real_, density=Dhat, area=A)
+  c(density=Dhat, area=A, cue_rate=NA_real_, distance_param=NA_real_)
 }
 
 estimate_sqpad <- function (object, ...) {
@@ -108,9 +109,9 @@ estimate_sqpad <- function (object, ...) {
     silent=TRUE)
   if (!inherits(m, "try-error")) {
     est <- unname(exp(stats::coef(m)))
-    c(phi=est[2], tau=est[3], density=est[1], area=A)
+    c(density=est[1], area=A, cue_rate=est[2], distance_param=est[3])
   } else {
-    c(phi=NA_real_, tau=NA_real_, density=NA_real_, area=A)
+    c(density=NA_real_, area=A, cue_rate=NA_real_, distance_param=NA_real_)
   }
 }
 
@@ -131,19 +132,30 @@ estimate_conv <- function (object, ...) {
 
   dets <- get_detections(object)
   dets <- dets[dets$t <= tmax & dets$d <= rmax,]
-  dlist <- list(dets$d)
+
+  d <- data.frame(y=numeric(0L), dis=numeric(0L), dur=numeric(0L))
+  dij <- list()
+  for (i in seq_along(rint)) {
+    for (j in seq_along(tint)) {
+      s <- dets$t <= tint[j] & dets$d <= rint[i]
+      dij[[length(dij)+1L]] <- dets$d[s]
+      r <- data.frame(
+        y=sum(s), dis=rint[i], dur=tint[j])
+      d <- rbind(d, r)
+    }
+  }
 
   m <- try(detect::sqpad.fit(
-      Y=nrow(dets), dis=rmax, dur=tmax,
-      dislist=dlist, 
-      type="conv", 
+      Y=d$y, dis=d$dis, dur=d$dur,
+      dislist=dij,
+      type="conv",
       det=if (object$condition == "det1") "joint" else "pq",
       ...),
     silent=TRUE)
   if (!inherits(m, "try-error")) {
     est <- unname(exp(stats::coef(m)))
-    c(phi=est[2], tau=est[3], density=est[1], area=A)
+    c(density=est[1], area=A, cue_rate=est[2], distance_param=est[3])
   } else {
-    c(phi=NA_real_, tau=NA_real_, density=NA_real_, area=A)
+    c(density=NA_real_, area=A, cue_rate=NA_real_, distance_param=NA_real_)
   }
 }
