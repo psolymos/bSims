@@ -2,6 +2,8 @@ library(shiny)
 library(detect)
 library(bSims)
 
+D0 <- 1
+SEED <- 12
 MAXDIS <- 10
 EXTENT <- 10
 DURATION <- 10
@@ -11,7 +13,8 @@ TINT <- list(
   "0-1-2-3 min"=c(1, 2, 3),
   "0-5-10 min"=c(5, 10),
   "0-3 min"=c(3),
-  "0-1-2-3-4-5 min"=c(1, 2, 3, 4, 5)
+  "0-1-2-3-4-5 min"=c(1, 2, 3, 4, 5),
+  "0-2-4-6-8-10 min"=c(2, 4, 6, 8, 10)
 )
 RINT <- list(
   "0-50-100-Inf m"=c(0.5, 1, Inf),
@@ -42,9 +45,9 @@ ui <- navbarPage("bSims (HER)",
       plotOutput(outputId = "plot_pop")
     ),
     column(6,
-      sliderInput("DH", "Density in habitat stratum", 0, 20, 1, 0.1),
-      sliderInput("DE", "Density in edge stratum", 0, 20, 1, 0.1),
-      sliderInput("DR", "Density in road stratum", 0, 20, 1, 0.1),
+      sliderInput("DH", "Density in habitat stratum", 0, 20, D0, 0.1),
+      sliderInput("DE", "Density in edge stratum", 0, 20, D0, 0.1),
+      sliderInput("DR", "Density in road stratum", 0, 20, D0, 0.1),
       radioButtons("spfun", "Spatial pattern",
         c("Random"="random", "Regular"="regular",
           "Clustered"="clustered"))
@@ -85,7 +88,8 @@ ui <- navbarPage("bSims (HER)",
   tabPanel("Transcribe",
     fluidRow(
       column(6,
-        plotOutput(outputId = "plot_tra")
+        plotOutput(outputId = "plot_tra"),
+        tableOutput(outputId = "table_rem")
       ),
       column(6,
         selectInput("tint", "Time intervals", names(TINT)),
@@ -96,18 +100,37 @@ ui <- navbarPage("bSims (HER)",
             "1st detection"="det1",
             "All detections"="alldet")),
         sliderInput("percept", "Percepted ratio", 0, 2, 1, 0.05),
-        checkboxInput("oucount", "Over/under count", FALSE)
+        checkboxInput("oucount", "Over/under count", FALSE),
+        checkboxInput("show_dets_table", "Show detailed detection info", FALSE)
       )
     ),
     fluidRow(
+      column(12,
+        tableOutput(outputId = "table_dets")
+        # plotOutput(outputId = "plot_est")
+      )
+      # column(6,
+      #   tableOutput(outputId = "table_rem")
+      # ),
+      # column(6,
+      #   plotOutput(outputId = "plot_est")
+      # )
+    )
+  ),
+
+  tabPanel("Estimate",
+    fluidRow(
       column(6,
-        tableOutput(outputId = "table_rem")
+        tableOutput(outputId = "table_est"),
+        plotOutput(outputId = "plot_est")
       ),
       column(6,
-        plotOutput(outputId = "plot_est")
+        radioButtons("estmethod", "Estimation method", c("QPAD", "SQPAD", "Convolution", "Naive"))
+        # selectInput("estmethod", "Estimation method", c("QPAD", "SQPAD", "Convolution", "Naive"))
       )
     )
   ),
+
   tabPanel("Settings",
     tagList(
       singleton(
@@ -130,7 +153,7 @@ ui <- navbarPage("bSims (HER)",
 )
 
 server <- function(input, output) {
-  rv <- reactiveValues(seed=0)
+  rv <- reactiveValues(seed=SEED)
   observeEvent(input$seed, {
     rv$seed <- rv$seed + 1
   })
@@ -201,13 +224,30 @@ server <- function(input, output) {
       perception = pr
     )
   })
+  e_all <- reactive({
+    m <- m()
+    est0 <- estimate(m, "naive")
+    est1 <- estimate(m, "qpad")
+    est2 <- estimate(m, "sqpad")
+    est3 <- estimate(m, "convolution")
+    data.frame(naive=est0, qpad=est1, sqpad=est2, convolution=est3)
+  })
+  # e <- reactive({
+  #   est <- estimate(m()) # default is QPAD
+  #   list(
+  #     phi=est["cue_rate"],
+  #     tau=est["distance_param"],
+  #     A=est["area"],
+  #     D=est["density"])
+  # })
   e <- reactive({
-    est <- estimate(m()) # default is QPAD
+    est <- e_all()
+    met <- tolower(input$estmethod)
     list(
-      phi=est["phi"],
-      tau=est["tau"],
-      A=est["area"],
-      D=est["density"])
+      phi=est["cue_rate", met],
+      tau=est["distance_param", met],
+      A=est["area", met],
+      D=est["density", met])
   })
   getset <- reactive({
     xc <- function(x) paste0("c(", paste0(x, collapse=", "), ")")
@@ -286,17 +326,35 @@ server <- function(input, output) {
     tab <- rbind(tab, Total=colSums(tab))
     tab
   }, rownames = TRUE, colnames = TRUE, digits = 0)
+  output$table_dets <- renderTable({
+    if (!input$show_dets_table)
+      return(NULL)
+    tab <- get_detections(m())
+    tab
+  }, rownames = FALSE, colnames = TRUE)
+  output$table_est <- renderTable({
+    est <- e_all()
+    colnames(est) <- c("Naive", "QPAD", "SQPAD", "Convolution")
+    out <- data.frame(
+      Parameter = c("Density (1/ha)", "Area (ha)", "Cue rate (1/min)", "Distance parameter (100 m)"),
+      est)
+    out[-2,]
+  }, rownames = FALSE, colnames = TRUE)
   output$plot_est <- renderPlot({
     req(e())
     v <- e()
     col <- c("#ffe042", "#e71989")
+
     op <- par(mfrow=c(1,3))
-    barplot(c(True=input$phiH, Estimate=v$phi),
-      col=col, main=expression(phi))
-    barplot(c(True=input$tauH, Estimate=v$tau),
-      col=col, main=expression(tau))
     barplot(c(True=input$DH, Estimate=v$D),
-      col=col, main=expression(D))
+      col=col,
+      main="Density (1/ha)")
+    barplot(c(True=input$phiH, Estimate=v$phi),
+      col=col,
+      main="Cue rate (1/min)")
+    barplot(c(True=input$tauH, Estimate=v$tau),
+      col=col,
+      main="Distance parameter (100 m)")
     par(op)
   })
   output$settings <- renderText({
