@@ -1,19 +1,20 @@
 estimate <- function (object, ...)
   UseMethod("estimate")
 
-estimate.bsims_transcript <- function (object, method = c("qpad", "sqpad", "naive"), ...) {
-  FUN <- switch(match.arg(method),
+estimate.bsims_transcript <- function (object, method = c("qpad", "sqpad", "convolution", "naive"), ...) {
+  method <- match.arg(method)
+  FUN <- switch(method,
     "naive" = estimate_naive,
     "qpad" = estimate_qpad,
     "sqpad" = estimate_sqpad,
+    "convolution" = estimate_conv,
     stop("Method not found"))
   FUN(object, ...)
 }
 
-# add here sqpad
-# need to make bSims depend on detect >= 0.5
-
 estimate_qpad <- function (object, ...) {
+  if (!requireNamespace("detect"))
+    stop("Use `install.packages('detect')` to install the 'detect' package.")
   y <- get_table(object, "removal")
   rmax <- max(object$rint)
   tmax <- max(object$tint)
@@ -76,6 +77,9 @@ estimate_naive <- function (object, ...) {
 
 estimate_sqpad <- function (object, ...) {
 
+  if (!requireNamespace("detect"))
+    stop("Use `install.packages('detect')` to install the 'detect' package.")
+
   y <- get_table(object, "removal")
   rint <- object$rint
   tint <- object$tint
@@ -96,8 +100,50 @@ estimate_sqpad <- function (object, ...) {
     }
   }
 
-  # m <- detect::sqpad.fit(Y=d$y, dis=d$dis, dur=d$dur, ...)
-  # est <- unname(exp(stats::coef(m)))
-  # c(phi=est[2], tau=est[3], density=est[1], area=A)
-  stop("not yet implemented")
+  m <- try(detect::sqpad.fit(
+      Y=d$y, dis=d$dis, dur=d$dur, 
+      type="full", 
+      det=if (object$condition == "det1") "joint" else "pq",
+      ...),
+    silent=TRUE)
+  if (!inherits(m, "try-error")) {
+    est <- unname(exp(stats::coef(m)))
+    c(phi=est[2], tau=est[3], density=est[1], area=A)
+  } else {
+    c(phi=NA_real_, tau=NA_real_, density=NA_real_, area=A)
+  }
+}
+
+estimate_conv <- function (object, ...) {
+
+  if (!requireNamespace("detect"))
+    stop("Use `install.packages('detect')` to install the 'detect' package.")
+
+  rint <- object$rint
+  tint <- object$tint
+
+  if (any(is.infinite(rint))) {
+    rint <- rint[!is.infinite(rint)]
+  }
+  rmax <- max(rint)
+  A <- pi * rmax^2
+  tmax <- max(tint)
+
+  dets <- get_detections(object)
+  dets <- dets[dets$t <= tmax & dets$d <= rmax,]
+  dlist <- list(dets$d)
+
+  m <- try(detect::sqpad.fit(
+      Y=nrow(dets), dis=rmax, dur=tmax,
+      dislist=dlist, 
+      type="conv", 
+      det=if (object$condition == "det1") "joint" else "pq",
+      ...),
+    silent=TRUE)
+  if (!inherits(m, "try-error")) {
+    est <- unname(exp(stats::coef(m)))
+    c(phi=est[2], tau=est[3], density=est[1], area=A)
+  } else {
+    c(phi=NA_real_, tau=NA_real_, density=NA_real_, area=A)
+  }
 }
