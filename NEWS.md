@@ -2,6 +2,7 @@
 
 * Updated package website with Shinylive versions of the apps.
 * `estimate` can uses multiple methods (QPAD, naive, etc.).
+* Update Shiny apps: separate transcribe vs. estimate tabs.
 
 # Version 0.3-3, 2025-07-12
 
