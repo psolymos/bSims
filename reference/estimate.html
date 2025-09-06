@@ -57,7 +57,7 @@ using the QPAD approach (Solymos et al. 2013).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">estimate</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'bsims_transcript'</span></span>
 <span><span class="fu">estimate</span><span class="op">(</span><span class="va">object</span>, </span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"qpad"</span>, <span class="st">"sqpad"</span>, <span class="st">"naive"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"qpad"</span>, <span class="st">"sqpad"</span>, <span class="st">"convolution"</span>, <span class="st">"naive"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,8 +76,9 @@ using the QPAD approach (Solymos et al. 2013).</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The method evaluates removal design to estimate
-model parameters and density using the QPAD methodology
-using the 'detect' package.</p>
+model parameters and density using the QPAD and SQPAD methodologies
+using the 'detect' package. Convolution implements the full-information
+likelihood. The Navive estimator fits GLM assuming no detection error.</p>
 <p>The function only works with multiple time and
 distance intervals. It returns <code>NA</code> otherwise.</p>
     </div>
@@ -85,7 +86,7 @@ distance intervals. It returns <code>NA</code> otherwise.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A vector with values for singing rate (phi),
 effective detection distance (tau),
-and density.</p>
+density, and survey area.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -95,6 +96,9 @@ Calibrating indices of avian density from non-standardized survey data:
 making the most of a messy situation.
 <em>Methods in Ecology and Evolution</em>, <b>4</b>: 1047–1058.
 &lt;doi:10.1111/2041-210X.12106&gt;</p>
+<p>Solymos, P., Lele, S. R., 2025. Single bin QPAD (SQPAD) approach for robust
+analysis of point count data with detection error.
+<em>Ornithological Applications</em>, <b>xx</b>, xx–xx.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -124,8 +128,9 @@ making the most of a messy situation.
 <span class="r-in"><span>  tint<span class="op">=</span><span class="va">tbr</span>, rint<span class="op">=</span><span class="va">rbr</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">estimate</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        phi        tau    density       area </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4754889  0.9051818 11.3640146  2.5740766 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: detect</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        density           area       cue_rate distance_param </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     11.3640146      2.5740766      0.4754889      0.9051818 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
