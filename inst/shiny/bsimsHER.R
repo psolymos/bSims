@@ -8,104 +8,126 @@ MAXDIS <- 10
 EXTENT <- 10
 DURATION <- 10
 TINT <- list(
-  "0-3-5-10 min"=c(3, 5, 10),
-  "0-10 min"=c(10),
-  "0-1-2-3 min"=c(1, 2, 3),
-  "0-5-10 min"=c(5, 10),
-  "0-3 min"=c(3),
-  "0-1-2-3-4-5 min"=c(1, 2, 3, 4, 5),
-  "0-2-4-6-8-10 min"=c(2, 4, 6, 8, 10)
+  "0-3-5-10 min" = c(3, 5, 10),
+  "0-10 min" = c(10),
+  "0-1-2-3 min" = c(1, 2, 3),
+  "0-5-10 min" = c(5, 10),
+  "0-3 min" = c(3),
+  "0-1-2-3-4-5 min" = c(1, 2, 3, 4, 5),
+  "0-2-4-6-8-10 min" = c(2, 4, 6, 8, 10)
 )
 RINT <- list(
-  "0-50-100-Inf m"=c(0.5, 1, Inf),
-  "0-Inf m"=c(Inf),
-  "0-50-Inf m"=c(0.5, Inf),
-  "0-50-100-150-Inf m"=c(0.5, 1, 1.5, Inf),
-  "0-50-100-150-200-Inf m"=c(0.5, 1, 1.5, 2, Inf),
-  "0-50-100 m"=c(0.5, 1),
-  "0-50 m"=c(0.5),
-  "0-50-100-150 m"=c(0.5, 1, 1.5),
-  "0-50-100-150-200 m"=c(0.5, 1, 1.5, 2)
+  "0-50-100-Inf m" = c(0.5, 1, Inf),
+  "0-Inf m" = c(Inf),
+  "0-50-Inf m" = c(0.5, Inf),
+  "0-50-100-150-Inf m" = c(0.5, 1, 1.5, Inf),
+  "0-50-100-150-200-Inf m" = c(0.5, 1, 1.5, 2, Inf),
+  "0-50-100 m" = c(0.5, 1),
+  "0-50 m" = c(0.5),
+  "0-50-100-150 m" = c(0.5, 1, 1.5),
+  "0-50-100-150-200 m" = c(0.5, 1, 1.5, 2)
 )
 
-ui <- navbarPage("bSims (HER)",
-  tabPanel("Initialize",
-    column(6,
-      plotOutput(outputId = "plot_ini")),
-    column(6,
+ui <- navbarPage(
+  "bSims (HER)",
+  tabPanel(
+    "Initialize",
+    column(6, plotOutput(outputId = "plot_ini")),
+    column(
+      6,
       actionButton("seed", "Change random seed"),
-      sliderInput("road", "Road half width", 0, EXTENT/2, 0, EXTENT/40),
-      sliderInput("edge", "Edge width", 0, EXTENT/2, 0, EXTENT/40),
-      sliderInput("offset",
-        "Offset for road position", -EXTENT/2, EXTENT/2, 0, EXTENT/20)
+      sliderInput("road", "Road half width", 0, EXTENT / 2, 0, EXTENT / 40),
+      sliderInput("edge", "Edge width", 0, EXTENT / 2, 0, EXTENT / 40),
+      sliderInput(
+        "offset",
+        "Offset for road position",
+        -EXTENT / 2,
+        EXTENT / 2,
+        0,
+        EXTENT / 20
+      )
     )
   ),
-  tabPanel("Populate",
-    column(6,
-      plotOutput(outputId = "plot_pop")
-    ),
-    column(6,
+  tabPanel(
+    "Populate",
+    column(6, plotOutput(outputId = "plot_pop")),
+    column(
+      6,
       sliderInput("DH", "Density in habitat stratum", 0, 20, D0, 0.1),
       sliderInput("DE", "Density in edge stratum", 0, 20, D0, 0.1),
       sliderInput("DR", "Density in road stratum", 0, 20, D0, 0.1),
-      radioButtons("spfun", "Spatial pattern",
-        c("Random"="random", "Regular"="regular",
-          "Clustered"="clustered"))
+      radioButtons(
+        "spfun",
+        "Spatial pattern",
+        c("Random" = "random", "Regular" = "regular", "Clustered" = "clustered")
+      )
     )
   ),
-  tabPanel("Animate",
-    column(6,
-      plotOutput(outputId = "plot_ani")),
-    column(6,
+  tabPanel(
+    "Animate",
+    column(6, plotOutput(outputId = "plot_ani")),
+    column(
+      6,
       sliderInput("phiH", "Vocal in habitat stratum", 0, 10, 0.5, 0.1),
       sliderInput("phiE", "Vocal in edge stratum", 0, 10, 0.5, 0.1),
       sliderInput("phiR", "Vocal in road stratum", 0, 10, 0.5, 0.1),
       sliderInput("phim", "Movement rate", 0, 10, 1, 0.1),
       sliderInput("SDm", "Movement SD", 0, 1, 0, 0.05),
-      radioButtons("avoid", "Avoid",
-        c("None"="none",
-          "Road"="R",
-          "Edge and road"="ER")),
+      radioButtons(
+        "avoid",
+        "Avoid",
+        c("None" = "none", "Road" = "R", "Edge and road" = "ER")
+      ),
       checkboxInput("overlap", "Territory overlap allowed", TRUE),
       checkboxInput("show_tess", "Show tessellation", FALSE),
       checkboxInput("init_loc", "Initial location", FALSE)
     )
   ),
-  tabPanel("Detect",
-    column(6,
-      plotOutput(outputId = "plot_det")
-    ),
-    column(6,
-      sliderInput("tauH", "EDR in habitat stratum", 0, MAXDIS, 1, MAXDIS/200),
-      sliderInput("tauE", "EDR in edge stratum", 0, MAXDIS, 1, MAXDIS/200),
-      sliderInput("tauR", "EDR in road stratum", 0, MAXDIS, 1, MAXDIS/200),
-      radioButtons("event", "Event type",
-        c("Vocalization"="vocal",
-          "Movement"="move",
-          "Both"="both"))
+  tabPanel(
+    "Detect",
+    column(6, plotOutput(outputId = "plot_det")),
+    column(
+      6,
+      sliderInput("tauH", "EDR in habitat stratum", 0, MAXDIS, 1, MAXDIS / 200),
+      sliderInput("tauE", "EDR in edge stratum", 0, MAXDIS, 1, MAXDIS / 200),
+      sliderInput("tauR", "EDR in road stratum", 0, MAXDIS, 1, MAXDIS / 200),
+      radioButtons(
+        "event",
+        "Event type",
+        c("Vocalization" = "vocal", "Movement" = "move", "Both" = "both")
+      )
     )
   ),
-  tabPanel("Transcribe",
+  tabPanel(
+    "Transcribe",
     fluidRow(
-      column(6,
+      column(
+        6,
         plotOutput(outputId = "plot_tra"),
         tableOutput(outputId = "table_rem")
       ),
-      column(6,
+      column(
+        6,
         selectInput("tint", "Time intervals", names(TINT)),
         selectInput("rint", "Distance intervals", names(RINT)),
         sliderInput("derr", "Distance error", 0, 1, 0, 0.1),
-        radioButtons("condition", "Condition",
-          c("1st event"="event1",
-            "1st detection"="det1",
-            "All detections"="alldet")),
+        radioButtons(
+          "condition",
+          "Condition",
+          c(
+            "1st event" = "event1",
+            "1st detection" = "det1",
+            "All detections" = "alldet"
+          )
+        ),
         sliderInput("percept", "Percepted ratio", 0, 2, 1, 0.05),
         checkboxInput("oucount", "Over/under count", FALSE),
         checkboxInput("show_dets_table", "Show detailed detection info", FALSE)
       )
     ),
     fluidRow(
-      column(12,
+      column(
+        12,
         tableOutput(outputId = "table_dets")
         # plotOutput(outputId = "plot_est")
       )
@@ -118,20 +140,28 @@ ui <- navbarPage("bSims (HER)",
     )
   ),
 
-  tabPanel("Estimate",
+  tabPanel(
+    "Estimate",
     fluidRow(
-      column(6,
+      column(
+        6,
         tableOutput(outputId = "table_est"),
         plotOutput(outputId = "plot_est")
       ),
-      column(6,
-        radioButtons("estmethod", "Estimation method", c("QPAD", "SQPAD", "Convolution", "Naive"))
+      column(
+        6,
+        radioButtons(
+          "estmethod",
+          "Estimation method",
+          c("QPAD", "SQPAD", "Convolution", "Naive")
+        )
         # selectInput("estmethod", "Estimation method", c("QPAD", "SQPAD", "Convolution", "Naive"))
       )
     )
   ),
 
-  tabPanel("Settings",
+  tabPanel(
+    "Settings",
     tagList(
       singleton(
         tags$head(
@@ -139,61 +169,76 @@ ui <- navbarPage("bSims (HER)",
         )
       )
     ),
-    column(12,
-      verbatimTextOutput("settings"),
-      uiOutput("clip")
-    )
+    column(12, verbatimTextOutput("settings"), uiOutput("clip"))
   ),
-  tabPanel("Documentation",
-    column(12,
-      tags$iframe(src="https://psolymos.github.io/bSims/",
-        height=600, width="100%", frameBorder=0)
+  tabPanel(
+    "Documentation",
+    column(
+      12,
+      tags$iframe(
+        src = "https://psolymos.github.io/bSims/",
+        height = 600,
+        width = "100%",
+        frameBorder = 0
+      )
     )
   )
 )
 
 server <- function(input, output) {
-  rv <- reactiveValues(seed=SEED)
+  rv <- reactiveValues(seed = SEED)
   observeEvent(input$seed, {
     rv$seed <- rv$seed + 1
+    showNotification(sprintf("Random seed changed to %s.", rv$seed))
   })
-  dis <- seq(0, MAXDIS, MAXDIS/200)
+  dis <- seq(0, MAXDIS, MAXDIS / 200)
   l <- reactive({
     set.seed(rv$seed)
-    bsims_init(extent = EXTENT,
+    bsims_init(
+      extent = EXTENT,
       road = input$road,
       edge = input$edge,
-      offset = input$offset)
+      offset = input$offset
+    )
   })
   xy_fun <- reactive({
-    switch(input$spfun,
-      "random"=function(d) rep(1, length(d)),
-      "regular"=function(d)
-        (1-exp(-d^2/1^2) + dlnorm(d, 2)/dlnorm(2,2)) / 2,
-      "clustered"=function(d)
-        exp(-d^2/1^2) + 0.5*(1-exp(-d^2/4^2))
-      )
+    switch(
+      input$spfun,
+      "random" = function(d) rep(1, length(d)),
+      "regular" = function(d) {
+        (1 - exp(-d^2 / 1^2) + dlnorm(d, 2) / dlnorm(2, 2)) / 2
+      },
+      "clustered" = function(d) {
+        exp(-d^2 / 1^2) + 0.5 * (1 - exp(-d^2 / 4^2))
+      }
+    )
   })
   a <- reactive({
-    margin <- switch(input$spfun,
-      "random"=0,
-      "regular"=2,
-      "clustered"=5)
-    bsims_populate(l(),
+    margin <- switch(input$spfun, "random" = 0, "regular" = 2, "clustered" = 5)
+    bsims_populate(
+      l(),
       density = c(input$DH, input$DE, input$DR),
       xy_fun = xy_fun(),
-      margin = margin)
+      margin = margin
+    )
   })
   b <- reactive({
     if (input$avoid == "R" && input$DR > 0) {
-      showNotification("Only 0 abundance stratum can be avoided, set road density to 0", type="error")
+      showNotification(
+        "Only 0 abundance stratum can be avoided, set road density to 0",
+        type = "error"
+      )
       return(NULL)
     }
     if (input$avoid == "ER" && (input$DE > 0 || input$DR > 0)) {
-      showNotification("Only 0 abundance stratum can be avoided, set road and edge densities to 0", type="error")
+      showNotification(
+        "Only 0 abundance stratum can be avoided, set road and edge densities to 0",
+        type = "error"
+      )
       return(NULL)
     }
-    bsims_animate(a(),
+    bsims_animate(
+      a(),
       duration = DURATION,
       vocal_rate = c(input$phiH, input$phiE, input$phiR),
       move_rate = input$phim,
@@ -201,21 +246,28 @@ server <- function(input, output) {
       mixture = 1,
       avoid = input$avoid,
       allow_overlap = input$overlap,
-      initial_location = input$init_loc)
+      initial_location = input$init_loc
+    )
   })
   o <- reactive({
-    bsims_detect(b(),
+    bsims_detect(
+      b(),
       xy = c(0, 0),
       tau = c(input$tauH, input$tauE, input$tauR),
       dist_fun = NULL,
       #dist_fun = function(d, tau) { print(c(length(d), length(tau)));exp(-d^2/tau^2)},
-#      repel = input$repel,
-      event_type = input$event)
+      #      repel = input$repel,
+      event_type = input$event
+    )
   })
   m <- reactive({
-    pr <- if (!input$oucount)
-      NULL else input$percept
-    bsims_transcribe(o(),
+    pr <- if (!input$oucount) {
+      NULL
+    } else {
+      input$percept
+    }
+    bsims_transcribe(
+      o(),
       tint = TINT[[input$tint]],
       rint = RINT[[input$rint]],
       error = input$derr,
@@ -230,7 +282,7 @@ server <- function(input, output) {
     est1 <- estimate(m, "qpad")
     est2 <- estimate(m, "sqpad")
     est3 <- estimate(m, "convolution")
-    data.frame(naive=est0, qpad=est1, sqpad=est2, convolution=est3)
+    data.frame(naive = est0, qpad = est1, sqpad = est2, convolution = est3)
   })
   # e <- reactive({
   #   est <- estimate(m()) # default is QPAD
@@ -244,117 +296,172 @@ server <- function(input, output) {
     est <- e_all()
     met <- tolower(input$estmethod)
     list(
-      phi=est["cue_rate", met],
-      tau=est["distance_param", met],
-      A=est["area", met],
-      D=est["density", met])
+      phi = est["cue_rate", met],
+      tau = est["distance_param", met],
+      A = est["area", met],
+      D = est["density", met]
+    )
   })
   getset <- reactive({
-    xc <- function(x) paste0("c(", paste0(x, collapse=", "), ")")
-    xq <- function(x) paste0("'", x, "'", collapse="")
-    margin <- switch(input$spfun,
-      "random"=0,
-      "regular"=2,
-      "clustered"=5)
-    pr <- if (!input$oucount)
-      "NULL" else input$percept
-    paste0("bsims_all(",
-    "\n  extent = ", EXTENT,
-    ",\n  road = ", input$road,
-    ",\n  edge = ", input$edge,
-    ",\n  offset = ", input$offset,
-    ",\n  density = ", xc(c(input$DH, input$DE, input$DR)),
-    ",\n  xy_fun = ", paste0(deparse(xy_fun()), collapse=''),
-    ",\n  margin = ", margin,
-    ",\n  duration = ", DURATION,
-    ",\n  vocal_rate = ", xc(c(input$phiH, input$phiE, input$phiR)),
-    ",\n  move_rate = ", input$phim,
-    ",\n  movement = ", input$SDm,
-    ",\n  mixture = 1",
-    ",\n  allow_overlap = ", input$overlap,
-    ",\n  initial_location = ", input$init_loc,
-    ",\n  tau = ", xc(c(input$tauH, input$tauE, input$tauR)),
-#    ",\n  dist_fun = NULL",
-    ",\n  xy = c(0, 0)",
-    ",\n  event_type = ", xq(input$event),
-    ",\n  tint = ", xc(TINT[[input$tint]]),
-    ",\n  rint = ", xc(RINT[[input$rint]]),
-    ",\n  error = ", input$derr,
-    ",\n  condition = ", xq(input$condition),
-    ",\n  perception = ", pr,
-    ")", collapse="")
+    xc <- function(x) paste0("c(", paste0(x, collapse = ", "), ")")
+    xq <- function(x) paste0("'", x, "'", collapse = "")
+    margin <- switch(input$spfun, "random" = 0, "regular" = 2, "clustered" = 5)
+    pr <- if (!input$oucount) {
+      "NULL"
+    } else {
+      input$percept
+    }
+    paste0(
+      "bsims_all(",
+      "\n  extent = ",
+      EXTENT,
+      ",\n  road = ",
+      input$road,
+      ",\n  edge = ",
+      input$edge,
+      ",\n  offset = ",
+      input$offset,
+      ",\n  density = ",
+      xc(c(input$DH, input$DE, input$DR)),
+      ",\n  xy_fun = ",
+      paste0(deparse(xy_fun()), collapse = ''),
+      ",\n  margin = ",
+      margin,
+      ",\n  duration = ",
+      DURATION,
+      ",\n  vocal_rate = ",
+      xc(c(input$phiH, input$phiE, input$phiR)),
+      ",\n  move_rate = ",
+      input$phim,
+      ",\n  movement = ",
+      input$SDm,
+      ",\n  mixture = 1",
+      ",\n  allow_overlap = ",
+      input$overlap,
+      ",\n  initial_location = ",
+      input$init_loc,
+      ",\n  tau = ",
+      xc(c(input$tauH, input$tauE, input$tauR)),
+      #    ",\n  dist_fun = NULL",
+      ",\n  xy = c(0, 0)",
+      ",\n  event_type = ",
+      xq(input$event),
+      ",\n  tint = ",
+      xc(TINT[[input$tint]]),
+      ",\n  rint = ",
+      xc(RINT[[input$rint]]),
+      ",\n  error = ",
+      input$derr,
+      ",\n  condition = ",
+      xq(input$condition),
+      ",\n  perception = ",
+      pr,
+      ")",
+      collapse = ""
+    )
   })
 
   output$plot_ini <- renderPlot({
-    op <- par(mar=c(0,0,0,0))
+    op <- par(mar = c(0, 0, 0, 0))
     plot(l())
     par(op)
   })
   output$plot_pop <- renderPlot({
     req(a())
-    op <- par(mar=c(0,0,0,0))
+    op <- par(mar = c(0, 0, 0, 0))
     plot(a())
     par(op)
   })
   output$plot_ani <- renderPlot({
     req(b())
-    op <- par(mar=c(0,0,0,0))
-    plot(b(), event_type=input$event)
-    if (input$show_tess && !is.null(b()$tess))
-      plot(b()$tess, add=TRUE, wlines="tess",
-        showpoints=FALSE, cmpnt_col="grey", cmpnt_lty=1)
+    op <- par(mar = c(0, 0, 0, 0))
+    plot(b(), event_type = input$event)
+    if (input$show_tess && !is.null(b()$tess)) {
+      plot(
+        b()$tess,
+        add = TRUE,
+        wlines = "tess",
+        showpoints = FALSE,
+        cmpnt_col = "grey",
+        cmpnt_lty = 1
+      )
+    }
     par(op)
   })
   output$plot_det <- renderPlot({
     req(o())
-    op <- par(mar=c(0,0,0,0))
-    plot(o(),
-      event_type=input$event,
-      condition=input$condition)
+    op <- par(mar = c(0, 0, 0, 0))
+    plot(o(), event_type = input$event, condition = input$condition)
     par(op)
   })
   output$plot_tra <- renderPlot({
     req(m())
-    op <- par(mar=c(0,0,0,0))
+    op <- par(mar = c(0, 0, 0, 0))
     plot(m())
     par(op)
   })
-  output$table_rem <- renderTable({
-    req(m())
-    tab <- get_table(m())
-    tab <- cbind(tab, Total=rowSums(tab))
-    tab <- rbind(tab, Total=colSums(tab))
-    tab
-  }, rownames = TRUE, colnames = TRUE, digits = 0)
-  output$table_dets <- renderTable({
-    if (!input$show_dets_table)
-      return(NULL)
-    tab <- get_detections(m())
-    tab
-  }, rownames = FALSE, colnames = TRUE)
-  output$table_est <- renderTable({
-    est <- e_all()
-    colnames(est) <- c("Naive", "QPAD", "SQPAD", "Convolution")
-    out <- data.frame(
-      Parameter = c("Density (1/ha)", "Area (ha)", "Cue rate (1/min)", "Distance parameter (100 m)"),
-      est)
-    out[-2,]
-  }, rownames = FALSE, colnames = TRUE)
+  output$table_rem <- renderTable(
+    {
+      req(m())
+      tab <- get_table(m())
+      tab <- cbind(tab, Total = rowSums(tab))
+      tab <- rbind(tab, Total = colSums(tab))
+      tab
+    },
+    rownames = TRUE,
+    colnames = TRUE,
+    digits = 0
+  )
+  output$table_dets <- renderTable(
+    {
+      if (!input$show_dets_table) {
+        return(NULL)
+      }
+      tab <- get_detections(m())
+      tab
+    },
+    rownames = FALSE,
+    colnames = TRUE
+  )
+  output$table_est <- renderTable(
+    {
+      est <- e_all()
+      colnames(est) <- c("Naive", "QPAD", "SQPAD", "Convolution")
+      out <- data.frame(
+        Parameter = c(
+          "Density (1/ha)",
+          "Area (ha)",
+          "Cue rate (1/min)",
+          "Distance parameter (100 m)"
+        ),
+        est
+      )
+      out[-2, ]
+    },
+    rownames = FALSE,
+    colnames = TRUE
+  )
   output$plot_est <- renderPlot({
     req(e())
     v <- e()
     col <- c("#ffe042", "#e71989")
 
-    op <- par(mfrow=c(1,3))
-    barplot(c(True=input$DH, Estimate=v$D),
-      col=col,
-      main="Density (1/ha)")
-    barplot(c(True=input$phiH, Estimate=v$phi),
-      col=col,
-      main="Cue rate (1/min)")
-    barplot(c(True=input$tauH, Estimate=v$tau),
-      col=col,
-      main="Distance parameter (100 m)")
+    op <- par(mfrow = c(1, 3))
+    barplot(
+      c(True = input$DH, Estimate = v$D),
+      col = col,
+      main = "Density (1/ha)"
+    )
+    barplot(
+      c(True = input$phiH, Estimate = v$phi),
+      col = col,
+      main = "Cue rate (1/min)"
+    )
+    barplot(
+      c(True = input$tauH, Estimate = v$tau),
+      col = col,
+      main = "Distance parameter (100 m)"
+    )
     par(op)
   })
   output$settings <- renderText({
@@ -362,15 +469,18 @@ server <- function(input, output) {
   })
   output$clip <- renderUI({
     tagList(
-      actionButton("clipbtn",
+      actionButton(
+        "clipbtn",
         label = "Copy settings to clipboard",
         icon = icon("clipboard"),
         `data-clipboard-text` = paste(
           getset(),
-          collapse="")
+          collapse = ""
+        )
       ),
       tags$script(
-        'new ClipboardJS(".btn", document.getElementById("clipbtn") );')
+        'new ClipboardJS(".btn", document.getElementById("clipbtn") );'
+      )
     )
   })
 }
