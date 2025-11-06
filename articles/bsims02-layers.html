@@ -167,7 +167,7 @@ subsections:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">d</span>, main<span class="op">=</span><span class="st">"Detect"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, main<span class="op">=</span><span class="st">"Transcribe"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/intro-1.png" width="100%"></p>
+<p><img src="bsims02-layers_files/figure-html/intro-1.png" class="r-plt" width="100%"></p>
 <div class="section level3">
 <h3 id="landscape">Landscape<a class="anchor" aria-label="anchor" href="#landscape"></a>
 </h3>
@@ -223,7 +223,7 @@ makes it possible to create landscapes with only two strata. The
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">arrows</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">0</span>, <span class="fl">0.1</span>, <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/landscape-1.png" width="100%"></p>
+<p><img src="bsims02-layers_files/figure-html/landscape-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -328,7 +328,7 @@ and different spatial point processes:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">distance</span>, <span class="fu">f_clust</span><span class="op">(</span><span class="va">distance</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, </span>
 <span>  main <span class="op">=</span> <span class="st">"clustered"</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">)</span>, col<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">p3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/pop-xy-1.png" width="576"></p>
+<p><img src="bsims02-layers_files/figure-html/pop-xy-1.png" class="r-plt" width="576"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>get_nests</code> function extracts the nest locations.
@@ -351,7 +351,7 @@ a vector of length 3 referring to the HER strata:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l2</span>, density <span class="op">=</span> <span class="va">D</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"Habitat &amp; road"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l3</span>, density <span class="op">=</span> <span class="va">D</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"Habitat, edge, road + offset"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l4</span>, density <span class="op">=</span> <span class="va">D</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"2 habitats"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/pop-dens-1.png" width="100%"></p>
+<p><img src="bsims02-layers_files/figure-html/pop-dens-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -427,7 +427,7 @@ locations)</p>
 <span><span class="co">#&gt; 6 -0.6696711 -4.1261427 0.161096144 1  86  6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/getters.html">get_events</a></span><span class="op">(</span><span class="va">e1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="../reference/getters.html">get_abundance</a></span><span class="op">(</span><span class="va">e1</span><span class="op">)</span>, col<span class="op">=</span><span class="fl">2</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/beh-events-1.png" width="576"></p>
+<p><img src="bsims02-layers_files/figure-html/beh-events-1.png" class="r-plt" width="576"></p>
 <p>There are no movement related events when <code>move_rate = 0</code>,
 the individuals are always located at the nest, i.e. there is no within
 territory movement. If we increase the movement rate, we also have to
@@ -441,7 +441,7 @@ events.</p>
 <span><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">e1</span>, main <span class="op">=</span> <span class="st">"Closure"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">e2</span>, main <span class="op">=</span> <span class="st">"Movement"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/beh-move-1.png" width="100%"></p>
+<p><img src="bsims02-layers_files/figure-html/beh-move-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <p>Individuals in the landscape might have different vocalization rates
@@ -456,7 +456,7 @@ to specify the mixture proportions.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/getters.html">get_events</a></span><span class="op">(</span><span class="va">e3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fl">0.67</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="../reference/getters.html">get_abundance</a></span><span class="op">(</span><span class="va">e3</span><span class="op">)</span>, col<span class="op">=</span><span class="fl">2</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/beh-mix-1.png" width="576"></p>
+<p><img src="bsims02-layers_files/figure-html/beh-mix-1.png" class="r-plt" width="576"></p>
 <p>Vocal and movement rates (and corresponding kernel standard
 deviations) can be defined four different ways:</p>
 <ul>
@@ -479,7 +479,7 @@ two-habitat landscape:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_animate</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l4</span>, density <span class="op">=</span> <span class="va">D</span><span class="op">)</span>, </span>
 <span>  move_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, movement <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, </span>
 <span>  mixture <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Strata based mixtures"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/beh-move2-1.png" width="480"></p>
+<p><img src="bsims02-layers_files/figure-html/beh-move2-1.png" class="r-plt" width="480"></p>
 <p>Stratum related behavior groups depend on the nest location.
 Sometimes it makes sense to restrict movement even further,
 i.e. individuals do not land in certain strata (but can cross a stratum
@@ -494,7 +494,7 @@ stratum):</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_animate</a></span><span class="op">(</span><span class="fu"><a href="../reference/bsims_init.html">bsims_populate</a></span><span class="op">(</span><span class="va">l2</span>, density <span class="op">=</span> <span class="va">D</span><span class="op">)</span>, </span>
 <span>  move_rate <span class="op">=</span> <span class="fl">1</span>, movement <span class="op">=</span> <span class="fl">0.3</span>, </span>
 <span>  avoid <span class="op">=</span> <span class="st">"R"</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Movement restricted"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/beh-move3-1.png" width="100%"></p>
+<p><img src="bsims02-layers_files/figure-html/beh-move3-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <p>Another way to restrict the movement of individuals is to prevent the
@@ -513,7 +513,7 @@ tessellation.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">e4</span>, main <span class="op">=</span> <span class="st">"No overlap"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">e4</span><span class="op">$</span><span class="va">tess</span>, add<span class="op">=</span><span class="cn">TRUE</span>, wlines<span class="op">=</span><span class="st">"tess"</span>,</span>
 <span>  showpoints<span class="op">=</span><span class="cn">FALSE</span>, cmpnt_lty<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/beh-move4-1.png" width="100%"></p>
+<p><img src="bsims02-layers_files/figure-html/beh-move4-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <p>We haven’t mentioned the <code>initial_location</code> argument yet.
@@ -583,7 +583,7 @@ distances (in 100 m units).</p>
 <span><span class="co">#&gt; 104 -2.237350 -1.1170397 1.2695494 1 247 2.5007026 NA  1  1</span></span>
 <span><span class="co">#&gt; 156  0.751192 -0.5472666 1.8167910 1 143 0.9294032 NA 37 37</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">d1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/det-1.png" width="480"></p>
+<p><img src="bsims02-layers_files/figure-html/det-1.png" class="r-plt" width="480"></p>
 <p>The <code>tau</code> argument can be a vector of length 3, referring
 to detection distances in the HER strata. When the landscape is
 stratified, and detection distances are different among the strata the
@@ -636,7 +636,7 @@ segmented attenuation.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, <span class="fu"><a href="../reference/dist_fun2.html">dist_fun2</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">tau</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">dist_fun</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, <span class="fu"><a href="../reference/dist_fun2.html">dist_fun2</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">tau</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">dist_fun</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, <span class="fu"><a href="../reference/dist_fun2.html">dist_fun2</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">tau</span>, <span class="va">dist_fun</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">4</span><span class="op">-</span><span class="va">b</span><span class="op">)</span><span class="op">)</span>, col<span class="op">=</span><span class="fl">2</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/segm-1.png" width="576"></p>
+<p><img src="bsims02-layers_files/figure-html/segm-1.png" class="r-plt" width="576"></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -661,7 +661,7 @@ segmented attenuation.</p>
 <span><span class="co">#&gt; 43 -0.5873458  0.67553887 0.11854136 0  NA 0.8951692 NA 33 33</span></span>
 <span><span class="co">#&gt; 80  0.7199966 -0.18819715 0.24575458 1 124 0.7441863 NA 93 93</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">d2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/det2-1.png" width="480"></p>
+<p><img src="bsims02-layers_files/figure-html/det2-1.png" class="r-plt" width="480"></p>
 <p>If you notice in the plot here, the detections (lines connecting the
 observer and the location of the events being detected) are 2 different
 colors. That’s because we allowed both vocalization and movement event
@@ -693,7 +693,7 @@ heard &amp; seen:</p>
 <span><span class="co">#&gt;            1           23            6</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">d3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/det3-1.png" width="480"></p>
+<p><img src="bsims02-layers_files/figure-html/det3-1.png" class="r-plt" width="480"></p>
 <p><code>tau</code> given as a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">3 \times 2</annotation></semantics></math>
 matrix combines strata (rows) and vocalization/movement (columns)
@@ -761,7 +761,7 @@ time intervals.</p>
 <span><span class="co">#&gt;     [0, 2, 4, 6, 8, 10 min]</span></span>
 <span><span class="co">#&gt;     [0, 50, 100, 150, Inf m]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/trans-1.png" width="576"></p>
+<p><img src="bsims02-layers_files/figure-html/trans-1.png" class="r-plt" width="576"></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/getters.html">get_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"removal"</span><span class="op">)</span></span>
@@ -823,7 +823,7 @@ estimation.</p>
 <span><span class="co">#&gt;    0-50m  50-100m 100-150m 150-200m </span></span>
 <span><span class="co">#&gt;        8       19       20       23</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bsims02-layers_files/figure-html/H-1.png" width="480"></p>
+<p><img src="bsims02-layers_files/figure-html/H-1.png" class="r-plt" width="480"></p>
 <p>We use the <strong>detect</strong> package to fit removal model and
 distance sampling model to the simulated output. This is handily
 implemented in the <code>estimate</code> method for the transcription
@@ -903,7 +903,7 @@ estimation. <em>Biologia Futura</em> 74, 377–392 <a href="https://doi.org/10.1
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
