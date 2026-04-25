@@ -1,4 +1,4 @@
-pandoc: 3.8.2.1
+pandoc: 3.9.0.2
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -6,4 +6,4 @@ articles:
   bsims02-layers: bsims02-layers.html
   bsims03-workflow: bsims03-workflow.html
   bsims04-apps: bsims04-apps.html
-last_built: 2025-11-06T22:07Z
+last_built: 2026-04-25T17:51Z

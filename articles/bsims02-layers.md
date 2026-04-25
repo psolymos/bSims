@@ -817,7 +817,7 @@ library(detect)
 #> Loading required package: Formula
 #> Loading required package: stats4
 #> Loading required package: pbapply
-#> detect 0.5-0      2025-08-31
+#> detect 0.5-1      2026-01-04
 cbind(true = c(phi=phi, tau=tau, D=Den), 
   estimate = estimate(x))
 #> Warning in cbind(true = c(phi = phi, tau = tau, D = Den), estimate =

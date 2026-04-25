@@ -326,25 +326,25 @@ tbr <- c(3, 5, 10)
 #> bSims population
 #>   1 km x 1 km
 #>   stratification: HER
-#>   total abundance: 101
+#>   total abundance: 89
 (a <- bsims_animate(p, vocal_rate=phi, duration=dur))
 #> bSims events
 #>   1 km x 1 km
 #>   stratification: HER
-#>   total abundance: 101
+#>   total abundance: 89
 #>   duration: 10 min
 (o <- bsims_detect(a, tau=tau))
 #> bSims detections
 #>   1 km x 1 km
 #>   stratification: HER
-#>   total abundance: 101
+#>   total abundance: 89
 #>   duration: 10 min
 #>   detected: 27 heard
 (x <- bsims_transcribe(o, tint=tbr, rint=rbr))
 #> bSims transcript
 #>   1 km x 1 km
 #>   stratification: HER
-#>   total abundance: 101
+#>   total abundance: 89
 #>   duration: 10 min
 #>   detected: 27 heard
 #>   1st event detected by breaks:
@@ -356,35 +356,35 @@ plot(x)
 get_table(x, "removal")
 #>          0-3min 3-5min 5-10min
 #> 0-50m         0      0       0
-#> 50-100m       0      1       0
-#> 100-150m      2      1       0
-#> 150+m        10      2       1
+#> 50-100m       2      0       0
+#> 100-150m      4      0       0
+#> 150+m         6      2       2
 get_table(x, "visits")
 #>          0-3min 3-5min 5-10min
 #> 0-50m         0      0       0
-#> 50-100m       0      1       1
-#> 100-150m      2      4       3
-#> 150+m        10      4      12
+#> 50-100m       2      1       1
+#> 100-150m      4      3       2
+#> 150+m         6      5      11
 
 head(get_events(a))
-#>            x          y           t v   a  i
-#> 1  4.9420166  0.8481676 0.001074585 1 205 71
-#> 2  2.2904309  3.0533086 0.007809853 1 266 86
-#> 3 -4.7614717  3.7423802 0.007952425 1 266 18
-#> 4  2.5182284  3.3121810 0.018549427 1 219 90
-#> 5 -0.3207192 -1.9902766 0.061760181 1  69 49
-#> 6  3.2394219  2.5997256 0.063696320 1 204 81
+#>           x         y          t v   a  i
+#> 1 -3.442282 -4.391607 0.03829154 1  68  6
+#> 2  4.293836 -4.017852 0.04325212 1 228 76
+#> 3  1.210166  1.818880 0.11871163 1 200 53
+#> 4  2.736663  3.298496 0.11923924 1 203 68
+#> 5  3.189445  3.931345 0.13485851 1 249 79
+#> 6 -2.677741  4.084859 0.22912982 1 101  4
 plot(get_events(a))
 
 
 head(get_detections(o))
-#>              x         y          t v   a        d  f  i  j
-#> 5  -0.32071924 -1.990277 0.06176018 1  69 2.015952 NA 49 49
-#> 10 -1.20470664 -2.317693 0.15694491 1 267 2.612091 NA 38 38
-#> 16 -1.20470664 -2.317693 0.29705728 1 325 2.612091 NA 38 38
-#> 23  0.80483427 -1.422090 0.35924502 1 344 1.634043 NA 55 55
-#> 38 -0.54546234  4.718541 0.75802088 1  17 4.749964 NA 40 40
-#> 48  0.02920578 -1.223315 1.04568047 1  44 1.223664 NA 51 51
+#>             x          y         t v   a         d  f  i  j
+#> 7  -0.3210701 -1.2764715 0.2390436 1 159 1.3162316 NA 47 47
+#> 15 -1.0619945  0.3420704 0.3613196 1 155 1.1157260 NA 39 39
+#> 21  0.1610299  1.5025998 0.4986072 1  35 1.5112037 NA 41 41
+#> 22 -1.0619945  0.3420704 0.5145775 1 208 1.1157260 NA 39 39
+#> 28 -0.0575831  2.5478251 0.6074020 1 215 2.5484757 NA 52 52
+#> 33  0.3010540 -0.5838783 0.6720317 1   3 0.6569227 NA 44 44
 plot(get_detections(o), "time")
 
 plot(get_detections(o), "distance")
@@ -412,9 +412,9 @@ b$new()
 #> bSims transcript
 #>   1 km x 1 km
 #>   stratification: HR
-#>   total abundance: 49
+#>   total abundance: 56
 #>   duration: 10 min
-#>   detected: 3 heard
+#>   detected: 2 heard
 #>   1st event detected by breaks:
 #>     [0, 3, 5, 10 min]
 #>     [0, 50, 100, 150, Inf m]
@@ -423,23 +423,23 @@ lapply(bb, get_table)
 #> [[1]]
 #>          0-3min 3-5min 5-10min
 #> 0-50m         0      0       0
-#> 50-100m       0      0       0
+#> 50-100m       1      0       0
 #> 100-150m      0      0       0
 #> 150+m         0      0       0
 #> 
 #> [[2]]
 #>          0-3min 3-5min 5-10min
-#> 0-50m         2      0       0
+#> 0-50m         1      0       0
 #> 50-100m       0      0       0
-#> 100-150m      1      0       0
+#> 100-150m      0      0       0
 #> 150+m         0      0       0
 #> 
 #> [[3]]
 #>          0-3min 3-5min 5-10min
 #> 0-50m         0      0       0
-#> 50-100m       0      0       0
-#> 100-150m      3      0       0
-#> 150+m         0      0       0
+#> 50-100m       2      0       0
+#> 100-150m      0      0       0
+#> 150+m         1      0       0
 #> 
 
 # \donttest{
@@ -451,22 +451,22 @@ nc <- 2 # number of cores
 ## sequential
 system.time(bb <- b$replicate(B, cl=NULL))
 #>    user  system elapsed 
-#>   0.293   0.004   0.300 
+#>   0.272   0.002   0.280 
 ## parallel clusters
 cl <- makeCluster(nc)
 ## note: loading the package is optional
 system.time(clusterEvalQ(cl, library(bSims)))
 #> Error in checkForRemoteErrors(lapply(cl, recvResult)): 2 nodes produced errors; first error: there is no package called ‘bSims’
-#> Timing stopped at: 0 0 0.001
+#> Timing stopped at: 0.001 0 0.001
 system.time(bb <- b$replicate(B, cl=cl))
 #> Error in checkForRemoteErrors(lapply(cl, recvResult)): 2 nodes produced errors; first error: there is no package called ‘bSims’
-#> Timing stopped at: 0.001 0.001 0.001
+#> Timing stopped at: 0.001 0 0.001
 stopCluster(cl)
 ## parallel forking
 if (.Platform$OS.type != "windows") {
   system.time(bb <- b$replicate(B, cl=nc))
 }
 #>    user  system elapsed 
-#>   0.144   0.053   0.216 
+#>   0.149   0.058   0.210 
 # }
 ```
